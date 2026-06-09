@@ -261,10 +261,15 @@ class NewsAdminController extends Controller
                 'review_note' => $payload['review_note'] ?? null,
             ];
         } else {
-            $review = [
+            return [
+                ...$payload,
                 'editorial_status' => $article?->editorial_status ?? NewsArticle::EDITORIAL_PENDING,
                 'fact_check_status' => $article?->fact_check_status ?? NewsArticle::FACT_PENDING,
                 'review_note' => $payload['review_note'] ?? $article?->review_note,
+                'approved_by' => $article?->approved_by,
+                'approved_at' => $article?->approved_at,
+                'fact_checked_by' => $article?->fact_checked_by,
+                'fact_checked_at' => $article?->fact_checked_at,
             ];
         }
 

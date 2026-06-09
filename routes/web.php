@@ -37,8 +37,10 @@ Route::post('/language/{locale}', [LanguageController::class, 'update'])->name('
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/dashboard/berita', [NewsAdminController::class, 'store'])->name('admin.news.store');
-    Route::patch('/dashboard/rekening', [WriterFinanceController::class, 'updateBank'])->name('writer.bank.update');
-    Route::post('/dashboard/withdrawals', [WriterFinanceController::class, 'requestWithdrawal'])->name('writer.withdrawals.store');
+    Route::middleware('role:writer')->group(function () {
+        Route::patch('/dashboard/rekening', [WriterFinanceController::class, 'updateBank'])->name('writer.bank.update');
+        Route::post('/dashboard/withdrawals', [WriterFinanceController::class, 'requestWithdrawal'])->name('writer.withdrawals.store');
+    });
 
     Route::middleware('role:admin')->group(function () {
         Route::post('/licenses', [DashboardController::class, 'store'])->name('licenses.store');

@@ -6,6 +6,7 @@ use App\Models\NewsArticle;
 use App\Models\NewsCategory;
 use App\Models\NewsTag;
 use App\Models\User;
+use App\Services\WriterPaymentService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -15,16 +16,20 @@ class NewsPortalSeeder extends Seeder
     public function run(): void
     {
         $authors = collect([
-            ['name' => 'Nadia Pramesti', 'email' => 'nadia@radina.net'],
-            ['name' => 'Rafi Adhitama', 'email' => 'rafi@radina.net'],
-            ['name' => 'Alya Salsabila', 'email' => 'alya@radina.net'],
-            ['name' => 'Dimas Wicaksono', 'email' => 'dimas@radina.net'],
+            ['name' => 'Nadia Pramesti', 'email' => 'nadia@radina.net', 'article_fee' => 30000, 'bank_name' => 'BCA', 'bank_account_number' => '1234567890'],
+            ['name' => 'Rafi Adhitama', 'email' => 'rafi@radina.net', 'article_fee' => 27500, 'bank_name' => 'BRI', 'bank_account_number' => '2345678901'],
+            ['name' => 'Alya Salsabila', 'email' => 'alya@radina.net', 'article_fee' => 25000, 'bank_name' => 'Mandiri', 'bank_account_number' => '3456789012'],
+            ['name' => 'Dimas Wicaksono', 'email' => 'dimas@radina.net', 'article_fee' => 25000, 'bank_name' => 'BNI', 'bank_account_number' => '4567890123'],
         ])->map(function (array $author): User {
             return User::updateOrCreate(
                 ['email' => $author['email']],
                 [
                     'name' => $author['name'],
                     'role' => User::ROLE_WRITER,
+                    'article_fee' => $author['article_fee'],
+                    'bank_name' => $author['bank_name'],
+                    'bank_account_number' => $author['bank_account_number'],
+                    'bank_account_holder' => $author['name'],
                     'password' => Hash::make('Editor@12345'),
                     'email_verified_at' => now(),
                 ]
@@ -221,6 +226,7 @@ class NewsPortalSeeder extends Seeder
         ];
 
         $cities = ['Jakarta', 'Bandung', 'Surabaya', 'Yogyakarta', 'Semarang', 'Makassar'];
+        $adminId = User::where('role', User::ROLE_ADMIN)->value('id');
 
         foreach ($categories as $category) {
             foreach ($storyAngles[$category->name] as $index => $angle) {
@@ -236,12 +242,13 @@ class NewsPortalSeeder extends Seeder
                 $contentEn = $this->buildEnglishArticleContent($category->name_en, $city, $angleEn);
                 $readingTime = max(4, (int) ceil(str_word_count(strip_tags($content)) / 180));
                 $coverImage = $category->cover_image_url;
+                $author = $authors[($category->id + $index) % $authors->count()];
 
                 $article = NewsArticle::updateOrCreate(
                     ['slug' => $slug],
                     [
                         'category_id' => $category->id,
-                        'user_id' => $authors->random()->id,
+                        'user_id' => $author->id,
                         'title' => $title,
                         'title_en' => $titleEn,
                         'slug' => $slug,
@@ -253,6 +260,12 @@ class NewsPortalSeeder extends Seeder
                         'cover_image_alt' => Str::limit("{$title} - {$category->name}", 180, ''),
                         'cover_image_alt_en' => Str::limit("{$titleEn} - {$category->name_en}", 180, ''),
                         'status' => NewsArticle::STATUS_PUBLISHED,
+                        'editorial_status' => NewsArticle::EDITORIAL_APPROVED,
+                        'fact_check_status' => NewsArticle::FACT_VERIFIED,
+                        'approved_by' => $adminId,
+                        'approved_at' => $publishedAt,
+                        'fact_checked_by' => $adminId,
+                        'fact_checked_at' => $publishedAt,
                         'is_featured' => $index < 2,
                         'reading_time' => $readingTime,
                         'views_count' => random_int(820, 24800),
@@ -282,6 +295,8 @@ class NewsPortalSeeder extends Seeder
                 $article->tags()->sync(
                     $tags->random(random_int(3, 5))->pluck('id')->all()
                 );
+
+                app(WriterPaymentService::class)->creditArticleIfEligible($article);
             }
         }
     }

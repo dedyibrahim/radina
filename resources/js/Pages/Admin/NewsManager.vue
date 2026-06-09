@@ -3,7 +3,7 @@ import { computed, ref, watch } from 'vue';
 import { Link, router, useForm, usePage } from '@inertiajs/vue3';
 import PaginationLinks from '../../Components/PaginationLinks.vue';
 import SeoHead from '../../Components/SeoHead.vue';
-import NewsLayout from '../../Layouts/NewsLayout.vue';
+import AdminLayout from '../../Layouts/AdminLayout.vue';
 
 const props = defineProps({
     seo: Object,
@@ -37,6 +37,9 @@ const defaults = () => ({
     cover_image_alt: '',
     cover_image_alt_en: '',
     status: 'draft',
+    editorial_status: 'pending',
+    fact_check_status: 'pending',
+    review_note: '',
     is_featured: false,
     published_at: '',
     seo_title: '',
@@ -72,6 +75,9 @@ const hydrateForm = () => {
         cover_image_alt: article.coverImageAlt || '',
         cover_image_alt_en: article.coverImageAltEn || '',
         status: article.status,
+        editorial_status: article.editorialStatus,
+        fact_check_status: article.factCheckStatus,
+        review_note: article.reviewNote || '',
         is_featured: article.isFeatured,
         published_at: article.publishedAt || '',
         seo_title: article.seoTitle || '',
@@ -118,10 +124,43 @@ const removeArticle = (article) => {
         router.delete(article.destroyUrl, { preserveScroll: true });
     }
 };
+
+const approveAndVerify = (article) => {
+    if (window.confirm(`Setujui, verifikasi fakta, dan terbitkan "${article.title}"? Honor penulis akan langsung dikreditkan.`)) {
+        router.patch(article.reviewUrl, {
+            editorial_status: 'approved',
+            fact_check_status: 'verified',
+            review_note: '',
+        }, { preserveScroll: true });
+    }
+};
+
+const rejectArticle = (article) => {
+    const note = window.prompt(`Alasan penolakan artikel "${article.title}":`);
+    if (!note) {
+        return;
+    }
+
+    router.patch(article.reviewUrl, {
+        editorial_status: 'rejected',
+        fact_check_status: 'rejected',
+        review_note: note,
+    }, { preserveScroll: true });
+};
+
+const formatRupiah = (amount) => new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    maximumFractionDigits: 0,
+}).format(Number(amount || 0));
 </script>
 
 <template>
-    <NewsLayout>
+    <AdminLayout
+        :is-admin="true"
+        active-section="news"
+        @navigate="router.visit(`/dashboard?section=${$event}`)"
+    >
         <SeoHead :seo="seo" />
 
         <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
@@ -180,11 +219,44 @@ const removeArticle = (article) => {
                             <p v-if="form.errors.category_id" class="admin-error">{{ form.errors.category_id }}</p>
                         </div>
                         <div>
-                            <label class="admin-label">Status</label>
-                            <select v-model="form.status" class="admin-input">
-                                <option value="draft">Draft</option>
-                                <option value="published">Published</option>
-                            </select>
+                            <label class="admin-label">Status publik</label>
+                            <div class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">
+                                {{ form.editorial_status === 'approved' && form.fact_check_status === 'verified' ? 'Published' : 'Draft' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-xl border border-blue-200 bg-blue-50/60 p-4">
+                        <h3 class="font-semibold text-slate-900">Review Redaksi dan Verifikasi Fakta</h3>
+                        <p class="mt-1 text-xs leading-5 text-slate-600">
+                            Artikel hanya diterbitkan dan menghasilkan honor jika editorial disetujui serta fakta terverifikasi.
+                        </p>
+                        <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                            <div>
+                                <label class="admin-label">Keputusan editorial</label>
+                                <select v-model="form.editorial_status" class="admin-input" :disabled="!!editArticle?.earningAmount">
+                                    <option value="pending">Menunggu review</option>
+                                    <option value="approved">Disetujui</option>
+                                    <option value="rejected">Ditolak</option>
+                                </select>
+                                <p v-if="form.errors.editorial_status" class="admin-error">{{ form.errors.editorial_status }}</p>
+                            </div>
+                            <div>
+                                <label class="admin-label">Verifikasi fakta</label>
+                                <select v-model="form.fact_check_status" class="admin-input" :disabled="!!editArticle?.earningAmount">
+                                    <option value="pending">Belum diperiksa</option>
+                                    <option value="verified">Terverifikasi</option>
+                                    <option value="rejected">Tidak valid</option>
+                                </select>
+                                <p v-if="form.errors.fact_check_status" class="admin-error">{{ form.errors.fact_check_status }}</p>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label class="admin-label">Catatan review</label>
+                            <textarea v-model="form.review_note" rows="3" class="admin-input" placeholder="Catatan koreksi atau alasan penolakan"></textarea>
+                        </div>
+                        <div v-if="editArticle?.earningAmount" class="mt-4 rounded-lg bg-emerald-100 px-4 py-3 text-sm font-semibold text-emerald-800">
+                            Honor {{ formatRupiah(editArticle.earningAmount) }} sudah dikreditkan dan status persetujuan dikunci.
                         </div>
                     </div>
 
@@ -280,9 +352,33 @@ const removeArticle = (article) => {
                             </div>
                             <h3 class="mt-2 text-lg font-semibold leading-6 text-slate-950">{{ article.title }}</h3>
                             <p class="mt-1 text-xs text-slate-500">Diperbarui {{ article.updatedAt }} oleh {{ article.authorName }}</p>
+                            <div class="mt-2 flex flex-wrap gap-2 text-[10px] font-bold uppercase tracking-wider">
+                                <span class="rounded-full bg-slate-100 px-2 py-1 text-slate-600">Editorial: {{ article.editorialStatus }}</span>
+                                <span class="rounded-full bg-slate-100 px-2 py-1 text-slate-600">Fakta: {{ article.factCheckStatus }}</span>
+                                <span v-if="article.earningAmount" class="rounded-full bg-emerald-100 px-2 py-1 text-emerald-700">
+                                    Honor {{ formatRupiah(article.earningAmount) }}
+                                </span>
+                            </div>
+                            <p v-if="article.reviewNote" class="mt-2 text-xs leading-5 text-slate-500">Catatan: {{ article.reviewNote }}</p>
                             <div class="mt-4 flex flex-wrap gap-2">
                                 <a v-if="article.status === 'published'" :href="article.publicUrl" target="_blank" class="admin-action">Lihat</a>
                                 <Link :href="article.editUrl" class="admin-action">Edit</Link>
+                                <button
+                                    v-if="!article.earningAmount"
+                                    type="button"
+                                    class="admin-action text-emerald-700"
+                                    @click="approveAndVerify(article)"
+                                >
+                                    Setujui & Verifikasi
+                                </button>
+                                <button
+                                    v-if="!article.earningAmount"
+                                    type="button"
+                                    class="admin-action text-amber-700"
+                                    @click="rejectArticle(article)"
+                                >
+                                    Tolak
+                                </button>
                                 <button type="button" class="admin-action text-rose-700" @click="removeArticle(article)">Hapus</button>
                             </div>
                         </div>
@@ -293,5 +389,5 @@ const removeArticle = (article) => {
                 </div>
             </div>
         </section>
-    </NewsLayout>
+    </AdminLayout>
 </template>

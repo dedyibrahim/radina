@@ -24,9 +24,13 @@ const menuItems = computed(() => [
     },
     ...(props.isAdmin ? [
         { key: 'categories', label: 'Kategori', description: 'Atur kanal berita' },
+        { key: 'payments', label: 'Pembayaran', description: 'Honor dan withdrawal' },
         { key: 'licenses', label: 'Lisensi', description: 'Kelola lisensi aplikasi' },
         { key: 'users', label: 'Pengguna', description: 'Atur admin dan penulis' },
-    ] : []),
+    ] : [
+        { key: 'earnings', label: 'Pendapatan', description: 'Saldo dan withdrawal' },
+        { key: 'bank', label: 'Rekening', description: 'Atur rekening pencairan' },
+    ]),
 ]);
 
 watch(drawerOpen, (isOpen) => {

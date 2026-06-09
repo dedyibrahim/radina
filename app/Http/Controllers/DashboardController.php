@@ -6,6 +6,7 @@ use App\Models\License;
 use App\Models\NewsArticle;
 use App\Models\NewsCategory;
 use App\Models\User;
+use App\Models\WriterWithdrawal;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -36,7 +37,9 @@ class DashboardController extends Controller
         $editUser = null;
         $editUserId = (int) $request->query('edit_user', 0);
         if ($isAdmin && $editUserId > 0) {
-            $editUser = User::withCount('newsArticles')->find($editUserId);
+            $editUser = User::withCount('newsArticles')
+                ->withSum('writerEarnings', 'amount')
+                ->find($editUserId);
         }
 
         $stats = $isAdmin ? [
@@ -55,6 +58,26 @@ class DashboardController extends Controller
         if (! $isAdmin) {
             $newsQuery->where('user_id', $user->id);
         }
+
+        $writerEarnings = $isAdmin
+            ? collect()
+            : $user->writerEarnings()->latest('credited_at')->limit(30)->get();
+
+        $writerWithdrawals = $isAdmin
+            ? collect()
+            : $user->writerWithdrawals()
+                ->with(['writer', 'processor'])
+                ->latest('requested_at')
+                ->limit(30)
+                ->get();
+
+        $adminWithdrawals = $isAdmin
+            ? WriterWithdrawal::query()
+                ->with(['writer', 'processor'])
+                ->latest('requested_at')
+                ->limit(50)
+                ->get()
+            : collect();
 
         return Inertia::render('Admin/Dashboard', [
             'seo' => [
@@ -125,7 +148,7 @@ class DashboardController extends Controller
             ] : null,
             'storeCategoryUrl' => $isAdmin ? route('admin.categories.store') : null,
             'recentNews' => NewsArticle::query()
-                ->with(['category', 'author'])
+                ->with(['category', 'author', 'earning'])
                 ->when(! $isAdmin, fn ($query) => $query->where('user_id', $user->id))
                 ->latest('updated_at')
                 ->limit(6)
@@ -134,6 +157,9 @@ class DashboardController extends Controller
                     'id' => $article->id,
                     'title' => $article->title,
                     'status' => $article->status,
+                    'editorialStatus' => $article->editorial_status,
+                    'factCheckStatus' => $article->fact_check_status,
+                    'earningAmount' => $article->earning?->amount,
                     'categoryName' => $article->category?->name,
                     'authorName' => $article->author?->name,
                     'coverImage' => $article->cover_image_url,
@@ -144,12 +170,17 @@ class DashboardController extends Controller
                 ->all(),
             'storeNewsUrl' => route('admin.news.store'),
             'defaultCoverImage' => '/images/news-dummy/technology-lead.png',
-            'activeSection' => ! $isAdmin ? 'news' : match (true) {
+            'activeSection' => ! $isAdmin
+                ? (in_array($request->query('section'), ['news', 'earnings', 'bank'], true)
+                    ? $request->query('section')
+                    : 'news')
+                : match (true) {
                 $request->query('section') === 'licenses' || $editLicense => 'licenses',
                 $request->query('section') === 'categories' || $editCategory => 'categories',
                 $request->query('section') === 'users' || $editUser => 'users',
+                $request->query('section') === 'payments' => 'payments',
                 default => 'news',
-            },
+                },
             'isAdmin' => $isAdmin,
             'licenses' => $isAdmin ? [
                 'data' => $licenses->getCollection()->map(fn (License $license) => $this->transformLicense($license))->all(),
@@ -177,6 +208,7 @@ class DashboardController extends Controller
             'users' => $isAdmin
                 ? User::query()
                     ->withCount('newsArticles')
+                    ->withSum('writerEarnings', 'amount')
                     ->orderBy('name')
                     ->get()
                     ->map(fn (User $account) => $this->transformUser($account))
@@ -184,6 +216,48 @@ class DashboardController extends Controller
                 : [],
             'editUser' => $editUser ? $this->transformUser($editUser) : null,
             'storeUserUrl' => $isAdmin ? route('admin.users.store') : null,
+            'paymentSummary' => $isAdmin
+                ? [
+                    'totalEarnings' => (int) \App\Models\WriterEarning::sum('amount'),
+                    'pendingWithdrawals' => WriterWithdrawal::where('status', WriterWithdrawal::STATUS_PENDING)->count(),
+                    'pendingAmount' => (int) WriterWithdrawal::where('status', WriterWithdrawal::STATUS_PENDING)->sum('amount'),
+                    'paidAmount' => (int) WriterWithdrawal::where('status', WriterWithdrawal::STATUS_PAID)->sum('amount'),
+                    'defaultArticleFee' => (int) config('writer_payments.default_article_fee'),
+                    'minimumWithdrawal' => (int) config('writer_payments.minimum_withdrawal'),
+                ]
+                : [
+                    'totalEarnings' => $user->totalEarnings(),
+                    'availableBalance' => $user->availableBalance(),
+                    'reservedAmount' => $user->reservedWithdrawals(),
+                    'paidAmount' => (int) $user->writerWithdrawals()
+                        ->where('status', WriterWithdrawal::STATUS_PAID)
+                        ->sum('amount'),
+                    'articleFee' => $user->articleFee(),
+                    'minimumWithdrawal' => (int) config('writer_payments.minimum_withdrawal'),
+                    'bankComplete' => $user->hasBankAccount(),
+                ],
+            'writerEarnings' => $writerEarnings
+                ->map(fn ($earning) => [
+                    'id' => $earning->id,
+                    'articleTitle' => $earning->article_title,
+                    'amount' => $earning->amount,
+                    'description' => $earning->description,
+                    'creditedAt' => $earning->credited_at?->translatedFormat('d M Y H:i'),
+                ])
+                ->all(),
+            'writerWithdrawals' => $writerWithdrawals
+                ->map(fn (WriterWithdrawal $withdrawal) => $this->transformWithdrawal($withdrawal))
+                ->all(),
+            'adminWithdrawals' => $adminWithdrawals
+                ->map(fn (WriterWithdrawal $withdrawal) => $this->transformWithdrawal($withdrawal, true))
+                ->all(),
+            'bankAccount' => [
+                'bankName' => $user->bank_name,
+                'accountNumber' => $user->bank_account_number,
+                'accountHolder' => $user->bank_account_holder,
+                'updateUrl' => route('writer.bank.update'),
+            ],
+            'withdrawalStoreUrl' => route('writer.withdrawals.store'),
         ]);
     }
 
@@ -279,11 +353,40 @@ class DashboardController extends Controller
             'email' => $user->email,
             'role' => $user->role,
             'roleLabel' => $user->isAdmin() ? 'Admin' : 'Penulis',
+            'articleFee' => $user->articleFee(),
+            'totalEarnings' => (int) ($user->writer_earnings_sum_amount ?? $user->totalEarnings()),
             'articlesCount' => $user->news_articles_count ?? $user->newsArticles()->count(),
             'verified' => $user->email_verified_at !== null,
             'editUrl' => route('dashboard', ['section' => 'users', 'edit_user' => $user->id]),
             'updateUrl' => route('admin.users.update', $user),
             'destroyUrl' => route('admin.users.destroy', $user),
+        ];
+    }
+
+    private function transformWithdrawal(WriterWithdrawal $withdrawal, bool $admin = false): array
+    {
+        $statusLabels = [
+            WriterWithdrawal::STATUS_PENDING => 'Menunggu',
+            WriterWithdrawal::STATUS_APPROVED => 'Disetujui',
+            WriterWithdrawal::STATUS_PAID => 'Dibayar',
+            WriterWithdrawal::STATUS_REJECTED => 'Ditolak',
+        ];
+
+        return [
+            'id' => $withdrawal->id,
+            'writerName' => $withdrawal->writer?->name,
+            'writerEmail' => $withdrawal->writer?->email,
+            'amount' => $withdrawal->amount,
+            'bankName' => $withdrawal->bank_name,
+            'accountNumber' => $withdrawal->bank_account_number,
+            'accountHolder' => $withdrawal->bank_account_holder,
+            'status' => $withdrawal->status,
+            'statusLabel' => $statusLabels[$withdrawal->status] ?? ucfirst($withdrawal->status),
+            'adminNote' => $withdrawal->admin_note,
+            'requestedAt' => $withdrawal->requested_at?->translatedFormat('d M Y H:i'),
+            'processedAt' => $withdrawal->processed_at?->translatedFormat('d M Y H:i'),
+            'processorName' => $withdrawal->processor?->name,
+            'updateUrl' => $admin ? route('admin.withdrawals.update', $withdrawal) : null,
         ];
     }
 }

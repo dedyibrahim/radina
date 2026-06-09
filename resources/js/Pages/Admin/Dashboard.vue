@@ -32,6 +32,12 @@ const props = defineProps({
         default: null,
     },
     storeUserUrl: String,
+    paymentSummary: Object,
+    writerEarnings: Array,
+    writerWithdrawals: Array,
+    adminWithdrawals: Array,
+    bankAccount: Object,
+    withdrawalStoreUrl: String,
 });
 
 const page = usePage();
@@ -100,11 +106,20 @@ const userDefaults = () => ({
     name: '',
     email: '',
     role: 'writer',
+    article_fee: props.paymentSummary?.defaultArticleFee || 25000,
     password: '',
     password_confirmation: '',
 });
 
 const userForm = useForm(userDefaults());
+const withdrawalForm = useForm({
+    amount: props.paymentSummary?.availableBalance || '',
+});
+const bankForm = useForm({
+    bank_name: props.bankAccount?.bankName || '',
+    bank_account_number: props.bankAccount?.accountNumber || '',
+    bank_account_holder: props.bankAccount?.accountHolder || '',
+});
 
 const hydrateForm = () => {
     form.customer_name = props.editLicense?.customerName || props.formDefaults.customer_name;
@@ -143,10 +158,44 @@ const hydrateUserForm = () => {
         name: props.editUser.name,
         email: props.editUser.email,
         role: props.editUser.role,
+        article_fee: props.editUser.articleFee,
         password: '',
         password_confirmation: '',
     } : userDefaults());
     userForm.clearErrors();
+};
+
+const formatRupiah = (amount) => new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    maximumFractionDigits: 0,
+}).format(Number(amount || 0));
+
+const submitBank = () => {
+    bankForm.patch(props.bankAccount.updateUrl, { preserveScroll: true });
+};
+
+const submitWithdrawal = () => {
+    withdrawalForm.post(props.withdrawalStoreUrl, {
+        preserveScroll: true,
+        onSuccess: () => {
+            withdrawalForm.amount = '';
+        },
+    });
+};
+
+const updateWithdrawal = (withdrawal, status) => {
+    const labels = {
+        approved: 'menyetujui',
+        paid: 'menandai sudah dibayar',
+        rejected: 'menolak',
+    };
+    const note = window.prompt(`Catatan admin untuk ${labels[status]} withdrawal ini (opsional):`, withdrawal.adminNote || '');
+    if (note === null) {
+        return;
+    }
+
+    router.patch(withdrawal.updateUrl, { status, admin_note: note }, { preserveScroll: true });
 };
 
 watch(() => props.editUser, hydrateUserForm, { immediate: true });
@@ -283,8 +332,8 @@ const removeUser = (account) => {
                     <h1 class="mt-4 text-4xl font-semibold sm:text-5xl">Dashboard Radina News</h1>
                     <p class="mt-3 max-w-2xl text-sm leading-7 text-slate-600">
                         {{ isAdmin
-                            ? 'Kelola berita, kategori, lisensi, dan pengguna dari satu dashboard.'
-                            : 'Tulis artikel baru dan kirimkan sebagai draft untuk diperiksa admin.' }}
+                            ? 'Kelola berita, pembayaran penulis, kategori, lisensi, dan pengguna dari satu dashboard.'
+                            : 'Tulis artikel, pantau honor, dan ajukan withdrawal setelah tulisan disetujui.' }}
                     </p>
                 </div>
                 <div class="flex flex-wrap gap-3">
@@ -308,6 +357,187 @@ const removeUser = (account) => {
                 <button type="button" class="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm" @click="copyText(newLicenseKey)">
                     Copy Key
                 </button>
+            </div>
+        </section>
+
+        <section v-if="!isAdmin" v-show="activePanel === 'earnings'" class="mt-6">
+            <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                <div class="admin-stat"><span>Saldo tersedia</span><strong>{{ formatRupiah(paymentSummary.availableBalance) }}</strong></div>
+                <div class="admin-stat"><span>Total honor</span><strong>{{ formatRupiah(paymentSummary.totalEarnings) }}</strong></div>
+                <div class="admin-stat"><span>Dalam proses</span><strong>{{ formatRupiah(paymentSummary.reservedAmount) }}</strong></div>
+                <div class="admin-stat"><span>Honor per artikel</span><strong>{{ formatRupiah(paymentSummary.articleFee) }}</strong></div>
+            </div>
+
+            <div class="mt-6 grid gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
+                <div class="rounded-2xl border border-slate-200 bg-white p-6">
+                    <h2 class="text-2xl font-semibold">Ajukan Withdrawal</h2>
+                    <p class="mt-2 text-sm leading-6 text-slate-500">
+                        Minimum pencairan {{ formatRupiah(paymentSummary.minimumWithdrawal) }}. Saldo langsung direservasi saat pengajuan dibuat.
+                    </p>
+
+                    <div v-if="!paymentSummary.bankComplete" class="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+                        Lengkapi rekening pencairan pada menu Rekening sebelum mengajukan withdrawal.
+                    </div>
+
+                    <form class="mt-5 space-y-4" @submit.prevent="submitWithdrawal">
+                        <div>
+                            <label class="admin-label">Nominal withdrawal</label>
+                            <input
+                                v-model="withdrawalForm.amount"
+                                type="number"
+                                :min="paymentSummary.minimumWithdrawal"
+                                :max="paymentSummary.availableBalance"
+                                step="1000"
+                                class="admin-input"
+                            >
+                            <p v-if="withdrawalForm.errors.amount" class="admin-error">{{ withdrawalForm.errors.amount }}</p>
+                        </div>
+                        <button
+                            type="submit"
+                            class="w-full rounded-xl bg-blue-700 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50"
+                            :disabled="withdrawalForm.processing || !paymentSummary.bankComplete || paymentSummary.availableBalance < paymentSummary.minimumWithdrawal"
+                        >
+                            {{ withdrawalForm.processing ? 'Mengajukan...' : 'Ajukan Withdrawal' }}
+                        </button>
+                    </form>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                        <div class="border-b border-slate-200 px-6 py-5">
+                            <h2 class="text-2xl font-semibold">Riwayat Honor</h2>
+                            <p class="mt-1 text-sm text-slate-500">Honor masuk setelah artikel disetujui dan fakta terverifikasi.</p>
+                        </div>
+                        <div v-if="writerEarnings.length" class="divide-y divide-slate-100">
+                            <div v-for="earning in writerEarnings" :key="earning.id" class="flex flex-col gap-2 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+                                <div>
+                                    <p class="font-semibold text-slate-900">{{ earning.articleTitle }}</p>
+                                    <p class="mt-1 text-xs text-slate-500">{{ earning.creditedAt }} · {{ earning.description }}</p>
+                                </div>
+                                <strong class="text-emerald-700">+{{ formatRupiah(earning.amount) }}</strong>
+                            </div>
+                        </div>
+                        <p v-else class="px-6 py-8 text-sm text-slate-500">Belum ada honor yang dikreditkan.</p>
+                    </div>
+
+                    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                        <div class="border-b border-slate-200 px-6 py-5">
+                            <h2 class="text-2xl font-semibold">Riwayat Withdrawal</h2>
+                        </div>
+                        <div v-if="writerWithdrawals.length" class="divide-y divide-slate-100">
+                            <div v-for="withdrawal in writerWithdrawals" :key="withdrawal.id" class="flex flex-col gap-3 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+                                <div>
+                                    <p class="font-semibold text-slate-900">{{ formatRupiah(withdrawal.amount) }} · {{ withdrawal.bankName }}</p>
+                                    <p class="mt-1 text-xs text-slate-500">{{ withdrawal.requestedAt }} · {{ withdrawal.accountNumber }}</p>
+                                    <p v-if="withdrawal.adminNote" class="mt-1 text-xs text-slate-500">Catatan: {{ withdrawal.adminNote }}</p>
+                                </div>
+                                <span class="w-fit rounded-full px-3 py-1 text-xs font-bold" :class="{
+                                    'bg-amber-100 text-amber-800': withdrawal.status === 'pending',
+                                    'bg-blue-100 text-blue-800': withdrawal.status === 'approved',
+                                    'bg-emerald-100 text-emerald-800': withdrawal.status === 'paid',
+                                    'bg-rose-100 text-rose-800': withdrawal.status === 'rejected',
+                                }">{{ withdrawal.statusLabel }}</span>
+                            </div>
+                        </div>
+                        <p v-else class="px-6 py-8 text-sm text-slate-500">Belum ada pengajuan withdrawal.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section v-if="!isAdmin" v-show="activePanel === 'bank'" class="mt-6">
+            <div class="mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
+                <span class="news-kicker">Pengaturan Penulis</span>
+                <h2 class="mt-4 text-3xl font-semibold">Rekening Pencairan</h2>
+                <p class="mt-2 text-sm leading-6 text-slate-500">
+                    Rekening ini digunakan sebagai tujuan setiap pengajuan withdrawal. Pastikan nama pemilik sesuai dengan data bank.
+                </p>
+                <form class="mt-7 space-y-5" @submit.prevent="submitBank">
+                    <div>
+                        <label class="admin-label">Nama bank atau e-wallet</label>
+                        <input v-model="bankForm.bank_name" type="text" class="admin-input" placeholder="BCA, BRI, Mandiri, DANA">
+                        <p v-if="bankForm.errors.bank_name" class="admin-error">{{ bankForm.errors.bank_name }}</p>
+                    </div>
+                    <div>
+                        <label class="admin-label">Nomor rekening</label>
+                        <input v-model="bankForm.bank_account_number" type="text" inputmode="numeric" class="admin-input" placeholder="Hanya angka">
+                        <p v-if="bankForm.errors.bank_account_number" class="admin-error">{{ bankForm.errors.bank_account_number }}</p>
+                    </div>
+                    <div>
+                        <label class="admin-label">Nama pemilik rekening</label>
+                        <input v-model="bankForm.bank_account_holder" type="text" class="admin-input">
+                        <p v-if="bankForm.errors.bank_account_holder" class="admin-error">{{ bankForm.errors.bank_account_holder }}</p>
+                    </div>
+                    <button type="submit" class="w-full rounded-xl bg-blue-700 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-800" :disabled="bankForm.processing">
+                        {{ bankForm.processing ? 'Menyimpan...' : 'Simpan Rekening' }}
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section v-if="isAdmin" v-show="activePanel === 'payments'" class="mt-6">
+            <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                <div class="admin-stat"><span>Total honor</span><strong>{{ formatRupiah(paymentSummary.totalEarnings) }}</strong></div>
+                <div class="admin-stat"><span>Withdrawal menunggu</span><strong>{{ paymentSummary.pendingWithdrawals }}</strong></div>
+                <div class="admin-stat"><span>Nominal menunggu</span><strong>{{ formatRupiah(paymentSummary.pendingAmount) }}</strong></div>
+                <div class="admin-stat"><span>Sudah dibayar</span><strong>{{ formatRupiah(paymentSummary.paidAmount) }}</strong></div>
+            </div>
+
+            <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                <div class="border-b border-slate-200 px-6 py-5">
+                    <h2 class="text-2xl font-semibold">Permintaan Withdrawal</h2>
+                    <p class="mt-1 text-sm text-slate-500">
+                        Minimum withdrawal {{ formatRupiah(paymentSummary.minimumWithdrawal) }}. Setujui setelah rekening diperiksa, lalu tandai dibayar setelah transfer.
+                    </p>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-left text-sm">
+                        <thead class="bg-slate-50 text-xs uppercase tracking-[0.12em] text-slate-500">
+                            <tr>
+                                <th class="px-5 py-4">Penulis</th>
+                                <th class="px-5 py-4">Nominal</th>
+                                <th class="px-5 py-4">Rekening</th>
+                                <th class="px-5 py-4">Status</th>
+                                <th class="px-5 py-4">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr v-for="withdrawal in adminWithdrawals" :key="withdrawal.id" class="align-top">
+                                <td class="px-5 py-4">
+                                    <p class="font-semibold text-slate-900">{{ withdrawal.writerName }}</p>
+                                    <p class="text-xs text-slate-500">{{ withdrawal.writerEmail }}</p>
+                                    <p class="mt-1 text-xs text-slate-500">{{ withdrawal.requestedAt }}</p>
+                                </td>
+                                <td class="px-5 py-4 font-bold text-slate-900">{{ formatRupiah(withdrawal.amount) }}</td>
+                                <td class="px-5 py-4">
+                                    <p class="font-semibold">{{ withdrawal.bankName }}</p>
+                                    <p class="text-xs text-slate-500">{{ withdrawal.accountNumber }}</p>
+                                    <p class="text-xs text-slate-500">{{ withdrawal.accountHolder }}</p>
+                                </td>
+                                <td class="px-5 py-4">
+                                    <span class="rounded-full px-2.5 py-1 text-xs font-bold" :class="{
+                                        'bg-amber-100 text-amber-800': withdrawal.status === 'pending',
+                                        'bg-blue-100 text-blue-800': withdrawal.status === 'approved',
+                                        'bg-emerald-100 text-emerald-800': withdrawal.status === 'paid',
+                                        'bg-rose-100 text-rose-800': withdrawal.status === 'rejected',
+                                    }">{{ withdrawal.statusLabel }}</span>
+                                    <p v-if="withdrawal.adminNote" class="mt-2 max-w-xs text-xs text-slate-500">{{ withdrawal.adminNote }}</p>
+                                </td>
+                                <td class="px-5 py-4">
+                                    <div v-if="withdrawal.status !== 'paid' && withdrawal.status !== 'rejected'" class="flex flex-wrap gap-2">
+                                        <button v-if="withdrawal.status === 'pending'" type="button" class="admin-action text-blue-700" @click="updateWithdrawal(withdrawal, 'approved')">Setujui</button>
+                                        <button v-if="withdrawal.status === 'approved'" type="button" class="admin-action text-emerald-700" @click="updateWithdrawal(withdrawal, 'paid')">Sudah Dibayar</button>
+                                        <button type="button" class="admin-action text-rose-700" @click="updateWithdrawal(withdrawal, 'rejected')">Tolak</button>
+                                    </div>
+                                    <span v-else class="text-xs text-slate-400">Selesai</span>
+                                </td>
+                            </tr>
+                            <tr v-if="!adminWithdrawals.length">
+                                <td colspan="5" class="px-6 py-10 text-center text-slate-500">Belum ada permintaan withdrawal.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
@@ -624,6 +854,13 @@ const removeUser = (account) => {
                                 </p>
                                 <h3 class="mt-2 font-semibold leading-6 text-slate-950">{{ article.title }}</h3>
                                 <p class="mt-1 text-xs text-slate-500">{{ article.updatedAt }} · {{ article.authorName }}</p>
+                                <div class="mt-2 flex flex-wrap gap-2 text-[10px] font-bold uppercase tracking-wider">
+                                    <span class="rounded-full bg-slate-100 px-2 py-1 text-slate-600">Editorial: {{ article.editorialStatus }}</span>
+                                    <span class="rounded-full bg-slate-100 px-2 py-1 text-slate-600">Fakta: {{ article.factCheckStatus }}</span>
+                                    <span v-if="article.earningAmount" class="rounded-full bg-emerald-100 px-2 py-1 text-emerald-700">
+                                        Honor {{ formatRupiah(article.earningAmount) }}
+                                    </span>
+                                </div>
                                 <div class="mt-3 flex gap-2">
                                     <a v-if="article.status === 'published'" :href="article.publicUrl" target="_blank" class="admin-action">Lihat</a>
                                     <Link v-if="article.editUrl" :href="article.editUrl" class="admin-action">Edit</Link>
@@ -774,6 +1011,12 @@ const removeUser = (account) => {
                             </select>
                             <p v-if="userForm.errors.role" class="admin-error">{{ userForm.errors.role }}</p>
                         </div>
+                        <div v-if="userForm.role === 'writer'">
+                            <label class="admin-label">Honor per artikel</label>
+                            <input v-model="userForm.article_fee" type="number" min="0" step="1000" class="admin-input">
+                            <p class="mt-1 text-xs text-slate-500">Dikreditkan sekali setelah artikel disetujui dan fakta terverifikasi.</p>
+                            <p v-if="userForm.errors.article_fee" class="admin-error">{{ userForm.errors.article_fee }}</p>
+                        </div>
                         <div>
                             <label class="admin-label">{{ isUserEditMode ? 'Password baru (opsional)' : 'Password' }}</label>
                             <input v-model="userForm.password" type="password" class="admin-input">
@@ -800,6 +1043,7 @@ const removeUser = (account) => {
                                 <tr>
                                     <th class="px-5 py-4">Pengguna</th>
                                     <th class="px-5 py-4">Level</th>
+                                    <th class="px-5 py-4">Honor / Saldo</th>
                                     <th class="px-5 py-4">Artikel</th>
                                     <th class="px-5 py-4">Aksi</th>
                                 </tr>
@@ -814,6 +1058,13 @@ const removeUser = (account) => {
                                         <span class="rounded-full px-2.5 py-1 text-xs font-bold" :class="account.role === 'admin' ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800'">
                                             {{ account.roleLabel }}
                                         </span>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <template v-if="account.role === 'writer'">
+                                            <p class="font-semibold text-slate-900">{{ formatRupiah(account.articleFee) }} / artikel</p>
+                                            <p class="text-xs text-slate-500">Total {{ formatRupiah(account.totalEarnings) }}</p>
+                                        </template>
+                                        <span v-else class="text-xs text-slate-400">Tidak berlaku</span>
                                     </td>
                                     <td class="px-5 py-4 text-slate-600">{{ account.articlesCount }}</td>
                                     <td class="px-5 py-4">

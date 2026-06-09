@@ -72,6 +72,8 @@ class NewsArticle extends Model
     {
         return $query
             ->where('status', self::STATUS_PUBLISHED)
+            ->where('editorial_status', self::EDITORIAL_APPROVED)
+            ->where('fact_check_status', self::FACT_VERIFIED)
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now());
     }

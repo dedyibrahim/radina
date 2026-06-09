@@ -1,66 +1,294 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Radina News
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Radina News adalah platform portal berita berbasis Laravel dan Inertia.js. Aplikasi mencakup portal berita publik, dashboard redaksi, manajemen penulis, verifikasi artikel, pembayaran honor penulis, withdrawal, kategori, pengguna, dan lisensi aplikasi.
 
-## About Laravel
+## Teknologi
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 8.1+
+- Laravel 10
+- MySQL
+- Inertia.js
+- Vue 3
+- Tailwind CSS
+- Vite
+- Server-side rendering Inertia
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Portal Berita
 
-## Learning Laravel
+- Homepage berita modern dan responsif.
+- Halaman artikel, arsip, kategori, dan topik.
+- Menu kategori berbentuk drawer pada perangkat mobile.
+- Konten Bahasa Indonesia dan Inggris.
+- Pencarian dan navigasi berita.
+- Data dummy berita beserta gambar.
+- Sitemap XML, RSS feed, robots.txt, meta tag, Open Graph, dan JSON-LD.
+- Favicon dan identitas visual Radina News.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Dashboard Admin
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- Drawer navigasi di sisi kanan.
+- Membuat, mengedit, menerbitkan, dan menghapus berita.
+- Review editorial dan verifikasi fakta.
+- Persetujuan atau penolakan tulisan penulis.
+- CRUD kategori berita.
+- CRUD akun admin dan penulis.
+- Pengaturan honor per artikel untuk setiap penulis.
+- Pengelolaan withdrawal penulis.
+- Pengelolaan lisensi aplikasi.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Dashboard Penulis
 
-## Laravel Sponsors
+- Membuat tulisan berdasarkan akun yang sedang login.
+- Tulisan otomatis disimpan sebagai draft.
+- Melihat status editorial dan verifikasi fakta.
+- Melihat honor per artikel dan saldo tersedia.
+- Melihat riwayat pendapatan dan withdrawal.
+- Mengatur rekening pencairan.
+- Mengajukan withdrawal setelah saldo mencapai batas minimum.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Role dan Hak Akses
 
-### Premium Partners
+### Admin
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Admin memiliki akses penuh untuk:
 
-## Contributing
+- Mengelola seluruh berita.
+- Menyetujui atau menolak artikel.
+- Melakukan verifikasi fakta.
+- Mengatur tarif honor penulis.
+- Memproses withdrawal.
+- Mengelola kategori, pengguna, dan lisensi.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Penulis
 
-## Code of Conduct
+Penulis hanya dapat:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Membuat tulisan baru.
+- Melihat tulisan miliknya sendiri.
+- Melihat saldo dan riwayat honor.
+- Mengatur rekening pribadi.
+- Mengajukan withdrawal.
 
-## Security Vulnerabilities
+Penulis tidak dapat menerbitkan artikel secara langsung.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Alur Editorial dan Pembayaran
 
-## License
+1. Penulis membuat berita melalui dashboard.
+2. Berita disimpan sebagai `draft` dengan status editorial dan verifikasi `pending`.
+3. Admin memeriksa isi berita.
+4. Admin menyetujui editorial dan mengonfirmasi kebenaran fakta.
+5. Artikel otomatis diterbitkan setelah kedua pemeriksaan selesai.
+6. Honor penulis dikreditkan satu kali sesuai tarif penulis.
+7. Penulis dapat mengajukan withdrawal jika saldo tersedia minimal Rp50.000.
+8. Admin memeriksa rekening, menyetujui withdrawal, lalu menandainya sebagai sudah dibayar.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Saldo withdrawal langsung direservasi ketika pengajuan dibuat agar saldo yang sama tidak dapat diajukan lebih dari sekali.
+
+## Instalasi
+
+### Persyaratan
+
+Pastikan perangkat sudah memiliki:
+
+- PHP 8.1 atau lebih baru.
+- Composer.
+- Node.js 18 atau lebih baru.
+- NPM.
+- MySQL atau MariaDB.
+
+### Langkah Instalasi
+
+```bash
+composer install
+npm install
+```
+
+Salin konfigurasi environment:
+
+```bash
+cp .env.example .env
+```
+
+Pada Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Buat application key:
+
+```bash
+php artisan key:generate
+```
+
+Atur koneksi database pada `.env`:
+
+```env
+APP_NAME="Radina News"
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=radina_news
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Buat tabel dan data dummy:
+
+```bash
+php artisan migrate --seed
+```
+
+Jalankan aplikasi:
+
+```bash
+php artisan serve
+```
+
+Pada terminal lain:
+
+```bash
+npm run dev
+```
+
+Aplikasi dapat dibuka melalui:
+
+```text
+http://localhost:8000
+```
+
+## Konfigurasi Pembayaran Penulis
+
+Konfigurasi pembayaran tersedia di `config/writer_payments.php`.
+
+Nilainya dapat diubah melalui `.env`:
+
+```env
+WRITER_DEFAULT_ARTICLE_FEE=25000
+WRITER_MINIMUM_WITHDRAWAL=50000
+```
+
+- `WRITER_DEFAULT_ARTICLE_FEE`: tarif default jika admin belum menentukan tarif khusus penulis.
+- `WRITER_MINIMUM_WITHDRAWAL`: batas minimum pengajuan withdrawal.
+
+Perubahan konfigurasi environment perlu diikuti dengan:
+
+```bash
+php artisan optimize:clear
+```
+
+## Akun Dummy
+
+### Admin
+
+```text
+Email: admin@radina.net
+Password: Admin@12345
+```
+
+### Penulis
+
+Semua akun penulis dummy menggunakan password `Editor@12345`.
+
+```text
+nadia@radina.net
+rafi@radina.net
+alya@radina.net
+dimas@radina.net
+```
+
+Akun Nadia sudah memiliki data dummy rekening, artikel tervalidasi, dan saldo honor sehingga alur withdrawal dapat langsung diuji.
+
+## Build Production
+
+Build aset browser dan bundle SSR:
+
+```bash
+npm run build
+```
+
+Bersihkan dan optimalkan cache Laravel:
+
+```bash
+php artisan optimize
+```
+
+Jika server-side rendering digunakan, jalankan:
+
+```bash
+npm run ssr
+```
+
+Untuk deployment production, pastikan:
+
+```env
+APP_ENV=production
+APP_DEBUG=false
+```
+
+Web server harus diarahkan ke folder `public`.
+
+## Menjalankan Test
+
+Jalankan seluruh test:
+
+```bash
+php artisan test
+```
+
+Test mencakup:
+
+- Autentikasi.
+- Hak akses admin dan penulis.
+- CRUD berita dan kategori.
+- Portal berita publik.
+- Review editorial dan verifikasi fakta.
+- Kredit honor tanpa duplikasi.
+- Pengaturan rekening.
+- Minimum withdrawal.
+- Proses persetujuan dan pembayaran withdrawal.
+
+## Struktur Penting
+
+```text
+app/Http/Controllers      Controller portal, dashboard, berita, dan pembayaran
+app/Models                Model berita, pengguna, honor, dan withdrawal
+app/Services              Layanan kredit honor penulis
+database/migrations       Struktur database
+database/seeders          Akun dan data dummy
+resources/js/Layouts      Layout portal dan dashboard
+resources/js/Pages        Halaman Inertia Vue
+routes/web.php            Route portal dan dashboard
+tests/Feature             Pengujian fitur aplikasi
+```
+
+## Perintah Database
+
+Menjalankan migration yang belum diterapkan:
+
+```bash
+php artisan migrate
+```
+
+Mengisi ulang data dummy tanpa menghapus data:
+
+```bash
+php artisan db:seed
+```
+
+Menghapus seluruh data, membuat ulang tabel, dan menjalankan seeder:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+> Perintah `migrate:fresh` menghapus seluruh data pada database yang digunakan.
+
+## Kontak
+
+Radina News  
+Telepon: 877-2417-0145

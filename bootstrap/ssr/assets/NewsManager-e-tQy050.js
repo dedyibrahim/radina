@@ -1,9 +1,9 @@
-import { ref, computed, watch, withCtx, unref, createTextVNode, createVNode, openBlock, createBlock, toDisplayString, createCommentVNode, withModifiers, withDirectives, Fragment, renderList, vModelSelect, vModelText, vModelCheckbox, useSSRContext } from "vue";
+import { ref, computed, watch, mergeProps, unref, withCtx, createTextVNode, createVNode, openBlock, createBlock, toDisplayString, createCommentVNode, withModifiers, withDirectives, Fragment, renderList, vModelSelect, vModelText, vModelCheckbox, useSSRContext } from "vue";
 import { ssrRenderComponent, ssrInterpolate, ssrRenderList, ssrRenderAttr, ssrIncludeBooleanAttr, ssrLooseContain, ssrLooseEqual, ssrRenderClass } from "vue/server-renderer";
-import { usePage, useForm, Link, router } from "@inertiajs/vue3";
+import { usePage, useForm, router, Link } from "@inertiajs/vue3";
 import { _ as _sfc_main$3 } from "./PaginationLinks-DDGWEAke.js";
 import { _ as _sfc_main$2 } from "./SeoHead-B3gH-eD3.js";
-import { _ as _sfc_main$1 } from "./NewsLayout-DM3H2upC.js";
+import { _ as _sfc_main$1 } from "./AdminLayout-C3VBifwm.js";
 const _sfc_main = {
   __name: "NewsManager",
   __ssrInlineRender: true,
@@ -47,6 +47,9 @@ const _sfc_main = {
         cover_image_alt: "",
         cover_image_alt_en: "",
         status: "draft",
+        editorial_status: "pending",
+        fact_check_status: "pending",
+        review_note: "",
         is_featured: false,
         published_at: "",
         seo_title: "",
@@ -79,6 +82,9 @@ const _sfc_main = {
         cover_image_alt: article.coverImageAlt || "",
         cover_image_alt_en: article.coverImageAltEn || "",
         status: article.status,
+        editorial_status: article.editorialStatus,
+        fact_check_status: article.factCheckStatus,
+        review_note: article.reviewNote || "",
         is_featured: article.isFeatured,
         published_at: article.publishedAt || "",
         seo_title: article.seoTitle || "",
@@ -120,10 +126,39 @@ const _sfc_main = {
         router.delete(article.destroyUrl, { preserveScroll: true });
       }
     };
+    const approveAndVerify = (article) => {
+      if (window.confirm(`Setujui, verifikasi fakta, dan terbitkan "${article.title}"? Honor penulis akan langsung dikreditkan.`)) {
+        router.patch(article.reviewUrl, {
+          editorial_status: "approved",
+          fact_check_status: "verified",
+          review_note: ""
+        }, { preserveScroll: true });
+      }
+    };
+    const rejectArticle = (article) => {
+      const note = window.prompt(`Alasan penolakan artikel "${article.title}":`);
+      if (!note) {
+        return;
+      }
+      router.patch(article.reviewUrl, {
+        editorial_status: "rejected",
+        fact_check_status: "rejected",
+        review_note: note
+      }, { preserveScroll: true });
+    };
+    const formatRupiah = (amount) => new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      maximumFractionDigits: 0
+    }).format(Number(amount || 0));
     return (_ctx, _push, _parent, _attrs) => {
-      _push(ssrRenderComponent(_sfc_main$1, _attrs, {
+      _push(ssrRenderComponent(_sfc_main$1, mergeProps({
+        "is-admin": true,
+        "active-section": "news",
+        onNavigate: ($event) => unref(router).visit(`/dashboard?section=${$event}`)
+      }, _attrs), {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
-          var _a, _b;
+          var _a, _b, _c, _d, _e, _f, _g, _h;
           if (_push2) {
             _push2(ssrRenderComponent(_sfc_main$2, { seo: __props.seo }, null, _parent2, _scopeId));
             _push2(`<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"${_scopeId}><div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"${_scopeId}><div${_scopeId}><span class="news-kicker"${_scopeId}>Panel Berita</span><h1 class="mt-4 text-4xl font-semibold sm:text-5xl"${_scopeId}>Kelola Berita</h1><p class="mt-3 max-w-2xl text-sm leading-7 text-slate-600"${_scopeId}> Buat, edit, terbitkan, dan hapus artikel Indonesia maupun Inggris. </p></div><div class="flex flex-wrap gap-3"${_scopeId}>`);
@@ -199,7 +234,25 @@ const _sfc_main = {
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div${_scopeId}><label class="admin-label"${_scopeId}>Status</label><select class="admin-input"${_scopeId}><option value="draft"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "draft") : ssrLooseEqual(unref(form).status, "draft")) ? " selected" : ""}${_scopeId}>Draft</option><option value="published"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "published") : ssrLooseEqual(unref(form).status, "published")) ? " selected" : ""}${_scopeId}>Published</option></select></div></div><div${_scopeId}><label class="admin-label"${_scopeId}>Judul Indonesia</label><input${ssrRenderAttr("value", unref(form).title)} type="text" class="admin-input"${_scopeId}>`);
+            _push2(`</div><div${_scopeId}><label class="admin-label"${_scopeId}>Status publik</label><div class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700"${_scopeId}>${ssrInterpolate(unref(form).editorial_status === "approved" && unref(form).fact_check_status === "verified" ? "Published" : "Draft")}</div></div></div><div class="rounded-xl border border-blue-200 bg-blue-50/60 p-4"${_scopeId}><h3 class="font-semibold text-slate-900"${_scopeId}>Review Redaksi dan Verifikasi Fakta</h3><p class="mt-1 text-xs leading-5 text-slate-600"${_scopeId}> Artikel hanya diterbitkan dan menghasilkan honor jika editorial disetujui serta fakta terverifikasi. </p><div class="mt-4 grid gap-4 sm:grid-cols-2"${_scopeId}><div${_scopeId}><label class="admin-label"${_scopeId}>Keputusan editorial</label><select class="admin-input"${ssrIncludeBooleanAttr(!!((_b = __props.editArticle) == null ? void 0 : _b.earningAmount)) ? " disabled" : ""}${_scopeId}><option value="pending"${ssrIncludeBooleanAttr(Array.isArray(unref(form).editorial_status) ? ssrLooseContain(unref(form).editorial_status, "pending") : ssrLooseEqual(unref(form).editorial_status, "pending")) ? " selected" : ""}${_scopeId}>Menunggu review</option><option value="approved"${ssrIncludeBooleanAttr(Array.isArray(unref(form).editorial_status) ? ssrLooseContain(unref(form).editorial_status, "approved") : ssrLooseEqual(unref(form).editorial_status, "approved")) ? " selected" : ""}${_scopeId}>Disetujui</option><option value="rejected"${ssrIncludeBooleanAttr(Array.isArray(unref(form).editorial_status) ? ssrLooseContain(unref(form).editorial_status, "rejected") : ssrLooseEqual(unref(form).editorial_status, "rejected")) ? " selected" : ""}${_scopeId}>Ditolak</option></select>`);
+            if (unref(form).errors.editorial_status) {
+              _push2(`<p class="admin-error"${_scopeId}>${ssrInterpolate(unref(form).errors.editorial_status)}</p>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`</div><div${_scopeId}><label class="admin-label"${_scopeId}>Verifikasi fakta</label><select class="admin-input"${ssrIncludeBooleanAttr(!!((_c = __props.editArticle) == null ? void 0 : _c.earningAmount)) ? " disabled" : ""}${_scopeId}><option value="pending"${ssrIncludeBooleanAttr(Array.isArray(unref(form).fact_check_status) ? ssrLooseContain(unref(form).fact_check_status, "pending") : ssrLooseEqual(unref(form).fact_check_status, "pending")) ? " selected" : ""}${_scopeId}>Belum diperiksa</option><option value="verified"${ssrIncludeBooleanAttr(Array.isArray(unref(form).fact_check_status) ? ssrLooseContain(unref(form).fact_check_status, "verified") : ssrLooseEqual(unref(form).fact_check_status, "verified")) ? " selected" : ""}${_scopeId}>Terverifikasi</option><option value="rejected"${ssrIncludeBooleanAttr(Array.isArray(unref(form).fact_check_status) ? ssrLooseContain(unref(form).fact_check_status, "rejected") : ssrLooseEqual(unref(form).fact_check_status, "rejected")) ? " selected" : ""}${_scopeId}>Tidak valid</option></select>`);
+            if (unref(form).errors.fact_check_status) {
+              _push2(`<p class="admin-error"${_scopeId}>${ssrInterpolate(unref(form).errors.fact_check_status)}</p>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`</div></div><div class="mt-4"${_scopeId}><label class="admin-label"${_scopeId}>Catatan review</label><textarea rows="3" class="admin-input" placeholder="Catatan koreksi atau alasan penolakan"${_scopeId}>${ssrInterpolate(unref(form).review_note)}</textarea></div>`);
+            if ((_d = __props.editArticle) == null ? void 0 : _d.earningAmount) {
+              _push2(`<div class="mt-4 rounded-lg bg-emerald-100 px-4 py-3 text-sm font-semibold text-emerald-800"${_scopeId}> Honor ${ssrInterpolate(formatRupiah(__props.editArticle.earningAmount))} sudah dikreditkan dan status persetujuan dikunci. </div>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`</div><div${_scopeId}><label class="admin-label"${_scopeId}>Judul Indonesia</label><input${ssrRenderAttr("value", unref(form).title)} type="text" class="admin-input"${_scopeId}>`);
             if (unref(form).errors.title) {
               _push2(`<p class="admin-error"${_scopeId}>${ssrInterpolate(unref(form).errors.title)}</p>`);
             } else {
@@ -236,7 +289,19 @@ const _sfc_main = {
               } else {
                 _push2(`<!---->`);
               }
-              _push2(`</div><h3 class="mt-2 text-lg font-semibold leading-6 text-slate-950"${_scopeId}>${ssrInterpolate(article.title)}</h3><p class="mt-1 text-xs text-slate-500"${_scopeId}>Diperbarui ${ssrInterpolate(article.updatedAt)} oleh ${ssrInterpolate(article.authorName)}</p><div class="mt-4 flex flex-wrap gap-2"${_scopeId}>`);
+              _push2(`</div><h3 class="mt-2 text-lg font-semibold leading-6 text-slate-950"${_scopeId}>${ssrInterpolate(article.title)}</h3><p class="mt-1 text-xs text-slate-500"${_scopeId}>Diperbarui ${ssrInterpolate(article.updatedAt)} oleh ${ssrInterpolate(article.authorName)}</p><div class="mt-2 flex flex-wrap gap-2 text-[10px] font-bold uppercase tracking-wider"${_scopeId}><span class="rounded-full bg-slate-100 px-2 py-1 text-slate-600"${_scopeId}>Editorial: ${ssrInterpolate(article.editorialStatus)}</span><span class="rounded-full bg-slate-100 px-2 py-1 text-slate-600"${_scopeId}>Fakta: ${ssrInterpolate(article.factCheckStatus)}</span>`);
+              if (article.earningAmount) {
+                _push2(`<span class="rounded-full bg-emerald-100 px-2 py-1 text-emerald-700"${_scopeId}> Honor ${ssrInterpolate(formatRupiah(article.earningAmount))}</span>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`</div>`);
+              if (article.reviewNote) {
+                _push2(`<p class="mt-2 text-xs leading-5 text-slate-500"${_scopeId}>Catatan: ${ssrInterpolate(article.reviewNote)}</p>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`<div class="mt-4 flex flex-wrap gap-2"${_scopeId}>`);
               if (article.status === "published") {
                 _push2(`<a${ssrRenderAttr("href", article.publicUrl)} target="_blank" class="admin-action"${_scopeId}>Lihat</a>`);
               } else {
@@ -257,6 +322,16 @@ const _sfc_main = {
                 }),
                 _: 2
               }, _parent2, _scopeId));
+              if (!article.earningAmount) {
+                _push2(`<button type="button" class="admin-action text-emerald-700"${_scopeId}> Setujui &amp; Verifikasi </button>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              if (!article.earningAmount) {
+                _push2(`<button type="button" class="admin-action text-amber-700"${_scopeId}> Tolak </button>`);
+              } else {
+                _push2(`<!---->`);
+              }
               _push2(`<button type="button" class="admin-action text-rose-700"${_scopeId}>Hapus</button></div></div></article>`);
             });
             _push2(`<!--]--></div><div class="border-t border-slate-200 px-6 py-5"${_scopeId}>`);
@@ -327,7 +402,7 @@ const _sfc_main = {
                       !isEditMode.value ? (openBlock(), createBlock("p", {
                         key: 0,
                         class: "mt-2 text-xs font-semibold text-blue-700"
-                      }, " Penulis: " + toDisplayString((_b = currentAuthor.value) == null ? void 0 : _b.name) + " (akun login) ", 1)) : createCommentVNode("", true)
+                      }, " Penulis: " + toDisplayString((_e = currentAuthor.value) == null ? void 0 : _e.name) + " (akun login) ", 1)) : createCommentVNode("", true)
                     ]),
                     isEditMode.value ? (openBlock(), createBlock(unref(Link), {
                       key: 0,
@@ -366,17 +441,66 @@ const _sfc_main = {
                         }, toDisplayString(unref(form).errors.category_id), 1)) : createCommentVNode("", true)
                       ]),
                       createVNode("div", null, [
-                        createVNode("label", { class: "admin-label" }, "Status"),
-                        withDirectives(createVNode("select", {
-                          "onUpdate:modelValue": ($event) => unref(form).status = $event,
-                          class: "admin-input"
-                        }, [
-                          createVNode("option", { value: "draft" }, "Draft"),
-                          createVNode("option", { value: "published" }, "Published")
-                        ], 8, ["onUpdate:modelValue"]), [
-                          [vModelSelect, unref(form).status]
-                        ])
+                        createVNode("label", { class: "admin-label" }, "Status publik"),
+                        createVNode("div", { class: "rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700" }, toDisplayString(unref(form).editorial_status === "approved" && unref(form).fact_check_status === "verified" ? "Published" : "Draft"), 1)
                       ])
+                    ]),
+                    createVNode("div", { class: "rounded-xl border border-blue-200 bg-blue-50/60 p-4" }, [
+                      createVNode("h3", { class: "font-semibold text-slate-900" }, "Review Redaksi dan Verifikasi Fakta"),
+                      createVNode("p", { class: "mt-1 text-xs leading-5 text-slate-600" }, " Artikel hanya diterbitkan dan menghasilkan honor jika editorial disetujui serta fakta terverifikasi. "),
+                      createVNode("div", { class: "mt-4 grid gap-4 sm:grid-cols-2" }, [
+                        createVNode("div", null, [
+                          createVNode("label", { class: "admin-label" }, "Keputusan editorial"),
+                          withDirectives(createVNode("select", {
+                            "onUpdate:modelValue": ($event) => unref(form).editorial_status = $event,
+                            class: "admin-input",
+                            disabled: !!((_f = __props.editArticle) == null ? void 0 : _f.earningAmount)
+                          }, [
+                            createVNode("option", { value: "pending" }, "Menunggu review"),
+                            createVNode("option", { value: "approved" }, "Disetujui"),
+                            createVNode("option", { value: "rejected" }, "Ditolak")
+                          ], 8, ["onUpdate:modelValue", "disabled"]), [
+                            [vModelSelect, unref(form).editorial_status]
+                          ]),
+                          unref(form).errors.editorial_status ? (openBlock(), createBlock("p", {
+                            key: 0,
+                            class: "admin-error"
+                          }, toDisplayString(unref(form).errors.editorial_status), 1)) : createCommentVNode("", true)
+                        ]),
+                        createVNode("div", null, [
+                          createVNode("label", { class: "admin-label" }, "Verifikasi fakta"),
+                          withDirectives(createVNode("select", {
+                            "onUpdate:modelValue": ($event) => unref(form).fact_check_status = $event,
+                            class: "admin-input",
+                            disabled: !!((_g = __props.editArticle) == null ? void 0 : _g.earningAmount)
+                          }, [
+                            createVNode("option", { value: "pending" }, "Belum diperiksa"),
+                            createVNode("option", { value: "verified" }, "Terverifikasi"),
+                            createVNode("option", { value: "rejected" }, "Tidak valid")
+                          ], 8, ["onUpdate:modelValue", "disabled"]), [
+                            [vModelSelect, unref(form).fact_check_status]
+                          ]),
+                          unref(form).errors.fact_check_status ? (openBlock(), createBlock("p", {
+                            key: 0,
+                            class: "admin-error"
+                          }, toDisplayString(unref(form).errors.fact_check_status), 1)) : createCommentVNode("", true)
+                        ])
+                      ]),
+                      createVNode("div", { class: "mt-4" }, [
+                        createVNode("label", { class: "admin-label" }, "Catatan review"),
+                        withDirectives(createVNode("textarea", {
+                          "onUpdate:modelValue": ($event) => unref(form).review_note = $event,
+                          rows: "3",
+                          class: "admin-input",
+                          placeholder: "Catatan koreksi atau alasan penolakan"
+                        }, null, 8, ["onUpdate:modelValue"]), [
+                          [vModelText, unref(form).review_note]
+                        ])
+                      ]),
+                      ((_h = __props.editArticle) == null ? void 0 : _h.earningAmount) ? (openBlock(), createBlock("div", {
+                        key: 0,
+                        class: "mt-4 rounded-lg bg-emerald-100 px-4 py-3 text-sm font-semibold text-emerald-800"
+                      }, " Honor " + toDisplayString(formatRupiah(__props.editArticle.earningAmount)) + " sudah dikreditkan dan status persetujuan dikunci. ", 1)) : createCommentVNode("", true)
                     ]),
                     createVNode("div", null, [
                       createVNode("label", { class: "admin-label" }, "Judul Indonesia"),
@@ -637,6 +761,18 @@ const _sfc_main = {
                           ]),
                           createVNode("h3", { class: "mt-2 text-lg font-semibold leading-6 text-slate-950" }, toDisplayString(article.title), 1),
                           createVNode("p", { class: "mt-1 text-xs text-slate-500" }, "Diperbarui " + toDisplayString(article.updatedAt) + " oleh " + toDisplayString(article.authorName), 1),
+                          createVNode("div", { class: "mt-2 flex flex-wrap gap-2 text-[10px] font-bold uppercase tracking-wider" }, [
+                            createVNode("span", { class: "rounded-full bg-slate-100 px-2 py-1 text-slate-600" }, "Editorial: " + toDisplayString(article.editorialStatus), 1),
+                            createVNode("span", { class: "rounded-full bg-slate-100 px-2 py-1 text-slate-600" }, "Fakta: " + toDisplayString(article.factCheckStatus), 1),
+                            article.earningAmount ? (openBlock(), createBlock("span", {
+                              key: 0,
+                              class: "rounded-full bg-emerald-100 px-2 py-1 text-emerald-700"
+                            }, " Honor " + toDisplayString(formatRupiah(article.earningAmount)), 1)) : createCommentVNode("", true)
+                          ]),
+                          article.reviewNote ? (openBlock(), createBlock("p", {
+                            key: 0,
+                            class: "mt-2 text-xs leading-5 text-slate-500"
+                          }, "Catatan: " + toDisplayString(article.reviewNote), 1)) : createCommentVNode("", true),
                           createVNode("div", { class: "mt-4 flex flex-wrap gap-2" }, [
                             article.status === "published" ? (openBlock(), createBlock("a", {
                               key: 0,
@@ -653,6 +789,18 @@ const _sfc_main = {
                               ]),
                               _: 1
                             }, 8, ["href"]),
+                            !article.earningAmount ? (openBlock(), createBlock("button", {
+                              key: 1,
+                              type: "button",
+                              class: "admin-action text-emerald-700",
+                              onClick: ($event) => approveAndVerify(article)
+                            }, " Setujui & Verifikasi ", 8, ["onClick"])) : createCommentVNode("", true),
+                            !article.earningAmount ? (openBlock(), createBlock("button", {
+                              key: 2,
+                              type: "button",
+                              class: "admin-action text-amber-700",
+                              onClick: ($event) => rejectArticle(article)
+                            }, " Tolak ", 8, ["onClick"])) : createCommentVNode("", true),
                             createVNode("button", {
                               type: "button",
                               class: "admin-action text-rose-700",

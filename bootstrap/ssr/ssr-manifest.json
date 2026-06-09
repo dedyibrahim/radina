@@ -16,16 +16,16 @@
     "/build/assets/NewsLayout-DM3H2upC.js"
   ],
   "resources/js/Layouts/AdminLayout.vue": [
-    "/build/assets/Dashboard-DBVM9fsZ.js"
+    "/build/assets/AdminLayout-C3VBifwm.js"
   ],
   "resources/js/Layouts/NewsLayout.vue": [
     "/build/assets/NewsLayout-DM3H2upC.js"
   ],
   "resources/js/Pages/Admin/Dashboard.vue": [
-    "/build/assets/Dashboard-DBVM9fsZ.js"
+    "/build/assets/Dashboard-7Avdqj8h.js"
   ],
   "resources/js/Pages/Admin/NewsManager.vue": [
-    "/build/assets/NewsManager-CPK1J2bG.js"
+    "/build/assets/NewsManager-e-tQy050.js"
   ],
   "resources/js/Pages/News/About.vue": [
     "/build/assets/About-BR4QqSoe.js"

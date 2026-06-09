@@ -1,70 +1,70 @@
 # Deployment Shared Hosting dengan GitHub Actions
 
-Workflow `.github/workflows/ci-cd.yml` menjalankan test Laravel, build Vite, membuat paket production, lalu mengunggahnya ke `public_html` melalui FTP atau FTPS. Migrasi database dilakukan manual.
+Workflow `.github/workflows/ci-cd.yml` menjalankan test Laravel, build Vite, membuat paket production, lalu mengunggahnya ke `public_html` melalui FTP atau FTPS. Migrasi production dapat berjalan otomatis melalui deployment hook HTTPS tanpa SSH.
 
 ## Persyaratan Hosting
 
 - PHP 8.1 atau lebih baru; PHP 8.2 direkomendasikan.
 - MySQL 8 atau MariaDB yang kompatibel.
 - Ekstensi PHP: `bcmath`, `ctype`, `curl`, `dom`, `fileinfo`, `mbstring`, `openssl`, `pdo_mysql`, `tokenizer`, dan `xml`.
-- Domain harus diarahkan ke folder `public` milik Laravel.
 - Akses FTP ke `public_html`.
-- phpMyAdmin atau fasilitas database dari panel hosting untuk migrasi manual.
+- HTTPS aktif pada domain production.
 
-Workflow otomatis membuat struktur berikut:
+Workflow membuat struktur berikut:
 
 ```text
 /public_html/
-├── _app/         <- source Laravel, diblokir oleh .htaccess
-│   ├── app/
-│   ├── bootstrap/
-│   ├── storage/
-│   ├── vendor/
-│   └── artisan
-├── build/
-├── images/
-├── .htaccess
-└── index.php
+|-- _app/         <- source Laravel, diblokir oleh .htaccess
+|   |-- app/
+|   |-- bootstrap/
+|   |-- storage/
+|   |-- vendor/
+|   `-- artisan
+|-- build/
+|-- images/
+|-- .htaccess
+`-- index.php
 ```
 
-`index.php` di root `public_html` sudah diarahkan ke aplikasi dalam `_app`. Folder `_app` dilindungi dari akses browser menggunakan `.htaccess`.
+`index.php` di root `public_html` diarahkan ke aplikasi dalam `_app`. Folder `_app` dilindungi dari akses browser menggunakan `.htaccess`.
 
 ## GitHub Environment
 
-Di repository GitHub buka:
+Buka `Settings > Environments > production` pada repository GitHub.
 
-`Settings > Environments > New environment > production`
-
-Tambahkan secrets berikut pada environment `production`:
+Tambahkan secrets:
 
 | Secret | Keterangan |
 | --- | --- |
 | `FTP_SERVER` | Host FTP, misalnya `ftp.domain.com` |
 | `FTP_USERNAME` | Username FTP |
 | `FTP_PASSWORD` | Password FTP |
+| `DEPLOY_HOOK_SECRET` | Secret acak untuk signature migrasi |
 
-Tidak perlu menambahkan secrets database ke GitHub. Job CI memakai database MySQL sementara di GitHub Actions, sedangkan database production tetap dikonfigurasi hanya melalui `public_html/_app/.env`.
-
-Tambahkan variables berikut:
+Tambahkan variables:
 
 | Variable | Contoh | Keterangan |
 | --- | --- | --- |
 | `FTP_PROTOCOL` | `ftp` atau `ftps` | Protokol server |
 | `FTP_SERVER_DIR` | `/public_html/` | Folder web utama pada koneksi FTP |
+| `DEPLOY_URL` | `https://domainanda.com` | URL production tanpa garis miring di akhir |
+| `DEPLOY_HOOK_ENABLED` | `true` | Menjalankan migrasi otomatis setelah upload |
 
-Jika akun FTP langsung membuka isi `public_html`, gunakan `/` sebagai nilai `FTP_SERVER_DIR`.
+Jika akun FTP langsung membuka isi `public_html`, gunakan `/` sebagai `FTP_SERVER_DIR`.
 
-Gunakan `FTP_PROTOCOL=ftp` jika panel hosting hanya memberikan FTP biasa. Mode ini menonaktifkan negosiasi TLS agar tidak gagal karena sertifikat hosting yang tidak sesuai dengan hostname. Gunakan `ftps` hanya jika provider memberikan hostname FTPS resmi dengan sertifikat valid.
+Gunakan `FTP_PROTOCOL=ftp` jika hosting hanya memberikan FTP biasa. Gunakan `ftps` hanya jika provider memberikan hostname FTPS resmi dengan sertifikat valid.
+
+Secrets database tidak diperlukan di GitHub. Job CI memakai MySQL sementara, sedangkan database production hanya dikonfigurasi melalui `public_html/_app/.env`.
 
 ## Konfigurasi `.env` Production
 
-File `.env` tidak pernah dikirim oleh workflow. Buat file lokal, lalu upload melalui FTP ke:
+File `.env` tidak dikirim workflow. Upload secara manual ke:
 
 ```text
 public_html/_app/.env
 ```
 
-Gunakan konfigurasi production:
+Contoh konfigurasi:
 
 ```dotenv
 APP_NAME="Radina News"
@@ -90,53 +90,70 @@ SESSION_DRIVER=file
 
 WRITER_DEFAULT_ARTICLE_FEE=25000
 WRITER_MINIMUM_WITHDRAWAL=50000
+
+DEPLOY_HOOK_ENABLED=true
+DEPLOY_HOOK_SECRET=masukkan_secret_acak_64_karakter
+DEPLOY_HOOK_SIGNATURE_TTL=300
 ```
 
-Jika belum memiliki `APP_KEY`, buat dari komputer lokal:
+Jika belum memiliki `APP_KEY`, jalankan `php artisan key:generate` dari komputer lokal lalu salin nilainya. Jangan mengganti `APP_KEY` setelah aplikasi digunakan.
+
+## Migrasi Otomatis Tanpa SSH
+
+Setelah upload FTP selesai, GitHub Actions memanggil `/api/deploy/migrate`. Endpoint menjalankan `php artisan migrate --force` dari aplikasi.
+
+Buat secret acak:
 
 ```bash
-php artisan key:generate
+php -r "echo bin2hex(random_bytes(32)), PHP_EOL;"
 ```
 
-Salin nilai `APP_KEY` dari `.env` lokal ke `public_html/_app/.env`. Jangan menggantinya setelah aplikasi digunakan karena session dan data terenkripsi lama tidak dapat dibaca.
+Simpan nilai yang sama pada:
+
+1. GitHub Environment secret `DEPLOY_HOOK_SECRET`.
+2. `public_html/_app/.env` pada `DEPLOY_HOOK_SECRET`.
+
+Hook dilindungi HMAC SHA-256, timestamp maksimal lima menit, commit SHA, rate limit, dan lock untuk mencegah migrasi paralel. `DEPLOY_URL` wajib HTTPS dan secret tidak dikirim dalam request.
+
+Untuk menonaktifkan migrasi otomatis, ubah GitHub variable dan `.env`:
+
+```dotenv
+DEPLOY_HOOK_ENABLED=false
+```
 
 ## Deployment Pertama
 
-1. Buat database dan user database dari panel hosting.
-2. Konfigurasikan GitHub Environment dan secrets.
-3. Pastikan `FTP_SERVER_DIR` menunjuk ke `/public_html/`, atau `/` jika login FTP langsung berada di folder tersebut.
-4. Buka tab `Actions`, pilih `CI/CD Shared Hosting`, lalu klik `Run workflow`.
-5. Setelah workflow selesai, download artifact `radina-production-...` dari halaman workflow.
-6. Ekstrak artifact hingga mendapatkan `radina-production.zip`.
-7. Upload satu file `radina-production.zip` ke `public_html` melalui File Manager cPanel, kemudian pilih **Extract**.
-8. Hapus `radina-production.zip` dari hosting setelah ekstraksi berhasil.
-9. Upload `.env` production ke `public_html/_app/.env`.
-10. Import struktur/data database secara manual melalui phpMyAdmin.
-11. Atur permission `public_html/_app/storage` dan `public_html/_app/bootstrap/cache` menjadi `775` melalui File Manager atau FTP jika hosting memerlukannya.
+1. Buat database dan user database pada panel hosting.
+2. Konfigurasikan GitHub Environment.
+3. Jalankan workflow `CI/CD Shared Hosting`.
+4. Download artifact `radina-production-...`.
+5. Ekstrak artifact hingga mendapatkan `radina-production.zip`.
+6. Upload ZIP ke `public_html` melalui File Manager, lalu pilih **Extract**.
+7. Hapus ZIP dari hosting setelah ekstraksi.
+8. Upload `.env` ke `public_html/_app/.env`.
+9. Pastikan permission `_app/storage` dan `_app/bootstrap/cache` dapat ditulis PHP.
+10. Jalankan kembali workflow agar deployment hook menjalankan migrasi pertama.
 
-Seeder dan migrasi Artisan tidak dijalankan otomatis karena deployment ini tidak memakai SSH.
+Seeder tidak dijalankan otomatis. Untuk data awal, import SQL melalui phpMyAdmin atau jalankan seeder dari fasilitas yang disediakan hosting.
 
 ## Deployment Berikutnya
 
-Setiap push ke branch `main` akan:
+Setiap push ke `main` akan:
 
 1. Menjalankan seluruh test dengan MySQL.
 2. Membangun frontend production.
-3. Menginstal dependency Composer tanpa paket development.
-4. Menyediakan ZIP production sebagai artifact selama 7 hari.
-5. Mengunggah perubahan aplikasi melalui FTP/FTPS tanpa mengirim ulang folder `vendor`.
-6. Menampilkan pengingat untuk memeriksa `.env` dan migrasi database manual.
+3. Membuat ZIP production sebagai artifact.
+4. Mengunggah perubahan melalui FTP tanpa mengirim ulang `vendor`.
+5. Menjalankan migrasi production melalui HTTPS.
 
-File `_app/.env`, upload pengguna, session, cache runtime, dan log tidak akan dihapus oleh proses sinkronisasi FTP.
+File `_app/.env`, upload pengguna, session, cache runtime, dan log tidak dihapus oleh sinkronisasi FTP.
 
-Folder `_app/vendor` sengaja tidak dikirim pada deployment FTP berikutnya karena berisi ribuan file dan sangat lambat di shared hosting. Jika `composer.lock` berubah, download artifact ZIP terbaru lalu upload dan ekstrak kembali melalui File Manager cPanel agar dependency production ikut diperbarui.
+Jika `composer.lock` berubah, download artifact ZIP terbaru lalu upload dan ekstrak kembali agar dependency production ikut diperbarui.
 
 ## Rollback
 
-Workflow tidak mengubah data database sebelum seluruh test berhasil. Untuk rollback kode:
-
-1. Revert commit bermasalah di GitHub.
+1. Revert commit bermasalah.
 2. Push hasil revert ke `main`.
-3. Workflow akan mengunggah versi kode sebelumnya.
+3. Workflow mengunggah versi kode sebelumnya.
 
-Migrasi database yang bersifat destruktif harus memiliki strategi rollback sendiri dan tidak boleh mengandalkan rollback kode saja.
+Rollback kode tidak otomatis membatalkan perubahan database. Migrasi destruktif harus memiliki strategi rollback terpisah.

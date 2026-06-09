@@ -234,9 +234,11 @@ Web server harus diarahkan ke folder `public`.
 
 ### CI/CD Shared Hosting
 
-Repository menyediakan GitHub Actions untuk menjalankan test, build production, dan deployment otomatis melalui FTP/FTPS langsung ke `public_html`. Source Laravel ditempatkan pada folder terlindungi `_app`, sedangkan migrasi database dilakukan manual.
+Repository menyediakan GitHub Actions untuk menjalankan test, build production, dan deployment otomatis melalui FTP/FTPS langsung ke `public_html`. Source Laravel ditempatkan pada folder terlindungi `_app`.
 
 Deployment pertama menggunakan artifact ZIP agar folder `vendor` tidak ditransfer satu per satu. Deployment FTP berikutnya tidak mengunggah ulang `vendor`.
+
+Pada hosting tanpa SSH, migrasi production dapat dijalankan otomatis melalui deployment hook HTTPS dengan signature HMAC.
 
 Panduan konfigurasi GitHub Secrets, target `public_html`, `.env`, dan deployment pertama tersedia di:
 

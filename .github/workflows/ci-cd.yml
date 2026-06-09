@@ -102,6 +102,9 @@ jobs:
       FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
       FTP_PROTOCOL: ${{ vars.FTP_PROTOCOL || 'ftp' }}
       FTP_SERVER_DIR: ${{ vars.FTP_SERVER_DIR || '/public_html/' }}
+      DEPLOY_URL: ${{ vars.DEPLOY_URL }}
+      DEPLOY_HOOK_ENABLED: ${{ vars.DEPLOY_HOOK_ENABLED || 'false' }}
+      DEPLOY_HOOK_SECRET: ${{ secrets.DEPLOY_HOOK_SECRET }}
 
     steps:
       - name: Checkout source
@@ -117,6 +120,21 @@ jobs:
               missing=1
             fi
           done
+
+          if [ "$DEPLOY_HOOK_ENABLED" = "true" ]; then
+            for name in DEPLOY_URL DEPLOY_HOOK_SECRET; do
+              if [ -z "${!name}" ]; then
+                echo "::error::$name wajib diisi saat DEPLOY_HOOK_ENABLED=true."
+                missing=1
+              fi
+            done
+
+            if [[ "$DEPLOY_URL" != https://* ]]; then
+              echo "::error::DEPLOY_URL wajib menggunakan HTTPS."
+              missing=1
+            fi
+          fi
+
           exit "$missing"
 
       - name: Setup PHP
@@ -232,6 +250,24 @@ jobs:
           bye
           LFTP
 
+      - name: Run production migrations over HTTPS
+        if: env.DEPLOY_HOOK_ENABLED == 'true'
+        shell: bash
+        run: |
+          timestamp="$(date +%s)"
+          signature="$(printf '%s\n%s' "$timestamp" "$GITHUB_SHA" | openssl dgst -sha256 -hmac "$DEPLOY_HOOK_SECRET" -hex | awk '{print $2}')"
+
+          curl --fail-with-body --show-error --silent \
+            --retry 3 \
+            --retry-all-errors \
+            --request POST \
+            --header "Accept: application/json" \
+            --header "X-Deploy-Timestamp: $timestamp" \
+            --header "X-Deploy-Commit: $GITHUB_SHA" \
+            --header "X-Deploy-Signature: $signature" \
+            "${DEPLOY_URL%/}/api/deploy/migrate"
+
       - name: Show manual finalization notice
+        if: env.DEPLOY_HOOK_ENABLED != 'true'
         run: |
           echo "::notice::Upload ke public_html selesai. Pastikan public_html/_app/.env tersedia dan jalankan migrasi database secara manual."

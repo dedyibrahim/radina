@@ -1,0 +1,211 @@
+name: CI/CD Shared Hosting
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: production-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test and build
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: laravel_testing
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --host=127.0.0.1 --user=root --password=root"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: bcmath, ctype, curl, dom, fileinfo, json, mbstring, openssl, pdo_mysql, tokenizer, xml
+          coverage: none
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Prepare test environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Run migrations
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: laravel_testing
+          DB_USERNAME: root
+          DB_PASSWORD: root
+        run: php artisan migrate --force
+
+      - name: Run automated tests
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: laravel_testing
+          DB_USERNAME: root
+          DB_PASSWORD: root
+        run: php artisan test
+
+  deploy:
+    name: Deploy production
+    needs: test
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment: production
+
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+      FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      FTP_PROTOCOL: ${{ vars.FTP_PROTOCOL || 'ftp' }}
+      FTP_SERVER_DIR: ${{ vars.FTP_SERVER_DIR || '/' }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      SSH_PORT: ${{ vars.SSH_PORT || '22' }}
+      SSH_APP_DIR: ${{ vars.SSH_APP_DIR }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Validate deployment secrets
+        shell: bash
+        run: |
+          missing=0
+          for name in FTP_SERVER FTP_USERNAME FTP_PASSWORD; do
+            if [ -z "${!name}" ]; then
+              echo "::error::$name belum dikonfigurasi pada GitHub Environment production."
+              missing=1
+            fi
+          done
+          exit "$missing"
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: bcmath, ctype, curl, dom, fileinfo, json, mbstring, openssl, pdo_mysql, tokenizer, xml
+          coverage: none
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install production PHP dependencies
+        run: composer install --no-dev --no-interaction --prefer-dist --no-progress --optimize-autoloader
+
+      - name: Build production frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Prepare release directory
+        shell: bash
+        run: |
+          mkdir -p release
+          rsync -a ./ release/ --exclude-from=.deployignore
+          rm -f release/bootstrap/cache/config.php
+          rm -f release/bootstrap/cache/events.php
+          rm -f release/bootstrap/cache/routes-*.php
+          rm -f release/bootstrap/cache/routes-v7.php
+          find release/storage -type d -exec chmod 775 {} \;
+          find release/bootstrap/cache -type d -exec chmod 775 {} \;
+
+      - name: Upload application using FTP
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+
+          lftp <<LFTP
+          set cmd:fail-exit yes
+          set net:max-retries 3
+          set net:timeout 20
+          set ftp:ssl-protect-data true
+          set ssl:verify-certificate true
+          open -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_PROTOCOL://$FTP_SERVER"
+          mirror --reverse --delete --verbose --parallel=4 \
+            --exclude-glob ".env" \
+            --exclude-glob ".env.*" \
+            --exclude-glob "public/storage" \
+            --exclude-glob "public/storage/**" \
+            --exclude-glob "storage/app/public/**" \
+            --exclude-glob "storage/framework/cache/data/**" \
+            --exclude-glob "storage/framework/sessions/**" \
+            --exclude-glob "storage/framework/views/**" \
+            --exclude-glob "storage/logs/**" \
+            release/ "$FTP_SERVER_DIR"
+          bye
+          LFTP
+
+      - name: Configure optional SSH access
+        if: env.SSH_HOST != '' && env.SSH_USERNAME != '' && env.SSH_PRIVATE_KEY != '' && env.SSH_APP_DIR != ''
+        shell: bash
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p "$SSH_PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts
+
+      - name: Finalize Laravel over SSH
+        if: env.SSH_HOST != '' && env.SSH_USERNAME != '' && env.SSH_PRIVATE_KEY != '' && env.SSH_APP_DIR != ''
+        shell: bash
+        run: |
+          ssh -p "$SSH_PORT" "$SSH_USERNAME@$SSH_HOST" \
+            "cd '$SSH_APP_DIR' && php artisan migrate --force && php artisan storage:link --force && php artisan optimize:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache"
+
+      - name: Show manual finalization notice
+        if: env.SSH_HOST == '' || env.SSH_USERNAME == '' || env.SSH_PRIVATE_KEY == '' || env.SSH_APP_DIR == ''
+        run: |
+          echo "::warning::SSH tidak dikonfigurasi. Jalankan migrate, storage:link, dan cache production secara manual melalui Terminal cPanel."
+

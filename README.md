@@ -232,6 +232,14 @@ APP_DEBUG=false
 
 Web server harus diarahkan ke folder `public`.
 
+### CI/CD Shared Hosting
+
+Repository menyediakan GitHub Actions untuk menjalankan test, build production, dan deployment otomatis melalui FTP/FTPS. Migrasi dan cache Laravel dapat dijalankan otomatis jika shared hosting menyediakan SSH.
+
+Panduan konfigurasi GitHub Secrets, document root, `.env`, dan deployment pertama tersedia di:
+
+[`docs/DEPLOY_SHARED_HOSTING.md`](docs/DEPLOY_SHARED_HOSTING.md)
+
 ## Menjalankan Test
 
 Jalankan seluruh test:

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\NewsArticle;
 use App\Models\NewsCategory;
 use App\Models\NewsTag;
+use App\Support\ArticleContentFormatter;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
@@ -433,7 +434,7 @@ class NewsPortalController extends Controller
     {
         return [
             ...$this->transformArticle($article, true),
-            'content' => $this->localizedField($article, 'content'),
+            'content' => ArticleContentFormatter::format($this->localizedField($article, 'content')),
             'seoDescription' => $this->localizedField($article, 'seo_description'),
             'seoKeywords' => $this->localizedField($article, 'seo_keywords'),
         ];

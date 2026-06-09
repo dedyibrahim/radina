@@ -1,6 +1,6 @@
 # Deployment Shared Hosting dengan GitHub Actions
 
-Workflow `.github/workflows/ci-cd.yml` menjalankan test Laravel, build Vite, membuat paket production, lalu mengunggahnya ke shared hosting melalui FTP atau FTPS.
+Workflow `.github/workflows/ci-cd.yml` menjalankan test Laravel, build Vite, membuat paket production, lalu mengunggahnya ke `public_html` melalui FTP atau FTPS. Migrasi database dilakukan manual.
 
 ## Persyaratan Hosting
 
@@ -8,21 +8,26 @@ Workflow `.github/workflows/ci-cd.yml` menjalankan test Laravel, build Vite, mem
 - MySQL 8 atau MariaDB yang kompatibel.
 - Ekstensi PHP: `bcmath`, `ctype`, `curl`, `dom`, `fileinfo`, `mbstring`, `openssl`, `pdo_mysql`, `tokenizer`, dan `xml`.
 - Domain harus diarahkan ke folder `public` milik Laravel.
-- Terminal atau SSH direkomendasikan untuk migrasi dan cache otomatis.
+- Akses FTP ke `public_html`.
+- phpMyAdmin atau fasilitas database dari panel hosting untuk migrasi manual.
 
-Contoh struktur hosting:
+Workflow otomatis membuat struktur berikut:
 
 ```text
-/home/username/radina/
-├── app/
-├── bootstrap/
-├── public/       <- document root domain
-├── storage/
-├── vendor/
-└── artisan
+/public_html/
+├── _app/         <- source Laravel, diblokir oleh .htaccess
+│   ├── app/
+│   ├── bootstrap/
+│   ├── storage/
+│   ├── vendor/
+│   └── artisan
+├── build/
+├── images/
+├── .htaccess
+└── index.php
 ```
 
-Jangan arahkan domain ke root aplikasi karena `.env`, source code, dan file internal Laravel dapat terekspos.
+`index.php` di root `public_html` sudah diarahkan ke aplikasi dalam `_app`. Folder `_app` dilindungi dari akses browser menggunakan `.htaccess`.
 
 ## GitHub Environment
 
@@ -37,24 +42,25 @@ Tambahkan secrets berikut pada environment `production`:
 | `FTP_SERVER` | Host FTP, misalnya `ftp.domain.com` |
 | `FTP_USERNAME` | Username FTP |
 | `FTP_PASSWORD` | Password FTP |
-| `SSH_HOST` | Opsional, host SSH |
-| `SSH_USERNAME` | Opsional, username SSH |
-| `SSH_PRIVATE_KEY` | Opsional, private key SSH |
 
 Tambahkan variables berikut:
 
 | Variable | Contoh | Keterangan |
 | --- | --- | --- |
 | `FTP_PROTOCOL` | `ftp` atau `ftps` | Protokol server |
-| `FTP_SERVER_DIR` | `/radina/` | Folder aplikasi pada koneksi FTP |
-| `SSH_PORT` | `22` | Opsional |
-| `SSH_APP_DIR` | `/home/username/radina` | Path absolut aplikasi untuk perintah Artisan |
+| `FTP_SERVER_DIR` | `/public_html/` | Folder web utama pada koneksi FTP |
 
-Secrets SSH harus diisi lengkap atau dikosongkan seluruhnya. Jika SSH tersedia, workflow otomatis menjalankan migrasi, membuat storage link, dan membangun cache production.
+Jika akun FTP langsung membuka isi `public_html`, gunakan `/` sebagai nilai `FTP_SERVER_DIR`.
 
 ## Konfigurasi `.env` Production
 
-File `.env` tidak pernah dikirim oleh workflow. Buat file ini langsung di hosting:
+File `.env` tidak pernah dikirim oleh workflow. Buat file lokal, lalu upload melalui FTP ke:
+
+```text
+public_html/_app/.env
+```
+
+Gunakan konfigurasi production:
 
 ```dotenv
 APP_NAME="Radina News"
@@ -82,47 +88,25 @@ WRITER_DEFAULT_ARTICLE_FEE=25000
 WRITER_MINIMUM_WITHDRAWAL=50000
 ```
 
-Buat `APP_KEY` sekali melalui Terminal cPanel:
+Jika belum memiliki `APP_KEY`, buat dari komputer lokal:
 
 ```bash
-cd /home/username/radina
 php artisan key:generate
 ```
 
-Jangan mengganti `APP_KEY` setelah aplikasi digunakan karena session dan data terenkripsi lama tidak dapat dibaca.
+Salin nilai `APP_KEY` dari `.env` lokal ke `public_html/_app/.env`. Jangan menggantinya setelah aplikasi digunakan karena session dan data terenkripsi lama tidak dapat dibaca.
 
 ## Deployment Pertama
 
-1. Buat database dan user database di cPanel.
-2. Buat folder aplikasi, misalnya `/home/username/radina`.
-3. Arahkan document root domain ke `/home/username/radina/public`.
-4. Buat `.env` production di root aplikasi.
-5. Konfigurasikan GitHub Environment dan secrets.
-6. Buka tab `Actions`, pilih `CI/CD Shared Hosting`, lalu klik `Run workflow`.
+1. Buat database dan user database dari panel hosting.
+2. Konfigurasikan GitHub Environment dan secrets.
+3. Pastikan `FTP_SERVER_DIR` menunjuk ke `/public_html/`, atau `/` jika login FTP langsung berada di folder tersebut.
+4. Buka tab `Actions`, pilih `CI/CD Shared Hosting`, lalu klik `Run workflow`.
+5. Upload `.env` production ke `public_html/_app/.env`.
+6. Import struktur/data database secara manual melalui phpMyAdmin.
+7. Atur permission `public_html/_app/storage` dan `public_html/_app/bootstrap/cache` menjadi `775` melalui File Manager atau FTP jika hosting memerlukannya.
 
-Jika hosting tidak menyediakan SSH, jalankan setelah upload melalui Terminal cPanel:
-
-```bash
-cd /home/username/radina
-php artisan migrate --force
-php artisan storage:link
-php artisan optimize:clear
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-Pastikan folder berikut dapat ditulis oleh PHP:
-
-```bash
-chmod -R 775 storage bootstrap/cache
-```
-
-Seeder hanya untuk instalasi awal dan tidak dijalankan otomatis:
-
-```bash
-php artisan db:seed --force
-```
+Seeder dan migrasi Artisan tidak dijalankan otomatis karena deployment ini tidak memakai SSH.
 
 ## Deployment Berikutnya
 
@@ -132,9 +116,9 @@ Setiap push ke branch `main` akan:
 2. Membangun frontend production.
 3. Menginstal dependency Composer tanpa paket development.
 4. Mengunggah perubahan melalui FTP/FTPS.
-5. Menjalankan migrasi dan cache jika SSH dikonfigurasi.
+5. Menampilkan pengingat untuk memeriksa `.env` dan migrasi database manual.
 
-Folder upload pengguna, `.env`, session, cache runtime, dan log tidak akan dihapus oleh proses sinkronisasi FTP.
+File `_app/.env`, upload pengguna, session, cache runtime, dan log tidak akan dihapus oleh proses sinkronisasi FTP.
 
 ## Rollback
 
@@ -145,4 +129,3 @@ Workflow tidak mengubah data database sebelum seluruh test berhasil. Untuk rollb
 3. Workflow akan mengunggah versi kode sebelumnya.
 
 Migrasi database yang bersifat destruktif harus memiliki strategi rollback sendiri dan tidak boleh mengandalkan rollback kode saja.
-

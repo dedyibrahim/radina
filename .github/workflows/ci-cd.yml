@@ -105,12 +105,7 @@ jobs:
       FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
       FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
       FTP_PROTOCOL: ${{ vars.FTP_PROTOCOL || 'ftp' }}
-      FTP_SERVER_DIR: ${{ vars.FTP_SERVER_DIR || '/' }}
-      SSH_HOST: ${{ secrets.SSH_HOST }}
-      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      SSH_PORT: ${{ vars.SSH_PORT || '22' }}
-      SSH_APP_DIR: ${{ vars.SSH_APP_DIR }}
+      FTP_SERVER_DIR: ${{ vars.FTP_SERVER_DIR || '/public_html/' }}
 
     steps:
       - name: Checkout source
@@ -153,13 +148,36 @@ jobs:
         shell: bash
         run: |
           mkdir -p release
-          rsync -a ./ release/ --exclude-from=.deployignore
-          rm -f release/bootstrap/cache/config.php
-          rm -f release/bootstrap/cache/events.php
-          rm -f release/bootstrap/cache/routes-*.php
-          rm -f release/bootstrap/cache/routes-v7.php
-          find release/storage -type d -exec chmod 775 {} \;
-          find release/bootstrap/cache -type d -exec chmod 775 {} \;
+          mkdir -p release/_app
+
+          rsync -a ./ release/_app/ \
+            --exclude-from=.deployignore \
+            --exclude="public/"
+
+          rsync -a public/ release/
+
+          sed -i "s#__DIR__.'/../storage#__DIR__.'/_app/storage#g" release/index.php
+          sed -i "s#__DIR__.'/../vendor#__DIR__.'/_app/vendor#g" release/index.php
+          sed -i "s#__DIR__.'/../bootstrap#__DIR__.'/_app/bootstrap#g" release/index.php
+
+          cat > release/_app/.htaccess <<'HTACCESS'
+          Options -Indexes
+
+          <IfModule mod_authz_core.c>
+              Require all denied
+          </IfModule>
+
+          <IfModule !mod_authz_core.c>
+              Deny from all
+          </IfModule>
+          HTACCESS
+
+          rm -f release/_app/bootstrap/cache/config.php
+          rm -f release/_app/bootstrap/cache/events.php
+          rm -f release/_app/bootstrap/cache/routes-*.php
+          rm -f release/_app/bootstrap/cache/routes-v7.php
+          find release/_app/storage -type d -exec chmod 775 {} \;
+          find release/_app/bootstrap/cache -type d -exec chmod 775 {} \;
 
       - name: Upload application using FTP
         shell: bash
@@ -175,37 +193,19 @@ jobs:
           set ssl:verify-certificate true
           open -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_PROTOCOL://$FTP_SERVER"
           mirror --reverse --delete --verbose --parallel=4 \
-            --exclude-glob ".env" \
-            --exclude-glob ".env.*" \
-            --exclude-glob "public/storage" \
-            --exclude-glob "public/storage/**" \
-            --exclude-glob "storage/app/public/**" \
-            --exclude-glob "storage/framework/cache/data/**" \
-            --exclude-glob "storage/framework/sessions/**" \
-            --exclude-glob "storage/framework/views/**" \
-            --exclude-glob "storage/logs/**" \
+            --exclude-glob "_app/.env" \
+            --exclude-glob "_app/.env.*" \
+            --exclude-glob "storage" \
+            --exclude-glob "storage/**" \
+            --exclude-glob "_app/storage/app/public/**" \
+            --exclude-glob "_app/storage/framework/cache/data/**" \
+            --exclude-glob "_app/storage/framework/sessions/**" \
+            --exclude-glob "_app/storage/framework/views/**" \
+            --exclude-glob "_app/storage/logs/**" \
             release/ "$FTP_SERVER_DIR"
           bye
           LFTP
 
-      - name: Configure optional SSH access
-        if: env.SSH_HOST != '' && env.SSH_USERNAME != '' && env.SSH_PRIVATE_KEY != '' && env.SSH_APP_DIR != ''
-        shell: bash
-        run: |
-          install -m 700 -d ~/.ssh
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -p "$SSH_PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts
-
-      - name: Finalize Laravel over SSH
-        if: env.SSH_HOST != '' && env.SSH_USERNAME != '' && env.SSH_PRIVATE_KEY != '' && env.SSH_APP_DIR != ''
-        shell: bash
-        run: |
-          ssh -p "$SSH_PORT" "$SSH_USERNAME@$SSH_HOST" \
-            "cd '$SSH_APP_DIR' && php artisan migrate --force && php artisan storage:link --force && php artisan optimize:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache"
-
       - name: Show manual finalization notice
-        if: env.SSH_HOST == '' || env.SSH_USERNAME == '' || env.SSH_PRIVATE_KEY == '' || env.SSH_APP_DIR == ''
         run: |
-          echo "::warning::SSH tidak dikonfigurasi. Jalankan migrate, storage:link, dan cache production secara manual melalui Terminal cPanel."
-
+          echo "::notice::Upload ke public_html selesai. Pastikan public_html/_app/.env tersedia dan jalankan migrasi database secara manual."

@@ -3,7 +3,7 @@ import { ssrRenderComponent, ssrInterpolate, ssrRenderList, ssrRenderAttr, ssrIn
 import { usePage, useForm, router, Link } from "@inertiajs/vue3";
 import { _ as _sfc_main$3 } from "./PaginationLinks-DDGWEAke.js";
 import { _ as _sfc_main$2 } from "./SeoHead-B3gH-eD3.js";
-import { _ as _sfc_main$1 } from "./AdminLayout-C3VBifwm.js";
+import { _ as _sfc_main$1 } from "./AdminLayout-B5vz3MkO.js";
 const _sfc_main = {
   __name: "NewsManager",
   __ssrInlineRender: true,
@@ -11,6 +11,7 @@ const _sfc_main = {
     seo: Object,
     stats: Object,
     categories: Array,
+    articleAuthors: Array,
     articles: Object,
     editArticle: {
       type: Object,
@@ -33,9 +34,10 @@ const _sfc_main = {
       return ((_a = page.props.auth) == null ? void 0 : _a.user) || null;
     });
     const defaults = () => {
-      var _a;
+      var _a, _b;
       return {
         category_id: ((_a = props.categories[0]) == null ? void 0 : _a.id) || "",
+        assigned_user_id: ((_b = currentAuthor.value) == null ? void 0 : _b.id) || "",
         title: "",
         title_en: "",
         excerpt: "",
@@ -71,6 +73,7 @@ const _sfc_main = {
       }
       Object.assign(form, {
         category_id: article.categoryId,
+        assigned_user_id: article.assignedUserId,
         title: article.title || "",
         title_en: article.titleEn || "",
         excerpt: article.excerpt || "",
@@ -126,6 +129,21 @@ const _sfc_main = {
         router.delete(article.destroyUrl, { preserveScroll: true });
       }
     };
+    const reassignArticle = (article, authorId, selectElement) => {
+      const author = props.articleAuthors.find((candidate) => candidate.id === Number(authorId));
+      if (!author || !window.confirm(`Alihkan artikel "${article.title}" kepada ${author.name}?`)) {
+        selectElement.value = article.authorId;
+        return;
+      }
+      router.patch(article.reassignUrl, {
+        assigned_user_id: author.id
+      }, {
+        preserveScroll: true,
+        onError: () => {
+          selectElement.value = article.authorId;
+        }
+      });
+    };
     const approveAndVerify = (article) => {
       if (window.confirm(`Setujui, verifikasi fakta, dan terbitkan "${article.title}"? Honor penulis akan langsung dikreditkan.`)) {
         router.patch(article.reviewUrl, {
@@ -158,7 +176,7 @@ const _sfc_main = {
         onNavigate: ($event) => unref(router).visit(`/dashboard?section=${$event}`)
       }, _attrs), {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
-          var _a, _b, _c, _d, _e, _f, _g, _h;
+          var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;
           if (_push2) {
             _push2(ssrRenderComponent(_sfc_main$2, { seo: __props.seo }, null, _parent2, _scopeId));
             _push2(`<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"${_scopeId}><div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"${_scopeId}><div${_scopeId}><span class="news-kicker"${_scopeId}>Panel Berita</span><h1 class="mt-4 text-4xl font-semibold sm:text-5xl"${_scopeId}>Kelola Berita</h1><p class="mt-3 max-w-2xl text-sm leading-7 text-slate-600"${_scopeId}> Buat, edit, terbitkan, dan hapus artikel Indonesia maupun Inggris. </p></div><div class="flex flex-wrap gap-3"${_scopeId}>`);
@@ -224,7 +242,7 @@ const _sfc_main = {
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><form class="mt-6 space-y-5"${_scopeId}><div class="grid gap-4 sm:grid-cols-2"${_scopeId}><div${_scopeId}><label class="admin-label"${_scopeId}>Kategori</label><select class="admin-input"${_scopeId}><!--[-->`);
+            _push2(`</div><form class="mt-6 space-y-5"${_scopeId}><div class="grid gap-4 sm:grid-cols-3"${_scopeId}><div${_scopeId}><label class="admin-label"${_scopeId}>Kategori</label><select class="admin-input"${_scopeId}><!--[-->`);
             ssrRenderList(__props.categories, (category) => {
               _push2(`<option${ssrRenderAttr("value", category.id)}${ssrIncludeBooleanAttr(Array.isArray(unref(form).category_id) ? ssrLooseContain(unref(form).category_id, category.id) : ssrLooseEqual(unref(form).category_id, category.id)) ? " selected" : ""}${_scopeId}>${ssrInterpolate(category.name)}</option>`);
             });
@@ -234,20 +252,30 @@ const _sfc_main = {
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div${_scopeId}><label class="admin-label"${_scopeId}>Status publik</label><div class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700"${_scopeId}>${ssrInterpolate(unref(form).editorial_status === "approved" && unref(form).fact_check_status === "verified" ? "Published" : "Draft")}</div></div></div><div class="rounded-xl border border-blue-200 bg-blue-50/60 p-4"${_scopeId}><h3 class="font-semibold text-slate-900"${_scopeId}>Review Redaksi dan Verifikasi Fakta</h3><p class="mt-1 text-xs leading-5 text-slate-600"${_scopeId}> Artikel hanya diterbitkan dan menghasilkan honor jika editorial disetujui serta fakta terverifikasi. </p><div class="mt-4 grid gap-4 sm:grid-cols-2"${_scopeId}><div${_scopeId}><label class="admin-label"${_scopeId}>Keputusan editorial</label><select class="admin-input"${ssrIncludeBooleanAttr(!!((_b = __props.editArticle) == null ? void 0 : _b.earningAmount)) ? " disabled" : ""}${_scopeId}><option value="pending"${ssrIncludeBooleanAttr(Array.isArray(unref(form).editorial_status) ? ssrLooseContain(unref(form).editorial_status, "pending") : ssrLooseEqual(unref(form).editorial_status, "pending")) ? " selected" : ""}${_scopeId}>Menunggu review</option><option value="approved"${ssrIncludeBooleanAttr(Array.isArray(unref(form).editorial_status) ? ssrLooseContain(unref(form).editorial_status, "approved") : ssrLooseEqual(unref(form).editorial_status, "approved")) ? " selected" : ""}${_scopeId}>Disetujui</option><option value="rejected"${ssrIncludeBooleanAttr(Array.isArray(unref(form).editorial_status) ? ssrLooseContain(unref(form).editorial_status, "rejected") : ssrLooseEqual(unref(form).editorial_status, "rejected")) ? " selected" : ""}${_scopeId}>Ditolak</option></select>`);
+            _push2(`</div><div${_scopeId}><label class="admin-label"${_scopeId}>Penulis artikel</label><select class="admin-input"${ssrIncludeBooleanAttr(!!((_b = __props.editArticle) == null ? void 0 : _b.earningAmount)) ? " disabled" : ""}${_scopeId}><!--[-->`);
+            ssrRenderList(__props.articleAuthors, (author) => {
+              _push2(`<option${ssrRenderAttr("value", author.id)}${ssrIncludeBooleanAttr(Array.isArray(unref(form).assigned_user_id) ? ssrLooseContain(unref(form).assigned_user_id, author.id) : ssrLooseEqual(unref(form).assigned_user_id, author.id)) ? " selected" : ""}${_scopeId}>${ssrInterpolate(author.name)} · ${ssrInterpolate(author.roleLabel)}</option>`);
+            });
+            _push2(`<!--]--></select>`);
+            if (unref(form).errors.assigned_user_id) {
+              _push2(`<p class="admin-error"${_scopeId}>${ssrInterpolate(unref(form).errors.assigned_user_id)}</p>`);
+            } else {
+              _push2(`<p class="mt-1 text-xs text-slate-500"${_scopeId}>${ssrInterpolate(((_c = __props.editArticle) == null ? void 0 : _c.earningAmount) ? "Dikunci karena honor sudah dikreditkan." : "Admin dapat mengalihkan kepemilikan sebelum honor masuk.")}</p>`);
+            }
+            _push2(`</div><div${_scopeId}><label class="admin-label"${_scopeId}>Status publik</label><div class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700"${_scopeId}>${ssrInterpolate(unref(form).editorial_status === "approved" && unref(form).fact_check_status === "verified" ? "Published" : "Draft")}</div></div></div><div class="rounded-xl border border-blue-200 bg-blue-50/60 p-4"${_scopeId}><h3 class="font-semibold text-slate-900"${_scopeId}>Review Redaksi dan Verifikasi Fakta</h3><p class="mt-1 text-xs leading-5 text-slate-600"${_scopeId}> Artikel hanya diterbitkan dan menghasilkan honor jika editorial disetujui serta fakta terverifikasi. </p><div class="mt-4 grid gap-4 sm:grid-cols-2"${_scopeId}><div${_scopeId}><label class="admin-label"${_scopeId}>Keputusan editorial</label><select class="admin-input"${ssrIncludeBooleanAttr(!!((_d = __props.editArticle) == null ? void 0 : _d.earningAmount)) ? " disabled" : ""}${_scopeId}><option value="pending"${ssrIncludeBooleanAttr(Array.isArray(unref(form).editorial_status) ? ssrLooseContain(unref(form).editorial_status, "pending") : ssrLooseEqual(unref(form).editorial_status, "pending")) ? " selected" : ""}${_scopeId}>Menunggu review</option><option value="approved"${ssrIncludeBooleanAttr(Array.isArray(unref(form).editorial_status) ? ssrLooseContain(unref(form).editorial_status, "approved") : ssrLooseEqual(unref(form).editorial_status, "approved")) ? " selected" : ""}${_scopeId}>Disetujui</option><option value="rejected"${ssrIncludeBooleanAttr(Array.isArray(unref(form).editorial_status) ? ssrLooseContain(unref(form).editorial_status, "rejected") : ssrLooseEqual(unref(form).editorial_status, "rejected")) ? " selected" : ""}${_scopeId}>Ditolak</option></select>`);
             if (unref(form).errors.editorial_status) {
               _push2(`<p class="admin-error"${_scopeId}>${ssrInterpolate(unref(form).errors.editorial_status)}</p>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div${_scopeId}><label class="admin-label"${_scopeId}>Verifikasi fakta</label><select class="admin-input"${ssrIncludeBooleanAttr(!!((_c = __props.editArticle) == null ? void 0 : _c.earningAmount)) ? " disabled" : ""}${_scopeId}><option value="pending"${ssrIncludeBooleanAttr(Array.isArray(unref(form).fact_check_status) ? ssrLooseContain(unref(form).fact_check_status, "pending") : ssrLooseEqual(unref(form).fact_check_status, "pending")) ? " selected" : ""}${_scopeId}>Belum diperiksa</option><option value="verified"${ssrIncludeBooleanAttr(Array.isArray(unref(form).fact_check_status) ? ssrLooseContain(unref(form).fact_check_status, "verified") : ssrLooseEqual(unref(form).fact_check_status, "verified")) ? " selected" : ""}${_scopeId}>Terverifikasi</option><option value="rejected"${ssrIncludeBooleanAttr(Array.isArray(unref(form).fact_check_status) ? ssrLooseContain(unref(form).fact_check_status, "rejected") : ssrLooseEqual(unref(form).fact_check_status, "rejected")) ? " selected" : ""}${_scopeId}>Tidak valid</option></select>`);
+            _push2(`</div><div${_scopeId}><label class="admin-label"${_scopeId}>Verifikasi fakta</label><select class="admin-input"${ssrIncludeBooleanAttr(!!((_e = __props.editArticle) == null ? void 0 : _e.earningAmount)) ? " disabled" : ""}${_scopeId}><option value="pending"${ssrIncludeBooleanAttr(Array.isArray(unref(form).fact_check_status) ? ssrLooseContain(unref(form).fact_check_status, "pending") : ssrLooseEqual(unref(form).fact_check_status, "pending")) ? " selected" : ""}${_scopeId}>Belum diperiksa</option><option value="verified"${ssrIncludeBooleanAttr(Array.isArray(unref(form).fact_check_status) ? ssrLooseContain(unref(form).fact_check_status, "verified") : ssrLooseEqual(unref(form).fact_check_status, "verified")) ? " selected" : ""}${_scopeId}>Terverifikasi</option><option value="rejected"${ssrIncludeBooleanAttr(Array.isArray(unref(form).fact_check_status) ? ssrLooseContain(unref(form).fact_check_status, "rejected") : ssrLooseEqual(unref(form).fact_check_status, "rejected")) ? " selected" : ""}${_scopeId}>Tidak valid</option></select>`);
             if (unref(form).errors.fact_check_status) {
               _push2(`<p class="admin-error"${_scopeId}>${ssrInterpolate(unref(form).errors.fact_check_status)}</p>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`</div></div><div class="mt-4"${_scopeId}><label class="admin-label"${_scopeId}>Catatan review</label><textarea rows="3" class="admin-input" placeholder="Catatan koreksi atau alasan penolakan"${_scopeId}>${ssrInterpolate(unref(form).review_note)}</textarea></div>`);
-            if ((_d = __props.editArticle) == null ? void 0 : _d.earningAmount) {
+            if ((_f = __props.editArticle) == null ? void 0 : _f.earningAmount) {
               _push2(`<div class="mt-4 rounded-lg bg-emerald-100 px-4 py-3 text-sm font-semibold text-emerald-800"${_scopeId}> Honor ${ssrInterpolate(formatRupiah(__props.editArticle.earningAmount))} sudah dikreditkan dan status persetujuan dikunci. </div>`);
             } else {
               _push2(`<!---->`);
@@ -301,7 +329,11 @@ const _sfc_main = {
               } else {
                 _push2(`<!---->`);
               }
-              _push2(`<div class="mt-4 flex flex-wrap gap-2"${_scopeId}>`);
+              _push2(`<div class="mt-3"${_scopeId}><label class="mb-1 block text-[10px] font-bold uppercase tracking-wider text-slate-500"${_scopeId}>Alihkan penulis</label><select${ssrRenderAttr("value", article.authorId)} class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"${ssrIncludeBooleanAttr(!!article.earningAmount) ? " disabled" : ""}${_scopeId}><!--[-->`);
+              ssrRenderList(__props.articleAuthors, (author) => {
+                _push2(`<option${ssrRenderAttr("value", author.id)}${_scopeId}>${ssrInterpolate(author.name)} · ${ssrInterpolate(author.roleLabel)}</option>`);
+              });
+              _push2(`<!--]--></select></div><div class="mt-4 flex flex-wrap gap-2"${_scopeId}>`);
               if (article.status === "published") {
                 _push2(`<a${ssrRenderAttr("href", article.publicUrl)} target="_blank" class="admin-action"${_scopeId}>Lihat</a>`);
               } else {
@@ -402,7 +434,7 @@ const _sfc_main = {
                       !isEditMode.value ? (openBlock(), createBlock("p", {
                         key: 0,
                         class: "mt-2 text-xs font-semibold text-blue-700"
-                      }, " Penulis: " + toDisplayString((_e = currentAuthor.value) == null ? void 0 : _e.name) + " (akun login) ", 1)) : createCommentVNode("", true)
+                      }, " Penulis: " + toDisplayString((_g = currentAuthor.value) == null ? void 0 : _g.name) + " (akun login) ", 1)) : createCommentVNode("", true)
                     ]),
                     isEditMode.value ? (openBlock(), createBlock(unref(Link), {
                       key: 0,
@@ -419,7 +451,7 @@ const _sfc_main = {
                     class: "mt-6 space-y-5",
                     onSubmit: withModifiers(submit, ["prevent"])
                   }, [
-                    createVNode("div", { class: "grid gap-4 sm:grid-cols-2" }, [
+                    createVNode("div", { class: "grid gap-4 sm:grid-cols-3" }, [
                       createVNode("div", null, [
                         createVNode("label", { class: "admin-label" }, "Kategori"),
                         withDirectives(createVNode("select", {
@@ -441,6 +473,30 @@ const _sfc_main = {
                         }, toDisplayString(unref(form).errors.category_id), 1)) : createCommentVNode("", true)
                       ]),
                       createVNode("div", null, [
+                        createVNode("label", { class: "admin-label" }, "Penulis artikel"),
+                        withDirectives(createVNode("select", {
+                          "onUpdate:modelValue": ($event) => unref(form).assigned_user_id = $event,
+                          class: "admin-input",
+                          disabled: !!((_h = __props.editArticle) == null ? void 0 : _h.earningAmount)
+                        }, [
+                          (openBlock(true), createBlock(Fragment, null, renderList(__props.articleAuthors, (author) => {
+                            return openBlock(), createBlock("option", {
+                              key: author.id,
+                              value: author.id
+                            }, toDisplayString(author.name) + " · " + toDisplayString(author.roleLabel), 9, ["value"]);
+                          }), 128))
+                        ], 8, ["onUpdate:modelValue", "disabled"]), [
+                          [vModelSelect, unref(form).assigned_user_id]
+                        ]),
+                        unref(form).errors.assigned_user_id ? (openBlock(), createBlock("p", {
+                          key: 0,
+                          class: "admin-error"
+                        }, toDisplayString(unref(form).errors.assigned_user_id), 1)) : (openBlock(), createBlock("p", {
+                          key: 1,
+                          class: "mt-1 text-xs text-slate-500"
+                        }, toDisplayString(((_i = __props.editArticle) == null ? void 0 : _i.earningAmount) ? "Dikunci karena honor sudah dikreditkan." : "Admin dapat mengalihkan kepemilikan sebelum honor masuk."), 1))
+                      ]),
+                      createVNode("div", null, [
                         createVNode("label", { class: "admin-label" }, "Status publik"),
                         createVNode("div", { class: "rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700" }, toDisplayString(unref(form).editorial_status === "approved" && unref(form).fact_check_status === "verified" ? "Published" : "Draft"), 1)
                       ])
@@ -454,7 +510,7 @@ const _sfc_main = {
                           withDirectives(createVNode("select", {
                             "onUpdate:modelValue": ($event) => unref(form).editorial_status = $event,
                             class: "admin-input",
-                            disabled: !!((_f = __props.editArticle) == null ? void 0 : _f.earningAmount)
+                            disabled: !!((_j = __props.editArticle) == null ? void 0 : _j.earningAmount)
                           }, [
                             createVNode("option", { value: "pending" }, "Menunggu review"),
                             createVNode("option", { value: "approved" }, "Disetujui"),
@@ -472,7 +528,7 @@ const _sfc_main = {
                           withDirectives(createVNode("select", {
                             "onUpdate:modelValue": ($event) => unref(form).fact_check_status = $event,
                             class: "admin-input",
-                            disabled: !!((_g = __props.editArticle) == null ? void 0 : _g.earningAmount)
+                            disabled: !!((_k = __props.editArticle) == null ? void 0 : _k.earningAmount)
                           }, [
                             createVNode("option", { value: "pending" }, "Belum diperiksa"),
                             createVNode("option", { value: "verified" }, "Terverifikasi"),
@@ -497,7 +553,7 @@ const _sfc_main = {
                           [vModelText, unref(form).review_note]
                         ])
                       ]),
-                      ((_h = __props.editArticle) == null ? void 0 : _h.earningAmount) ? (openBlock(), createBlock("div", {
+                      ((_l = __props.editArticle) == null ? void 0 : _l.earningAmount) ? (openBlock(), createBlock("div", {
                         key: 0,
                         class: "mt-4 rounded-lg bg-emerald-100 px-4 py-3 text-sm font-semibold text-emerald-800"
                       }, " Honor " + toDisplayString(formatRupiah(__props.editArticle.earningAmount)) + " sudah dikreditkan dan status persetujuan dikunci. ", 1)) : createCommentVNode("", true)
@@ -773,6 +829,22 @@ const _sfc_main = {
                             key: 0,
                             class: "mt-2 text-xs leading-5 text-slate-500"
                           }, "Catatan: " + toDisplayString(article.reviewNote), 1)) : createCommentVNode("", true),
+                          createVNode("div", { class: "mt-3" }, [
+                            createVNode("label", { class: "mb-1 block text-[10px] font-bold uppercase tracking-wider text-slate-500" }, "Alihkan penulis"),
+                            createVNode("select", {
+                              value: article.authorId,
+                              class: "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400",
+                              disabled: !!article.earningAmount,
+                              onChange: ($event) => reassignArticle(article, $event.target.value, $event.target)
+                            }, [
+                              (openBlock(true), createBlock(Fragment, null, renderList(__props.articleAuthors, (author) => {
+                                return openBlock(), createBlock("option", {
+                                  key: author.id,
+                                  value: author.id
+                                }, toDisplayString(author.name) + " · " + toDisplayString(author.roleLabel), 9, ["value"]);
+                              }), 128))
+                            ], 40, ["value", "disabled", "onChange"])
+                          ]),
                           createVNode("div", { class: "mt-4 flex flex-wrap gap-2" }, [
                             article.status === "published" ? (openBlock(), createBlock("a", {
                               key: 0,

@@ -169,6 +169,7 @@ class NewsPortalController extends Controller
             ]),
             'pageTitle' => $categoryName,
             'pageDescription' => $categoryDescription,
+            'pageCover' => $category->cover_image_url,
             'filters' => [
                 'q' => '',
             ],

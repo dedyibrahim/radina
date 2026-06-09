@@ -13,6 +13,7 @@ const props = defineProps({
 const emit = defineEmits(['navigate']);
 const page = usePage();
 const drawerOpen = ref(false);
+const desktopDrawerOpen = ref(true);
 const user = computed(() => page.props.auth?.user || {});
 const portal = computed(() => page.props.portal || {});
 
@@ -46,33 +47,58 @@ const navigate = (section) => {
     emit('navigate', section);
 };
 
+const isDesktop = () => typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches;
+
+const toggleDrawer = () => {
+    if (isDesktop()) {
+        desktopDrawerOpen.value = !desktopDrawerOpen.value;
+        return;
+    }
+
+    drawerOpen.value = true;
+};
+
+const closeDrawer = () => {
+    if (isDesktop()) {
+        desktopDrawerOpen.value = false;
+        return;
+    }
+
+    drawerOpen.value = false;
+};
+
 const logout = () => {
     router.post('/logout');
 };
 </script>
 
 <template>
-    <div class="min-h-screen bg-slate-100 lg:pr-72">
+    <div
+        class="min-h-screen bg-slate-100 transition-[padding] duration-300"
+        :class="desktopDrawerOpen ? 'lg:pl-72' : 'lg:pl-0'"
+    >
         <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur">
             <div class="flex min-h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-                <div class="min-w-0">
-                    <p class="truncate text-lg font-bold text-slate-950">Dashboard Radina News</p>
-                    <p class="text-xs text-slate-500">{{ isAdmin ? 'Administrator' : 'Penulis' }}</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <Link href="/" class="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 hover:text-blue-700">
-                        Lihat Portal
-                    </Link>
+                <div class="flex min-w-0 items-center gap-3">
                     <button
                         type="button"
-                        class="grid h-10 w-10 place-items-center rounded-lg bg-slate-950 text-white lg:hidden"
-                        aria-label="Buka menu dashboard"
-                        @click="drawerOpen = true"
+                        class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-slate-950 text-white hover:bg-blue-700"
+                        aria-label="Buka atau tutup menu dashboard"
+                        @click="toggleDrawer"
                     >
                         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
+                    <div class="min-w-0">
+                        <p class="truncate text-lg font-bold text-slate-950">Dashboard Radina News</p>
+                        <p class="text-xs text-slate-500">{{ isAdmin ? 'Administrator' : 'Penulis' }}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <Link href="/" class="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 hover:text-blue-700">
+                        Lihat Portal
+                    </Link>
                 </div>
             </div>
         </header>
@@ -88,8 +114,11 @@ const logout = () => {
         />
 
         <aside
-            class="fixed inset-y-0 right-0 z-50 flex w-72 translate-x-full flex-col border-l border-slate-800 bg-slate-950 text-slate-300 shadow-2xl transition-transform duration-300 lg:translate-x-0"
-            :class="{ 'translate-x-0': drawerOpen }"
+            class="fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-slate-800 bg-slate-950 text-slate-300 shadow-2xl transition-transform duration-300"
+            :class="[
+                drawerOpen ? 'translate-x-0' : '-translate-x-full',
+                desktopDrawerOpen ? 'lg:translate-x-0' : 'lg:-translate-x-full',
+            ]"
         >
             <div class="flex items-center justify-between border-b border-white/10 p-5">
                 <Link href="/" class="flex items-center gap-3">
@@ -99,7 +128,7 @@ const logout = () => {
                         <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-300">Management Panel</p>
                     </div>
                 </Link>
-                <button type="button" class="text-slate-400 lg:hidden" aria-label="Tutup menu" @click="drawerOpen = false">
+                <button type="button" class="text-slate-400 hover:text-white" aria-label="Tutup menu" @click="closeDrawer">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" d="M6 6l12 12M18 6 6 18" />
                     </svg>

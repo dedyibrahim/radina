@@ -9,6 +9,7 @@ const props = defineProps({
     seo: Object,
     stats: Object,
     categories: Array,
+    articleAuthors: Array,
     articles: Object,
     editArticle: {
         type: Object,
@@ -26,6 +27,7 @@ const currentAuthor = computed(() => page.props.auth?.user || null);
 
 const defaults = () => ({
     category_id: props.categories[0]?.id || '',
+    assigned_user_id: currentAuthor.value?.id || '',
     title: '',
     title_en: '',
     excerpt: '',
@@ -64,6 +66,7 @@ const hydrateForm = () => {
 
     Object.assign(form, {
         category_id: article.categoryId,
+        assigned_user_id: article.assignedUserId,
         title: article.title || '',
         title_en: article.titleEn || '',
         excerpt: article.excerpt || '',
@@ -123,6 +126,24 @@ const removeArticle = (article) => {
     if (window.confirm(`Hapus berita "${article.title}"?`)) {
         router.delete(article.destroyUrl, { preserveScroll: true });
     }
+};
+
+const reassignArticle = (article, authorId, selectElement) => {
+    const author = props.articleAuthors.find((candidate) => candidate.id === Number(authorId));
+
+    if (!author || !window.confirm(`Alihkan artikel "${article.title}" kepada ${author.name}?`)) {
+        selectElement.value = article.authorId;
+        return;
+    }
+
+    router.patch(article.reassignUrl, {
+        assigned_user_id: author.id,
+    }, {
+        preserveScroll: true,
+        onError: () => {
+            selectElement.value = article.authorId;
+        },
+    });
 };
 
 const approveAndVerify = (article) => {
@@ -208,7 +229,7 @@ const formatRupiah = (amount) => new Intl.NumberFormat('id-ID', {
                 </div>
 
                 <form class="mt-6 space-y-5" @submit.prevent="submit">
-                    <div class="grid gap-4 sm:grid-cols-2">
+                    <div class="grid gap-4 sm:grid-cols-3">
                         <div>
                             <label class="admin-label">Kategori</label>
                             <select v-model="form.category_id" class="admin-input">
@@ -217,6 +238,24 @@ const formatRupiah = (amount) => new Intl.NumberFormat('id-ID', {
                                 </option>
                             </select>
                             <p v-if="form.errors.category_id" class="admin-error">{{ form.errors.category_id }}</p>
+                        </div>
+                        <div>
+                            <label class="admin-label">Penulis artikel</label>
+                            <select
+                                v-model="form.assigned_user_id"
+                                class="admin-input"
+                                :disabled="!!editArticle?.earningAmount"
+                            >
+                                <option v-for="author in articleAuthors" :key="author.id" :value="author.id">
+                                    {{ author.name }} · {{ author.roleLabel }}
+                                </option>
+                            </select>
+                            <p v-if="form.errors.assigned_user_id" class="admin-error">{{ form.errors.assigned_user_id }}</p>
+                            <p v-else class="mt-1 text-xs text-slate-500">
+                                {{ editArticle?.earningAmount
+                                    ? 'Dikunci karena honor sudah dikreditkan.'
+                                    : 'Admin dapat mengalihkan kepemilikan sebelum honor masuk.' }}
+                            </p>
                         </div>
                         <div>
                             <label class="admin-label">Status publik</label>
@@ -360,6 +399,19 @@ const formatRupiah = (amount) => new Intl.NumberFormat('id-ID', {
                                 </span>
                             </div>
                             <p v-if="article.reviewNote" class="mt-2 text-xs leading-5 text-slate-500">Catatan: {{ article.reviewNote }}</p>
+                            <div class="mt-3">
+                                <label class="mb-1 block text-[10px] font-bold uppercase tracking-wider text-slate-500">Alihkan penulis</label>
+                                <select
+                                    :value="article.authorId"
+                                    class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
+                                    :disabled="!!article.earningAmount"
+                                    @change="reassignArticle(article, $event.target.value, $event.target)"
+                                >
+                                    <option v-for="author in articleAuthors" :key="author.id" :value="author.id">
+                                        {{ author.name }} · {{ author.roleLabel }}
+                                    </option>
+                                </select>
+                            </div>
                             <div class="mt-4 flex flex-wrap gap-2">
                                 <a v-if="article.status === 'published'" :href="article.publicUrl" target="_blank" class="admin-action">Lihat</a>
                                 <Link :href="article.editUrl" class="admin-action">Edit</Link>

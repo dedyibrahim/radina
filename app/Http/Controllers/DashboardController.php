@@ -169,6 +169,22 @@ class DashboardController extends Controller
                 ])
                 ->all(),
             'storeNewsUrl' => route('admin.news.store'),
+            'articleAuthors' => $isAdmin
+                ? User::query()
+                    ->whereIn('role', [User::ROLE_ADMIN, User::ROLE_WRITER])
+                    ->orderByRaw("CASE WHEN role = ? THEN 0 ELSE 1 END", [User::ROLE_WRITER])
+                    ->orderBy('name')
+                    ->get(['id', 'name', 'email', 'role'])
+                    ->map(fn (User $account) => [
+                        'id' => $account->id,
+                        'name' => $account->name,
+                        'email' => $account->email,
+                        'role' => $account->role,
+                        'roleLabel' => $account->isWriter() ? 'Penulis' : 'Admin',
+                        'articleFee' => $account->isWriter() ? $account->articleFee() : null,
+                    ])
+                    ->all()
+                : [],
             'defaultCoverImage' => '/images/news-dummy/technology-lead.png',
             'activeSection' => ! $isAdmin
                 ? (in_array($request->query('section'), ['news', 'earnings', 'bank'], true)

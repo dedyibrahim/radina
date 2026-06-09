@@ -41,8 +41,11 @@ class NewsCategoryAdminTest extends TestCase
         $this
             ->get(route('news.home'))
             ->assertInertia(fn ($page) => $page
-                ->has('navigation.categories', 7)
-                ->where('navigation.categories.6.slug', 'nasional')
+                ->has('navigation.categories', 8)
+                ->where(
+                    'navigation.categories',
+                    fn ($categories) => collect($categories)->contains('slug', 'nasional')
+                )
             );
 
         $this
@@ -94,7 +97,7 @@ class NewsCategoryAdminTest extends TestCase
             ->assertInertia(fn ($page) => $page
                 ->component('Admin/Dashboard')
                 ->where('activeSection', 'categories')
-                ->has('categories', 6)
+                ->has('categories', 7)
                 ->has('categories.0.articlesCount')
                 ->has('categories.0.editUrl')
                 ->has('storeCategoryUrl')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\NewsArticle;
 use App\Models\NewsCategory;
 use App\Models\NewsTag;
+use App\Models\User;
 use App\Services\WriterPaymentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,7 +32,10 @@ class NewsAdminController extends Controller
     public function store(Request $request, WriterPaymentService $paymentService): RedirectResponse
     {
         $payload = $this->validatePayload($request);
-        $payload['user_id'] = $request->user()->id;
+        $payload['user_id'] = $request->user()->isAdmin()
+            ? (int) (($payload['assigned_user_id'] ?? null) ?: $request->user()->id)
+            : $request->user()->id;
+        unset($payload['assigned_user_id']);
 
         if ($request->user()->isWriter()) {
             $payload['status'] = NewsArticle::STATUS_DRAFT;
@@ -71,13 +75,16 @@ class NewsAdminController extends Controller
         if ($article->earning && (
             $request->input('editorial_status', $article->editorial_status) !== NewsArticle::EDITORIAL_APPROVED
             || $request->input('fact_check_status', $article->fact_check_status) !== NewsArticle::FACT_VERIFIED
+            || (int) $request->input('assigned_user_id', $article->user_id) !== $article->user_id
         )) {
             return back()->withErrors([
-                'editorial_status' => 'Artikel yang sudah menghasilkan honor tidak dapat dibatalkan persetujuannya.',
+                'editorial_status' => 'Artikel yang sudah menghasilkan honor tidak dapat dibatalkan atau dialihkan.',
             ]);
         }
 
         $payload = $this->validatePayload($request, $article);
+        $payload['user_id'] = (int) (($payload['assigned_user_id'] ?? null) ?: $article->user_id);
+        unset($payload['assigned_user_id']);
         $payload = $this->applyReviewState($request, $payload, $article);
         $payload['slug'] = $this->uniqueSlug($payload['title'], $article);
         $payload['cover_image_url'] = $this->resolveCoverImage(
@@ -97,6 +104,24 @@ class NewsAdminController extends Controller
         return redirect()
             ->route('admin.news.index')
             ->with('status', 'Berita berhasil diperbarui.');
+    }
+
+    public function reassign(Request $request, NewsArticle $article): RedirectResponse
+    {
+        if ($article->earning) {
+            return back()->withErrors([
+                'assigned_user_id' => 'Artikel yang sudah menghasilkan honor tidak dapat dialihkan ke penulis lain.',
+            ]);
+        }
+
+        $payload = $request->validate([
+            'assigned_user_id' => ['required', 'integer', Rule::exists('users', 'id')],
+        ]);
+
+        $newAuthor = User::findOrFail($payload['assigned_user_id']);
+        $article->update(['user_id' => $newAuthor->id]);
+
+        return back()->with('status', "Artikel berhasil dialihkan kepada {$newAuthor->name}.");
     }
 
     public function review(
@@ -180,6 +205,7 @@ class NewsAdminController extends Controller
                     'nameEn' => $category->name_en,
                 ])
                 ->all(),
+            'articleAuthors' => $this->articleAuthors(),
             'articles' => [
                 'data' => $articles->getCollection()
                     ->map(fn (NewsArticle $article) => $this->transformArticle($article))
@@ -200,6 +226,7 @@ class NewsAdminController extends Controller
     {
         return $request->validate([
             'category_id' => ['required', 'integer', Rule::exists('news_categories', 'id')],
+            'assigned_user_id' => ['nullable', 'integer', Rule::exists('users', 'id')],
             'title' => ['required', 'string', 'max:180'],
             'title_en' => ['nullable', 'string', 'max:180'],
             'excerpt' => ['required', 'string', 'max:1000'],
@@ -392,6 +419,8 @@ class NewsAdminController extends Controller
             'isFeatured' => $article->is_featured,
             'categoryName' => $article->category?->name,
             'authorName' => $article->author?->name,
+            'authorId' => $article->user_id,
+            'authorRole' => $article->author?->role,
             'coverImage' => $article->cover_image_url,
             'publishedAt' => $article->published_at?->format('Y-m-d\TH:i'),
             'updatedAt' => $article->updated_at?->translatedFormat('d M Y H:i'),
@@ -399,6 +428,7 @@ class NewsAdminController extends Controller
             'editUrl' => route('admin.news.edit', $article),
             'updateUrl' => route('admin.news.update', $article),
             'reviewUrl' => route('admin.news.review', $article),
+            'reassignUrl' => route('admin.news.reassign', $article),
             'destroyUrl' => route('admin.news.destroy', $article),
         ];
 
@@ -409,6 +439,7 @@ class NewsAdminController extends Controller
         return [
             ...$data,
             'categoryId' => $article->category_id,
+            'assignedUserId' => $article->user_id,
             'excerpt' => $article->excerpt,
             'excerptEn' => $article->excerpt_en,
             'content' => $article->content,
@@ -423,5 +454,23 @@ class NewsAdminController extends Controller
             'seoKeywordsEn' => $article->seo_keywords_en,
             'tags' => $article->tags->pluck('name')->implode(', '),
         ];
+    }
+
+    private function articleAuthors(): array
+    {
+        return User::query()
+            ->whereIn('role', [User::ROLE_ADMIN, User::ROLE_WRITER])
+            ->orderByRaw("CASE WHEN role = ? THEN 0 ELSE 1 END", [User::ROLE_WRITER])
+            ->orderBy('name')
+            ->get(['id', 'name', 'email', 'role'])
+            ->map(fn (User $user) => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+                'roleLabel' => $user->isWriter() ? 'Penulis' : 'Admin',
+                'articleFee' => $user->isWriter() ? $user->articleFee() : null,
+            ])
+            ->all();
     }
 }

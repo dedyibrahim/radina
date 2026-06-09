@@ -32,7 +32,7 @@ class RoleAccessTest extends TestCase
                 ->where('isAdmin', false)
                 ->where('activeSection', 'news')
                 ->where('auth.user.role', User::ROLE_WRITER)
-                ->has('categories', 6)
+                ->has('categories', 7)
                 ->has('users', 0)
                 ->has('licenses.data', 0)
             );

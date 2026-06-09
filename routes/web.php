@@ -51,6 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/dashboard/berita/{article:slug}/edit', [NewsAdminController::class, 'edit'])->name('admin.news.edit');
         Route::patch('/dashboard/berita/{article:slug}', [NewsAdminController::class, 'update'])->name('admin.news.update');
         Route::patch('/dashboard/berita/{article:slug}/review', [NewsAdminController::class, 'review'])->name('admin.news.review');
+        Route::patch('/dashboard/berita/{article:slug}/penulis', [NewsAdminController::class, 'reassign'])->name('admin.news.reassign');
         Route::delete('/dashboard/berita/{article:slug}', [NewsAdminController::class, 'destroy'])->name('admin.news.destroy');
         Route::post('/dashboard/kategori', [NewsCategoryAdminController::class, 'store'])->name('admin.categories.store');
         Route::patch('/dashboard/kategori/{category:slug}', [NewsCategoryAdminController::class, 'update'])->name('admin.categories.update');

@@ -27,7 +27,7 @@ class NewsPortalTest extends TestCase
                 ->has('hero')
                 ->has('latest')
                 ->has('seo')
-                ->has('navigation.categories', 6)
+                ->has('navigation.categories', 7)
                 ->where('portal.contactPhone', '877-2417-0145')
                 ->missing('portal.contactEmail')
                 ->missing('navigation.mainLinks')
@@ -73,8 +73,8 @@ class NewsPortalTest extends TestCase
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
                 ->where('locale', 'en')
-                ->where('hero.title', $article->title_en)
-                ->where('hero.excerpt', $article->excerpt_en)
+                ->where('hero.title', $article->title_en ?: $article->title)
+                ->where('hero.excerpt', $article->excerpt_en ?: $article->excerpt)
             );
     }
 }

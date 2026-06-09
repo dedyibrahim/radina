@@ -11,6 +11,10 @@ const props = defineProps({
     seo: Object,
     pageTitle: String,
     pageDescription: String,
+    pageCover: {
+        type: String,
+        default: null,
+    },
     filters: Object,
     articles: Object,
     highlights: Array,
@@ -40,12 +44,25 @@ const submitSearch = () => {
     <NewsLayout>
         <SeoHead :seo="seo" />
 
-        <section class="rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-blue-50/50 p-6 sm:p-8">
-            <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-                <div class="max-w-3xl">
+        <section
+            class="relative overflow-hidden rounded-2xl border border-slate-200"
+            :class="pageCover ? 'min-h-[340px] bg-slate-950 text-white' : 'bg-gradient-to-br from-white to-blue-50/50'"
+        >
+            <img
+                v-if="pageCover"
+                :src="pageCover"
+                :alt="pageTitle"
+                class="absolute inset-0 h-full w-full object-cover"
+            >
+            <div v-if="pageCover" class="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/70 to-slate-950/20"></div>
+
+            <div class="relative flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-end lg:justify-between">
+                <div class="max-w-3xl" :class="{ 'self-end': pageCover }">
                     <span v-if="context" class="news-kicker">{{ context.label }} / {{ context.value }}</span>
                     <h1 class="mt-4 text-4xl font-semibold leading-tight sm:text-5xl">{{ pageTitle }}</h1>
-                    <p class="mt-4 text-sm leading-7 text-slate-600 sm:text-base">{{ pageDescription }}</p>
+                    <p class="mt-4 text-sm leading-7 sm:text-base" :class="pageCover ? 'text-slate-200' : 'text-slate-600'">
+                        {{ pageDescription }}
+                    </p>
                 </div>
                 <form class="flex w-full max-w-md gap-2" @submit.prevent="submitSearch">
                     <input

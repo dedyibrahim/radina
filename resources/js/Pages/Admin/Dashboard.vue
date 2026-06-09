@@ -17,6 +17,7 @@ const props = defineProps({
     storeCategoryUrl: String,
     recentNews: Array,
     storeNewsUrl: String,
+    articleAuthors: Array,
     defaultCoverImage: String,
     activeSection: String,
     isAdmin: Boolean,
@@ -61,6 +62,7 @@ const form = useForm({
 
 const newsDefaults = () => ({
     category_id: props.categories[0]?.id || '',
+    assigned_user_id: props.isAdmin ? (currentAuthor.value?.id || '') : '',
     title: '',
     title_en: '',
     excerpt: '',
@@ -723,14 +725,16 @@ const removeUser = (account) => {
                             {{ currentAuthor?.name?.charAt(0)?.toUpperCase() }}
                         </span>
                         <div class="min-w-0">
-                            <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-blue-700">Penulis dari session login</p>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-blue-700">
+                                {{ isAdmin ? 'Admin pembuat artikel' : 'Penulis dari session login' }}
+                            </p>
                             <p class="truncate text-sm font-semibold text-slate-900">{{ currentAuthor?.name }}</p>
                             <p class="truncate text-xs text-slate-500">{{ currentAuthor?.email }}</p>
                         </div>
                     </div>
 
                     <form class="mt-6 space-y-5" @submit.prevent="submitNews">
-                        <div class="grid gap-4 sm:grid-cols-2">
+                        <div class="grid gap-4 sm:grid-cols-2" :class="{ 'xl:grid-cols-3': isAdmin }">
                             <div>
                                 <label class="admin-label">Kategori</label>
                                 <select v-model="newsForm.category_id" class="admin-input">
@@ -739,6 +743,15 @@ const removeUser = (account) => {
                                     </option>
                                 </select>
                                 <p v-if="newsForm.errors.category_id" class="admin-error">{{ newsForm.errors.category_id }}</p>
+                            </div>
+                            <div v-if="isAdmin">
+                                <label class="admin-label">Penulis artikel</label>
+                                <select v-model="newsForm.assigned_user_id" class="admin-input">
+                                    <option v-for="author in articleAuthors" :key="author.id" :value="author.id">
+                                        {{ author.name }} · {{ author.roleLabel }}
+                                    </option>
+                                </select>
+                                <p v-if="newsForm.errors.assigned_user_id" class="admin-error">{{ newsForm.errors.assigned_user_id }}</p>
                             </div>
                             <div v-if="isAdmin">
                                 <label class="admin-label">Status</label>

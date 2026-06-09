@@ -71,7 +71,8 @@ class NewsAdminTest extends TestCase
             ->assertOk()
             ->assertInertia(fn ($page) => $page
                 ->component('Admin/Dashboard')
-                ->has('categories', 6)
+                ->has('categories', 7)
+                ->has('articleAuthors', 5)
                 ->has('recentNews')
                 ->has('licenses.data')
                 ->where('activeSection', 'news')
@@ -120,6 +121,7 @@ class NewsAdminTest extends TestCase
             ->post(route('admin.news.store'), [
                 'category_id' => $category->id,
                 'user_id' => $otherUser->id,
+                'assigned_user_id' => $otherUser->id,
                 'title' => 'Artikel Penulis dari Session',
                 'excerpt' => 'Penulis artikel harus mengikuti session login.',
                 'content' => 'Isi artikel untuk pengujian penulis.',
@@ -133,6 +135,40 @@ class NewsAdminTest extends TestCase
 
         $this->assertSame($sessionAuthor->id, $article->user_id);
         $this->assertNotSame($otherUser->id, $article->user_id);
+    }
+
+    public function test_admin_can_create_and_reassign_article_to_another_writer(): void
+    {
+        $admin = User::where('email', 'admin@radina.net')->firstOrFail();
+        $firstWriter = User::where('email', 'nadia@radina.net')->firstOrFail();
+        $secondWriter = User::where('email', 'rafi@radina.net')->firstOrFail();
+        $category = NewsCategory::firstOrFail();
+
+        $this
+            ->actingAs($admin)
+            ->post(route('admin.news.store'), [
+                'category_id' => $category->id,
+                'assigned_user_id' => $firstWriter->id,
+                'title' => 'Artikel yang Dapat Dialihkan Admin',
+                'excerpt' => 'Artikel draft untuk pengujian pengalihan penulis.',
+                'content' => 'Isi artikel yang akan dialihkan kepada penulis lain.',
+                'cover_image_url' => '/images/news-dummy/technology-lead.png',
+                'status' => NewsArticle::STATUS_DRAFT,
+                'is_featured' => false,
+            ])
+            ->assertRedirect(route('admin.news.index'));
+
+        $article = NewsArticle::where('title', 'Artikel yang Dapat Dialihkan Admin')->firstOrFail();
+        $this->assertSame($firstWriter->id, $article->user_id);
+
+        $this
+            ->actingAs($admin)
+            ->patch(route('admin.news.reassign', $article), [
+                'assigned_user_id' => $secondWriter->id,
+            ])
+            ->assertSessionHasNoErrors();
+
+        $this->assertSame($secondWriter->id, $article->fresh()->user_id);
     }
 
     public function test_verified_user_can_update_and_delete_news(): void

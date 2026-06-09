@@ -1,5 +1,5 @@
 import { ref, watch, withCtx, unref, createTextVNode, toDisplayString, createVNode, openBlock, createBlock, createCommentVNode, withModifiers, withDirectives, vModelText, Fragment, renderList, useSSRContext } from "vue";
-import { ssrRenderComponent, ssrInterpolate, ssrRenderAttr, ssrRenderList } from "vue/server-renderer";
+import { ssrRenderComponent, ssrRenderClass, ssrRenderAttr, ssrInterpolate, ssrRenderList } from "vue/server-renderer";
 import { Link, router } from "@inertiajs/vue3";
 import { _ as _sfc_main$3 } from "./ArticleCard-8kgce7ST.js";
 import { _ as _sfc_main$4 } from "./PaginationLinks-DDGWEAke.js";
@@ -12,6 +12,10 @@ const _sfc_main = {
     seo: Object,
     pageTitle: String,
     pageDescription: String,
+    pageCover: {
+      type: String,
+      default: null
+    },
     filters: Object,
     articles: Object,
     highlights: Array,
@@ -43,13 +47,24 @@ const _sfc_main = {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
             _push2(ssrRenderComponent(_sfc_main$2, { seo: __props.seo }, null, _parent2, _scopeId));
-            _push2(`<section class="rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-blue-50/50 p-6 sm:p-8"${_scopeId}><div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"${_scopeId}><div class="max-w-3xl"${_scopeId}>`);
+            _push2(`<section class="${ssrRenderClass([__props.pageCover ? "min-h-[340px] bg-slate-950 text-white" : "bg-gradient-to-br from-white to-blue-50/50", "relative overflow-hidden rounded-2xl border border-slate-200"])}"${_scopeId}>`);
+            if (__props.pageCover) {
+              _push2(`<img${ssrRenderAttr("src", __props.pageCover)}${ssrRenderAttr("alt", __props.pageTitle)} class="absolute inset-0 h-full w-full object-cover"${_scopeId}>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            if (__props.pageCover) {
+              _push2(`<div class="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/70 to-slate-950/20"${_scopeId}></div>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`<div class="relative flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-end lg:justify-between"${_scopeId}><div class="${ssrRenderClass([{ "self-end": __props.pageCover }, "max-w-3xl"])}"${_scopeId}>`);
             if (__props.context) {
               _push2(`<span class="news-kicker"${_scopeId}>${ssrInterpolate(__props.context.label)} / ${ssrInterpolate(__props.context.value)}</span>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`<h1 class="mt-4 text-4xl font-semibold leading-tight sm:text-5xl"${_scopeId}>${ssrInterpolate(__props.pageTitle)}</h1><p class="mt-4 text-sm leading-7 text-slate-600 sm:text-base"${_scopeId}>${ssrInterpolate(__props.pageDescription)}</p></div><form class="flex w-full max-w-md gap-2"${_scopeId}><input${ssrRenderAttr("value", searchTerm.value)} type="search"${ssrRenderAttr("placeholder", unref(t)("archiveSearch"))} class="min-w-0 flex-1 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"${_scopeId}><button type="submit" class="rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800"${_scopeId}>${ssrInterpolate(unref(t)("search"))}</button></form></div></section><section class="mt-8 grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]"${_scopeId}><div${_scopeId}><div class="grid gap-6 md:grid-cols-2"${_scopeId}><!--[-->`);
+            _push2(`<h1 class="mt-4 text-4xl font-semibold leading-tight sm:text-5xl"${_scopeId}>${ssrInterpolate(__props.pageTitle)}</h1><p class="${ssrRenderClass([__props.pageCover ? "text-slate-200" : "text-slate-600", "mt-4 text-sm leading-7 sm:text-base"])}"${_scopeId}>${ssrInterpolate(__props.pageDescription)}</p></div><form class="flex w-full max-w-md gap-2"${_scopeId}><input${ssrRenderAttr("value", searchTerm.value)} type="search"${ssrRenderAttr("placeholder", unref(t)("archiveSearch"))} class="min-w-0 flex-1 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"${_scopeId}><button type="submit" class="rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800"${_scopeId}>${ssrInterpolate(unref(t)("search"))}</button></form></div></section><section class="mt-8 grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]"${_scopeId}><div${_scopeId}><div class="grid gap-6 md:grid-cols-2"${_scopeId}><!--[-->`);
             ssrRenderList(__props.articles.data, (article) => {
               _push2(ssrRenderComponent(_sfc_main$3, {
                 key: article.slug,
@@ -104,16 +119,32 @@ const _sfc_main = {
           } else {
             return [
               createVNode(_sfc_main$2, { seo: __props.seo }, null, 8, ["seo"]),
-              createVNode("section", { class: "rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-blue-50/50 p-6 sm:p-8" }, [
-                createVNode("div", { class: "flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between" }, [
-                  createVNode("div", { class: "max-w-3xl" }, [
+              createVNode("section", {
+                class: ["relative overflow-hidden rounded-2xl border border-slate-200", __props.pageCover ? "min-h-[340px] bg-slate-950 text-white" : "bg-gradient-to-br from-white to-blue-50/50"]
+              }, [
+                __props.pageCover ? (openBlock(), createBlock("img", {
+                  key: 0,
+                  src: __props.pageCover,
+                  alt: __props.pageTitle,
+                  class: "absolute inset-0 h-full w-full object-cover"
+                }, null, 8, ["src", "alt"])) : createCommentVNode("", true),
+                __props.pageCover ? (openBlock(), createBlock("div", {
+                  key: 1,
+                  class: "absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/70 to-slate-950/20"
+                })) : createCommentVNode("", true),
+                createVNode("div", { class: "relative flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-end lg:justify-between" }, [
+                  createVNode("div", {
+                    class: ["max-w-3xl", { "self-end": __props.pageCover }]
+                  }, [
                     __props.context ? (openBlock(), createBlock("span", {
                       key: 0,
                       class: "news-kicker"
                     }, toDisplayString(__props.context.label) + " / " + toDisplayString(__props.context.value), 1)) : createCommentVNode("", true),
                     createVNode("h1", { class: "mt-4 text-4xl font-semibold leading-tight sm:text-5xl" }, toDisplayString(__props.pageTitle), 1),
-                    createVNode("p", { class: "mt-4 text-sm leading-7 text-slate-600 sm:text-base" }, toDisplayString(__props.pageDescription), 1)
-                  ]),
+                    createVNode("p", {
+                      class: ["mt-4 text-sm leading-7 sm:text-base", __props.pageCover ? "text-slate-200" : "text-slate-600"]
+                    }, toDisplayString(__props.pageDescription), 3)
+                  ], 2),
                   createVNode("form", {
                     class: "flex w-full max-w-md gap-2",
                     onSubmit: withModifiers(submitSearch, ["prevent"])
@@ -132,7 +163,7 @@ const _sfc_main = {
                     }, toDisplayString(unref(t)("search")), 1)
                   ], 32)
                 ])
-              ]),
+              ], 2),
               createVNode("section", { class: "mt-8 grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]" }, [
                 createVNode("div", null, [
                   createVNode("div", { class: "grid gap-6 md:grid-cols-2" }, [

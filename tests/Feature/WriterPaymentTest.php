@@ -129,6 +129,24 @@ class WriterPaymentTest extends TestCase
         ]);
     }
 
+    public function test_article_cannot_be_reassigned_after_earning_is_credited(): void
+    {
+        $admin = User::where('email', 'admin@radina.net')->firstOrFail();
+        $article = NewsArticle::whereHas('earning')->firstOrFail();
+        $otherWriter = User::where('role', User::ROLE_WRITER)
+            ->whereKeyNot($article->user_id)
+            ->firstOrFail();
+
+        $this
+            ->actingAs($admin)
+            ->patch(route('admin.news.reassign', $article), [
+                'assigned_user_id' => $otherWriter->id,
+            ])
+            ->assertSessionHasErrors('assigned_user_id');
+
+        $this->assertSame($article->user_id, $article->fresh()->user_id);
+    }
+
     public function test_admin_approves_withdrawal_before_marking_it_paid(): void
     {
         $admin = User::where('email', 'admin@radina.net')->firstOrFail();

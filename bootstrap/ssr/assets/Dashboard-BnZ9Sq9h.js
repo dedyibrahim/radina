@@ -3,7 +3,7 @@ import { ssrRenderComponent, ssrInterpolate, ssrRenderStyle, ssrRenderAttr, ssrI
 import { usePage, useForm, Link, router } from "@inertiajs/vue3";
 import { _ as _sfc_main$3 } from "./PaginationLinks-DDGWEAke.js";
 import { _ as _sfc_main$2 } from "./SeoHead-B3gH-eD3.js";
-import { _ as _sfc_main$1 } from "./AdminLayout-C3VBifwm.js";
+import { _ as _sfc_main$1 } from "./AdminLayout-B5vz3MkO.js";
 const _sfc_main = {
   __name: "Dashboard",
   __ssrInlineRender: true,
@@ -19,6 +19,7 @@ const _sfc_main = {
     storeCategoryUrl: String,
     recentNews: Array,
     storeNewsUrl: String,
+    articleAuthors: Array,
     defaultCoverImage: String,
     activeSection: String,
     isAdmin: Boolean,
@@ -71,9 +72,10 @@ const _sfc_main = {
       notes: props.formDefaults.notes
     });
     const newsDefaults = () => {
-      var _a2;
+      var _a2, _b2;
       return {
         category_id: ((_a2 = props.categories[0]) == null ? void 0 : _a2.id) || "",
+        assigned_user_id: props.isAdmin ? ((_b2 = currentAuthor.value) == null ? void 0 : _b2.id) || "" : "",
         title: "",
         title_en: "",
         excerpt: "",
@@ -551,7 +553,7 @@ const _sfc_main = {
             } else {
               _push2(`<!---->`);
             }
-            _push2(`<section class="mt-6" style="${ssrRenderStyle(activePanel.value === "news" ? null : { display: "none" })}"${_scopeId}><div class="mb-6 grid gap-4 sm:grid-cols-3"${_scopeId}><div class="admin-stat"${_scopeId}><span${_scopeId}>Total berita</span><strong${_scopeId}>${ssrInterpolate(__props.newsStats.total)}</strong></div><div class="admin-stat"${_scopeId}><span${_scopeId}>Published</span><strong${_scopeId}>${ssrInterpolate(__props.newsStats.published)}</strong></div><div class="admin-stat"${_scopeId}><span${_scopeId}>Draft</span><strong${_scopeId}>${ssrInterpolate(__props.newsStats.draft)}</strong></div></div><div class="grid gap-6 xl:grid-cols-[minmax(0,560px)_minmax(0,1fr)]"${_scopeId}><div class="rounded-2xl border border-slate-200 bg-white p-6"${_scopeId}><h2 class="text-2xl font-semibold"${_scopeId}>Buat Berita</h2><p class="mt-2 text-sm text-slate-500"${_scopeId}>Kolom Indonesia wajib. Bahasa Inggris dan SEO dapat dilengkapi bila diperlukan.</p><div class="mt-4 flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3"${_scopeId}><span class="grid h-9 w-9 place-items-center rounded-full bg-blue-700 text-sm font-bold text-white"${_scopeId}>${ssrInterpolate((_c2 = (_b2 = (_a2 = currentAuthor.value) == null ? void 0 : _a2.name) == null ? void 0 : _b2.charAt(0)) == null ? void 0 : _c2.toUpperCase())}</span><div class="min-w-0"${_scopeId}><p class="text-[10px] font-bold uppercase tracking-[0.16em] text-blue-700"${_scopeId}>Penulis dari session login</p><p class="truncate text-sm font-semibold text-slate-900"${_scopeId}>${ssrInterpolate((_d2 = currentAuthor.value) == null ? void 0 : _d2.name)}</p><p class="truncate text-xs text-slate-500"${_scopeId}>${ssrInterpolate((_e = currentAuthor.value) == null ? void 0 : _e.email)}</p></div></div><form class="mt-6 space-y-5"${_scopeId}><div class="grid gap-4 sm:grid-cols-2"${_scopeId}><div${_scopeId}><label class="admin-label"${_scopeId}>Kategori</label><select class="admin-input"${_scopeId}><!--[-->`);
+            _push2(`<section class="mt-6" style="${ssrRenderStyle(activePanel.value === "news" ? null : { display: "none" })}"${_scopeId}><div class="mb-6 grid gap-4 sm:grid-cols-3"${_scopeId}><div class="admin-stat"${_scopeId}><span${_scopeId}>Total berita</span><strong${_scopeId}>${ssrInterpolate(__props.newsStats.total)}</strong></div><div class="admin-stat"${_scopeId}><span${_scopeId}>Published</span><strong${_scopeId}>${ssrInterpolate(__props.newsStats.published)}</strong></div><div class="admin-stat"${_scopeId}><span${_scopeId}>Draft</span><strong${_scopeId}>${ssrInterpolate(__props.newsStats.draft)}</strong></div></div><div class="grid gap-6 xl:grid-cols-[minmax(0,560px)_minmax(0,1fr)]"${_scopeId}><div class="rounded-2xl border border-slate-200 bg-white p-6"${_scopeId}><h2 class="text-2xl font-semibold"${_scopeId}>Buat Berita</h2><p class="mt-2 text-sm text-slate-500"${_scopeId}>Kolom Indonesia wajib. Bahasa Inggris dan SEO dapat dilengkapi bila diperlukan.</p><div class="mt-4 flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3"${_scopeId}><span class="grid h-9 w-9 place-items-center rounded-full bg-blue-700 text-sm font-bold text-white"${_scopeId}>${ssrInterpolate((_c2 = (_b2 = (_a2 = currentAuthor.value) == null ? void 0 : _a2.name) == null ? void 0 : _b2.charAt(0)) == null ? void 0 : _c2.toUpperCase())}</span><div class="min-w-0"${_scopeId}><p class="text-[10px] font-bold uppercase tracking-[0.16em] text-blue-700"${_scopeId}>${ssrInterpolate(__props.isAdmin ? "Admin pembuat artikel" : "Penulis dari session login")}</p><p class="truncate text-sm font-semibold text-slate-900"${_scopeId}>${ssrInterpolate((_d2 = currentAuthor.value) == null ? void 0 : _d2.name)}</p><p class="truncate text-xs text-slate-500"${_scopeId}>${ssrInterpolate((_e = currentAuthor.value) == null ? void 0 : _e.email)}</p></div></div><form class="mt-6 space-y-5"${_scopeId}><div class="${ssrRenderClass([{ "xl:grid-cols-3": __props.isAdmin }, "grid gap-4 sm:grid-cols-2"])}"${_scopeId}><div${_scopeId}><label class="admin-label"${_scopeId}>Kategori</label><select class="admin-input"${_scopeId}><!--[-->`);
             ssrRenderList(__props.categories, (category) => {
               _push2(`<option${ssrRenderAttr("value", category.id)}${ssrIncludeBooleanAttr(Array.isArray(unref(newsForm).category_id) ? ssrLooseContain(unref(newsForm).category_id, category.id) : ssrLooseEqual(unref(newsForm).category_id, category.id)) ? " selected" : ""}${_scopeId}>${ssrInterpolate(category.name)}</option>`);
             });
@@ -562,6 +564,21 @@ const _sfc_main = {
               _push2(`<!---->`);
             }
             _push2(`</div>`);
+            if (__props.isAdmin) {
+              _push2(`<div${_scopeId}><label class="admin-label"${_scopeId}>Penulis artikel</label><select class="admin-input"${_scopeId}><!--[-->`);
+              ssrRenderList(__props.articleAuthors, (author) => {
+                _push2(`<option${ssrRenderAttr("value", author.id)}${ssrIncludeBooleanAttr(Array.isArray(unref(newsForm).assigned_user_id) ? ssrLooseContain(unref(newsForm).assigned_user_id, author.id) : ssrLooseEqual(unref(newsForm).assigned_user_id, author.id)) ? " selected" : ""}${_scopeId}>${ssrInterpolate(author.name)} · ${ssrInterpolate(author.roleLabel)}</option>`);
+              });
+              _push2(`<!--]--></select>`);
+              if (unref(newsForm).errors.assigned_user_id) {
+                _push2(`<p class="admin-error"${_scopeId}>${ssrInterpolate(unref(newsForm).errors.assigned_user_id)}</p>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`</div>`);
+            } else {
+              _push2(`<!---->`);
+            }
             if (__props.isAdmin) {
               _push2(`<div${_scopeId}><label class="admin-label"${_scopeId}>Status</label><select class="admin-input"${_scopeId}><option value="draft"${ssrIncludeBooleanAttr(Array.isArray(unref(newsForm).status) ? ssrLooseContain(unref(newsForm).status, "draft") : ssrLooseEqual(unref(newsForm).status, "draft")) ? " selected" : ""}${_scopeId}>Draft</option><option value="published"${ssrIncludeBooleanAttr(Array.isArray(unref(newsForm).status) ? ssrLooseContain(unref(newsForm).status, "published") : ssrLooseEqual(unref(newsForm).status, "published")) ? " selected" : ""}${_scopeId}>Published</option></select></div>`);
             } else {
@@ -1460,7 +1477,7 @@ const _sfc_main = {
                     createVNode("div", { class: "mt-4 flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3" }, [
                       createVNode("span", { class: "grid h-9 w-9 place-items-center rounded-full bg-blue-700 text-sm font-bold text-white" }, toDisplayString((_h = (_g = (_f = currentAuthor.value) == null ? void 0 : _f.name) == null ? void 0 : _g.charAt(0)) == null ? void 0 : _h.toUpperCase()), 1),
                       createVNode("div", { class: "min-w-0" }, [
-                        createVNode("p", { class: "text-[10px] font-bold uppercase tracking-[0.16em] text-blue-700" }, "Penulis dari session login"),
+                        createVNode("p", { class: "text-[10px] font-bold uppercase tracking-[0.16em] text-blue-700" }, toDisplayString(__props.isAdmin ? "Admin pembuat artikel" : "Penulis dari session login"), 1),
                         createVNode("p", { class: "truncate text-sm font-semibold text-slate-900" }, toDisplayString((_i = currentAuthor.value) == null ? void 0 : _i.name), 1),
                         createVNode("p", { class: "truncate text-xs text-slate-500" }, toDisplayString((_j = currentAuthor.value) == null ? void 0 : _j.email), 1)
                       ])
@@ -1469,7 +1486,9 @@ const _sfc_main = {
                       class: "mt-6 space-y-5",
                       onSubmit: withModifiers(submitNews, ["prevent"])
                     }, [
-                      createVNode("div", { class: "grid gap-4 sm:grid-cols-2" }, [
+                      createVNode("div", {
+                        class: ["grid gap-4 sm:grid-cols-2", { "xl:grid-cols-3": __props.isAdmin }]
+                      }, [
                         createVNode("div", null, [
                           createVNode("label", { class: "admin-label" }, "Kategori"),
                           withDirectives(createVNode("select", {
@@ -1491,6 +1510,26 @@ const _sfc_main = {
                           }, toDisplayString(unref(newsForm).errors.category_id), 1)) : createCommentVNode("", true)
                         ]),
                         __props.isAdmin ? (openBlock(), createBlock("div", { key: 0 }, [
+                          createVNode("label", { class: "admin-label" }, "Penulis artikel"),
+                          withDirectives(createVNode("select", {
+                            "onUpdate:modelValue": ($event) => unref(newsForm).assigned_user_id = $event,
+                            class: "admin-input"
+                          }, [
+                            (openBlock(true), createBlock(Fragment, null, renderList(__props.articleAuthors, (author) => {
+                              return openBlock(), createBlock("option", {
+                                key: author.id,
+                                value: author.id
+                              }, toDisplayString(author.name) + " · " + toDisplayString(author.roleLabel), 9, ["value"]);
+                            }), 128))
+                          ], 8, ["onUpdate:modelValue"]), [
+                            [vModelSelect, unref(newsForm).assigned_user_id]
+                          ]),
+                          unref(newsForm).errors.assigned_user_id ? (openBlock(), createBlock("p", {
+                            key: 0,
+                            class: "admin-error"
+                          }, toDisplayString(unref(newsForm).errors.assigned_user_id), 1)) : createCommentVNode("", true)
+                        ])) : createCommentVNode("", true),
+                        __props.isAdmin ? (openBlock(), createBlock("div", { key: 1 }, [
                           createVNode("label", { class: "admin-label" }, "Status"),
                           withDirectives(createVNode("select", {
                             "onUpdate:modelValue": ($event) => unref(newsForm).status = $event,
@@ -1501,11 +1540,11 @@ const _sfc_main = {
                           ], 8, ["onUpdate:modelValue"]), [
                             [vModelSelect, unref(newsForm).status]
                           ])
-                        ])) : (openBlock(), createBlock("div", { key: 1 }, [
+                        ])) : (openBlock(), createBlock("div", { key: 2 }, [
                           createVNode("label", { class: "admin-label" }, "Status"),
                           createVNode("div", { class: "rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800" }, " Draft — menunggu pemeriksaan admin ")
                         ]))
-                      ]),
+                      ], 2),
                       createVNode("div", null, [
                         createVNode("label", { class: "admin-label" }, "Judul berita"),
                         withDirectives(createVNode("input", {

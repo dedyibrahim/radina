@@ -315,6 +315,8 @@ jobs:
             cp -a release/_app/bootstrap/ssr incremental-release/_app/bootstrap/ssr
           fi
 
+          printf '%s\n' "$GITHUB_SHA" > incremental-release/.radina-release-commit
+
           file_count="$(find incremental-release -type f | wc -l | tr -d ' ')"
           echo "file_count=$file_count" >> "$GITHUB_OUTPUT"
           echo "File incremental yang akan diunggah: $file_count"

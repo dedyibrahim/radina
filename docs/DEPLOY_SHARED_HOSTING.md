@@ -49,7 +49,12 @@ Tambahkan variables:
 | `FTP_SERVER_DIR` | `/public_html/` | Folder web utama pada koneksi FTP |
 | `DEPLOY_URL` | `https://domainanda.com` | URL production tanpa garis miring di akhir |
 
-Jika akun FTP langsung membuka isi `public_html`, gunakan `/` sebagai `FTP_SERVER_DIR`.
+Periksa folder yang terlihat setelah login FTP:
+
+- Jika terlihat folder `public_html`, gunakan `FTP_SERVER_DIR=/public_html/`.
+- Jika langsung terlihat `index.php`, `_app`, `images`, atau isi website, gunakan `FTP_SERVER_DIR=/`.
+
+Nilai ini mengikuti posisi awal akun FTP, bukan hanya document root domain.
 
 Gunakan `FTP_PROTOCOL=ftp` jika hosting hanya memberikan FTP biasa. Gunakan `ftps` hanya jika provider memberikan hostname FTPS resmi dengan sertifikat valid.
 
@@ -120,6 +125,8 @@ Simpan nilai yang sama pada:
 2. `public_html/_app/.env` pada `DEPLOY_HOOK_SECRET`.
 
 Hook dilindungi HMAC SHA-256, timestamp maksimal lima menit, commit SHA, dan file lock untuk mencegah deployment paralel. `DEPLOY_URL` wajib HTTPS dan secret tidak dikirim dalam request.
+
+Workflow juga mengunggah `.radina-release-commit` ke folder target. Hook memeriksanya sebelum menyentuh database. Jika folder FTP salah, respons akan menunjukkan fase `upload-path` atau `upload-version`.
 
 Migration dan seeder selalu dijalankan otomatis pada deployment production. Workflow berhenti sebelum upload jika `DEPLOY_URL` atau `DEPLOY_HOOK_SECRET` belum dikonfigurasi.
 

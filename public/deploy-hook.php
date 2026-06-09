@@ -51,7 +51,15 @@ if (! is_file($autoload) || ! is_file($environmentFile)) {
 
 require $autoload;
 
-Dotenv::createImmutable($applicationRoot)->safeLoad();
+try {
+    Dotenv::createImmutable($applicationRoot)->safeLoad();
+} catch (Throwable $exception) {
+    respond(500, [
+        'message' => 'Production .env file is invalid.',
+        'phase' => 'environment',
+        'error' => safeError($exception),
+    ]);
+}
 
 $enabled = filter_var($_ENV['DEPLOY_HOOK_ENABLED'] ?? false, FILTER_VALIDATE_BOOL);
 $secret = (string) ($_ENV['DEPLOY_HOOK_SECRET'] ?? '');
@@ -59,9 +67,14 @@ $ttl = max(60, (int) ($_ENV['DEPLOY_HOOK_SIGNATURE_TTL'] ?? 300));
 $timestamp = (string) ($_SERVER['HTTP_X_DEPLOY_TIMESTAMP'] ?? '');
 $commit = (string) ($_SERVER['HTTP_X_DEPLOY_COMMIT'] ?? '');
 $signature = (string) ($_SERVER['HTTP_X_DEPLOY_SIGNATURE'] ?? '');
+$releaseCommitPath = __DIR__.'/.radina-release-commit';
 
 if (! $enabled) {
-    respond(404, ['message' => 'Not found.']);
+    respond(503, [
+        'message' => 'Deployment hook is not enabled in production .env.',
+        'phase' => 'environment',
+        'required_variable' => 'DEPLOY_HOOK_ENABLED=true',
+    ]);
 }
 
 if (
@@ -77,6 +90,25 @@ $expectedSignature = hash_hmac('sha256', "{$timestamp}\n{$commit}", $secret);
 
 if (! hash_equals($expectedSignature, $signature)) {
     respond(401, ['message' => 'Deployment signature is invalid.']);
+}
+
+if (! is_file($releaseCommitPath)) {
+    respond(409, [
+        'message' => 'Deployment files were uploaded to the wrong directory.',
+        'phase' => 'upload-path',
+        'expected_file' => '.radina-release-commit',
+    ]);
+}
+
+$uploadedCommit = trim((string) file_get_contents($releaseCommitPath));
+
+if (! hash_equals(strtolower($commit), strtolower($uploadedCommit))) {
+    respond(409, [
+        'message' => 'The deployed files do not match the requested commit.',
+        'phase' => 'upload-version',
+        'expected_commit' => $commit,
+        'uploaded_commit' => $uploadedCommit,
+    ]);
 }
 
 $lockPath = $applicationRoot.'/storage/framework/deploy.lock';

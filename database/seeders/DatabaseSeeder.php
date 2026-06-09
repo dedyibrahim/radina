@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::firstOrCreate(
+        $admin = User::firstOrCreate(
             ['email' => 'admin@radina.net'],
             [
                 'name' => 'radina.net Admin',
@@ -22,6 +22,10 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         );
+
+        if (! $admin->isAdmin()) {
+            $admin->forceFill(['role' => User::ROLE_ADMIN])->save();
+        }
 
         $this->call([
             LicenseSeeder::class,

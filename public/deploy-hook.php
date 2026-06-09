@@ -15,6 +15,25 @@ function respond(int $status, array $payload): never
     exit;
 }
 
+function safeError(Throwable $exception): string
+{
+    $message = preg_replace(
+        [
+            '/password=[^;\s)]+/i',
+            '/(DB_PASSWORD|DEPLOY_HOOK_SECRET)=\S+/i',
+            '/mysql:[^"\']+/i',
+        ],
+        [
+            'password=[hidden]',
+            '$1=[hidden]',
+            'mysql:[hidden]',
+        ],
+        $exception->getMessage()
+    );
+
+    return mb_substr((string) $message, 0, 1000);
+}
+
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     respond(405, ['message' => 'Method not allowed.']);
 }
@@ -68,16 +87,20 @@ if ($lockHandle === false || ! flock($lockHandle, LOCK_EX | LOCK_NB)) {
 }
 
 try {
+    $phase = 'cache';
+
     foreach (glob($applicationRoot.'/bootstrap/cache/*.php') ?: [] as $cacheFile) {
         if (! in_array(basename($cacheFile), ['packages.php', 'services.php'], true)) {
             @unlink($cacheFile);
         }
     }
 
+    $phase = 'bootstrap';
     $app = require $applicationRoot.'/bootstrap/app.php';
     $kernel = $app->make(Kernel::class);
     $kernel->bootstrap();
 
+    $phase = 'migration';
     $migrationExitCode = $kernel->call('migrate', [
         '--force' => true,
         '--no-interaction' => true,
@@ -86,10 +109,13 @@ try {
     if ($migrationExitCode !== 0) {
         respond(500, [
             'message' => 'Database migration failed.',
+            'phase' => $phase,
+            'output' => mb_substr(trim($kernel->output()), 0, 2000),
             'commit' => $commit,
         ]);
     }
 
+    $phase = 'seeder';
     $seederExitCode = $kernel->call('db:seed', [
         '--class' => 'Database\\Seeders\\DatabaseSeeder',
         '--force' => true,
@@ -99,6 +125,8 @@ try {
     if ($seederExitCode !== 0) {
         respond(500, [
             'message' => 'Database seeding failed.',
+            'phase' => $phase,
+            'output' => mb_substr(trim($kernel->output()), 0, 2000),
             'commit' => $commit,
         ]);
     }
@@ -116,6 +144,8 @@ try {
 
     respond(500, [
         'message' => 'Deployment database operation failed.',
+        'phase' => $phase ?? 'initialization',
+        'error' => safeError($exception),
         'commit' => $commit,
     ]);
 } finally {

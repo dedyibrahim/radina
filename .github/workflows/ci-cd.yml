@@ -358,15 +358,24 @@ jobs:
           timestamp="$(date +%s)"
           signature="$(printf '%s\n%s' "$timestamp" "$GITHUB_SHA" | openssl dgst -sha256 -hmac "$DEPLOY_HOOK_SECRET" -hex | awk '{print $2}')"
 
-          curl --fail-with-body --show-error --silent \
-            --retry 3 \
-            --retry-all-errors \
+          response_file="$(mktemp)"
+          status_code="$(curl --show-error --silent \
+            --output "$response_file" \
+            --write-out "%{http_code}" \
             --request POST \
             --header "Accept: application/json" \
             --header "X-Deploy-Timestamp: $timestamp" \
             --header "X-Deploy-Commit: $GITHUB_SHA" \
             --header "X-Deploy-Signature: $signature" \
-            "${DEPLOY_URL%/}/deploy-hook.php"
+            "${DEPLOY_URL%/}/deploy-hook.php")"
+
+          cat "$response_file"
+          echo
+
+          if [ "$status_code" -lt 200 ] || [ "$status_code" -ge 300 ]; then
+            echo "::error::Deployment hook gagal dengan HTTP $status_code."
+            exit 1
+          fi
 
       - name: Mark successful production commit
         shell: bash

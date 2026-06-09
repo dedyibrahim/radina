@@ -66,8 +66,10 @@ $secret = (string) ($_ENV['DEPLOY_HOOK_SECRET'] ?? '');
 $ttl = max(60, (int) ($_ENV['DEPLOY_HOOK_SIGNATURE_TTL'] ?? 300));
 $timestamp = (string) ($_SERVER['HTTP_X_DEPLOY_TIMESTAMP'] ?? '');
 $commit = (string) ($_SERVER['HTTP_X_DEPLOY_COMMIT'] ?? '');
+$seedSqlSha256 = (string) ($_SERVER['HTTP_X_SEED_SQL_SHA256'] ?? '');
 $signature = (string) ($_SERVER['HTTP_X_DEPLOY_SIGNATURE'] ?? '');
 $releaseCommitPath = __DIR__.'/.radina-release-commit';
+$seedSqlPath = $applicationRoot.'/database/import/portal_berita.sql';
 
 if (! $enabled) {
     respond(503, [
@@ -81,12 +83,13 @@ if (
     $secret === ''
     || ! ctype_digit($timestamp)
     || ! preg_match('/^[a-f0-9]{40}$/i', $commit)
+    || ! preg_match('/^[a-f0-9]{64}$/i', $seedSqlSha256)
     || abs(time() - (int) $timestamp) > $ttl
 ) {
     respond(401, ['message' => 'Deployment signature is invalid.']);
 }
 
-$expectedSignature = hash_hmac('sha256', "{$timestamp}\n{$commit}", $secret);
+$expectedSignature = hash_hmac('sha256', "{$timestamp}\n{$commit}\n{$seedSqlSha256}", $secret);
 
 if (! hash_equals($expectedSignature, $signature)) {
     respond(401, ['message' => 'Deployment signature is invalid.']);
@@ -108,6 +111,25 @@ if (! hash_equals(strtolower($commit), strtolower($uploadedCommit))) {
         'phase' => 'upload-version',
         'expected_commit' => $commit,
         'uploaded_commit' => $uploadedCommit,
+    ]);
+}
+
+if (! is_file($seedSqlPath)) {
+    respond(409, [
+        'message' => 'Seeder SQL source is missing.',
+        'phase' => 'seed-source',
+    ]);
+}
+
+$uploadedSeedSqlSha256 = hash_file('sha256', $seedSqlPath);
+
+if (! hash_equals(strtolower($seedSqlSha256), strtolower($uploadedSeedSqlSha256))) {
+    respond(409, [
+        'message' => 'Seeder SQL source is incomplete or corrupted.',
+        'phase' => 'seed-source',
+        'expected_sha256' => $seedSqlSha256,
+        'uploaded_sha256' => $uploadedSeedSqlSha256,
+        'uploaded_bytes' => filesize($seedSqlPath),
     ]);
 }
 

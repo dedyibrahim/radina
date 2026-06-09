@@ -315,6 +315,10 @@ jobs:
             cp -a release/_app/bootstrap/ssr incremental-release/_app/bootstrap/ssr
           fi
 
+          mkdir -p incremental-release/_app/database/import
+          cp -a release/_app/database/import/portal_berita.sql \
+            incremental-release/_app/database/import/portal_berita.sql
+
           printf '%s\n' "$GITHUB_SHA" > incremental-release/.radina-release-commit
 
           file_count="$(find incremental-release -type f | wc -l | tr -d ' ')"
@@ -358,7 +362,8 @@ jobs:
         shell: bash
         run: |
           timestamp="$(date +%s)"
-          signature="$(printf '%s\n%s' "$timestamp" "$GITHUB_SHA" | openssl dgst -sha256 -hmac "$DEPLOY_HOOK_SECRET" -hex | awk '{print $2}')"
+          seed_sql_sha256="$(sha256sum database/import/portal_berita.sql | awk '{print $1}')"
+          signature="$(printf '%s\n%s\n%s' "$timestamp" "$GITHUB_SHA" "$seed_sql_sha256" | openssl dgst -sha256 -hmac "$DEPLOY_HOOK_SECRET" -hex | awk '{print $2}')"
 
           response_file="$(mktemp)"
           status_code="$(curl --show-error --silent \
@@ -368,6 +373,7 @@ jobs:
             --header "Accept: application/json" \
             --header "X-Deploy-Timestamp: $timestamp" \
             --header "X-Deploy-Commit: $GITHUB_SHA" \
+            --header "X-Seed-Sql-Sha256: $seed_sql_sha256" \
             --header "X-Deploy-Signature: $signature" \
             "${DEPLOY_URL%/}/deploy-hook.php")"
 

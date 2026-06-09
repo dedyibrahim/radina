@@ -128,6 +128,8 @@ Hook dilindungi HMAC SHA-256, timestamp maksimal lima menit, commit SHA, dan fil
 
 Workflow juga mengunggah `.radina-release-commit` ke folder target. Hook memeriksanya sebelum menyentuh database. Jika folder FTP salah, respons akan menunjukkan fase `upload-path` atau `upload-version`.
 
+File `database/import/portal_berita.sql` selalu diunggah ulang dan diverifikasi dengan SHA-256 sebelum seeder berjalan. Jika transfer FTP terputus atau file terpotong, hook berhenti pada fase `seed-source` tanpa mengubah data.
+
 Migration dan seeder selalu dijalankan otomatis pada deployment production. Workflow berhenti sebelum upload jika `DEPLOY_URL` atau `DEPLOY_HOOK_SECRET` belum dikonfigurasi.
 
 ## Deployment Pertama

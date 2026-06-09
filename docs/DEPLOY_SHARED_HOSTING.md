@@ -43,6 +43,8 @@ Tambahkan secrets berikut pada environment `production`:
 | `FTP_USERNAME` | Username FTP |
 | `FTP_PASSWORD` | Password FTP |
 
+Tidak perlu menambahkan secrets database ke GitHub. Job CI memakai database MySQL sementara di GitHub Actions, sedangkan database production tetap dikonfigurasi hanya melalui `public_html/_app/.env`.
+
 Tambahkan variables berikut:
 
 | Variable | Contoh | Keterangan |

@@ -20,12 +20,22 @@ jobs:
   test:
     name: Test and build
     runs-on: ubuntu-latest
+    env:
+      APP_ENV: testing
+      DB_CONNECTION: mysql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_DATABASE: laravel_testing
+      DB_USERNAME: laravel
+      DB_PASSWORD: laravel
 
     services:
       mysql:
         image: mysql:8.0
         env:
           MYSQL_DATABASE: laravel_testing
+          MYSQL_USER: laravel
+          MYSQL_PASSWORD: laravel
           MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306:3306
@@ -74,23 +84,9 @@ jobs:
         run: npm run build
 
       - name: Run migrations
-        env:
-          DB_CONNECTION: mysql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: php artisan migrate --force
 
       - name: Run automated tests
-        env:
-          DB_CONNECTION: mysql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: php artisan test
 
   deploy:

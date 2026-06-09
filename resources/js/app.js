@@ -6,6 +6,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Radina News';
 const appId = 'app';
+const assetRevision = '2026-06-09-production-recovery';
 
 const resolveInitialPage = () => {
     const legacyRoot = document.getElementById(appId);
@@ -29,6 +30,8 @@ createInertiaApp({
     title: (title) => `${title} | ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
+        el.dataset.assetRevision = assetRevision;
+
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .mount(el);

@@ -130,6 +130,8 @@ Workflow juga mengunggah `.radina-release-commit` ke folder target. Hook memerik
 
 File `database/import/portal_berita.sql` selalu diunggah ulang dan diverifikasi dengan SHA-256 sebelum seeder berjalan. Jika transfer FTP terputus atau file terpotong, hook berhenti pada fase `seed-source` tanpa mengubah data.
 
+Semua file incremental juga dicatat dalam `.radina-release-manifest.json` beserta ukuran dan SHA-256. Hook memverifikasi setiap file sebelum migration. Upload FTP dibatasi dua koneksi paralel agar lebih stabil pada shared hosting. File rusak akan dilaporkan pada fase `release-files`.
+
 Migration dan seeder selalu dijalankan otomatis pada deployment production. Workflow berhenti sebelum upload jika `DEPLOY_URL` atau `DEPLOY_HOOK_SECRET` belum dikonfigurasi.
 
 ## Deployment Pertama

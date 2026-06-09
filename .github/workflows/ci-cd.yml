@@ -319,7 +319,43 @@ jobs:
           cp -a release/_app/database/import/portal_berita.sql \
             incremental-release/_app/database/import/portal_berita.sql
 
+          mkdir -p incremental-release/_app/bootstrap/cache
+          cp -a release/_app/bootstrap/cache/packages.php \
+            incremental-release/_app/bootstrap/cache/packages.php
+          cp -a release/_app/bootstrap/cache/services.php \
+            incremental-release/_app/bootstrap/cache/services.php
+
           printf '%s\n' "$GITHUB_SHA" > incremental-release/.radina-release-commit
+
+          python <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path('incremental-release')
+          files = {}
+
+          for path in sorted(root.rglob('*')):
+              if not path.is_file() or path.name == '.radina-release-manifest.json':
+                  continue
+
+              relative = path.relative_to(root).as_posix()
+              content = path.read_bytes()
+              files[relative] = {
+                  'bytes': len(content),
+                  'sha256': hashlib.sha256(content).hexdigest(),
+              }
+
+          manifest = {
+              'commit': '${{ github.sha }}',
+              'files': files,
+          }
+
+          (root / '.radina-release-manifest.json').write_text(
+              json.dumps(manifest, separators=(',', ':'), sort_keys=True),
+              encoding='utf-8',
+          )
+          PY
 
           file_count="$(find incremental-release -type f | wc -l | tr -d ' ')"
           echo "file_count=$file_count" >> "$GITHUB_OUTPUT"
@@ -353,7 +389,7 @@ jobs:
           set net:timeout 20
           $FTP_TLS_SETTINGS
           open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER"
-          mirror --reverse --verbose --parallel=8 \
+          mirror --reverse --verbose --parallel=2 \
             incremental-release/ "$FTP_SERVER_DIR"
           bye
           LFTP
@@ -363,7 +399,8 @@ jobs:
         run: |
           timestamp="$(date +%s)"
           seed_sql_sha256="$(sha256sum database/import/portal_berita.sql | awk '{print $1}')"
-          signature="$(printf '%s\n%s\n%s' "$timestamp" "$GITHUB_SHA" "$seed_sql_sha256" | openssl dgst -sha256 -hmac "$DEPLOY_HOOK_SECRET" -hex | awk '{print $2}')"
+          release_manifest_sha256="$(sha256sum incremental-release/.radina-release-manifest.json | awk '{print $1}')"
+          signature="$(printf '%s\n%s\n%s\n%s' "$timestamp" "$GITHUB_SHA" "$seed_sql_sha256" "$release_manifest_sha256" | openssl dgst -sha256 -hmac "$DEPLOY_HOOK_SECRET" -hex | awk '{print $2}')"
 
           response_file="$(mktemp)"
           status_code="$(curl --show-error --silent \
@@ -374,6 +411,7 @@ jobs:
             --header "X-Deploy-Timestamp: $timestamp" \
             --header "X-Deploy-Commit: $GITHUB_SHA" \
             --header "X-Seed-Sql-Sha256: $seed_sql_sha256" \
+            --header "X-Release-Manifest-Sha256: $release_manifest_sha256" \
             --header "X-Deploy-Signature: $signature" \
             "${DEPLOY_URL%/}/deploy-hook.php")"
 

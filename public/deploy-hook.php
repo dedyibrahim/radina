@@ -67,8 +67,10 @@ $ttl = max(60, (int) ($_ENV['DEPLOY_HOOK_SIGNATURE_TTL'] ?? 300));
 $timestamp = (string) ($_SERVER['HTTP_X_DEPLOY_TIMESTAMP'] ?? '');
 $commit = (string) ($_SERVER['HTTP_X_DEPLOY_COMMIT'] ?? '');
 $seedSqlSha256 = (string) ($_SERVER['HTTP_X_SEED_SQL_SHA256'] ?? '');
+$releaseManifestSha256 = (string) ($_SERVER['HTTP_X_RELEASE_MANIFEST_SHA256'] ?? '');
 $signature = (string) ($_SERVER['HTTP_X_DEPLOY_SIGNATURE'] ?? '');
 $releaseCommitPath = __DIR__.'/.radina-release-commit';
+$releaseManifestPath = __DIR__.'/.radina-release-manifest.json';
 $seedSqlPath = $applicationRoot.'/database/import/portal_berita.sql';
 
 if (! $enabled) {
@@ -84,12 +86,17 @@ if (
     || ! ctype_digit($timestamp)
     || ! preg_match('/^[a-f0-9]{40}$/i', $commit)
     || ! preg_match('/^[a-f0-9]{64}$/i', $seedSqlSha256)
+    || ! preg_match('/^[a-f0-9]{64}$/i', $releaseManifestSha256)
     || abs(time() - (int) $timestamp) > $ttl
 ) {
     respond(401, ['message' => 'Deployment signature is invalid.']);
 }
 
-$expectedSignature = hash_hmac('sha256', "{$timestamp}\n{$commit}\n{$seedSqlSha256}", $secret);
+$expectedSignature = hash_hmac(
+    'sha256',
+    "{$timestamp}\n{$commit}\n{$seedSqlSha256}\n{$releaseManifestSha256}",
+    $secret
+);
 
 if (! hash_equals($expectedSignature, $signature)) {
     respond(401, ['message' => 'Deployment signature is invalid.']);
@@ -112,6 +119,66 @@ if (! hash_equals(strtolower($commit), strtolower($uploadedCommit))) {
         'expected_commit' => $commit,
         'uploaded_commit' => $uploadedCommit,
     ]);
+}
+
+if (! is_file($releaseManifestPath)) {
+    respond(409, [
+        'message' => 'Release manifest is missing.',
+        'phase' => 'release-files',
+    ]);
+}
+
+$uploadedManifestSha256 = hash_file('sha256', $releaseManifestPath);
+
+if (! hash_equals(strtolower($releaseManifestSha256), strtolower($uploadedManifestSha256))) {
+    respond(409, [
+        'message' => 'Release manifest is incomplete or corrupted.',
+        'phase' => 'release-files',
+    ]);
+}
+
+$releaseManifest = json_decode((string) file_get_contents($releaseManifestPath), true);
+
+if (
+    ! is_array($releaseManifest)
+    || ($releaseManifest['commit'] ?? null) !== $commit
+    || ! is_array($releaseManifest['files'] ?? null)
+) {
+    respond(409, [
+        'message' => 'Release manifest is invalid.',
+        'phase' => 'release-files',
+    ]);
+}
+
+foreach ($releaseManifest['files'] as $relativePath => $metadata) {
+    if (
+        ! is_string($relativePath)
+        || str_contains($relativePath, '..')
+        || str_starts_with($relativePath, '/')
+        || ! is_array($metadata)
+    ) {
+        respond(409, [
+            'message' => 'Release manifest contains an invalid path.',
+            'phase' => 'release-files',
+        ]);
+    }
+
+    $deployedFile = __DIR__.'/'.str_replace('/', DIRECTORY_SEPARATOR, $relativePath);
+    $expectedBytes = (int) ($metadata['bytes'] ?? -1);
+    $expectedSha256 = (string) ($metadata['sha256'] ?? '');
+
+    if (
+        ! is_file($deployedFile)
+        || filesize($deployedFile) !== $expectedBytes
+        || ! preg_match('/^[a-f0-9]{64}$/i', $expectedSha256)
+        || ! hash_equals(strtolower($expectedSha256), strtolower(hash_file('sha256', $deployedFile)))
+    ) {
+        respond(409, [
+            'message' => 'A deployed file is incomplete or corrupted.',
+            'phase' => 'release-files',
+            'file' => $relativePath,
+        ]);
+    }
 }
 
 if (! is_file($seedSqlPath)) {
@@ -147,6 +214,10 @@ try {
         if (! in_array(basename($cacheFile), ['packages.php', 'services.php'], true)) {
             @unlink($cacheFile);
         }
+    }
+
+    foreach (glob($applicationRoot.'/storage/framework/views/*.php') ?: [] as $compiledView) {
+        @unlink($compiledView);
     }
 
     $phase = 'bootstrap';

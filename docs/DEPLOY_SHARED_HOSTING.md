@@ -48,7 +48,6 @@ Tambahkan variables:
 | `FTP_PROTOCOL` | `ftp` atau `ftps` | Protokol server |
 | `FTP_SERVER_DIR` | `/public_html/` | Folder web utama pada koneksi FTP |
 | `DEPLOY_URL` | `https://domainanda.com` | URL production tanpa garis miring di akhir |
-| `DEPLOY_HOOK_ENABLED` | `true` | Menjalankan migrasi otomatis setelah upload |
 
 Jika akun FTP langsung membuka isi `public_html`, gunakan `/` sebagai `FTP_SERVER_DIR`.
 
@@ -121,11 +120,7 @@ Simpan nilai yang sama pada:
 
 Hook dilindungi HMAC SHA-256, timestamp maksimal lima menit, commit SHA, dan file lock untuk mencegah deployment paralel. `DEPLOY_URL` wajib HTTPS dan secret tidak dikirim dalam request.
 
-Untuk menonaktifkan migrasi otomatis, ubah GitHub variable dan `.env`:
-
-```dotenv
-DEPLOY_HOOK_ENABLED=false
-```
+Migration dan seeder selalu dijalankan otomatis pada deployment production. Workflow berhenti sebelum upload jika `DEPLOY_URL` atau `DEPLOY_HOOK_SECRET` belum dikonfigurasi.
 
 ## Deployment Pertama
 

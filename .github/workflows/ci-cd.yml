@@ -175,6 +175,21 @@ jobs:
           find release/_app/storage -type d -exec chmod 775 {} \;
           find release/_app/bootstrap/cache -type d -exec chmod 775 {} \;
 
+      - name: Create production ZIP package
+        shell: bash
+        run: |
+          cd release
+          zip -q -r ../radina-production.zip .
+
+      - name: Upload production ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: radina-production-${{ github.sha }}
+          path: radina-production.zip
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
+
       - name: Upload application using FTP
         shell: bash
         run: |
@@ -205,6 +220,7 @@ jobs:
           mirror --reverse --delete --verbose --parallel=4 \
             --exclude-glob "_app/.env" \
             --exclude-glob "_app/.env.*" \
+            --exclude-glob "_app/vendor/**" \
             --exclude-glob "storage" \
             --exclude-glob "storage/**" \
             --exclude-glob "_app/storage/app/public/**" \

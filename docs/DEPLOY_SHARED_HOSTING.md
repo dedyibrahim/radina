@@ -106,9 +106,13 @@ Salin nilai `APP_KEY` dari `.env` lokal ke `public_html/_app/.env`. Jangan mengg
 2. Konfigurasikan GitHub Environment dan secrets.
 3. Pastikan `FTP_SERVER_DIR` menunjuk ke `/public_html/`, atau `/` jika login FTP langsung berada di folder tersebut.
 4. Buka tab `Actions`, pilih `CI/CD Shared Hosting`, lalu klik `Run workflow`.
-5. Upload `.env` production ke `public_html/_app/.env`.
-6. Import struktur/data database secara manual melalui phpMyAdmin.
-7. Atur permission `public_html/_app/storage` dan `public_html/_app/bootstrap/cache` menjadi `775` melalui File Manager atau FTP jika hosting memerlukannya.
+5. Setelah workflow selesai, download artifact `radina-production-...` dari halaman workflow.
+6. Ekstrak artifact hingga mendapatkan `radina-production.zip`.
+7. Upload satu file `radina-production.zip` ke `public_html` melalui File Manager cPanel, kemudian pilih **Extract**.
+8. Hapus `radina-production.zip` dari hosting setelah ekstraksi berhasil.
+9. Upload `.env` production ke `public_html/_app/.env`.
+10. Import struktur/data database secara manual melalui phpMyAdmin.
+11. Atur permission `public_html/_app/storage` dan `public_html/_app/bootstrap/cache` menjadi `775` melalui File Manager atau FTP jika hosting memerlukannya.
 
 Seeder dan migrasi Artisan tidak dijalankan otomatis karena deployment ini tidak memakai SSH.
 
@@ -119,10 +123,13 @@ Setiap push ke branch `main` akan:
 1. Menjalankan seluruh test dengan MySQL.
 2. Membangun frontend production.
 3. Menginstal dependency Composer tanpa paket development.
-4. Mengunggah perubahan melalui FTP/FTPS.
-5. Menampilkan pengingat untuk memeriksa `.env` dan migrasi database manual.
+4. Menyediakan ZIP production sebagai artifact selama 7 hari.
+5. Mengunggah perubahan aplikasi melalui FTP/FTPS tanpa mengirim ulang folder `vendor`.
+6. Menampilkan pengingat untuk memeriksa `.env` dan migrasi database manual.
 
 File `_app/.env`, upload pengguna, session, cache runtime, dan log tidak akan dihapus oleh proses sinkronisasi FTP.
+
+Folder `_app/vendor` sengaja tidak dikirim pada deployment FTP berikutnya karena berisi ribuan file dan sangat lambat di shared hosting. Jika `composer.lock` berubah, download artifact ZIP terbaru lalu upload dan ekstrak kembali melalui File Manager cPanel agar dependency production ikut diperbarui.
 
 ## Rollback
 

@@ -2,6 +2,11 @@
 
 return [
 
+    'google_analytics' => [
+        'measurement_id' => env('GOOGLE_ANALYTICS_ID', 'G-7BZHBM3W8L'),
+        'enabled' => env('GOOGLE_ANALYTICS_ENABLED', env('APP_ENV') === 'production'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Third Party Services

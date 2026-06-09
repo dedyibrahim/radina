@@ -1,12 +1,22 @@
 import './bootstrap';
 
 import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/vue3';
+import { createInertiaApp, router } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Radina News';
 const appId = 'app';
 const assetRevision = '2026-06-09-production-recovery';
+const googleAnalyticsId = document.querySelector('meta[name="google-analytics-id"]')?.content;
+
+if (googleAnalyticsId) {
+    router.on('navigate', () => {
+        window.gtag?.('config', googleAnalyticsId, {
+            page_location: window.location.href,
+            page_path: window.location.pathname + window.location.search,
+        });
+    });
+}
 
 const resolveInitialPage = () => {
     const legacyRoot = document.getElementById(appId);

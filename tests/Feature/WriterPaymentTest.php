@@ -24,7 +24,7 @@ class WriterPaymentTest extends TestCase
     public function test_writer_is_credited_once_after_article_is_approved_and_fact_verified(): void
     {
         $admin = User::where('email', 'admin@radina.net')->firstOrFail();
-        $writer = User::where('email', 'nadia@radina.net')->firstOrFail();
+        $writer = User::where('email', 'shara@radina.net')->firstOrFail();
         $category = NewsCategory::firstOrFail();
 
         $writer->update(['article_fee' => 60000]);
@@ -86,14 +86,14 @@ class WriterPaymentTest extends TestCase
 
     public function test_writer_can_save_bank_account_and_withdraw_when_balance_reaches_minimum(): void
     {
-        $writer = User::where('email', 'nadia@radina.net')->firstOrFail();
+        $writer = User::where('email', 'shara@radina.net')->firstOrFail();
 
         $this
             ->actingAs($writer)
             ->patch(route('writer.bank.update'), [
                 'bank_name' => 'BCA',
                 'bank_account_number' => '9876543210',
-                'bank_account_holder' => 'Nadia Pramesti',
+                'bank_account_holder' => 'Shara',
             ])
             ->assertRedirect(route('dashboard', ['section' => 'bank']));
 
@@ -116,7 +116,7 @@ class WriterPaymentTest extends TestCase
 
     public function test_withdrawal_below_minimum_is_rejected(): void
     {
-        $writer = User::where('email', 'nadia@radina.net')->firstOrFail();
+        $writer = User::where('email', 'shara@radina.net')->firstOrFail();
 
         $this
             ->actingAs($writer)
@@ -133,9 +133,10 @@ class WriterPaymentTest extends TestCase
     {
         $admin = User::where('email', 'admin@radina.net')->firstOrFail();
         $article = NewsArticle::whereHas('earning')->firstOrFail();
-        $otherWriter = User::where('role', User::ROLE_WRITER)
-            ->whereKeyNot($article->user_id)
-            ->firstOrFail();
+        $otherWriter = User::factory()->create([
+            'role' => User::ROLE_WRITER,
+            'name' => 'Penulis Alternatif',
+        ]);
 
         $this
             ->actingAs($admin)
@@ -150,7 +151,7 @@ class WriterPaymentTest extends TestCase
     public function test_admin_approves_withdrawal_before_marking_it_paid(): void
     {
         $admin = User::where('email', 'admin@radina.net')->firstOrFail();
-        $writer = User::where('email', 'nadia@radina.net')->firstOrFail();
+        $writer = User::where('email', 'shara@radina.net')->firstOrFail();
         $withdrawal = WriterWithdrawal::create([
             'user_id' => $writer->id,
             'amount' => 50000,

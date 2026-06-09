@@ -100,7 +100,12 @@ Jika belum memiliki `APP_KEY`, jalankan `php artisan key:generate` dari komputer
 
 ## Migrasi Otomatis Tanpa SSH
 
-Setelah upload FTP selesai, GitHub Actions memanggil `/api/deploy/migrate`. Endpoint menjalankan `php artisan migrate --force` dari aplikasi.
+Setelah upload FTP selesai, GitHub Actions memanggil `/deploy-hook.php`. Hook mandiri membersihkan cache konfigurasi/route lama, kemudian menjalankan:
+
+```bash
+php artisan migrate --force
+php artisan db:seed --class=Database\\Seeders\\DatabaseSeeder --force
+```
 
 Buat secret acak:
 
@@ -113,7 +118,7 @@ Simpan nilai yang sama pada:
 1. GitHub Environment secret `DEPLOY_HOOK_SECRET`.
 2. `public_html/_app/.env` pada `DEPLOY_HOOK_SECRET`.
 
-Hook dilindungi HMAC SHA-256, timestamp maksimal lima menit, commit SHA, rate limit, dan lock untuk mencegah migrasi paralel. `DEPLOY_URL` wajib HTTPS dan secret tidak dikirim dalam request.
+Hook dilindungi HMAC SHA-256, timestamp maksimal lima menit, commit SHA, dan file lock untuk mencegah deployment paralel. `DEPLOY_URL` wajib HTTPS dan secret tidak dikirim dalam request.
 
 Untuk menonaktifkan migrasi otomatis, ubah GitHub variable dan `.env`:
 
@@ -134,7 +139,7 @@ DEPLOY_HOOK_ENABLED=false
 9. Pastikan permission `_app/storage` dan `_app/bootstrap/cache` dapat ditulis PHP.
 10. Jalankan kembali workflow agar deployment hook menjalankan migrasi pertama.
 
-Seeder tidak dijalankan otomatis. Untuk data awal, import SQL melalui phpMyAdmin atau jalankan seeder dari fasilitas yang disediakan hosting.
+Seeder berjalan otomatis setelah migration. Prosesnya idempotent: password admin existing tidak direset, lisensi existing tidak ditimpa, dan artikel portal diarahkan ke akun Shara.
 
 ## Deployment Berikutnya
 
@@ -146,8 +151,8 @@ Setiap push ke `main` akan:
 4. Membaca marker commit production `.radina-deploy-commit`.
 5. Membuat staging yang hanya berisi file berubah sejak deployment berhasil terakhir.
 6. Mengunggah staging melalui FTP tanpa `--delete` dan tanpa memindai seluruh release.
-7. Memperbarui marker commit setelah file berhasil diunggah.
-8. Menjalankan migrasi production melalui HTTPS.
+7. Menjalankan migration dan seeder production melalui HTTPS.
+8. Memperbarui marker commit hanya setelah seluruh deployment berhasil.
 
 File `_app/.env`, upload pengguna, session, cache runtime, dan log tidak dihapus oleh sinkronisasi FTP.
 

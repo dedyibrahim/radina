@@ -359,8 +359,6 @@ jobs:
           open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER"
           mirror --reverse --verbose --parallel=8 \
             incremental-release/ "$FTP_SERVER_DIR"
-          cd "$FTP_SERVER_DIR"
-          put /tmp/radina-current-commit -o .radina-deploy-commit
           bye
           LFTP
 
@@ -379,9 +377,35 @@ jobs:
             --header "X-Deploy-Timestamp: $timestamp" \
             --header "X-Deploy-Commit: $GITHUB_SHA" \
             --header "X-Deploy-Signature: $signature" \
-            "${DEPLOY_URL%/}/api/deploy/migrate"
+            "${DEPLOY_URL%/}/deploy-hook.php"
 
       - name: Show manual finalization notice
         if: env.DEPLOY_HOOK_ENABLED != 'true'
         run: |
           echo "::notice::Upload ke public_html selesai. Pastikan public_html/_app/.env tersedia dan jalankan migrasi database secara manual."
+
+      - name: Mark successful production commit
+        shell: bash
+        run: |
+          if [ "$FTP_PROTOCOL" = "ftp" ]; then
+            FTP_TLS_SETTINGS="
+          set ftp:ssl-allow false
+          set ftp:ssl-force false"
+          else
+            FTP_TLS_SETTINGS="
+          set ftp:ssl-allow true
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set ssl:verify-certificate true"
+          fi
+
+          lftp <<LFTP
+          set cmd:fail-exit yes
+          set net:max-retries 3
+          set net:timeout 20
+          $FTP_TLS_SETTINGS
+          open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER"
+          cd "$FTP_SERVER_DIR"
+          put /tmp/radina-current-commit -o .radina-deploy-commit
+          bye
+          LFTP

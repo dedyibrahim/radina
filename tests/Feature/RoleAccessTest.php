@@ -21,7 +21,7 @@ class RoleAccessTest extends TestCase
 
     public function test_writer_dashboard_only_exposes_writing_features(): void
     {
-        $writer = User::where('email', 'nadia@radina.net')->firstOrFail();
+        $writer = User::where('email', 'shara@radina.net')->firstOrFail();
 
         $this
             ->actingAs($writer)
@@ -40,7 +40,7 @@ class RoleAccessTest extends TestCase
 
     public function test_writer_cannot_access_admin_management_routes(): void
     {
-        $writer = User::where('email', 'nadia@radina.net')->firstOrFail();
+        $writer = User::where('email', 'shara@radina.net')->firstOrFail();
         $category = NewsCategory::firstOrFail();
 
         $this->actingAs($writer)->get(route('admin.news.index'))->assertForbidden();
@@ -52,7 +52,7 @@ class RoleAccessTest extends TestCase
 
     public function test_writer_submissions_are_always_saved_as_drafts(): void
     {
-        $writer = User::where('email', 'nadia@radina.net')->firstOrFail();
+        $writer = User::where('email', 'shara@radina.net')->firstOrFail();
         $category = NewsCategory::firstOrFail();
 
         $this

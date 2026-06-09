@@ -238,7 +238,7 @@ Repository menyediakan GitHub Actions untuk menjalankan test, build production, 
 
 Deployment pertama menggunakan artifact ZIP agar folder `vendor` tidak ditransfer satu per satu. Deployment FTP berikutnya tidak mengunggah ulang `vendor`.
 
-Pada hosting tanpa SSH, migrasi production dapat dijalankan otomatis melalui deployment hook HTTPS dengan signature HMAC.
+Pada hosting tanpa SSH, migration dan seeder production dijalankan otomatis melalui deployment hook HTTPS dengan signature HMAC.
 
 Panduan konfigurasi GitHub Secrets, target `public_html`, `.env`, dan deployment pertama tersedia di:
 

@@ -94,7 +94,7 @@ class NewsPortalSeeder extends Seeder
                     return;
                 }
 
-                $author = $authors[$index % $authors->count()];
+                $author = $authors->first();
                 $title = $this->cleanPlainText($post['post_title']);
                 $content = $this->cleanContent($post['post_content']);
                 $excerpt = $this->cleanExcerpt($post['post_teaser'], $content);
@@ -163,7 +163,11 @@ class NewsPortalSeeder extends Seeder
                 }
 
                 $article->tags()->sync($articleTagIds->all());
-                app(WriterPaymentService::class)->creditArticleIfEligible($article);
+                $earning = app(WriterPaymentService::class)->creditArticleIfEligible($article);
+
+                if ($earning && $earning->user_id !== $article->user_id) {
+                    $earning->update(['user_id' => $article->user_id]);
+                }
             });
 
         $this->removeUnusedPreviousCategories();
@@ -172,23 +176,23 @@ class NewsPortalSeeder extends Seeder
     private function seedAuthors()
     {
         return collect([
-            ['name' => 'Nadia Pramesti', 'email' => 'nadia@radina.net', 'article_fee' => 30000, 'bank_name' => 'BCA', 'bank_account_number' => '1234567890'],
-            ['name' => 'Rafi Adhitama', 'email' => 'rafi@radina.net', 'article_fee' => 27500, 'bank_name' => 'BRI', 'bank_account_number' => '2345678901'],
-            ['name' => 'Alya Salsabila', 'email' => 'alya@radina.net', 'article_fee' => 25000, 'bank_name' => 'Mandiri', 'bank_account_number' => '3456789012'],
-            ['name' => 'Dimas Wicaksono', 'email' => 'dimas@radina.net', 'article_fee' => 25000, 'bank_name' => 'BNI', 'bank_account_number' => '4567890123'],
-        ])->map(fn (array $author) => User::updateOrCreate(
-            ['email' => $author['email']],
-            [
-                'name' => $author['name'],
-                'role' => User::ROLE_WRITER,
-                'article_fee' => $author['article_fee'],
-                'bank_name' => $author['bank_name'],
-                'bank_account_number' => $author['bank_account_number'],
-                'bank_account_holder' => $author['name'],
-                'password' => Hash::make('Editor@12345'),
-                'email_verified_at' => now(),
-            ]
-        ));
+            User::firstOrCreate(
+                ['email' => 'shara@radina.net'],
+                [
+                    'name' => 'Shara',
+                    'role' => User::ROLE_WRITER,
+                    'article_fee' => 25000,
+                    'password' => Hash::make('Editor@12345'),
+                    'email_verified_at' => now(),
+                ]
+            ),
+        ])->map(function (User $author): User {
+            if (! $author->isWriter()) {
+                $author->forceFill(['role' => User::ROLE_WRITER])->save();
+            }
+
+            return $author;
+        });
     }
 
     private function removePreviousDummyArticles(): void

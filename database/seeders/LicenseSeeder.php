@@ -43,7 +43,7 @@ class LicenseSeeder extends Seeder
         ];
 
         foreach ($licenses as $item) {
-            License::updateOrCreate(['key' => $item['key']], $item);
+            License::firstOrCreate(['key' => $item['key']], $item);
         }
     }
 }

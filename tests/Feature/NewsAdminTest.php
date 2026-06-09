@@ -72,7 +72,7 @@ class NewsAdminTest extends TestCase
             ->assertInertia(fn ($page) => $page
                 ->component('Admin/Dashboard')
                 ->has('categories', 7)
-                ->has('articleAuthors', 5)
+                ->has('articleAuthors', 2)
                 ->has('recentNews')
                 ->has('licenses.data')
                 ->where('activeSection', 'news')
@@ -140,8 +140,11 @@ class NewsAdminTest extends TestCase
     public function test_admin_can_create_and_reassign_article_to_another_writer(): void
     {
         $admin = User::where('email', 'admin@radina.net')->firstOrFail();
-        $firstWriter = User::where('email', 'nadia@radina.net')->firstOrFail();
-        $secondWriter = User::where('email', 'rafi@radina.net')->firstOrFail();
+        $firstWriter = User::where('email', 'shara@radina.net')->firstOrFail();
+        $secondWriter = User::factory()->create([
+            'role' => User::ROLE_WRITER,
+            'name' => 'Penulis Kedua',
+        ]);
         $category = NewsCategory::firstOrFail();
 
         $this

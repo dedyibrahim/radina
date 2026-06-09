@@ -8,7 +8,7 @@ Radina News adalah platform portal berita berbasis Laravel dan Inertia.js. Aplik
 - Laravel 10
 - MySQL
 - Inertia.js
-- Vue 3
+- Vue 3s
 - Tailwind CSS
 - Vite
 - Server-side rendering Inertia

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EFF6FF"/>
+      <stop offset="1" stop-color="#ECFEFF"/>
+    </linearGradient>
+    <linearGradient id="step" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F8FAFC"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#0F172A" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="760" rx="34" fill="url(#bg)"/>
+  <text x="600" y="90" text-anchor="middle" font-size="38" font-family="Segoe UI, Arial, sans-serif" font-weight="800" fill="#0F172A">Workflow Garis Akta Notaris</text>
+  <text x="600" y="126" text-anchor="middle" font-size="20" font-family="Segoe UI, Arial, sans-serif" font-weight="500" fill="#334155">Alur kerja yang cepat dari dokumen masuk sampai hasil final</text>
+
+  <g filter="url(#shadow)">
+    <rect x="90" y="188" width="222" height="268" rx="24" fill="url(#step)"/>
+    <circle cx="201" cy="240" r="32" fill="#0EA5E9"/>
+    <text x="201" y="249" text-anchor="middle" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="800" fill="white">1</text>
+    <text x="201" y="304" text-anchor="middle" font-size="23" font-family="Segoe UI, Arial, sans-serif" font-weight="700" fill="#0F172A">Load Dokumen</text>
+    <text x="201" y="340" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#475569">PDF / DOCX / DOC</text>
+    <text x="201" y="366" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#475569">masuk ke editor</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="348" y="188" width="222" height="268" rx="24" fill="url(#step)"/>
+    <circle cx="459" cy="240" r="32" fill="#06B6D4"/>
+    <text x="459" y="249" text-anchor="middle" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="800" fill="white">2</text>
+    <text x="459" y="304" text-anchor="middle" font-size="23" font-family="Segoe UI, Arial, sans-serif" font-weight="700" fill="#0F172A">Atur Garis</text>
+    <text x="459" y="340" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#475569">Preset kemiringan</text>
+    <text x="459" y="366" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#475569">atau custom</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="606" y="188" width="222" height="268" rx="24" fill="url(#step)"/>
+    <circle cx="717" cy="240" r="32" fill="#2563EB"/>
+    <text x="717" y="249" text-anchor="middle" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="800" fill="white">3</text>
+    <text x="717" y="304" text-anchor="middle" font-size="23" font-family="Segoe UI, Arial, sans-serif" font-weight="700" fill="#0F172A">Preview QC</text>
+    <text x="717" y="340" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#475569">Cek halaman dan</text>
+    <text x="717" y="366" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#475569">akurasi posisi garis</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="864" y="188" width="222" height="268" rx="24" fill="url(#step)"/>
+    <circle cx="975" cy="240" r="32" fill="#16A34A"/>
+    <text x="975" y="249" text-anchor="middle" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="800" fill="white">4</text>
+    <text x="975" y="304" text-anchor="middle" font-size="23" font-family="Segoe UI, Arial, sans-serif" font-weight="700" fill="#0F172A">Export Final</text>
+    <text x="975" y="340" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#475569">Simpan ke PDF / DOCX</text>
+    <text x="975" y="366" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#475569">siap kirim ke klien</text>
+  </g>
+
+  <path d="M312 322H338" stroke="#38BDF8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M570 322H596" stroke="#38BDF8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M828 322H854" stroke="#38BDF8" stroke-width="10" stroke-linecap="round"/>
+
+  <rect x="160" y="530" width="880" height="146" rx="24" fill="#0F172A"/>
+  <text x="600" y="586" text-anchor="middle" font-size="28" font-family="Segoe UI, Arial, sans-serif" font-weight="700" fill="#F8FAFC">Hasil Lebih Rapi, Waktu Proses Lebih Cepat</text>
+  <text x="600" y="624" text-anchor="middle" font-size="18" font-family="Segoe UI, Arial, sans-serif" fill="#CBD5E1">Dirancang khusus untuk kebutuhan operasional notaris modern.</text>
+</svg>

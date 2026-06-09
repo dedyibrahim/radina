@@ -1,0 +1,43 @@
+{
+  "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
+  "resources/js/Components/ArticleCard.vue": [
+    "/build/assets/ArticleCard-8kgce7ST.js"
+  ],
+  "resources/js/Components/PaginationLinks.vue": [
+    "/build/assets/PaginationLinks-DDGWEAke.js"
+  ],
+  "resources/js/Components/SectionHeader.vue": [
+    "/build/assets/Home-C2MGhybb.js"
+  ],
+  "resources/js/Components/SeoHead.vue": [
+    "/build/assets/SeoHead-B3gH-eD3.js"
+  ],
+  "resources/js/Composables/useNewsLocale.js": [
+    "/build/assets/NewsLayout-DM3H2upC.js"
+  ],
+  "resources/js/Layouts/AdminLayout.vue": [
+    "/build/assets/Dashboard-DBVM9fsZ.js"
+  ],
+  "resources/js/Layouts/NewsLayout.vue": [
+    "/build/assets/NewsLayout-DM3H2upC.js"
+  ],
+  "resources/js/Pages/Admin/Dashboard.vue": [
+    "/build/assets/Dashboard-DBVM9fsZ.js"
+  ],
+  "resources/js/Pages/Admin/NewsManager.vue": [
+    "/build/assets/NewsManager-CPK1J2bG.js"
+  ],
+  "resources/js/Pages/News/About.vue": [
+    "/build/assets/About-BR4QqSoe.js"
+  ],
+  "resources/js/Pages/News/Archive.vue": [
+    "/build/assets/Archive-CF08YE5o.js"
+  ],
+  "resources/js/Pages/News/ArticleShow.vue": [
+    "/build/assets/ArticleShow-D0CP4-Kp.js"
+  ],
+  "resources/js/Pages/News/Home.vue": [
+    "/build/assets/Home-C2MGhybb.js"
+  ],
+  "resources/js/ssr.js": []
+}

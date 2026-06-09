@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="860" viewBox="0 0 1400 860" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1400" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EAF7FF"/>
+      <stop offset="1" stop-color="#D7F3FF"/>
+    </linearGradient>
+    <linearGradient id="toolbar" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#0F172A" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="1400" height="860" rx="40" fill="url(#bg)"/>
+  <circle cx="210" cy="170" r="120" fill="#BAE6FD" opacity="0.55"/>
+  <circle cx="1240" cy="120" r="90" fill="#67E8F9" opacity="0.5"/>
+  <circle cx="1180" cy="720" r="130" fill="#CFFAFE" opacity="0.75"/>
+
+  <g filter="url(#shadow)">
+    <rect x="120" y="90" width="1160" height="680" rx="28" fill="#F8FAFC"/>
+    <rect x="120" y="90" width="1160" height="68" rx="28" fill="url(#toolbar)"/>
+    <rect x="120" y="130" width="1160" height="28" fill="url(#toolbar)"/>
+    <rect x="154" y="112" width="14" height="14" rx="7" fill="#BFDBFE"/>
+    <rect x="178" y="112" width="14" height="14" rx="7" fill="#DBEAFE"/>
+    <rect x="202" y="112" width="14" height="14" rx="7" fill="#93C5FD"/>
+    <text x="700" y="132" text-anchor="middle" font-size="27" font-family="Segoe UI, Arial, sans-serif" font-weight="700" fill="white">Sistem Garis Akta Notaris Digital</text>
+
+    <rect x="150" y="184" width="220" height="548" rx="18" fill="#E2E8F0"/>
+    <rect x="168" y="206" width="184" height="40" rx="10" fill="#DBEAFE"/>
+    <rect x="168" y="258" width="184" height="132" rx="12" fill="white"/>
+    <rect x="168" y="402" width="184" height="132" rx="12" fill="white"/>
+    <rect x="168" y="546" width="184" height="132" rx="12" fill="white"/>
+    <rect x="190" y="292" width="140" height="4" rx="2" fill="#CBD5E1"/>
+    <rect x="190" y="304" width="126" height="4" rx="2" fill="#CBD5E1"/>
+    <rect x="190" y="316" width="132" height="4" rx="2" fill="#CBD5E1"/>
+    <rect x="190" y="436" width="132" height="4" rx="2" fill="#CBD5E1"/>
+    <rect x="190" y="448" width="120" height="4" rx="2" fill="#CBD5E1"/>
+    <rect x="190" y="460" width="136" height="4" rx="2" fill="#CBD5E1"/>
+    <rect x="190" y="580" width="132" height="4" rx="2" fill="#CBD5E1"/>
+    <rect x="190" y="592" width="118" height="4" rx="2" fill="#CBD5E1"/>
+    <rect x="190" y="604" width="136" height="4" rx="2" fill="#CBD5E1"/>
+
+    <rect x="394" y="184" width="858" height="548" rx="18" fill="#EEF2F7"/>
+
+    <rect x="616" y="236" width="414" height="440" rx="8" fill="#FFFFFF"/>
+    <rect x="664" y="282" width="268" height="5" rx="2.5" fill="#CBD5E1"/>
+    <rect x="664" y="302" width="240" height="5" rx="2.5" fill="#CBD5E1"/>
+    <rect x="664" y="322" width="248" height="5" rx="2.5" fill="#CBD5E1"/>
+    <rect x="664" y="342" width="255" height="5" rx="2.5" fill="#CBD5E1"/>
+    <rect x="664" y="362" width="236" height="5" rx="2.5" fill="#CBD5E1"/>
+    <rect x="664" y="382" width="252" height="5" rx="2.5" fill="#CBD5E1"/>
+    <rect x="664" y="402" width="232" height="5" rx="2.5" fill="#CBD5E1"/>
+    <rect x="664" y="422" width="264" height="5" rx="2.5" fill="#CBD5E1"/>
+    <rect x="664" y="442" width="242" height="5" rx="2.5" fill="#CBD5E1"/>
+    <rect x="664" y="462" width="258" height="5" rx="2.5" fill="#CBD5E1"/>
+    <rect x="664" y="482" width="236" height="5" rx="2.5" fill="#CBD5E1"/>
+
+    <rect x="642" y="270" width="5" height="240" rx="2.5" fill="#EF4444"/>
+    <rect x="642" y="266" width="22" height="4" rx="2" fill="#22C55E"/>
+    <rect x="642" y="510" width="22" height="4" rx="2" fill="#22C55E"/>
+    <rect x="643" y="338" width="5" height="190" rx="2.5" fill="#EF4444"/>
+    <rect x="643" y="334" width="20" height="4" rx="2" fill="#22C55E"/>
+    <rect x="643" y="528" width="20" height="4" rx="2" fill="#22C55E"/>
+
+    <rect x="1080" y="286" width="142" height="310" rx="24" fill="#0F172A"/>
+    <rect x="1110" y="326" width="82" height="82" rx="41" fill="#2563EB"/>
+    <text x="1151" y="377" text-anchor="middle" font-size="46" font-family="Segoe UI, Arial, sans-serif" font-weight="700" fill="white">+</text>
+    <text x="1151" y="447" text-anchor="middle" font-size="34" font-family="Segoe UI, Arial, sans-serif" font-weight="800" fill="#DBEAFE">1.40x</text>
+    <rect x="1110" y="468" width="82" height="82" rx="41" fill="#2563EB"/>
+    <text x="1151" y="520" text-anchor="middle" font-size="46" font-family="Segoe UI, Arial, sans-serif" font-weight="700" fill="white">-</text>
+  </g>
+</svg>

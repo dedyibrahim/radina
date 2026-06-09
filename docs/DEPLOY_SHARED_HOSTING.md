@@ -54,6 +54,8 @@ Tambahkan variables berikut:
 
 Jika akun FTP langsung membuka isi `public_html`, gunakan `/` sebagai nilai `FTP_SERVER_DIR`.
 
+Gunakan `FTP_PROTOCOL=ftp` jika panel hosting hanya memberikan FTP biasa. Mode ini menonaktifkan negosiasi TLS agar tidak gagal karena sertifikat hosting yang tidak sesuai dengan hostname. Gunakan `ftps` hanya jika provider memberikan hostname FTPS resmi dengan sertifikat valid.
+
 ## Konfigurasi `.env` Production
 
 File `.env` tidak pernah dikirim oleh workflow. Buat file lokal, lalu upload melalui FTP ke:

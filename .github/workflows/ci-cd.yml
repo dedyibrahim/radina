@@ -181,13 +181,27 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq lftp
 
+          if [ "$FTP_PROTOCOL" = "ftp" ]; then
+            FTP_TLS_SETTINGS="
+          set ftp:ssl-allow false
+          set ftp:ssl-force false"
+          elif [ "$FTP_PROTOCOL" = "ftps" ]; then
+            FTP_TLS_SETTINGS="
+          set ftp:ssl-allow true
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set ssl:verify-certificate true"
+          else
+            echo "::error::FTP_PROTOCOL harus bernilai ftp atau ftps."
+            exit 1
+          fi
+
           lftp <<LFTP
           set cmd:fail-exit yes
           set net:max-retries 3
           set net:timeout 20
-          set ftp:ssl-protect-data true
-          set ssl:verify-certificate true
-          open -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_PROTOCOL://$FTP_SERVER"
+          $FTP_TLS_SETTINGS
+          open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER"
           mirror --reverse --delete --verbose --parallel=4 \
             --exclude-glob "_app/.env" \
             --exclude-glob "_app/.env.*" \

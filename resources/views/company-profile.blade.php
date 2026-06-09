@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <x-favicon />
         <x-google-analytics />
+        <x-google-adsense />
         <title>Profil Radina News | Media Digital Indonesia</title>
         <meta name="description" content="Radina News menyajikan berita terkini dan laporan mendalam dari beragam sektor untuk pembaca Indonesia." />
         <meta name="keywords" content="Radina News, media digital Indonesia, berita terkini, portal berita" />

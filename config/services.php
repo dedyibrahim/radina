@@ -7,6 +7,11 @@ return [
         'enabled' => env('GOOGLE_ANALYTICS_ENABLED', env('APP_ENV') === 'production'),
     ],
 
+    'google_adsense' => [
+        'client_id' => env('GOOGLE_ADSENSE_CLIENT_ID', 'ca-pub-4867094357641504'),
+        'enabled' => env('GOOGLE_ADSENSE_ENABLED', env('APP_ENV') === 'production'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Third Party Services

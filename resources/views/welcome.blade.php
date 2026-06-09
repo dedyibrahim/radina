@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <x-favicon />
         <x-google-analytics />
+        <x-google-adsense />
 
         <title>Laravel</title>
 

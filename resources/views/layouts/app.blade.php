@@ -6,6 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <x-favicon />
         <x-google-analytics />
+        <x-google-adsense />
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 

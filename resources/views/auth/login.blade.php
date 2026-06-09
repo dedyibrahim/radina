@@ -6,6 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <x-favicon />
         <x-google-analytics />
+        <x-google-adsense />
 
         <title>Login Dashboard | Radina News</title>
         <meta name="robots" content="noindex,nofollow">

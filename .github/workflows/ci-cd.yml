@@ -315,6 +315,11 @@ jobs:
             cp -a release/_app/bootstrap/ssr incremental-release/_app/bootstrap/ssr
           fi
 
+          rm -rf incremental-release/_app/app incremental-release/_app/routes
+          mkdir -p incremental-release/_app
+          cp -a release/_app/app incremental-release/_app/app
+          cp -a release/_app/routes incremental-release/_app/routes
+
           mkdir -p incremental-release/_app/database/import
           cp -a release/_app/database/import/portal_berita.sql \
             incremental-release/_app/database/import/portal_berita.sql

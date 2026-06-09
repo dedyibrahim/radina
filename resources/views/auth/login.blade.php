@@ -99,6 +99,37 @@
                             @enderror
                         </div>
 
+                        <div>
+                            <div class="mb-2 flex items-center justify-between gap-4">
+                                <label for="captcha" class="block text-sm font-bold text-slate-800">Verifikasi keamanan</label>
+                                <button
+                                    type="button"
+                                    onclick="window.location.reload()"
+                                    class="text-xs font-bold text-blue-700 underline-offset-4 hover:text-blue-900 hover:underline"
+                                >
+                                    Ganti soal
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-[130px_minmax(0,1fr)] gap-3">
+                                <div class="flex items-center justify-center rounded-xl border-2 border-blue-200 bg-blue-50 px-4 py-3 text-lg font-black tracking-wider text-blue-950" aria-label="Soal CAPTCHA">
+                                    {{ $captchaQuestion }} = ?
+                                </div>
+                                <input
+                                    id="captcha"
+                                    type="number"
+                                    name="captcha"
+                                    required
+                                    inputmode="numeric"
+                                    autocomplete="off"
+                                    class="block w-full rounded-xl border-2 border-slate-300 bg-white px-4 py-3 text-sm text-slate-950 shadow-sm placeholder:text-slate-500 hover:border-slate-400 focus:border-blue-700 focus:ring-2 focus:ring-blue-200"
+                                    placeholder="Jawaban"
+                                >
+                            </div>
+                            @error('captcha')
+                                <p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         <label for="remember_me" class="flex cursor-pointer items-center gap-3 text-sm font-medium text-slate-700">
                             <input id="remember_me" type="checkbox" name="remember" class="rounded border-2 border-slate-400 text-blue-700 focus:ring-blue-600">
                             Ingat saya

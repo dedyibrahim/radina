@@ -132,6 +132,8 @@ File `database/import/portal_berita.sql` selalu diunggah ulang dan diverifikasi 
 
 Semua file incremental juga dicatat dalam `.radina-release-manifest.json` beserta ukuran dan SHA-256. Hook memverifikasi setiap file sebelum migration. Upload FTP dibatasi dua koneksi paralel agar lebih stabil pada shared hosting. File rusak akan dilaporkan pada fase `release-files`.
 
+Folder runtime `_app/app` dan `_app/routes` selalu disinkronkan pada setiap deployment. Ini mencegah controller atau route tertinggal ketika marker commit production tidak lagi sesuai dengan isi hosting.
+
 Migration dan seeder selalu dijalankan otomatis pada deployment production. Workflow berhenti sebelum upload jika `DEPLOY_URL` atau `DEPLOY_HOOK_SECRET` belum dikonfigurasi.
 
 ## Deployment Pertama

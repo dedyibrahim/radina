@@ -4,6 +4,7 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Support\LoginCaptcha;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,7 +16,10 @@ class AuthenticationTest extends TestCase
     {
         $response = $this->get('/login');
 
-        $response->assertStatus(200);
+        $response
+            ->assertStatus(200)
+            ->assertSee('Verifikasi keamanan')
+            ->assertSessionHas(LoginCaptcha::SESSION_KEY);
     }
 
     public function test_inertia_login_visit_is_forced_to_full_page_navigation(): void
@@ -31,10 +35,13 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
+        $response = $this
+            ->withSession([LoginCaptcha::SESSION_KEY => 12])
+            ->post('/login', [
+                'email' => $user->email,
+                'password' => 'password',
+                'captcha' => 12,
+            ]);
 
         $this->assertAuthenticated();
         $response->assertRedirect(RouteServiceProvider::HOME);
@@ -44,12 +51,31 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'wrong-password',
-        ]);
+        $this
+            ->withSession([LoginCaptcha::SESSION_KEY => 12])
+            ->post('/login', [
+                'email' => $user->email,
+                'password' => 'wrong-password',
+                'captcha' => 12,
+            ]);
 
         $this->assertGuest();
+    }
+
+    public function test_users_cannot_authenticate_with_invalid_captcha(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this
+            ->withSession([LoginCaptcha::SESSION_KEY => 12])
+            ->post('/login', [
+                'email' => $user->email,
+                'password' => 'password',
+                'captcha' => 11,
+            ]);
+
+        $this->assertGuest();
+        $response->assertSessionHasErrors('captcha');
     }
 
     public function test_users_can_logout(): void

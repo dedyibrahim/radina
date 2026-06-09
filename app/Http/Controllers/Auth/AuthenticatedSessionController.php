@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use App\Support\LoginCaptcha;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,9 @@ class AuthenticatedSessionController extends Controller
             return Inertia::location(route('login'));
         }
 
-        return view('auth.login');
+        return view('auth.login', [
+            'captchaQuestion' => LoginCaptcha::generate($request->session()),
+        ]);
     }
 
     /**
@@ -34,6 +37,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        $request->session()->forget(LoginCaptcha::SESSION_KEY);
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

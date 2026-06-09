@@ -143,10 +143,15 @@ Setiap push ke `main` akan:
 1. Menjalankan seluruh test dengan MySQL.
 2. Membangun frontend production.
 3. Membuat ZIP production sebagai artifact.
-4. Mengunggah perubahan melalui FTP tanpa mengirim ulang `vendor`.
-5. Menjalankan migrasi production melalui HTTPS.
+4. Membaca marker commit production `.radina-deploy-commit`.
+5. Membuat staging yang hanya berisi file berubah sejak deployment berhasil terakhir.
+6. Mengunggah staging melalui FTP tanpa `--delete` dan tanpa memindai seluruh release.
+7. Memperbarui marker commit setelah file berhasil diunggah.
+8. Menjalankan migrasi production melalui HTTPS.
 
 File `_app/.env`, upload pengguna, session, cache runtime, dan log tidak dihapus oleh sinkronisasi FTP.
+
+Workflow tidak menghapus file atau folder lain dalam `public_html`, termasuk subdomain, `error_log`, dan arsip manual. Jika sebuah file aplikasi memang perlu dihapus, hapus manual melalui File Manager setelah deployment.
 
 Jika `composer.lock` berubah, download artifact ZIP terbaru lalu upload dan ekstrak kembali agar dependency production ikut diperbarui.
 

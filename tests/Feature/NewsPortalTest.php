@@ -58,6 +58,8 @@ class NewsPortalTest extends TestCase
         $response = $this->get('/sitemap.xml');
 
         $response->assertOk();
+        $response->assertHeader('Content-Type', 'application/xml; charset=UTF-8');
+        $response->assertSee('<?xml version="1.0" encoding="UTF-8"?>', false);
         $response->assertSee(route('news.home'), false);
         $response->assertSee(route('company.profile'), false);
         $response->assertSee($articleUrl = route('news.show', NewsArticle::published()->firstOrFail()), false);
@@ -74,6 +76,8 @@ class NewsPortalTest extends TestCase
 
         $this->get('/news-sitemap.xml')
             ->assertOk()
+            ->assertHeader('Content-Type', 'application/xml; charset=UTF-8')
+            ->assertSee('<?xml version="1.0" encoding="UTF-8"?>', false)
             ->assertSee(route('news.show', $recentArticle), false)
             ->assertDontSee(route('news.show', $oldArticle), false)
             ->assertSee('<news:publication>', false);

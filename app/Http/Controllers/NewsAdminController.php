@@ -18,16 +18,60 @@ use Inertia\Response;
 
 class NewsAdminController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        return $this->renderPage();
+        $search = trim((string) $request->query('q', ''));
+        $approval = (string) $request->query('approval', 'all');
+
+        $articles = NewsArticle::query()
+            ->with(['category', 'author', 'earning'])
+            ->when($search !== '', fn ($query) => $query->where(function ($builder) use ($search): void {
+                $builder
+                    ->where('title', 'like', "%{$search}%")
+                    ->orWhere('excerpt', 'like', "%{$search}%")
+                    ->orWhereHas('author', fn ($authorQuery) => $authorQuery->where('name', 'like', "%{$search}%"))
+                    ->orWhereHas('category', fn ($categoryQuery) => $categoryQuery->where('name', 'like', "%{$search}%"));
+            }))
+            ->when($approval === 'approved', fn ($query) => $query
+                ->where('editorial_status', NewsArticle::EDITORIAL_APPROVED)
+                ->where('fact_check_status', NewsArticle::FACT_VERIFIED))
+            ->when($approval === 'pending', fn ($query) => $query->where(function ($builder): void {
+                $builder
+                    ->where('editorial_status', NewsArticle::EDITORIAL_PENDING)
+                    ->orWhere('fact_check_status', NewsArticle::FACT_PENDING);
+            }))
+            ->when($approval === 'rejected', fn ($query) => $query->where(function ($builder): void {
+                $builder
+                    ->where('editorial_status', NewsArticle::EDITORIAL_REJECTED)
+                    ->orWhere('fact_check_status', NewsArticle::FACT_REJECTED);
+            }))
+            ->latest('updated_at')
+            ->paginate(15)
+            ->withQueryString();
+
+        return Inertia::render('Admin/NewsIndex', [
+            'seo' => $this->seoData('Daftar Berita', route('admin.news.index')),
+            'stats' => $this->newsStats(),
+            'filters' => [
+                'q' => $search,
+                'approval' => $approval,
+            ],
+            'articles' => $this->transformArticles($articles),
+            'articleAuthors' => $this->articleAuthors(),
+            'createUrl' => route('admin.news.create'),
+        ]);
+    }
+
+    public function create(): Response
+    {
+        return $this->renderForm();
     }
 
     public function edit(NewsArticle $article): Response
     {
         $article->load(['category', 'tags', 'earning', 'images']);
 
-        return $this->renderPage($article);
+        return $this->renderForm($article);
     }
 
     public function store(Request $request, WriterPaymentService $paymentService): RedirectResponse
@@ -75,20 +119,28 @@ class NewsAdminController extends Controller
         WriterPaymentService $paymentService
     ): RedirectResponse
     {
-        if ($article->earning && (
-            $request->input('editorial_status', $article->editorial_status) !== NewsArticle::EDITORIAL_APPROVED
-            || $request->input('fact_check_status', $article->fact_check_status) !== NewsArticle::FACT_VERIFIED
-            || (int) $request->input('assigned_user_id', $article->user_id) !== $article->user_id
-        )) {
-            return back()->withErrors([
-                'editorial_status' => 'Artikel yang sudah menghasilkan honor tidak dapat dibatalkan atau dialihkan.',
-            ]);
-        }
-
         $payload = $this->validatePayload($request, $article);
-        $payload['user_id'] = (int) (($payload['assigned_user_id'] ?? null) ?: $article->user_id);
+        $payload['user_id'] = $article->earning
+            ? $article->user_id
+            : (int) (($payload['assigned_user_id'] ?? null) ?: $article->user_id);
         unset($payload['assigned_user_id']);
-        $payload = $this->applyReviewState($request, $payload, $article);
+
+        if ($article->earning) {
+            $payload = [
+                ...$payload,
+                'status' => $article->status,
+                'editorial_status' => $article->editorial_status,
+                'fact_check_status' => $article->fact_check_status,
+                'review_note' => $article->review_note,
+                'approved_by' => $article->approved_by,
+                'approved_at' => $article->approved_at,
+                'fact_checked_by' => $article->fact_checked_by,
+                'fact_checked_at' => $article->fact_checked_at,
+                'published_at' => $article->published_at,
+            ];
+        } else {
+            $payload = $this->applyReviewState($request, $payload, $article);
+        }
         $payload['slug'] = $this->uniqueSlug($payload['title'], $article);
         $payload['cover_image_url'] = $this->resolveCoverImage(
             $request,
@@ -191,29 +243,12 @@ class NewsAdminController extends Controller
         return back()->with('status', 'Gambar isi artikel berhasil dihapus.');
     }
 
-    private function renderPage(?NewsArticle $editArticle = null): Response
+    private function renderForm(?NewsArticle $editArticle = null): Response
     {
-        $articles = NewsArticle::query()
-            ->with(['category', 'author', 'earning'])
-            ->latest('updated_at')
-            ->paginate(12);
-
         return Inertia::render('Admin/NewsManager', [
-            'seo' => [
-                'title' => 'Kelola Berita',
-                'description' => 'Dashboard pengelolaan berita Radina News.',
-                'url' => route('admin.news.index'),
-                'robots' => 'noindex,nofollow',
-                'type' => 'website',
-                'keywords' => 'dashboard berita, admin radina news',
-                'jsonLd' => [],
-            ],
-            'stats' => [
-                'total' => NewsArticle::count(),
-                'published' => NewsArticle::where('status', NewsArticle::STATUS_PUBLISHED)->count(),
-                'draft' => NewsArticle::where('status', NewsArticle::STATUS_DRAFT)->count(),
-                'featured' => NewsArticle::where('is_featured', true)->count(),
-            ],
+            'seo' => $this->seoData($editArticle ? 'Edit Berita' : 'Tambah Berita', $editArticle
+                ? route('admin.news.edit', $editArticle)
+                : route('admin.news.create')),
             'categories' => NewsCategory::query()
                 ->orderBy('name')
                 ->get(['id', 'name', 'name_en'])
@@ -224,20 +259,58 @@ class NewsAdminController extends Controller
                 ])
                 ->all(),
             'articleAuthors' => $this->articleAuthors(),
-            'articles' => [
-                'data' => $articles->getCollection()
-                    ->map(fn (NewsArticle $article) => $this->transformArticle($article))
-                    ->all(),
-                'links' => $articles->linkCollection()->map(fn (array $link) => [
-                    'url' => $link['url'],
-                    'label' => strip_tags($link['label']),
-                    'active' => $link['active'],
-                ])->all(),
-            ],
             'editArticle' => $editArticle ? $this->transformArticle($editArticle, true) : null,
             'storeUrl' => route('admin.news.store'),
+            'indexUrl' => route('admin.news.index'),
             'defaultCoverImage' => '/images/news-dummy/technology-lead.png',
         ]);
+    }
+
+    private function newsStats(): array
+    {
+        return [
+            'total' => NewsArticle::count(),
+            'approved' => NewsArticle::where('editorial_status', NewsArticle::EDITORIAL_APPROVED)
+                ->where('fact_check_status', NewsArticle::FACT_VERIFIED)
+                ->count(),
+            'pending' => NewsArticle::where(function ($query): void {
+                $query
+                    ->where('editorial_status', NewsArticle::EDITORIAL_PENDING)
+                    ->orWhere('fact_check_status', NewsArticle::FACT_PENDING);
+            })->count(),
+            'rejected' => NewsArticle::where(function ($query): void {
+                $query
+                    ->where('editorial_status', NewsArticle::EDITORIAL_REJECTED)
+                    ->orWhere('fact_check_status', NewsArticle::FACT_REJECTED);
+            })->count(),
+        ];
+    }
+
+    private function seoData(string $title, string $url): array
+    {
+        return [
+            'title' => $title,
+            'description' => 'Dashboard pengelolaan berita Radina News.',
+            'url' => $url,
+            'robots' => 'noindex,nofollow',
+            'type' => 'website',
+            'keywords' => 'dashboard berita, admin radina news',
+            'jsonLd' => [],
+        ];
+    }
+
+    private function transformArticles($articles): array
+    {
+        return [
+            'data' => $articles->getCollection()
+                ->map(fn (NewsArticle $article) => $this->transformArticle($article))
+                ->all(),
+            'links' => $articles->linkCollection()->map(fn (array $link) => [
+                'url' => $link['url'],
+                'label' => strip_tags($link['label']),
+                'active' => $link['active'],
+            ])->all(),
+        ];
     }
 
     private function validatePayload(Request $request, ?NewsArticle $article = null): array
@@ -506,7 +579,9 @@ class NewsAdminController extends Controller
             'authorId' => $article->user_id,
             'authorRole' => $article->author?->role,
             'coverImage' => $article->cover_image_url,
+            'excerpt' => $article->excerpt,
             'publishedAt' => $article->published_at?->format('Y-m-d\TH:i'),
+            'publishedLabel' => $article->published_at?->translatedFormat('d M Y H:i'),
             'updatedAt' => $article->updated_at?->translatedFormat('d M Y H:i'),
             'publicUrl' => route('news.show', $article),
             'editUrl' => route('admin.news.edit', $article),

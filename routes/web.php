@@ -49,6 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/licenses/{license}', [DashboardController::class, 'destroy'])->name('licenses.destroy');
         Route::patch('/licenses/{license}/toggle-status', [DashboardController::class, 'toggleStatus'])->name('licenses.toggle-status');
         Route::get('/dashboard/berita', [NewsAdminController::class, 'index'])->name('admin.news.index');
+        Route::get('/dashboard/berita/tambah', [NewsAdminController::class, 'create'])->name('admin.news.create');
         Route::get('/dashboard/berita/{article:slug}/edit', [NewsAdminController::class, 'edit'])->name('admin.news.edit');
         Route::patch('/dashboard/berita/{article:slug}', [NewsAdminController::class, 'update'])->name('admin.news.update');
         Route::patch('/dashboard/berita/{article:slug}/review', [NewsAdminController::class, 'review'])->name('admin.news.review');

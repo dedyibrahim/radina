@@ -17,6 +17,7 @@ const props = defineProps({
         default: null,
     },
     storeUrl: String,
+    indexUrl: String,
     defaultCoverImage: String,
 });
 
@@ -25,6 +26,10 @@ const fileInput = ref(null);
 const flashStatus = computed(() => page.props.flash?.status || '');
 const isEditMode = computed(() => !!props.editArticle);
 const currentAuthor = computed(() => page.props.auth?.user || null);
+
+const navigatePanel = (section) => {
+    router.visit(section === 'news' ? props.indexUrl : `/dashboard?section=${section}`);
+};
 
 const defaults = () => ({
     category_id: props.categories[0]?.id || '',
@@ -192,7 +197,7 @@ const formatRupiah = (amount) => new Intl.NumberFormat('id-ID', {
     <AdminLayout
         :is-admin="true"
         active-section="news"
-        @navigate="router.visit(`/dashboard?section=${$event}`)"
+        @navigate="navigatePanel"
     >
         <SeoHead :seo="seo" />
 
@@ -220,15 +225,15 @@ const formatRupiah = (amount) => new Intl.NumberFormat('id-ID', {
             {{ flashStatus }}
         </section>
 
-        <section class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <section v-if="stats" class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <div class="admin-stat"><span>Total</span><strong>{{ stats.total }}</strong></div>
             <div class="admin-stat"><span>Published</span><strong>{{ stats.published }}</strong></div>
             <div class="admin-stat"><span>Draft</span><strong>{{ stats.draft }}</strong></div>
             <div class="admin-stat"><span>Featured</span><strong>{{ stats.featured }}</strong></div>
         </section>
 
-        <section class="mt-8 grid gap-6 xl:grid-cols-[minmax(0,520px)_minmax(0,1fr)]">
-            <div class="rounded-2xl border border-slate-200 bg-white p-6">
+        <section class="mt-8">
+            <div class="mx-auto max-w-5xl rounded-2xl border border-slate-200 bg-white p-6">
                 <div class="flex items-start justify-between gap-4">
                     <div>
                         <h2 class="text-2xl font-semibold">{{ isEditMode ? 'Edit Berita' : 'Buat Berita' }}</h2>
@@ -237,7 +242,7 @@ const formatRupiah = (amount) => new Intl.NumberFormat('id-ID', {
                             Penulis: {{ currentAuthor?.name }} (akun login)
                         </p>
                     </div>
-                    <Link v-if="isEditMode" href="/dashboard/berita" class="text-sm font-semibold text-blue-700">Batal</Link>
+                    <Link :href="indexUrl" class="text-sm font-semibold text-blue-700">Kembali ke daftar</Link>
                 </div>
 
                 <form class="mt-6 space-y-5" @submit.prevent="submit">
@@ -392,7 +397,7 @@ const formatRupiah = (amount) => new Intl.NumberFormat('id-ID', {
                 </form>
             </div>
 
-            <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+            <div v-if="articles" class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
                 <div class="border-b border-slate-200 px-6 py-5">
                     <h2 class="text-2xl font-semibold">Daftar Berita</h2>
                     <p class="mt-1 text-sm text-slate-500">Artikel terbaru yang tersimpan di Radina News.</p>

@@ -53,6 +53,15 @@ const categoryFileInput = ref(null);
 const isCategoryEditMode = computed(() => !!props.editCategory);
 const isUserEditMode = computed(() => !!props.editUser);
 
+const navigatePanel = (section) => {
+    if (props.isAdmin && section === 'news') {
+        router.visit('/dashboard/berita');
+        return;
+    }
+
+    activePanel.value = section;
+};
+
 const form = useForm({
     customer_name: props.formDefaults.customer_name,
     product_name: props.formDefaults.product_name,
@@ -326,7 +335,7 @@ const removeUser = (account) => {
 </script>
 
 <template>
-    <AdminLayout :active-section="activePanel" :is-admin="isAdmin" @navigate="activePanel = $event">
+    <AdminLayout :active-section="activePanel" :is-admin="isAdmin" @navigate="navigatePanel">
         <SeoHead :seo="seo" />
 
         <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">

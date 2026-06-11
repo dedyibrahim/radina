@@ -27,9 +27,10 @@ class DatabaseSeeder extends Seeder
             $admin->forceFill(['role' => User::ROLE_ADMIN])->save();
         }
 
-        $this->call([
-            LicenseSeeder::class,
-            NewsPortalSeeder::class,
-        ]);
+        if (! app()->environment('production')) {
+            $this->call(LicenseSeeder::class);
+        }
+
+        $this->call(NewsPortalSeeder::class);
     }
 }

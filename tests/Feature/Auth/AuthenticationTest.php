@@ -18,6 +18,9 @@ class AuthenticationTest extends TestCase
 
         $response
             ->assertStatus(200)
+            ->assertHeader('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet')
+            ->assertSee('<title>Login | Radina News</title>', false)
+            ->assertSee('<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">', false)
             ->assertSee('Verifikasi keamanan')
             ->assertSessionHas(LoginCaptcha::SESSION_KEY);
     }

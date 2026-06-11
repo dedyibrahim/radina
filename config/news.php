@@ -14,4 +14,5 @@ return [
         'x' => env('NEWS_X', 'https://x.com/radinanet'),
     ],
     'default_image' => env('NEWS_DEFAULT_IMAGE', '/images/radina-news-logo.png'),
+    'social_image' => env('NEWS_SOCIAL_IMAGE', '/images/radina-news-social.jpg'),
 ];

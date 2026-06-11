@@ -22,6 +22,10 @@ class NewsPortalTest extends TestCase
     {
         $this->get('/')
             ->assertOk()
+            ->assertSee('<link rel="icon" type="image/png" sizes="192x192" href="'.asset('favicon-192x192.png').'">', false)
+            ->assertSee('<meta data-inertia="og-image" property="og:image" content="'.asset('images/radina-news-social.jpg').'">', false)
+            ->assertSee('<meta data-inertia="og-image-width" property="og:image:width" content="1200">', false)
+            ->assertSee('<meta data-inertia="og-image-height" property="og:image:height" content="630">', false)
             ->assertInertia(fn (Assert $page) => $page
                 ->component('News/Home')
                 ->has('hero')
@@ -51,6 +55,17 @@ class NewsPortalTest extends TestCase
             );
 
         $this->assertSame($initialViews + 1, $article->fresh()->views_count);
+    }
+
+    public function test_article_seo_title_does_not_repeat_site_name(): void
+    {
+        $article = NewsArticle::published()->firstOrFail();
+        $article->update(['seo_title' => 'Judul Artikel | Radina News | Radina News']);
+
+        $this->get(route('news.show', $article))
+            ->assertOk()
+            ->assertSee('<title data-inertia="">Judul Artikel | Radina News</title>', false)
+            ->assertDontSee('Radina News | Radina News', false);
     }
 
     public function test_sitemap_contains_news_and_company_profile_urls(): void

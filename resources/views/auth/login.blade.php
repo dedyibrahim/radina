@@ -8,8 +8,8 @@
         <x-google-analytics />
         <x-google-adsense />
 
-        <title>Login Dashboard | Radina News</title>
-        <meta name="robots" content="noindex,nofollow">
+        <title>Login | Radina News</title>
+        <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet">

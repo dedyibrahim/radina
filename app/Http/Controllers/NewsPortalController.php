@@ -61,6 +61,11 @@ class NewsPortalController extends Controller
                     ? 'Technology, business, AI, startup, and digital infrastructure news from Indonesia in a modern, search-friendly experience.'
                     : 'Berita teknologi, bisnis, AI, startup, dan infrastruktur digital Indonesia yang aktual, jelas, dan relevan.',
                 'url' => route('news.home'),
+                'image' => $this->absoluteUrl(config('news.social_image')),
+                'imageWidth' => 1200,
+                'imageHeight' => 630,
+                'imageType' => 'image/jpeg',
+                'imageAlt' => 'Radina News - Portal Berita',
                 'keywords' => $isEnglish
                     ? 'news portal, technology news, indonesia startups, digital business, AI indonesia'
                     : 'portal berita, berita teknologi, startup indonesia, berita bisnis digital, AI indonesia',
@@ -248,6 +253,10 @@ class NewsPortalController extends Controller
                 'description' => $this->localizedField($article, 'seo_description') ?: $this->localizedField($article, 'excerpt'),
                 'url' => route('news.show', $article),
                 'image' => $this->absoluteUrl($article->og_image_url ?: $article->cover_image_url),
+                'imageWidth' => null,
+                'imageHeight' => null,
+                'imageType' => null,
+                'imageAlt' => $article->cover_image_alt ?: $this->localizedField($article, 'title'),
                 'keywords' => $this->localizedField($article, 'seo_keywords'),
                 'type' => 'article',
                 'publishedAt' => optional($article->published_at)->toIso8601String(),
@@ -501,7 +510,11 @@ class NewsPortalController extends Controller
             'title' => $this->siteName(),
             'description' => config('news.description'),
             'url' => route('news.home'),
-            'image' => $this->absoluteUrl(config('news.default_image')),
+            'image' => $this->absoluteUrl(config('news.social_image')),
+            'imageWidth' => 1200,
+            'imageHeight' => 630,
+            'imageType' => 'image/jpeg',
+            'imageAlt' => $this->siteName().' - Portal Berita',
             'type' => 'website',
             'keywords' => 'portal berita, berita teknologi, berita bisnis, berita startup',
             'robots' => 'index,follow',
@@ -510,12 +523,23 @@ class NewsPortalController extends Controller
             'jsonLd' => [],
         ];
 
-        return array_merge($defaults, $meta);
+        $seo = array_merge($defaults, $meta);
+        $seo['title'] = $this->normalizeSeoTitle($seo['title']);
+
+        return $seo;
     }
 
     private function siteName(): string
     {
         return config('news.name');
+    }
+
+    private function normalizeSeoTitle(?string $title): string
+    {
+        $siteName = preg_quote($this->siteName(), '/');
+        $normalized = trim((string) $title);
+
+        return trim((string) preg_replace('/(?:\s*\|\s*'.$siteName.')+$/iu', '', $normalized));
     }
 
     private function absoluteUrl(?string $value): ?string
@@ -552,6 +576,12 @@ class NewsPortalController extends Controller
             'name' => $this->siteName(),
             'url' => route('news.home'),
             'description' => config('news.description'),
+            'primaryImageOfPage' => [
+                '@type' => 'ImageObject',
+                'url' => $this->absoluteUrl(config('news.social_image')),
+                'width' => 1200,
+                'height' => 630,
+            ],
             'potentialAction' => [
                 '@type' => 'SearchAction',
                 'target' => route('news.index').'?q={search_term_string}',

@@ -5,6 +5,10 @@
 
     RewriteEngine On
 
+    # Keep a single canonical hostname for search engines.
+    RewriteCond %{HTTP_HOST} ^www\.radina\.net$ [NC]
+    RewriteRule ^ https://radina.net%{REQUEST_URI} [L,R=301]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

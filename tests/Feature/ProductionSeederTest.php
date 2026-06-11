@@ -15,6 +15,23 @@ class ProductionSeederTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_production_seeder_does_not_create_demo_licenses(): void
+    {
+        $originalEnvironment = app()->environment();
+        app()->detectEnvironment(fn () => 'production');
+
+        try {
+            $this->artisan('db:seed', [
+                '--class' => DatabaseSeeder::class,
+                '--force' => true,
+            ])->assertSuccessful();
+
+            $this->assertSame(0, License::count());
+        } finally {
+            app()->detectEnvironment(fn () => $originalEnvironment);
+        }
+    }
+
     public function test_production_seeder_is_idempotent_and_preserves_existing_accounts(): void
     {
         $this->seed(DatabaseSeeder::class);

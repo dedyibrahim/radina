@@ -175,10 +175,17 @@ class NewsAdminTest extends TestCase
         $this->assertSame($secondWriter->id, $article->fresh()->user_id);
     }
 
-    public function test_verified_user_can_update_and_delete_news(): void
+    public function test_admin_can_edit_earning_article_without_changing_approval_state(): void
     {
         $user = User::where('email', 'admin@radina.net')->firstOrFail();
-        $article = NewsArticle::with('tags')->firstOrFail();
+        $article = NewsArticle::with(['tags', 'earning'])
+            ->whereHas('earning')
+            ->firstOrFail();
+        $originalAuthorId = $article->user_id;
+        $originalStatus = $article->status;
+        $originalEditorialStatus = $article->editorial_status;
+        $originalFactCheckStatus = $article->fact_check_status;
+        $originalPublishedAt = $article->published_at?->toDateTimeString();
 
         $this
             ->actingAs($user)
@@ -202,8 +209,11 @@ class NewsAdminTest extends TestCase
 
         $article->refresh();
         $this->assertSame('Judul Berita Diperbarui', $article->title);
-        $this->assertSame(NewsArticle::STATUS_DRAFT, $article->status);
-        $this->assertNull($article->published_at);
+        $this->assertSame($originalAuthorId, $article->user_id);
+        $this->assertSame($originalStatus, $article->status);
+        $this->assertSame($originalEditorialStatus, $article->editorial_status);
+        $this->assertSame($originalFactCheckStatus, $article->fact_check_status);
+        $this->assertSame($originalPublishedAt, $article->published_at?->toDateTimeString());
 
         $this
             ->actingAs($user)

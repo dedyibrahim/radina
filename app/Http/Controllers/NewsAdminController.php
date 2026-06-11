@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\NewsArticle;
+use App\Models\NewsArticleImage;
 use App\Models\NewsCategory;
 use App\Models\NewsTag;
 use App\Models\User;
@@ -24,7 +25,7 @@ class NewsAdminController extends Controller
 
     public function edit(NewsArticle $article): Response
     {
-        $article->load(['category', 'tags', 'earning']);
+        $article->load(['category', 'tags', 'earning', 'images']);
 
         return $this->renderPage($article);
     }
@@ -51,11 +52,13 @@ class NewsAdminController extends Controller
         $payload['cover_image_url'] = $this->resolveCoverImage($request, $payload['cover_image_url'] ?? null);
         $payload['published_at'] = $this->publishedAt($payload);
         $tags = $payload['tags'] ?? '';
+        $articleImages = $payload['article_images'] ?? [];
 
-        unset($payload['cover_image'], $payload['tags']);
+        unset($payload['cover_image'], $payload['tags'], $payload['article_images'], $payload['existing_images']);
 
         $article = NewsArticle::create($payload);
         $this->syncTags($article, $tags);
+        $this->storeArticleImages($article, $articleImages);
         $paymentService->creditArticleIfEligible($article);
 
         $redirectRoute = $request->input('redirect_to') === 'dashboard'
@@ -94,11 +97,15 @@ class NewsAdminController extends Controller
         );
         $payload['published_at'] = $this->publishedAt($payload, $article);
         $tags = $payload['tags'] ?? '';
+        $articleImages = $payload['article_images'] ?? [];
+        $existingImages = $payload['existing_images'] ?? [];
 
-        unset($payload['cover_image'], $payload['tags']);
+        unset($payload['cover_image'], $payload['tags'], $payload['article_images'], $payload['existing_images']);
 
         $article->update($payload);
         $this->syncTags($article, $tags);
+        $this->updateArticleImages($article, $existingImages);
+        $this->storeArticleImages($article, $articleImages);
         $paymentService->creditArticleIfEligible($article);
 
         return redirect()
@@ -166,11 +173,22 @@ class NewsAdminController extends Controller
     public function destroy(NewsArticle $article): RedirectResponse
     {
         $this->deleteUploadedCover($article->cover_image_url);
+        $article->images()->each(fn (NewsArticleImage $image) => $this->deleteUploadedArticleImage($image->image_url));
         $article->delete();
 
         return redirect()
             ->route('admin.news.index')
             ->with('status', 'Berita berhasil dihapus.');
+    }
+
+    public function destroyImage(NewsArticle $article, NewsArticleImage $image): RedirectResponse
+    {
+        abort_unless($image->article_id === $article->id, 404);
+
+        $this->deleteUploadedArticleImage($image->image_url);
+        $image->delete();
+
+        return back()->with('status', 'Gambar isi artikel berhasil dihapus.');
     }
 
     private function renderPage(?NewsArticle $editArticle = null): Response
@@ -264,6 +282,24 @@ class NewsAdminController extends Controller
             'seo_keywords' => ['nullable', 'string', 'max:255'],
             'seo_keywords_en' => ['nullable', 'string', 'max:255'],
             'tags' => ['nullable', 'string', 'max:500'],
+            'article_images' => ['nullable', 'array', 'max:20'],
+            'article_images.*.file' => ['required', 'image', 'max:5120'],
+            'article_images.*.alt_text' => ['nullable', 'string', 'max:180'],
+            'article_images.*.caption' => ['nullable', 'string', 'max:500'],
+            'article_images.*.position_after_paragraph' => ['nullable', 'integer', 'min:0', 'max:500'],
+            'existing_images' => ['nullable', 'array'],
+            'existing_images.*.id' => [
+                'required',
+                'integer',
+                Rule::exists('news_article_images', 'id')->where(
+                    fn ($query) => $article
+                        ? $query->where('article_id', $article->id)
+                        : $query->whereRaw('1 = 0')
+                ),
+            ],
+            'existing_images.*.alt_text' => ['nullable', 'string', 'max:180'],
+            'existing_images.*.caption' => ['nullable', 'string', 'max:500'],
+            'existing_images.*.position_after_paragraph' => ['nullable', 'integer', 'min:0', 'max:500'],
         ]);
     }
 
@@ -352,6 +388,54 @@ class NewsAdminController extends Controller
         }
 
         File::delete(public_path(ltrim($cover, '/')));
+    }
+
+    private function storeArticleImages(NewsArticle $article, array $images): void
+    {
+        if ($images === []) {
+            return;
+        }
+
+        $directory = public_path('images/news/article-content');
+        File::ensureDirectoryExists($directory);
+        $nextSortOrder = (int) $article->images()->max('sort_order') + 1;
+
+        foreach ($images as $index => $imageData) {
+            $file = $imageData['file'];
+            $filename = now()->format('YmdHis').'-'.Str::uuid().'.'.$file->extension();
+            $file->move($directory, $filename);
+
+            $article->images()->create([
+                'image_url' => "/images/news/article-content/{$filename}",
+                'alt_text' => $imageData['alt_text'] ?? null,
+                'caption' => $imageData['caption'] ?? null,
+                'position_after_paragraph' => (int) ($imageData['position_after_paragraph'] ?? 0),
+                'sort_order' => $nextSortOrder + $index,
+            ]);
+        }
+    }
+
+    private function updateArticleImages(NewsArticle $article, array $images): void
+    {
+        foreach ($images as $index => $imageData) {
+            $article->images()
+                ->whereKey($imageData['id'])
+                ->update([
+                    'alt_text' => $imageData['alt_text'] ?? null,
+                    'caption' => $imageData['caption'] ?? null,
+                    'position_after_paragraph' => (int) ($imageData['position_after_paragraph'] ?? 0),
+                    'sort_order' => $index,
+                ]);
+        }
+    }
+
+    private function deleteUploadedArticleImage(?string $imageUrl): void
+    {
+        if (! $imageUrl || ! str_starts_with($imageUrl, '/images/news/article-content/')) {
+            return;
+        }
+
+        File::delete(public_path(ltrim($imageUrl, '/')));
     }
 
     private function publishedAt(array $payload, ?NewsArticle $article = null): mixed
@@ -453,6 +537,14 @@ class NewsAdminController extends Controller
             'seoKeywords' => $article->seo_keywords,
             'seoKeywordsEn' => $article->seo_keywords_en,
             'tags' => $article->tags->pluck('name')->implode(', '),
+            'images' => $article->images->map(fn (NewsArticleImage $image) => [
+                'id' => $image->id,
+                'url' => $image->image_url,
+                'altText' => $image->alt_text,
+                'caption' => $image->caption,
+                'positionAfterParagraph' => $image->position_after_paragraph,
+                'destroyUrl' => route('admin.news.images.destroy', [$article, $image]),
+            ])->all(),
         ];
     }
 

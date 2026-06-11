@@ -59,7 +59,7 @@ class NewsPortalController extends Controller
                 'title' => $isEnglish ? 'Latest News and In-Depth Reports' : 'Berita Terkini dan Laporan Mendalam',
                 'description' => $isEnglish
                     ? 'Technology, business, AI, startup, and digital infrastructure news from Indonesia in a modern, search-friendly experience.'
-                    : 'Berita teknologi, bisnis, AI, startup, dan infrastruktur digital Indonesia dengan tampilan modern dan performa SEO yang kuat.',
+                    : 'Berita teknologi, bisnis, AI, startup, dan infrastruktur digital Indonesia yang aktual, jelas, dan relevan.',
                 'url' => route('news.home'),
                 'keywords' => $isEnglish
                     ? 'news portal, technology news, indonesia startups, digital business, AI indonesia'
@@ -230,7 +230,7 @@ class NewsPortalController extends Controller
         abort_unless($article->isPublished(), HttpResponse::HTTP_NOT_FOUND);
 
         $article->increment('views_count');
-        $article->refresh()->load(['category', 'author', 'tags']);
+        $article->refresh()->load(['category', 'author', 'tags', 'images']);
 
         $related = $this->publishedArticles()
             ->whereKeyNot($article->id)
@@ -332,17 +332,41 @@ class NewsPortalController extends Controller
                 ])
             )
             ->merge(
-                NewsArticle::query()->published()->latest('published_at')->take(200)->get()->map(fn (NewsArticle $article) => [
+                NewsArticle::query()->with('images')->published()->latest('published_at')->get()->map(fn (NewsArticle $article) => [
                     'loc' => route('news.show', $article),
                     'changefreq' => 'weekly',
                     'priority' => $article->is_featured ? '0.9' : '0.8',
                     'lastmod' => optional($article->updated_at)->toDateString() ?: now()->toDateString(),
+                    'images' => collect([$article->cover_image_url])
+                        ->merge($article->images->pluck('image_url'))
+                        ->filter()
+                        ->map(fn (string $image) => $this->absoluteUrl($image))
+                        ->values()
+                        ->all(),
                 ])
             )
             ->all();
 
         return response()
             ->view('sitemap', compact('urls'))
+            ->header('Content-Type', 'application/xml; charset=UTF-8');
+    }
+
+    public function newsSitemap(): HttpResponse
+    {
+        $articles = NewsArticle::query()
+            ->published()
+            ->where('published_at', '>=', now()->subDays(2))
+            ->latest('published_at')
+            ->limit(1000)
+            ->get();
+
+        return response()
+            ->view('news-sitemap', [
+                'articles' => $articles,
+                'publicationName' => $this->siteName(),
+                'language' => app()->isLocale('en') ? 'en' : 'id',
+            ])
             ->header('Content-Type', 'application/xml; charset=UTF-8');
     }
 
@@ -368,6 +392,7 @@ class NewsPortalController extends Controller
             'Disallow: /profile',
             'Disallow: /licenses',
             'Sitemap: '.route('sitemap'),
+            'Sitemap: '.route('news.sitemap'),
         ]);
 
         return response($content, HttpResponse::HTTP_OK, [
@@ -435,6 +460,13 @@ class NewsPortalController extends Controller
         return [
             ...$this->transformArticle($article, true),
             'content' => ArticleContentFormatter::format($this->localizedField($article, 'content')),
+            'images' => $article->images->map(fn ($image) => [
+                'id' => $image->id,
+                'url' => $image->image_url,
+                'altText' => $image->alt_text ?: $this->localizedField($article, 'title'),
+                'caption' => $image->caption,
+                'positionAfterParagraph' => $image->position_after_paragraph,
+            ])->all(),
             'seoDescription' => $this->localizedField($article, 'seo_description'),
             'seoKeywords' => $this->localizedField($article, 'seo_keywords'),
         ];
@@ -567,7 +599,12 @@ class NewsPortalController extends Controller
                 ?: $this->localizedField($article, 'excerpt'),
             'datePublished' => optional($article->published_at)->toIso8601String(),
             'dateModified' => optional($article->updated_at)->toIso8601String(),
-            'image' => [$this->absoluteUrl($article->og_image_url ?: $article->cover_image_url)],
+            'image' => collect([$article->og_image_url ?: $article->cover_image_url])
+                ->merge($article->images->pluck('image_url'))
+                ->filter()
+                ->map(fn (string $image) => $this->absoluteUrl($image))
+                ->values()
+                ->all(),
             'articleSection' => $article->category ? $this->localizedField($article->category, 'name') : null,
             'keywords' => $this->localizedField($article, 'seo_keywords'),
             'author' => [

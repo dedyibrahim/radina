@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref, watch } from 'vue';
 import { Link, router, useForm, usePage } from '@inertiajs/vue3';
+import ArticleImageFields from '../../Components/ArticleImageFields.vue';
 import PaginationLinks from '../../Components/PaginationLinks.vue';
 import SeoHead from '../../Components/SeoHead.vue';
 import AdminLayout from '../../Layouts/AdminLayout.vue';
@@ -51,6 +52,8 @@ const defaults = () => ({
     seo_keywords: '',
     seo_keywords_en: '',
     tags: '',
+    article_images: [],
+    existing_images: [],
 });
 
 const form = useForm(defaults());
@@ -90,6 +93,15 @@ const hydrateForm = () => {
         seo_keywords: article.seoKeywords || '',
         seo_keywords_en: article.seoKeywordsEn || '',
         tags: article.tags || '',
+        article_images: [],
+        existing_images: (article.images || []).map((image) => ({
+            id: image.id,
+            url: image.url,
+            alt_text: image.altText || '',
+            caption: image.caption || '',
+            position_after_paragraph: image.positionAfterParagraph || 0,
+            destroyUrl: image.destroyUrl,
+        })),
     });
     form.clearErrors();
 };
@@ -339,6 +351,12 @@ const formatRupiah = (amount) => new Intl.NumberFormat('id-ID', {
                             </p>
                         </div>
                     </div>
+
+                    <ArticleImageFields
+                        v-model="form.article_images"
+                        v-model:existing-images="form.existing_images"
+                        :errors="form.errors"
+                    />
 
                     <div class="grid gap-4 sm:grid-cols-2">
                         <div>

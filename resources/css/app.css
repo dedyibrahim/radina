@@ -112,6 +112,10 @@
         color: var(--news-ink);
     }
 
+    .news-prose img {
+        @apply cursor-zoom-in;
+    }
+
     .scrollbar-hide {
         scrollbar-width: none;
     }

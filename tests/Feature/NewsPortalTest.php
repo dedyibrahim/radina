@@ -41,9 +41,12 @@ class NewsPortalTest extends TestCase
 
         $this->get(route('news.show', $article))
             ->assertOk()
+            ->assertSee('<meta data-inertia="robots" name="robots" content="index,follow">', false)
+            ->assertSee('<link data-inertia="canonical" rel="canonical" href="'.route('news.show', $article).'">', false)
             ->assertInertia(fn (Assert $page) => $page
                 ->component('News/ArticleShow')
                 ->where('article.slug', $article->slug)
+                ->has('article.images')
                 ->has('related')
             );
 
@@ -57,6 +60,23 @@ class NewsPortalTest extends TestCase
         $response->assertOk();
         $response->assertSee(route('news.home'), false);
         $response->assertSee(route('company.profile'), false);
+        $response->assertSee($articleUrl = route('news.show', NewsArticle::published()->firstOrFail()), false);
+        $response->assertSee(NewsArticle::published()->firstOrFail()->cover_image_url, false);
+    }
+
+    public function test_news_sitemap_only_exposes_recent_published_articles(): void
+    {
+        $recentArticle = NewsArticle::published()->firstOrFail();
+        $recentArticle->update(['published_at' => now()->subHour()]);
+
+        $oldArticle = NewsArticle::published()->whereKeyNot($recentArticle->id)->firstOrFail();
+        $oldArticle->update(['published_at' => now()->subDays(3)]);
+
+        $this->get('/news-sitemap.xml')
+            ->assertOk()
+            ->assertSee(route('news.show', $recentArticle), false)
+            ->assertDontSee(route('news.show', $oldArticle), false)
+            ->assertSee('<news:publication>', false);
     }
 
     public function test_language_switch_changes_shared_locale_and_article_content(): void

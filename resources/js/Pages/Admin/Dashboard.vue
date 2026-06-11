@@ -2,6 +2,7 @@
 import { computed, ref, watch } from 'vue';
 import { Link, router, useForm, usePage } from '@inertiajs/vue3';
 import PaginationLinks from '../../Components/PaginationLinks.vue';
+import ArticleImageFields from '../../Components/ArticleImageFields.vue';
 import SeoHead from '../../Components/SeoHead.vue';
 import AdminLayout from '../../Layouts/AdminLayout.vue';
 
@@ -83,6 +84,7 @@ const newsDefaults = () => ({
     seo_keywords: '',
     seo_keywords_en: '',
     tags: '',
+    article_images: [],
     redirect_to: 'dashboard',
 });
 
@@ -814,6 +816,8 @@ const removeUser = (account) => {
                                 </p>
                             </div>
                         </div>
+
+                        <ArticleImageFields v-model="newsForm.article_images" :errors="newsForm.errors" />
 
                         <div v-if="isAdmin" class="grid gap-4 sm:grid-cols-2">
                             <div>

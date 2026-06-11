@@ -30,6 +30,7 @@ Route::get('/topik/{tag:slug}', [NewsPortalController::class, 'tag'])->name('new
 Route::get('/tentang', [NewsPortalController::class, 'about'])->name('news.about');
 Route::view('/company-profile', 'company-profile')->name('company.profile');
 Route::get('/sitemap.xml', [NewsPortalController::class, 'sitemap'])->name('sitemap');
+Route::get('/news-sitemap.xml', [NewsPortalController::class, 'newsSitemap'])->name('news.sitemap');
 Route::get('/rss.xml', [NewsPortalController::class, 'feed'])->name('news.feed');
 Route::get('/robots.txt', [NewsPortalController::class, 'robots'])->name('robots');
 Route::post('/language/{locale}', [LanguageController::class, 'update'])->name('language.update');
@@ -52,6 +53,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('/dashboard/berita/{article:slug}', [NewsAdminController::class, 'update'])->name('admin.news.update');
         Route::patch('/dashboard/berita/{article:slug}/review', [NewsAdminController::class, 'review'])->name('admin.news.review');
         Route::patch('/dashboard/berita/{article:slug}/penulis', [NewsAdminController::class, 'reassign'])->name('admin.news.reassign');
+        Route::delete('/dashboard/berita/{article:slug}/gambar/{image}', [NewsAdminController::class, 'destroyImage'])->name('admin.news.images.destroy');
         Route::delete('/dashboard/berita/{article:slug}', [NewsAdminController::class, 'destroy'])->name('admin.news.destroy');
         Route::post('/dashboard/kategori', [NewsCategoryAdminController::class, 'store'])->name('admin.categories.store');
         Route::patch('/dashboard/kategori/{category:slug}', [NewsCategoryAdminController::class, 'update'])->name('admin.categories.update');

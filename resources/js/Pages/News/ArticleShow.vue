@@ -1,5 +1,7 @@
 <script setup>
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { Link } from '@inertiajs/vue3';
+import ArticleBody from '../../Components/ArticleBody.vue';
 import ArticleCard from '../../Components/ArticleCard.vue';
 import SeoHead from '../../Components/SeoHead.vue';
 import NewsLayout from '../../Layouts/NewsLayout.vue';
@@ -13,6 +15,31 @@ defineProps({
 });
 
 const { t } = useNewsLocale();
+const zoomedImage = ref(null);
+
+const openImage = (image) => {
+    zoomedImage.value = image;
+};
+
+const closeImage = () => {
+    zoomedImage.value = null;
+};
+
+const handleEscape = (event) => {
+    if (event.key === 'Escape') {
+        closeImage();
+    }
+};
+
+watch(zoomedImage, (image) => {
+    document.body.style.overflow = image ? 'hidden' : '';
+});
+
+onMounted(() => window.addEventListener('keydown', handleEscape));
+onBeforeUnmount(() => {
+    window.removeEventListener('keydown', handleEscape);
+    document.body.style.overflow = '';
+});
 </script>
 
 <template>
@@ -46,15 +73,21 @@ const { t } = useNewsLocale();
                 </div>
             </header>
 
-            <img
-                :src="article.coverImage"
-                :alt="article.coverAlt"
-                class="mt-8 aspect-[16/8] w-full rounded-2xl object-cover shadow-[0_18px_45px_rgba(15,23,42,0.12)]"
-            >
+            <button type="button" class="mt-8 block w-full overflow-hidden rounded-2xl" @click="openImage({
+                url: article.coverImage,
+                altText: article.coverAlt,
+                caption: article.coverAlt,
+            })">
+                <img
+                    :src="article.coverImage"
+                    :alt="article.coverAlt"
+                    class="aspect-[16/8] w-full object-cover shadow-[0_18px_45px_rgba(15,23,42,0.12)] transition duration-300 hover:scale-[1.01]"
+                >
+            </button>
 
             <div class="mt-10 grid gap-8 xl:grid-cols-[minmax(0,760px)_300px] xl:justify-center">
                 <div class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-9">
-                    <div class="news-prose" v-html="article.content" />
+                    <ArticleBody :content="article.content" :images="article.images" @zoom="openImage" />
                     <div class="mt-8 flex flex-wrap gap-2 border-t border-slate-200 pt-6">
                         <Link
                             v-for="tag in article.tags"
@@ -97,5 +130,35 @@ const { t } = useNewsLocale();
                 <ArticleCard v-for="item in related" :key="item.slug" :article="item" />
             </div>
         </section>
+
+        <Teleport to="body">
+            <div
+                v-if="zoomedImage"
+                class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/95 p-4 sm:p-8"
+                role="dialog"
+                aria-modal="true"
+                :aria-label="zoomedImage.altText || 'Pratinjau gambar artikel'"
+                @click.self="closeImage"
+            >
+                <button
+                    type="button"
+                    class="absolute right-4 top-4 rounded-full bg-white/10 px-4 py-2 text-2xl text-white transition hover:bg-white/20"
+                    aria-label="Tutup gambar"
+                    @click="closeImage"
+                >
+                    &times;
+                </button>
+                <figure class="flex max-h-full max-w-6xl flex-col items-center">
+                    <img
+                        :src="zoomedImage.url"
+                        :alt="zoomedImage.altText"
+                        class="max-h-[82vh] max-w-full rounded-xl object-contain"
+                    >
+                    <figcaption v-if="zoomedImage.caption" class="mt-4 max-w-3xl text-center text-sm leading-6 text-slate-200">
+                        {{ zoomedImage.caption }}
+                    </figcaption>
+                </figure>
+            </div>
+        </Teleport>
     </NewsLayout>
 </template>

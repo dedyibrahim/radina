@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class NewsArticle extends Model
@@ -133,6 +134,13 @@ class NewsArticle extends Model
     public function earning(): HasOne
     {
         return $this->hasOne(WriterEarning::class, 'article_id');
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(NewsArticleImage::class, 'article_id')
+            ->orderBy('sort_order')
+            ->orderBy('id');
     }
 
     public function isApprovedAndVerified(): bool

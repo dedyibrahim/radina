@@ -22,31 +22,32 @@ const jsonLdBlocks = computed(() => (props.seo.jsonLd || []).filter(Boolean));
 <template>
     <Head>
         <title>{{ seo.title }}</title>
-        <meta name="description" :content="description" />
-        <meta name="robots" :content="seo.robots" />
-        <meta v-if="keywords" name="keywords" :content="keywords" />
+        <meta head-key="description" name="description" :content="description" />
+        <meta head-key="robots" name="robots" :content="seo.robots" />
+        <meta v-if="keywords" head-key="keywords" name="keywords" :content="keywords" />
 
-        <link rel="canonical" :href="url" />
+        <link head-key="canonical" rel="canonical" :href="url" />
 
-        <meta property="og:site_name" :content="siteName" />
-        <meta property="og:title" :content="seo.title" />
-        <meta property="og:description" :content="description" />
-        <meta property="og:type" :content="seo.type" />
-        <meta property="og:url" :content="url" />
-        <meta property="og:image" :content="image" />
+        <meta head-key="og-site-name" property="og:site_name" :content="siteName" />
+        <meta head-key="og-title" property="og:title" :content="seo.title" />
+        <meta head-key="og-description" property="og:description" :content="description" />
+        <meta head-key="og-type" property="og:type" :content="seo.type" />
+        <meta head-key="og-url" property="og:url" :content="url" />
+        <meta head-key="og-image" property="og:image" :content="image" />
 
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" :content="seo.title" />
-        <meta name="twitter:description" :content="description" />
-        <meta name="twitter:image" :content="image" />
+        <meta head-key="twitter-card" name="twitter:card" content="summary_large_image" />
+        <meta head-key="twitter-title" name="twitter:title" :content="seo.title" />
+        <meta head-key="twitter-description" name="twitter:description" :content="description" />
+        <meta head-key="twitter-image" name="twitter:image" :content="image" />
 
-        <meta v-if="seo.publishedAt" property="article:published_time" :content="seo.publishedAt" />
-        <meta v-if="seo.updatedAt" property="article:modified_time" :content="seo.updatedAt" />
+        <meta v-if="seo.publishedAt" head-key="article-published-at" property="article:published_time" :content="seo.publishedAt" />
+        <meta v-if="seo.updatedAt" head-key="article-updated-at" property="article:modified_time" :content="seo.updatedAt" />
 
         <component
             :is="'script'"
             v-for="(schema, index) in jsonLdBlocks"
             :key="`schema-${index}`"
+            :head-key="`schema-${index}`"
             type="application/ld+json"
             v-html="JSON.stringify(schema)"
         />

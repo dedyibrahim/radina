@@ -1,3 +1,7 @@
 User-agent: *
-Disallow:
-Sitemap: /sitemap.xml
+Allow: /
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /licenses
+Sitemap: https://radina.net/sitemap.xml
+Sitemap: https://radina.net/news-sitemap.xml

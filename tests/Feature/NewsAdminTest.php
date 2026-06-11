@@ -6,6 +6,7 @@ use App\Models\NewsArticle;
 use App\Models\NewsCategory;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class NewsAdminTest extends TestCase
@@ -210,5 +211,47 @@ class NewsAdminTest extends TestCase
             ->assertRedirect(route('admin.news.index'));
 
         $this->assertDatabaseMissing('news_articles', ['id' => $article->id]);
+    }
+
+    public function test_admin_can_upload_and_delete_inline_article_images(): void
+    {
+        $admin = User::where('email', 'admin@radina.net')->firstOrFail();
+        $category = NewsCategory::firstOrFail();
+
+        $this
+            ->actingAs($admin)
+            ->post(route('admin.news.store'), [
+                'category_id' => $category->id,
+                'title' => 'Tutorial dengan Gambar Bertahap',
+                'excerpt' => 'Artikel tutorial dengan gambar pada paragraf tertentu.',
+                'content' => "Langkah pertama.\n\nLangkah kedua.",
+                'cover_image_url' => '/images/news-dummy/technology-lead.png',
+                'status' => NewsArticle::STATUS_DRAFT,
+                'is_featured' => false,
+                'article_images' => [
+                    [
+                        'file' => UploadedFile::fake()->image('langkah-pertama.jpg', 800, 600),
+                        'alt_text' => 'Tampilan langkah pertama',
+                        'caption' => 'Buka menu pengaturan.',
+                        'position_after_paragraph' => 1,
+                    ],
+                ],
+            ])
+            ->assertSessionHasNoErrors();
+
+        $article = NewsArticle::where('title', 'Tutorial dengan Gambar Bertahap')->firstOrFail();
+        $image = $article->images()->firstOrFail();
+
+        $this->assertSame('Tampilan langkah pertama', $image->alt_text);
+        $this->assertSame(1, $image->position_after_paragraph);
+        $this->assertFileExists(public_path(ltrim($image->image_url, '/')));
+
+        $this
+            ->actingAs($admin)
+            ->delete(route('admin.news.images.destroy', [$article, $image]))
+            ->assertSessionHasNoErrors();
+
+        $this->assertDatabaseMissing('news_article_images', ['id' => $image->id]);
+        $this->assertFileDoesNotExist(public_path(ltrim($image->image_url, '/')));
     }
 }

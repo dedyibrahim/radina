@@ -4,8 +4,10 @@ import { usePage } from '@inertiajs/vue3';
 const messages = {
     id: {
         edition: 'Edisi',
-        mainPortal: 'Portal berita utama',
-        digitalNewsPortal: 'Portal Berita Digital',
+        home: 'Beranda',
+        newsArchive: 'Berita',
+        mainPortal: 'Beranda Radina News',
+        digitalNewsPortal: 'Referensi Digital Indonesia',
         searchPlaceholder: 'Cari berita, isu, atau tokoh',
         search: 'Cari',
         profile: 'Profil',
@@ -60,8 +62,10 @@ const messages = {
     },
     en: {
         edition: 'Edition',
-        mainPortal: 'Main news portal',
-        digitalNewsPortal: 'Digital News Portal',
+        home: 'Home',
+        newsArchive: 'News',
+        mainPortal: 'Radina News Home',
+        digitalNewsPortal: "Indonesia's Digital Reference",
         searchPlaceholder: 'Search news, issues, or people',
         search: 'Search',
         profile: 'Profile',

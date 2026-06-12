@@ -1,7 +1,8 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
 import ArticleCard from '../../Components/ArticleCard.vue';
+import Breadcrumbs from '../../Components/Breadcrumbs.vue';
 import PaginationLinks from '../../Components/PaginationLinks.vue';
 import SeoHead from '../../Components/SeoHead.vue';
 import NewsLayout from '../../Layouts/NewsLayout.vue';
@@ -27,6 +28,11 @@ const props = defineProps({
 
 const searchTerm = ref(props.filters?.q || '');
 const { t } = useNewsLocale();
+const breadcrumbs = computed(() => [
+    { label: t('home'), url: '/' },
+    { label: t('newsArchive'), url: props.context ? '/berita' : null },
+    ...(props.context ? [{ label: props.context.value }] : []),
+]);
 
 watch(
     () => props.filters?.q,
@@ -46,7 +52,7 @@ const submitSearch = () => {
 
         <section
             class="relative overflow-hidden rounded-2xl border border-slate-200"
-            :class="pageCover ? 'min-h-[340px] bg-slate-950 text-white' : 'bg-gradient-to-br from-white to-blue-50/50'"
+            :class="pageCover ? 'min-h-[220px] bg-slate-950 text-white sm:min-h-[240px]' : 'bg-gradient-to-br from-white to-blue-50/50'"
         >
             <img
                 v-if="pageCover"
@@ -56,15 +62,15 @@ const submitSearch = () => {
             >
             <div v-if="pageCover" class="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/70 to-slate-950/20"></div>
 
-            <div class="relative flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-end lg:justify-between">
-                <div class="max-w-3xl" :class="{ 'self-end': pageCover }">
-                    <span v-if="context" class="news-kicker">{{ context.label }} / {{ context.value }}</span>
-                    <h1 class="mt-4 text-4xl font-semibold leading-tight sm:text-5xl">{{ pageTitle }}</h1>
-                    <p class="mt-4 text-sm leading-7 sm:text-base" :class="pageCover ? 'text-slate-200' : 'text-slate-600'">
+            <div class="relative flex min-h-[220px] flex-col justify-between gap-5 p-5 sm:min-h-[240px] sm:p-7 lg:flex-row lg:items-end">
+                <div class="max-w-2xl">
+                    <Breadcrumbs :items="breadcrumbs" :light="!!pageCover" />
+                    <h1 class="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">{{ pageTitle }}</h1>
+                    <p class="mt-3 line-clamp-2 text-sm leading-6 sm:text-base" :class="pageCover ? 'text-slate-200' : 'text-slate-600'">
                         {{ pageDescription }}
                     </p>
                 </div>
-                <form class="flex w-full max-w-md gap-2" @submit.prevent="submitSearch">
+                <form class="flex w-full gap-2 lg:ml-auto lg:max-w-md" @submit.prevent="submitSearch">
                     <input
                         v-model="searchTerm"
                         type="search"

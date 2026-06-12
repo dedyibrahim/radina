@@ -98,6 +98,18 @@ class NewsPortalTest extends TestCase
             ->assertSee('<news:publication>', false);
     }
 
+    public function test_rss_feed_returns_valid_xml(): void
+    {
+        $article = NewsArticle::published()->firstOrFail();
+
+        $this->get('/rss.xml')
+            ->assertOk()
+            ->assertHeader('Content-Type', 'application/rss+xml; charset=UTF-8')
+            ->assertSee('<?xml version="1.0" encoding="UTF-8"?>', false)
+            ->assertSee('<rss version="2.0">', false)
+            ->assertSee(route('news.show', $article), false);
+    }
+
     public function test_language_switch_changes_shared_locale_and_article_content(): void
     {
         $article = NewsArticle::published()

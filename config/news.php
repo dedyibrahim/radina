@@ -2,7 +2,7 @@
 
 return [
     'name' => env('NEWS_SITE_NAME', 'Radina News'),
-    'tagline' => env('NEWS_SITE_TAGLINE', 'Informasi terkini, tepercaya, dan relevan untuk pembaca Indonesia.'),
+    'tagline' => env('NEWS_SITE_TAGLINE', 'Referensi Digital Indonesia'),
     'description' => env('NEWS_SITE_DESCRIPTION', 'Radina News menyajikan berita terkini, laporan mendalam, dan informasi relevan dari Indonesia maupun dunia.'),
     'base_url' => env('APP_URL', 'http://localhost'),
     'contact_phone' => env('NEWS_CONTACT_PHONE', '877-2417-0145'),

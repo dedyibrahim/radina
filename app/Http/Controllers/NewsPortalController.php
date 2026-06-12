@@ -65,7 +65,7 @@ class NewsPortalController extends Controller
                 'imageWidth' => 1200,
                 'imageHeight' => 630,
                 'imageType' => 'image/jpeg',
-                'imageAlt' => 'Radina News - Portal Berita',
+                'imageAlt' => 'Radina News - Referensi Digital Indonesia',
                 'keywords' => $isEnglish
                     ? 'news portal, technology news, indonesia startups, digital business, AI indonesia'
                     : 'portal berita, berita teknologi, startup indonesia, berita bisnis digital, AI indonesia',
@@ -514,7 +514,7 @@ class NewsPortalController extends Controller
             'imageWidth' => 1200,
             'imageHeight' => 630,
             'imageType' => 'image/jpeg',
-            'imageAlt' => $this->siteName().' - Portal Berita',
+            'imageAlt' => $this->siteName().' - Referensi Digital Indonesia',
             'type' => 'website',
             'keywords' => 'portal berita, berita teknologi, berita bisnis, berita startup',
             'robots' => 'index,follow',

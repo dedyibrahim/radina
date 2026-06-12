@@ -52,7 +52,7 @@
                     <img src="{{ asset('favicon-192x192.png') }}" alt="Radina News" class="h-14 w-14 object-contain">
                     <div>
                         <p class="text-xl font-extrabold">Radina News</p>
-                        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-700">Portal Berita Digital</p>
+                        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-700">Referensi Digital Indonesia</p>
                     </div>
                 </a>
                 <a href="{{ route('news.home') }}" class="rounded-full bg-blue-700 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-blue-800">

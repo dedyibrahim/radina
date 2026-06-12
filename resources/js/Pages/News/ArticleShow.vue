@@ -3,6 +3,7 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import ArticleBody from '../../Components/ArticleBody.vue';
 import ArticleCard from '../../Components/ArticleCard.vue';
+import Breadcrumbs from '../../Components/Breadcrumbs.vue';
 import SeoHead from '../../Components/SeoHead.vue';
 import NewsLayout from '../../Layouts/NewsLayout.vue';
 import { useNewsLocale } from '../../Composables/useNewsLocale';
@@ -47,6 +48,14 @@ onBeforeUnmount(() => {
         <SeoHead :seo="seo" />
 
         <article>
+            <Breadcrumbs
+                class="mx-auto mb-6 max-w-4xl"
+                :items="[
+                    { label: t('home'), url: '/' },
+                    { label: article.category.name, url: article.category.url },
+                    { label: article.title },
+                ]"
+            />
             <header class="mx-auto max-w-4xl text-center">
                 <div class="flex flex-wrap items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
                     <Link

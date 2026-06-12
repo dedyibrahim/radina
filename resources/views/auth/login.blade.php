@@ -23,7 +23,7 @@
                     <img src="{{ asset('favicon-192x192.png') }}" alt="Radina News" class="h-20 w-20 rounded-xl bg-white object-contain">
                     <div>
                         <p class="text-2xl font-bold">Radina News</p>
-                        <p class="mt-1 text-xs font-semibold uppercase tracking-[0.22em] text-blue-300">Portal Berita</p>
+                        <p class="mt-1 text-xs font-semibold uppercase tracking-[0.22em] text-blue-300">Referensi Digital Indonesia</p>
                     </div>
                 </a>
 
@@ -146,7 +146,7 @@
                     </form>
 
                     <a href="{{ route('news.home') }}" class="mt-8 inline-flex text-sm font-bold text-slate-600 transition hover:text-blue-700">
-                        &larr; Kembali ke portal berita
+                        &larr; Kembali ke Radina News
                     </a>
                 </div>
             </section>

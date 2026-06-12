@@ -100,7 +100,9 @@ class NewsPortalTest extends TestCase
 
     public function test_rss_feed_returns_valid_xml(): void
     {
-        $article = NewsArticle::published()->firstOrFail();
+        $article = NewsArticle::published()
+            ->latest('published_at')
+            ->firstOrFail();
 
         $this->get('/rss.xml')
             ->assertOk()

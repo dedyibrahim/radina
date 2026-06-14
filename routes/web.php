@@ -28,6 +28,8 @@ Route::get('/berita/{article:slug}', [NewsPortalController::class, 'show'])->nam
 Route::get('/kategori/{category:slug}', [NewsPortalController::class, 'category'])->name('news.category');
 Route::get('/topik/{tag:slug}', [NewsPortalController::class, 'tag'])->name('news.tag');
 Route::get('/tentang', [NewsPortalController::class, 'about'])->name('news.about');
+Route::get('/persyaratan-layanan', [NewsPortalController::class, 'terms'])->name('news.terms');
+Route::get('/kebijakan-privasi', [NewsPortalController::class, 'privacy'])->name('news.privacy');
 Route::view('/company-profile', 'company-profile')->name('company.profile');
 Route::get('/sitemap.xml', [NewsPortalController::class, 'sitemap'])->name('sitemap');
 Route::get('/news-sitemap.xml', [NewsPortalController::class, 'newsSitemap'])->name('news.sitemap');

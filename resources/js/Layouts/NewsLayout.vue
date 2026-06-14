@@ -352,6 +352,8 @@ const isActive = (url) => {
                     <h3 class="text-xs font-bold uppercase tracking-[0.18em] text-white">{{ t('newsroom') }}</h3>
                     <nav class="mt-5 grid gap-3 text-sm">
                         <Link href="/tentang" class="transition hover:translate-x-1 hover:text-blue-300">{{ t('aboutNewsroom') }}</Link>
+                        <Link href="/persyaratan-layanan" class="transition hover:translate-x-1 hover:text-blue-300">{{ t('termsOfService') }}</Link>
+                        <Link href="/kebijakan-privasi" class="transition hover:translate-x-1 hover:text-blue-300">{{ t('privacyPolicy') }}</Link>
                         <a href="/sitemap.xml" class="transition hover:translate-x-1 hover:text-blue-300">Sitemap</a>
                         <a href="/rss.xml" class="transition hover:translate-x-1 hover:text-blue-300">RSS Feed</a>
                         <a :href="`tel:${portal.contactPhone}`" class="transition hover:translate-x-1 hover:text-blue-300">{{ t('contactUs') }}</a>

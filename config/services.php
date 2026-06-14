@@ -12,6 +12,12 @@ return [
         'enabled' => env('GOOGLE_ADSENSE_ENABLED', env('APP_ENV') === 'production'),
     ],
 
+    'google_publisher_center' => [
+        'product_id' => env('GOOGLE_PUBLISHER_CENTER_PRODUCT_ID', 'CAow7_rGDA:openaccess'),
+        'language' => env('GOOGLE_PUBLISHER_CENTER_LANGUAGE', 'id'),
+        'enabled' => env('GOOGLE_PUBLISHER_CENTER_ENABLED', env('APP_ENV') === 'production'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Third Party Services

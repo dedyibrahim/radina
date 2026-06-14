@@ -7,10 +7,12 @@ import Breadcrumbs from '../../Components/Breadcrumbs.vue';
 import SeoHead from '../../Components/SeoHead.vue';
 import NewsLayout from '../../Layouts/NewsLayout.vue';
 import { useNewsLocale } from '../../Composables/useNewsLocale';
+import { initializeGooglePublisherCenter } from '../../Support/googlePublisherCenter';
 
-defineProps({
+const props = defineProps({
     seo: Object,
     article: Object,
+    publisherCenter: Object,
     related: Array,
     trending: Array,
 });
@@ -36,7 +38,13 @@ watch(zoomedImage, (image) => {
     document.body.style.overflow = image ? 'hidden' : '';
 });
 
-onMounted(() => window.addEventListener('keydown', handleEscape));
+onMounted(() => {
+    window.addEventListener('keydown', handleEscape);
+
+    if (props.publisherCenter?.enabled) {
+        initializeGooglePublisherCenter(props.publisherCenter);
+    }
+});
 onBeforeUnmount(() => {
     window.removeEventListener('keydown', handleEscape);
     document.body.style.overflow = '';

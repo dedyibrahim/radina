@@ -40,16 +40,21 @@ class NewsPortalTest extends TestCase
 
     public function test_article_detail_page_is_accessible_and_tracks_views(): void
     {
+        config()->set('services.google_publisher_center.enabled', true);
         $article = NewsArticle::published()->firstOrFail();
         $initialViews = $article->views_count;
 
         $this->get(route('news.show', $article))
             ->assertOk()
+            ->assertSee('https://news.google.com/swg/js/v1/swg-basic.js', false)
+            ->assertSee('CAow7_rGDA:openaccess', false)
             ->assertSee('<meta data-inertia="robots" name="robots" content="index,follow">', false)
             ->assertSee('<link data-inertia="canonical" rel="canonical" href="'.route('news.show', $article).'">', false)
             ->assertInertia(fn (Assert $page) => $page
                 ->component('News/ArticleShow')
                 ->where('article.slug', $article->slug)
+                ->where('publisherCenter.enabled', true)
+                ->where('publisherCenter.productId', 'CAow7_rGDA:openaccess')
                 ->has('article.images')
                 ->has('related')
             );
@@ -77,8 +82,29 @@ class NewsPortalTest extends TestCase
         $response->assertSee('<?xml version="1.0" encoding="UTF-8"?>', false);
         $response->assertSee(route('news.home'), false);
         $response->assertSee(route('company.profile'), false);
+        $response->assertSee(route('news.terms'), false);
+        $response->assertSee(route('news.privacy'), false);
         $response->assertSee($articleUrl = route('news.show', NewsArticle::published()->firstOrFail()), false);
         $response->assertSee(NewsArticle::published()->firstOrFail()->cover_image_url, false);
+    }
+
+    public function test_legal_pages_are_public_and_render_complete_documents(): void
+    {
+        $this->get(route('news.terms'))
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('News/Legal')
+                ->where('document.title', 'Persyaratan Layanan')
+                ->has('document.sections', 20)
+            );
+
+        $this->get(route('news.privacy'))
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('News/Legal')
+                ->where('document.title', 'Kebijakan Privasi')
+                ->has('document.sections', 22)
+            );
     }
 
     public function test_news_sitemap_only_exposes_recent_published_articles(): void

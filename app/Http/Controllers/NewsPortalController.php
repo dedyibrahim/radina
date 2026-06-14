@@ -267,6 +267,11 @@ class NewsPortalController extends Controller
                 ],
             ]),
             'article' => $this->transformArticleDetail($article),
+            'publisherCenter' => [
+                'enabled' => (bool) config('services.google_publisher_center.enabled'),
+                'productId' => config('services.google_publisher_center.product_id'),
+                'language' => config('services.google_publisher_center.language', 'id'),
+            ],
             'related' => $related->map(fn (NewsArticle $item) => $this->transformArticle($item))->all(),
             'trending' => $this->publishedArticles()->orderByDesc('views_count')->take(5)->get()->map(fn (NewsArticle $item) => $this->transformHeadline($item, true))->all(),
         ]);
@@ -296,6 +301,16 @@ class NewsPortalController extends Controller
         ]);
     }
 
+    public function terms(): Response
+    {
+        return $this->legalDocument('terms', route('news.terms'));
+    }
+
+    public function privacy(): Response
+    {
+        return $this->legalDocument('privacy', route('news.privacy'));
+    }
+
     public function sitemap(): HttpResponse
     {
         $urls = collect([
@@ -321,6 +336,18 @@ class NewsPortalController extends Controller
                 'loc' => route('company.profile'),
                 'changefreq' => 'monthly',
                 'priority' => '0.5',
+                'lastmod' => now()->toDateString(),
+            ],
+            [
+                'loc' => route('news.terms'),
+                'changefreq' => 'yearly',
+                'priority' => '0.4',
+                'lastmod' => now()->toDateString(),
+            ],
+            [
+                'loc' => route('news.privacy'),
+                'changefreq' => 'yearly',
+                'priority' => '0.4',
                 'lastmod' => now()->toDateString(),
             ],
         ])
@@ -527,6 +554,30 @@ class NewsPortalController extends Controller
         $seo['title'] = $this->normalizeSeoTitle($seo['title']);
 
         return $seo;
+    }
+
+    private function legalDocument(string $documentKey, string $url): Response
+    {
+        $document = config("legal.{$documentKey}");
+        abort_unless(is_array($document), HttpResponse::HTTP_NOT_FOUND);
+
+        return Inertia::render('News/Legal', [
+            'seo' => $this->buildSeo([
+                'title' => $document['title'],
+                'description' => $document['summary'],
+                'url' => $url,
+                'keywords' => $documentKey === 'privacy'
+                    ? 'kebijakan privasi radina news, perlindungan data pribadi, privasi pengguna'
+                    : 'persyaratan layanan radina news, ketentuan penggunaan, syarat penulis',
+                'jsonLd' => [
+                    $this->collectionSchema($document['title'], $url),
+                ],
+            ]),
+            'document' => [
+                ...$document,
+                'updatedAt' => config('legal.updated_at'),
+            ],
+        ]);
     }
 
     private function siteName(): string

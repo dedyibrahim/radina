@@ -21,6 +21,9 @@
         <x-favicon />
         <x-google-analytics />
         <x-google-adsense />
+        @if ($initialType === 'article')
+            <x-google-publisher-center />
+        @endif
 
         <title data-inertia="">{{ $initialTitle }}{{ $initialTitle !== $siteName ? " | {$siteName}" : '' }}</title>
         <meta data-inertia="description" name="description" content="{{ $initialDescription }}">

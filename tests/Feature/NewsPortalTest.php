@@ -73,6 +73,32 @@ class NewsPortalTest extends TestCase
             ->assertDontSee('Radina News | Radina News', false);
     }
 
+    public function test_curated_trending_articles_are_seeded_with_images_and_sources(): void
+    {
+        $slugs = [
+            'luhut-ungkap-masukan-ke-presiden-banyak-diolah-ai-apa-dampaknya',
+            'android-17-dirilis-fitur-privasi-dan-multitasking-jadi-perhatian-pengguna',
+            'pokemon-champions-versi-mobile-rilis-event-mega-raichu-jadi-magnet-pemain-baru',
+            'galaxy-z-fold8-ultra-dikaitkan-dengan-spider-man-strategi-teaser-samsung-disorot',
+            'indonesia-bawa-agenda-ai-dan-transformasi-digital-ke-london-tech-week-2026',
+        ];
+
+        $articles = NewsArticle::query()
+            ->whereIn('slug', $slugs)
+            ->get()
+            ->keyBy('slug');
+
+        $this->assertCount(5, $articles);
+
+        $articles->each(function (NewsArticle $article): void {
+            $this->assertSame(NewsArticle::STATUS_PUBLISHED, $article->status);
+            $this->assertSame(NewsArticle::EDITORIAL_APPROVED, $article->editorial_status);
+            $this->assertSame(NewsArticle::FACT_VERIFIED, $article->fact_check_status);
+            $this->assertStringStartsWith('/images/news-curated/', $article->cover_image_url);
+            $this->assertStringContainsString('Sumber rujukan', $article->content);
+        });
+    }
+
     public function test_sitemap_contains_news_and_company_profile_urls(): void
     {
         $response = $this->get('/sitemap.xml');

@@ -7,7 +7,6 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -35,11 +34,13 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e): Response
     {
-        if ($this->isHttpException($e) && $this->statusCode($e) === Response::HTTP_NOT_FOUND && ! $request->expectsJson()) {
+        $response = parent::render($request, $e);
+
+        if ($response->getStatusCode() === Response::HTTP_NOT_FOUND && ! $request->expectsJson()) {
             return $this->renderNotFoundPage($request);
         }
 
-        return parent::render($request, $e);
+        return $response;
     }
 
     private function renderNotFoundPage(Request $request): Response
@@ -103,10 +104,4 @@ class Handler extends ExceptionHandler
         }
     }
 
-    private function statusCode(Throwable $e): int
-    {
-        return $e instanceof HttpExceptionInterface
-            ? $e->getStatusCode()
-            : Response::HTTP_INTERNAL_SERVER_ERROR;
-    }
 }

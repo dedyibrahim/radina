@@ -112,6 +112,16 @@ class NewsPortalTest extends TestCase
             );
     }
 
+    public function test_missing_article_slug_uses_custom_not_found_page(): void
+    {
+        $this->get('/berita/slug-berita-yang-tidak-tersedia')
+            ->assertNotFound()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('News/NotFound')
+                ->has('latestArticles')
+            );
+    }
+
     public function test_sitemap_contains_news_and_company_profile_urls(): void
     {
         $response = $this->get('/sitemap.xml');

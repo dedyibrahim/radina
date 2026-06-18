@@ -2,7 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\Models\NewsArticle;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -26,5 +31,82 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e): Response
+    {
+        if ($this->isHttpException($e) && $this->statusCode($e) === Response::HTTP_NOT_FOUND && ! $request->expectsJson()) {
+            return $this->renderNotFoundPage($request);
+        }
+
+        return parent::render($request, $e);
+    }
+
+    private function renderNotFoundPage(Request $request): Response
+    {
+        return Inertia::render('News/NotFound', [
+            'seo' => [
+                'title' => 'Halaman Tidak Ditemukan',
+                'description' => 'Halaman yang Anda cari tidak ditemukan. Temukan berita terbaru dan kategori populer di Radina News.',
+                'url' => $request->fullUrl(),
+                'image' => asset(config('news.social_image')),
+                'imageWidth' => 1200,
+                'imageHeight' => 630,
+                'imageType' => 'image/jpeg',
+                'imageAlt' => config('news.name').' - Referensi Digital Indonesia',
+                'type' => 'website',
+                'keywords' => 'Radina News, berita terbaru, arsip berita, halaman tidak ditemukan',
+                'robots' => 'noindex,follow',
+                'publishedAt' => null,
+                'updatedAt' => null,
+                'jsonLd' => [],
+            ],
+            'latestArticles' => $this->latestArticlesForNotFound(),
+        ])->toResponse($request)->setStatusCode(Response::HTTP_NOT_FOUND);
+    }
+
+    private function latestArticlesForNotFound(): array
+    {
+        try {
+            return NewsArticle::query()
+                ->with(['category', 'author'])
+                ->published()
+                ->latest('published_at')
+                ->limit(6)
+                ->get()
+                ->map(fn (NewsArticle $article): array => [
+                    'title' => $article->title,
+                    'slug' => $article->slug,
+                    'excerpt' => $article->excerpt,
+                    'url' => route('news.show', $article),
+                    'coverImage' => $article->cover_image_url,
+                    'coverAlt' => $article->cover_image_alt ?: $article->title,
+                    'publishedAt' => optional($article->published_at)->toIso8601String(),
+                    'publishedLabel' => optional($article->published_at)->translatedFormat('d M Y'),
+                    'readingTime' => $article->reading_time,
+                    'viewsCount' => $article->views_count,
+                    'isFeatured' => $article->is_featured,
+                    'category' => $article->category ? [
+                        'name' => $article->category->name,
+                        'slug' => $article->category->slug,
+                        'url' => route('news.category', $article->category),
+                        'accentColor' => $article->category->accent_color,
+                    ] : null,
+                    'author' => $article->author ? [
+                        'name' => $article->author->name,
+                    ] : null,
+                    'tags' => [],
+                ])
+                ->all();
+        } catch (Throwable) {
+            return [];
+        }
+    }
+
+    private function statusCode(Throwable $e): int
+    {
+        return $e instanceof HttpExceptionInterface
+            ? $e->getStatusCode()
+            : Response::HTTP_INTERNAL_SERVER_ERROR;
     }
 }

@@ -29,6 +29,7 @@ class NewsPortalTest extends TestCase
             ->assertInertia(fn (Assert $page) => $page
                 ->component('News/Home')
                 ->has('hero')
+                ->has('editorsPick', 6)
                 ->has('latest')
                 ->has('seo')
                 ->has('navigation.categories', 7)
@@ -97,6 +98,18 @@ class NewsPortalTest extends TestCase
             $this->assertStringStartsWith('/images/news-curated/', $article->cover_image_url);
             $this->assertStringContainsString('Sumber rujukan', $article->content);
         });
+    }
+
+    public function test_not_found_page_shows_latest_articles(): void
+    {
+        $this->get('/halaman-tidak-ada')
+            ->assertNotFound()
+            ->assertSee('<meta data-inertia="robots" name="robots" content="noindex,follow">', false)
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('News/NotFound')
+                ->where('seo.title', 'Halaman Tidak Ditemukan')
+                ->has('latestArticles', 6)
+            );
     }
 
     public function test_sitemap_contains_news_and_company_profile_urls(): void

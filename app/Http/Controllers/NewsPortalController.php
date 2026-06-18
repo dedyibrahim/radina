@@ -25,8 +25,20 @@ class NewsPortalController extends Controller
         $editorsPick = $this->publishedArticles()
             ->when($heroId, fn ($query) => $query->whereKeyNot($heroId))
             ->featured()
-            ->take(4)
+            ->take(6)
             ->get();
+
+        if ($editorsPick->count() < 6) {
+            $editorsPick = $editorsPick
+                ->merge(
+                    $this->publishedArticles()
+                        ->when($heroId, fn ($query) => $query->whereKeyNot($heroId))
+                        ->whereNotIn('id', $editorsPick->pluck('id'))
+                        ->take(6 - $editorsPick->count())
+                        ->get()
+                )
+                ->values();
+        }
 
         $latest = $this->publishedArticles()
             ->when($heroId, fn ($query) => $query->whereKeyNot($heroId))

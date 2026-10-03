@@ -7,7 +7,7 @@ defineProps({ light: Boolean, iconOnly: Boolean })
 <template>
   <img
     :src="iconOnly ? icon : light ? white : primary"
-    alt="Radina — Digital Wedding Invitation"
+    alt="Radina — Undangan Digital"
     class="radina-logo"
     :class="{ 'radina-icon': iconOnly }"
   />

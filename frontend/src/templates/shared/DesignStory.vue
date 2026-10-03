@@ -10,7 +10,11 @@ const wedding = inject('wedding')
 <template>
   <section id="story" class="section design-story" :class="`story-${design}`">
     <FlowerMotion v-if="['amore', 'garden', 'daydream'].includes(design)" />
-    <SectionHeading section="story" eyebrow="OUR LOVE STORY" title="Our journey" />
+    <SectionHeading
+      section="story"
+      :eyebrow="wedding.isWedding ? 'OUR LOVE STORY' : 'TENTANG ACARA'"
+      :title="wedding.isWedding ? 'Our journey' : 'Tentang Acara'"
+    />
     <div class="story-composition">
       <template v-for="(story, i) in wedding.loveStory" :key="i"
         ><article class="story-chapter" data-reveal>
@@ -36,8 +40,10 @@ const wedding = inject('wedding')
             wedding.sections.couple?.enabled !== false &&
             i === Math.max(0, Math.floor(wedding.loveStory.length / 2) - 1)
           "
-          section-key="couple" :content="wedding.sections.couple"
-      ><DesignCouple design="cinema" /></SectionFrame></template>
+          section-key="couple"
+          :content="wedding.sections.couple"
+          ><DesignCouple design="cinema" /></SectionFrame
+      ></template>
     </div>
   </section>
 </template>

@@ -278,5 +278,150 @@
         "text": "We invite you to join Eleanor and William as our next chapter begins."
       }
     ]
+  },
+  {
+    "key": "nur-jannah",
+    "folder": "NurJannah",
+    "name": "Nur Jannah",
+    "category": "Islamic",
+    "thumbnail": "/images/templates/nur-jannah.svg",
+    "bride": "Hanifa",
+    "groom": "Fikri",
+    "quote": "Lengkung ivory dengan taman geometris",
+    "venue": "Gedung Nur Jannah",
+    "story": [
+      {
+        "title": "Awal Pertemuan",
+        "text": "Hanifa dan Fikri bertemu dan mulai mengenal satu sama lain."
+      },
+      {
+        "title": "Mengenal Keluarga",
+        "text": "Hanifa dan Fikri mempertemukan keluarga dalam suasana hangat."
+      },
+      {
+        "title": "Niat Baik",
+        "text": "Hanifa dan Fikri bersepakat melangkah bersama dengan doa keluarga."
+      },
+      {
+        "title": "Hari Bahagia",
+        "text": "Hanifa dan Fikri mengundang Anda merayakan awal perjalanan keluarga mereka."
+      }
+    ]
+  },
+  {
+    "key": "mihrab-emerald",
+    "folder": "MihrabEmerald",
+    "name": "Mihrab Emerald",
+    "category": "Islamic",
+    "thumbnail": "/images/templates/mihrab-emerald.svg",
+    "bride": "Salma",
+    "groom": "Hakim",
+    "quote": "Mihrab zamrud dengan bingkai emas",
+    "venue": "Gedung Mihrab Emerald",
+    "story": [
+      {
+        "title": "Awal Pertemuan",
+        "text": "Salma dan Hakim bertemu dan mulai mengenal satu sama lain."
+      },
+      {
+        "title": "Mengenal Keluarga",
+        "text": "Salma dan Hakim mempertemukan keluarga dalam suasana hangat."
+      },
+      {
+        "title": "Niat Baik",
+        "text": "Salma dan Hakim bersepakat melangkah bersama dengan doa keluarga."
+      },
+      {
+        "title": "Hari Bahagia",
+        "text": "Salma dan Hakim mengundang Anda merayakan awal perjalanan keluarga mereka."
+      }
+    ]
+  },
+  {
+    "key": "sahara-gold",
+    "folder": "SaharaGold",
+    "name": "Sahara Gold",
+    "category": "Islamic",
+    "thumbnail": "/images/templates/sahara-gold.svg",
+    "bride": "Zahira",
+    "groom": "Ilham",
+    "quote": "Panel pasir dan pola bintang",
+    "venue": "Gedung Sahara Gold",
+    "story": [
+      {
+        "title": "Awal Pertemuan",
+        "text": "Zahira dan Ilham bertemu dan mulai mengenal satu sama lain."
+      },
+      {
+        "title": "Mengenal Keluarga",
+        "text": "Zahira dan Ilham mempertemukan keluarga dalam suasana hangat."
+      },
+      {
+        "title": "Niat Baik",
+        "text": "Zahira dan Ilham bersepakat melangkah bersama dengan doa keluarga."
+      },
+      {
+        "title": "Hari Bahagia",
+        "text": "Zahira dan Ilham mengundang Anda merayakan awal perjalanan keluarga mereka."
+      }
+    ]
+  },
+  {
+    "key": "qamar-blue",
+    "folder": "QamarBlue",
+    "name": "Qamar Blue",
+    "category": "Islamic",
+    "thumbnail": "/images/templates/qamar-blue.svg",
+    "bride": "Maryam",
+    "groom": "Rafi",
+    "quote": "Langit biru dengan bulan dan konstelasi",
+    "venue": "Gedung Qamar Blue",
+    "story": [
+      {
+        "title": "Awal Pertemuan",
+        "text": "Maryam dan Rafi bertemu dan mulai mengenal satu sama lain."
+      },
+      {
+        "title": "Mengenal Keluarga",
+        "text": "Maryam dan Rafi mempertemukan keluarga dalam suasana hangat."
+      },
+      {
+        "title": "Niat Baik",
+        "text": "Maryam dan Rafi bersepakat melangkah bersama dengan doa keluarga."
+      },
+      {
+        "title": "Hari Bahagia",
+        "text": "Maryam dan Rafi mengundang Anda merayakan awal perjalanan keluarga mereka."
+      }
+    ]
+  },
+  {
+    "key": "zahra-ivory",
+    "folder": "ZahraIvory",
+    "name": "Zahra Ivory",
+    "category": "Islamic",
+    "thumbnail": "/images/templates/zahra-ivory.svg",
+    "bride": "Safiya",
+    "groom": "Yusuf",
+    "quote": "Ivory dengan roset floral dan bingkai plum",
+    "venue": "Gedung Zahra Ivory",
+    "story": [
+      {
+        "title": "Awal Pertemuan",
+        "text": "Safiya dan Yusuf bertemu dan mulai mengenal satu sama lain."
+      },
+      {
+        "title": "Mengenal Keluarga",
+        "text": "Safiya dan Yusuf mempertemukan keluarga dalam suasana hangat."
+      },
+      {
+        "title": "Niat Baik",
+        "text": "Safiya dan Yusuf bersepakat melangkah bersama dengan doa keluarga."
+      },
+      {
+        "title": "Hari Bahagia",
+        "text": "Safiya dan Yusuf mengundang Anda merayakan awal perjalanan keluarga mereka."
+      }
+    ]
   }
 ]

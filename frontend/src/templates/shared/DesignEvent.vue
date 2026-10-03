@@ -13,12 +13,19 @@ const date = (value) =>
     year: 'numeric',
   })
 const zone = (value) =>
-  ({ 'Asia/Jakarta': 'WIB', 'Asia/Makassar': 'WITA', 'Asia/Jayapura': 'WIT' })[value] || value
+  ({
+    'Asia/Jakarta': 'WIB',
+    'Asia/Makassar': 'WITA',
+    'Asia/Jayapura': 'WIT',
+  })[value] || value
 </script>
 <template>
   <section id="event" class="section event-section design-event">
     <FlowerMotion v-if="['amore', 'garden', 'daydream'].includes(design)" />
-    <SectionHeading eyebrow="WEDDING EVENT" title="Join our celebration" />
+    <SectionHeading
+      :eyebrow="wedding.isWedding ? 'WEDDING EVENT' : 'AGENDA ACARA'"
+      :title="wedding.isWedding ? 'Join our celebration' : 'Waktu & Tempat'"
+    />
     <article
       v-for="(event, i) in wedding.events"
       :key="event.id || i"

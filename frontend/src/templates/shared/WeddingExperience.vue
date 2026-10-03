@@ -48,16 +48,28 @@ onUnmounted(() => clearTimeout(timer))
       <BotanicalOrnament class="ambient-left" /><BotanicalOrnament class="ambient-right" />
       <div class="desktop-note">
         <div class="desktop-monogram">
-          {{ Array.from(wedding.bride.shortName)[0] }} <em>&</em>
-          {{ Array.from(wedding.groom.shortName)[0] }}
+          <template v-if="wedding.isWedding"
+            >{{ Array.from(wedding.bride.shortName)[0] }} <em>&</em
+            >{{ Array.from(wedding.groom.shortName)[0] }}</template
+          ><template v-else>{{
+            Array.from(wedding.eventDetails.host_name || wedding.displayName || 'R')[0]
+          }}</template>
         </div>
         <div class="tiny-divider"><span></span><i>✦</i><span></span></div>
-        <p>A PROMISE<br />OF FOREVER</p>
+        <p>
+          {{ wedding.isWedding ? 'A PROMISE OF FOREVER' : wedding.occasionLabel }}
+        </p>
         <small>{{ wedding.date.day }} {{ wedding.date.month }} {{ wedding.date.year }}</small>
       </div>
       <div class="desktop-right-note">
-        <span>Love is a journey.</span>
-        <p>Thank you for being<br />a part of ours.</p>
+        <span>{{ wedding.isWedding ? 'Love is a journey.' : 'Anda diundang.' }}</span>
+        <p>
+          {{
+            wedding.isWedding
+              ? 'Thank you for being a part of ours.'
+              : 'Terima kasih telah menjadi bagian dari acara kami.'
+          }}
+        </p>
       </div>
     </div>
     <main class="invitation-shell" id="invitation" tabindex="-1">

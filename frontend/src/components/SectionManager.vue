@@ -8,7 +8,7 @@ const preset = computed(() => presetFor(props.templateKey))
 const order = computed(() =>
   props.modelValue.section_order?.length ? props.modelValue.section_order : preset.value.order,
 )
-const labels = {
+const baseLabels = {
   opening: 'Opening',
   home: 'Hero',
   couple: 'Couple & Parents',
@@ -25,8 +25,21 @@ const labels = {
   livestream: 'Livestream',
   closing: 'Closing',
 }
+const labels = computed(() =>
+  props.modelValue.event_type && props.modelValue.event_type !== 'wedding'
+    ? {
+        ...baseLabels,
+        couple: 'Data Acara',
+        story: 'Tentang Acara',
+        gift: 'Hadiah',
+      }
+    : baseLabels,
+)
 function content(key) {
-  return { ...preset.value.sections[key], ...props.modelValue.section_content?.[key] }
+  return {
+    ...preset.value.sections[key],
+    ...props.modelValue.section_content?.[key],
+  }
 }
 function patch(key, field, value) {
   emit('update:modelValue', {
@@ -45,7 +58,10 @@ function reorder(from, to) {
   dragging.value = null
 }
 function defaults() {
-  emit('update:modelValue', { ...props.modelValue, section_order: [...preset.value.order] })
+  emit('update:modelValue', {
+    ...props.modelValue,
+    section_order: [...preset.value.order],
+  })
 }
 </script>
 <template>
@@ -60,13 +76,23 @@ function defaults() {
     </button>
     <article class="managed-section">
       <strong>Opening Cover</strong>
-      <label class="toggle-row">Tampilkan Opening Cover<input type="checkbox" :checked="content('opening').enabled !== false" @change="patch('opening','enabled',$event.target.checked)" /></label>
+      <label class="toggle-row"
+        >Tampilkan Opening Cover<input
+          type="checkbox"
+          :checked="content('opening').enabled !== false"
+          @change="patch('opening', 'enabled', $event.target.checked)"
+      /></label>
       <p>Opening tetap menjadi gerbang undangan; tidak termasuk urutan scroll.</p>
       <label class="form-field"
         >Konten opening<textarea
           :value="modelValue.opening_text"
           rows="3"
-          @input="$emit('update:modelValue', { ...modelValue, opening_text: $event.target.value })"
+          @input="
+            $emit('update:modelValue', {
+              ...modelValue,
+              opening_text: $event.target.value,
+            })
+          "
         ></textarea>
       </label>
     </article>

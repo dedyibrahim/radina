@@ -54,7 +54,7 @@ class CustomerPortalController extends Controller
             ? $portal->submission
             : $this->service->initial($portal->wedding);
 
-        return ['status' => $status, 'form' => $form, 'submission_version' => $portal->submission_version, 'submitted_at' => $portal->submitted_at, 'applied_version' => $portal->applied_version, 'revision_notes' => $portal->revision_notes, 'approved_at' => $status === 'APPROVED' ? $portal->approved_at : null, 'expires_at' => $portal->expires_at];
+        return ['event_type' => $portal->wedding->event_type ?? 'wedding', 'status' => $status, 'form' => $form, 'submission_version' => $portal->submission_version, 'submitted_at' => $portal->submitted_at, 'applied_version' => $portal->applied_version, 'revision_notes' => $portal->revision_notes, 'approved_at' => $status === 'APPROVED' ? $portal->approved_at : null, 'expires_at' => $portal->expires_at];
     }
 
     private function response(array $data)

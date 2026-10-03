@@ -15,7 +15,7 @@ use Illuminate\Validation\ValidationException;
 
 class CustomerPortalService
 {
-    public const FIELDS = ['title', 'wedding_date', 'hashtag', 'opening_text', 'quote', 'quote_source', 'closing_text', 'cover_image', 'hero_image', 'closing_image', 'video_url', 'bride', 'groom', 'events', 'stories', 'gallery', 'gift_methods'];
+    public const FIELDS = ['title', 'wedding_date', 'hashtag', 'opening_text', 'quote', 'quote_source', 'closing_text', 'cover_image', 'hero_image', 'closing_image', 'video_url', 'bride', 'groom', 'events', 'stories', 'gallery', 'gift_methods', 'event_details'];
 
     public static function preview(Wedding $wedding): array
     {
@@ -26,6 +26,8 @@ class CustomerPortalService
     {
         $data = self::preview($wedding);
         $data = collect($data)->except(['id', 'order_id', 'status', 'published_at', 'publish_at', 'updated_at', 'is_demo'])->all();
+        // Preserve unchanged wedding approvals when invisible metadata is added.
+        if (($data['event_type'] ?? 'wedding') === 'wedding') unset($data['event_type'], $data['event_details']);
         $data['template'] = ['template_key' => $data['template']['template_key'], 'name' => $data['template']['name']];
         $clean = function ($value) use (&$clean) {
             if (! is_array($value)) {
@@ -85,7 +87,7 @@ class CustomerPortalService
             'data.hashtag' => 'nullable|string|max:120', 'data.quote_source' => 'nullable|string|max:255',
             'data.events' => ($submit ? 'required|array|min:1|max:20' : 'present|array|max:20'), 'data.stories' => 'present|array|max:30', 'data.gallery' => 'present|array|max:50', 'data.gift_methods' => 'present|array|max:30',
             'data.events.*' => 'array:type,title,date,start_time,end_time,timezone,venue,address,google_maps_url',
-            'data.events.*.type' => ['required', Rule::in(['akad', 'reception', 'ngunduh', 'afterparty', 'other'])],
+            'data.events.*.type' => ['required', Rule::in(InvitationEvent::agendaTypes())],
             'data.events.*.title' => $required.'|string|max:120', 'data.events.*.date' => $required.'|date_format:Y-m-d',
             'data.events.*.start_time' => $required.'|date_format:H:i', 'data.events.*.end_time' => $required.'|date_format:H:i',
             'data.events.*.timezone' => ['required', Rule::in(['Asia/Jakarta', 'Asia/Makassar', 'Asia/Jayapura'])], 'data.events.*.venue' => $required.'|string|max:255', 'data.events.*.address' => 'nullable|string|max:1000', 'data.events.*.google_maps_url' => 'nullable|url:http,https|max:2048',
@@ -100,14 +102,16 @@ class CustomerPortalService
             $rules['data.'.$key] = $media;
         }
         foreach (['bride', 'groom'] as $role) {
-            $rules['data.'.$role] = 'required|array:full_name,nickname,father_name,mother_name,family_order,instagram,photo';
-            $rules['data.'.$role.'.full_name'] = $required.'|string|min:2|max:120';
+            $rules['data.'.$role] = ($wedding->event_type === 'wedding' ? 'required' : 'present').'|array:full_name,nickname,father_name,mother_name,family_order,instagram,photo';
+            $rules['data.'.$role.'.full_name'] = ($wedding->event_type === 'wedding' ? $required : 'nullable').'|string|min:2|max:120';
             foreach (['nickname', 'father_name', 'mother_name', 'family_order'] as $key) {
                 $rules['data.'.$role.'.'.$key] = 'nullable|string|max:120';
             }
             $rules['data.'.$role.'.instagram'] = 'nullable|regex:/^[a-zA-Z0-9_.]{1,30}$/';
             $rules['data.'.$role.'.photo'] = $media;
         }
+        $rules += InvitationEvent::rules('data.event_details', $wedding->event_type ?? 'wedding', $submit);
+        if ($submit && $wedding->event_type !== 'wedding') $rules['data.title'] = 'required|string|min:2|max:255';
         $validator = Validator::make(['data' => $data], $rules);
         $validator->after(function ($validator) use ($data, $wedding) {
             foreach (is_array($data['events'] ?? null) ? $data['events'] : [] as $index => $event) {
@@ -148,7 +152,7 @@ class CustomerPortalService
         foreach (collect($submission)->except('gift_methods') as $key => $value) {
             $data[$key] = $value;
         }
-        $data['title'] = $data['title'] ?: 'The Wedding of '.$data['bride']['full_name'].' & '.$data['groom']['full_name'];
+        $data['title'] = $data['title'] ?: ($wedding->event_type === 'wedding' ? 'The Wedding of '.$data['bride']['full_name'].' & '.$data['groom']['full_name'] : $wedding->title);
         $data['expected_updated_at'] = $request->input('expected_updated_at');
         $form = SaveWeddingRequest::create($request->url(), 'PUT', $data);
         $form->setRouteResolver($request->getRouteResolver());

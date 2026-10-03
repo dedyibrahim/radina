@@ -18,8 +18,11 @@ async function load() {
   loading.value = true
   error.value = ''
   try {
-    const result = (await api.get('/admin/orders', { params: { ...filter, page: page.value } }))
-      .data
+    const result = (
+      await api.get('/admin/orders', {
+        params: { ...filter, page: page.value },
+      })
+    ).data
     if (current !== sequence) return
     orders.value = result.data
     meta.value = result.meta
@@ -76,22 +79,27 @@ onMounted(async () => {
     <PageState v-if="loading || error" :loading="loading" :error="error" @retry="load" />
     <div v-else class="surface orders-panel">
       <div class="order-grid-header">
-        <span>Order / tanggal</span><span>Customer / WhatsApp</span><span>Pengantin</span
+        <span>Order / tanggal</span><span>Customer / WhatsApp</span><span>Acara / pengantin</span
         ><span>Template</span><span>Total</span><span>Pembayaran</span><span>Status</span
         ><span></span>
       </div>
       <article v-for="order in orders" :key="order.id" class="order-row">
         <div>
           <small>Order ID</small><strong>{{ order.order_number }}</strong>
-          <p>{{ new Date(order.created_at).toLocaleDateString('id-ID') }}</p>
+          <p>
+            {{ new Date(order.created_at).toLocaleDateString('id-ID') }}
+          </p>
         </div>
         <div>
           <small>Customer</small><strong>{{ order.customer_name }}</strong>
           <p>{{ order.whatsapp }}</p>
         </div>
         <div>
-          <small>Pengantin</small>
-          <p>{{ order.bride_name }}<br />& {{ order.groom_name }}</p>
+          <small>{{ order.event_type === 'wedding' ? 'Pengantin' : 'Acara' }}</small>
+          <p v-if="!order.event_type || order.event_type === 'wedding'">
+            {{ order.bride_name }}<br />& {{ order.groom_name }}
+          </p>
+          <p v-else>{{ order.event_title }}<br />{{ order.host_name }}</p>
         </div>
         <div>
           <small>Template</small>

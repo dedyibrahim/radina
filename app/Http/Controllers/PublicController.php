@@ -13,6 +13,7 @@ use App\Models\TemplateCategory;
 use App\Models\Wedding;
 use App\Services\OrderWorkflow;
 use App\Services\PlatformSettings;
+use App\Services\InvitationEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -60,13 +61,48 @@ class PublicController extends Controller
         return new TemplateResource(Template::with('category')->where('slug', $slug)->where('status', 'ACTIVE')->firstOrFail());
     }
 
-    public function demo(string $slug)
+    public function demo(Request $request, string $slug)
     {
+        $request->validate(['event_type' => ['sometimes', \Illuminate\Validation\Rule::in(array_keys(InvitationEvent::types()))]]);
         $template = Template::with('category')->where('slug', $slug)->where('status', 'ACTIVE')->firstOrFail();
         $wedding = (Wedding::where('is_demo', true)->where('slug', 'radina-demo-'.$template->template_key)->first()
             ?? Wedding::where('is_demo', true)->firstOrFail())->loadContent();
         $wedding->setRelation('template', $template);
         $wedding->setAttribute('template_id', $template->id);
+        $type = $request->input('event_type', 'wedding');
+        if ($type !== 'wedding') {
+            $profile = InvitationEvent::profile($type);
+            $wedding->event_type = $type;
+            $wedding->title = match ($type) {
+                'khitanan' => 'Syukuran Khitanan Ahmad', 'office' => 'Pertemuan Tahunan Radina',
+                'birthday' => 'Ulang Tahun Naila', 'aqiqah' => 'Syukuran Aqiqah Amina', default => 'Silaturahmi Keluarga Radina',
+            };
+            $wedding->event_details = InvitationEvent::details(['host_name' => $type === 'office' ? 'PT Radina Nusantara' : 'Keluarga Ibrahim',
+                'honoree_name' => match ($type) { 'khitanan' => 'Ahmad Ibrahim', 'birthday' => 'Naila Ibrahim', 'aqiqah' => 'Amina Ibrahim', default => '' },
+                'father_name' => $profile['honoree'] ? 'Bapak Ibrahim' : '', 'mother_name' => $profile['honoree'] ? 'Ibu Siti' : '',
+                'description' => 'Pratinjau contoh. Seluruh nama, jadwal, dan lokasi dapat disesuaikan dengan acara Anda.']);
+            $wedding->fill(InvitationEvent::initial($type));
+            $wedding->cover_image = null;
+            $wedding->hero_image = null;
+            $wedding->closing_image = null;
+            $wedding->video_url = null;
+            $wedding->hashtag = null;
+            $wedding->livestream_platform = null;
+            $wedding->livestream_url = null;
+            $wedding->shipping_gift = null;
+            $wedding->setRelation('couples', collect());
+            $wedding->setRelation('gallery', collect());
+            $wedding->setRelation('stories', collect());
+            $wedding->setRelation('giftMethods', collect());
+            $wedding->setRelation('gifts', collect());
+            $wedding->events->each(function ($event, $index) use ($type) {
+                $event->title = $index ? 'Ramah Tamah' : ($type === 'office' ? 'Sesi Utama' : 'Pembukaan & Doa');
+                $event->type = $type === 'office' ? 'meeting' : 'syukuran';
+                $event->venue = 'Aula Radina (Lokasi Demo)';
+                $event->address = 'Alamat contoh; ubah sesuai lokasi acara Anda.';
+                $event->google_maps_url = null;
+            });
+        }
 
         return new WeddingResource($wedding);
     }
@@ -75,6 +111,10 @@ class PublicController extends Controller
     {
         $order = DB::transaction(function () use ($request) {
             $data = $request->validated();
+            if ($data['event_type'] !== 'wedding') {
+                $data['bride_name'] = '';
+                $data['groom_name'] = '';
+            }
             $template = Template::lockForUpdate()->findOrFail($data['template_id']);
             abort_unless($template->status === 'ACTIVE', 422, 'Template sudah tidak aktif.');
             // Auto-increment identity provides uniqueness even for simultaneous requests.

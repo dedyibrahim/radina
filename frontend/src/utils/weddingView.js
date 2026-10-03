@@ -1,12 +1,23 @@
 import { presetFor } from '../templates/contentPresets'
+import { eventProfile } from '../services/invitationEvents'
 // A presentation adapter, never a source of customer content. Every value comes from the shared API contract.
 export function weddingView(data) {
   const preset = presetFor(data.template?.template_key)
-  const cover = data.cover_image || data.hero_image || data.bride?.photo || data.groom?.photo || null
+  const eventType = data.event_type || 'wedding'
+  const isWedding = eventType === 'wedding'
+  const profile = eventProfile(eventType)
+  const cover =
+    data.cover_image ||
+    data.hero_image ||
+    (isWedding ? data.bride?.photo || data.groom?.photo : data.event_details?.photo) ||
+    null
   const sections = Object.fromEntries(
     Object.entries({ ...preset.sections, ...data.section_content }).map(([key]) => [
       key,
-      { ...preset.sections[key], ...(data.section_content?.[key] || {}) },
+      {
+        ...preset.sections[key],
+        ...(data.section_content?.[key] || {}),
+      },
     ]),
   )
   const events = (data.events || []).map((event) => ({
@@ -22,6 +33,7 @@ export function weddingView(data) {
   }
   const date = data.wedding_date ? new Date(`${data.wedding_date}T12:00:00+07:00`) : null
   function person(source = {}) {
+    source ||= {}
     return {
       name: source.full_name || '',
       shortName: source.nickname || source.full_name || '',
@@ -34,6 +46,19 @@ export function weddingView(data) {
   }
   return {
     id: data.id,
+    templateKey: data.template?.template_key,
+    eventType,
+    isWedding,
+    occasionLabel: profile.label,
+    eventDetails: data.event_details || {},
+    displayName: isWedding
+      ? [
+          data.bride?.nickname || data.bride?.full_name,
+          data.groom?.nickname || data.groom?.full_name,
+        ]
+          .filter(Boolean)
+          .join(' & ')
+      : data.title,
     sections,
     customSectionOrder: Boolean(data.section_order?.length),
     sectionOrder: data.section_order?.length ? data.section_order : preset.order,
@@ -51,12 +76,18 @@ export function weddingView(data) {
       year: date?.getFullYear() || '',
       weekday: date ? date.toLocaleDateString('id-ID', { weekday: 'long' }) : '',
       display: date
-        ? date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
+        ? date.toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })
         : '',
       timezone:
-        { 'Asia/Jakarta': 'WIB', 'Asia/Makassar': 'WITA', 'Asia/Jayapura': 'WIT' }[
-          first.timezone
-        ] || 'WIB',
+        {
+          'Asia/Jakarta': 'WIB',
+          'Asia/Makassar': 'WITA',
+          'Asia/Jayapura': 'WIT',
+        }[first.timezone] || 'WIB',
     },
     events,
     akad: events[0],
@@ -79,7 +110,7 @@ export function weddingView(data) {
     closing: data.closing_image || data.hero_image || cover,
     gallery: (data.gallery || []).map((photo) => ({
       src: photo.image,
-      alt: photo.caption || 'Momen pernikahan',
+      alt: photo.caption || (isWedding ? 'Momen pernikahan' : 'Dokumentasi acara'),
     })),
     loveStory: (data.stories || []).map((story) => ({
       year: story.date_label,

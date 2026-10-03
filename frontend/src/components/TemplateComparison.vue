@@ -2,7 +2,7 @@
 import { useTemplateCollection } from '../composables/useTemplateCollection'
 import { formatMoney } from '../services/api'
 import BaseModal from './BaseModal.vue'
-defineProps({ open: Boolean })
+defineProps({ open: Boolean, eventType: { type: String, default: 'wedding' } })
 defineEmits(['close'])
 const { comparison, compare } = useTemplateCollection()
 </script>
@@ -25,7 +25,9 @@ const { comparison, compare } = useTemplateCollection()
           <dt>Harga</dt>
           <dd>{{ formatMoney(template.price) }}</dd>
         </dl>
-        <RouterLink class="p-button secondary" :to="`/templates/${template.slug}/preview`"
+        <RouterLink
+          class="p-button secondary"
+          :to="`/templates/${template.slug}/preview${eventType !== 'wedding' ? `?event_type=${eventType}` : ''}`"
           >Live Preview ↗</RouterLink
         >
         <button class="p-button secondary" @click="compare(template)">Hapus pilihan</button>

@@ -34,7 +34,14 @@ async function load() {
       : route.meta.preview
         ? `/templates/${route.params.slug}/preview`
         : `/weddings/${route.params.slug}`
-    wedding.value = (await api.get(path)).data.data
+    wedding.value = (
+      await api.get(path, {
+        params:
+          route.meta.preview && !route.params.id
+            ? { event_type: route.query.event_type || 'wedding' }
+            : {},
+      })
+    ).data.data
   } catch (e) {
     error.value =
       e.response?.status === 404
@@ -45,13 +52,19 @@ async function load() {
   }
 }
 watch(
-  () => [route.params.id || '', route.params.slug || '', Boolean(route.meta.preview)].join(':'),
+  () =>
+    [
+      route.params.id || '',
+      route.params.slug || '',
+      Boolean(route.meta.preview),
+      route.query.event_type || 'wedding',
+    ].join(':'),
   load,
   { immediate: true },
 )
 useSeo(() => ({
-  title: wedding.value?.title || 'Undangan Pernikahan',
-  description: `${wedding.value?.wedding_date || ''} — ${wedding.value?.opening_text || 'Hari bahagia, cerita cinta yang indah.'}`,
+  title: wedding.value?.title || 'Undangan Digital',
+  description: `${wedding.value?.wedding_date || ''} — ${wedding.value?.opening_text || 'Anda diundang untuk menghadiri acara kami.'}`,
   image: wedding.value?.cover_image,
 }))
 </script>

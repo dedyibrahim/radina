@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Services\InvitationEvent;
 
 class WeddingResource extends JsonResource
 {
@@ -19,6 +20,7 @@ class WeddingResource extends JsonResource
             ...($isAdmin ? ['customer_whatsapp' => $this->order?->whatsapp] : []),
             'publish_at' => $this->publish_at, 'published_at' => $this->published_at, 'updated_at' => $this->updated_at,
             'title' => $this->title, 'wedding_date' => $this->wedding_date?->format('Y-m-d'), 'is_demo' => $this->is_demo,
+            'event_type' => $this->event_type ?? 'wedding', 'event_details' => InvitationEvent::details($this->event_details),
             'bride' => $couples->get('bride'), 'groom' => $couples->get('groom'),
             'quote' => $this->quote, 'quote_source' => $this->quote_source, 'opening_text' => $this->opening_text, 'closing_text' => $this->closing_text, 'hashtag' => $this->hashtag,
             'cover_image' => $this->cover_image, 'hero_image' => $this->hero_image, 'closing_image' => $this->closing_image, 'video_url' => $this->video_url,

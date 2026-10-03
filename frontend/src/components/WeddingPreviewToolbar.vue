@@ -16,16 +16,22 @@ const sections = [
   <header class="wedding-preview-tools">
     <div class="preview-banner platform">
       <RadinaLogo iconOnly /><RouterLink
-        :to="weddingId ? `/admin/weddings/${weddingId}` : `/templates/${wedding.template.slug}`"
+        :to="
+          weddingId
+            ? `/admin/weddings/${weddingId}`
+            : `/templates/${wedding.template.slug}${wedding.event_type !== 'wedding' ? `?event_type=${wedding.event_type}` : ''}`
+        "
         ><ArrowLeft :size="15" /><span>Kembali</span></RouterLink
       ><span>Pratinjau · {{ wedding.template.name }}</span
-      ><RouterLink v-if="!weddingId" :to="`/order/${wedding.template.slug}`"
+      ><RouterLink
+        v-if="!weddingId"
+        :to="`/order/${wedding.template.slug}${wedding.event_type !== 'wedding' ? `?event_type=${wedding.event_type}` : ''}`"
         >Pilih<ArrowUpRight :size="15"
       /></RouterLink>
     </div>
     <div v-if="weddingId" class="preview-controls">
       <button v-for="item in sections" :key="item[0]" @click="$emit('section', item[0])">
-        {{ item[1] }}
+        {{ item[0] === 'couple' && wedding.event_type !== 'wedding' ? 'Profil' : item[1] }}
       </button>
     </div>
   </header>

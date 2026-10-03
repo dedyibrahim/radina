@@ -16,7 +16,8 @@
     "test:experiences": "node scripts/experience-test.mjs",
     "test:music-cms": "node scripts/music-cms-test.mjs",
     "test:collection": "node scripts/collection-test.mjs",
-    "test:integration": "node scripts/integration-test.mjs"
+    "test:integration": "node scripts/integration-test.mjs",
+    "test:events": "node scripts/event-invitations-test.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.51.0",

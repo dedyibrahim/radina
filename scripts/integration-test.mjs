@@ -72,7 +72,7 @@ try {
     const result = await (await context.request.get(`${base}/api/templates?page=${n}`)).json()
     templates.push(...result.data)
   }
-  assert.equal(templates.length, 20)
+  assert.equal(templates.length, 25)
   for (const template of templates) {
     for (const width of [390, 1440]) {
       await page.setViewportSize({ width, height: 900 })

@@ -1,4 +1,6 @@
 <script setup>
+import EventDetailsForm from '../../components/EventDetailsForm.vue'
+import { eventOptions, eventProfile, agendaOptions } from '../../services/invitationEvents'
 import MusicSelector from '../../components/MusicSelector.vue'
 import SectionManager from '../../components/SectionManager.vue'
 import WeddingGiftManager from '../../components/WeddingGiftManager.vue'
@@ -41,7 +43,7 @@ const route = useRoute(),
   guestRecords = ref([]),
   guestNext = ref(null)
 const window = globalThis.window
-const tabs = [
+const baseTabs = [
   ['basic', 'Informasi Dasar'],
   ['customer', 'Pelanggan'],
   ['import-export', 'Impor / Ekspor'],
@@ -60,7 +62,7 @@ const tabs = [
   ['preview', 'Preview'],
   ['publish', 'Publish'],
 ]
-const basicFields = [
+const baseBasicFields = [
   ['title', 'Judul Undangan', 'text'],
   ['wedding_date', 'Tanggal Pernikahan', 'date'],
   ['hashtag', 'Wedding Hashtag', 'text'],
@@ -89,13 +91,41 @@ const featureLabels = {
   gift: 'Wedding Gift',
   livestream: 'Livestream',
 }
+const isWedding = computed(() => !form.value?.event_type || form.value.event_type === 'wedding')
+const profile = computed(() => eventProfile(form.value?.event_type))
+const tabs = computed(() =>
+  baseTabs.map(([key, label]) => [
+    key,
+    !isWedding.value
+      ? { couple: 'Data Acara', story: 'Tentang Acara', gift: 'Hadiah' }[key] || label
+      : label,
+  ]),
+)
+const basicFields = computed(() =>
+  baseBasicFields.map(([key, label, type]) => [
+    key,
+    !isWedding.value
+      ? {
+          wedding_date: 'Tanggal Acara',
+          hashtag: 'Hashtag Acara',
+          quote: 'Kutipan',
+        }[key] || label
+      : label,
+    type,
+  ]),
+)
 const dirty = computed(() => form.value && JSON.stringify(form.value) !== baseline.value)
 const checklist = computed(() =>
   form.value
     ? [
         {
-          label: 'Pengantin',
-          done: Boolean(form.value.bride.full_name && form.value.groom.full_name),
+          label: isWedding.value ? 'Pengantin' : 'Data Acara',
+          done: isWedding.value
+            ? Boolean(form.value.bride.full_name && form.value.groom.full_name)
+            : Boolean(
+                form.value.event_details.host_name &&
+                (!profile.value.honoree || form.value.event_details.honoree_name),
+              ),
         },
         { label: 'Tanggal', done: Boolean(form.value.wedding_date) },
         { label: 'Acara', done: form.value.events.length > 0 },
@@ -131,6 +161,8 @@ function normalize(data) {
     start_time: event.start_time.slice(0, 5),
     end_time: event.end_time.slice(0, 5),
   }))
+  result.event_type ||= 'wedding'
+  result.event_details ||= {}
   result.section_content ||= {}
   result.music.playlist ||= []
   result.gift_methods ||= []
@@ -203,7 +235,7 @@ function reorder(list, index, direction) {
 }
 function addEvent() {
   form.value.events.push({
-    type: 'reception',
+    type: isWedding.value ? 'reception' : 'other',
     title: '',
     date: form.value.wedding_date || '',
     start_time: '11:00',
@@ -215,10 +247,20 @@ function addEvent() {
   })
 }
 function addStory() {
-  form.value.stories.push({ date_label: '', title: '', description: '', image: '' })
+  form.value.stories.push({
+    date_label: '',
+    title: '',
+    description: '',
+    image: '',
+  })
 }
 function addGift() {
-  form.value.gifts.push({ bank: '', account_number: '', account_name: '', logo: '' })
+  form.value.gifts.push({
+    bank: '',
+    account_number: '',
+    account_name: '',
+    logo: '',
+  })
 }
 function addGallery(media) {
   form.value.gallery.push(...media.map((item) => ({ image: item.url, caption: '' })))
@@ -339,10 +381,16 @@ watch(tab, (value) => {
       v-else
       ><div class="admin-title editor-title">
         <div>
-          <p class="p-eyebrow">WEDDING STUDIO</p>
+          <p class="p-eyebrow">
+            {{ isWedding ? 'WEDDING STUDIO' : 'INVITATION STUDIO' }}
+            ? {{ profile.label }}
+          </p>
           <h1>
-            {{ form.bride.nickname || form.bride.full_name }} &
-            {{ form.groom.nickname || form.groom.full_name }}
+            {{
+              isWedding
+                ? `${form.bride.nickname || form.bride.full_name} & ${form.groom.nickname || form.groom.full_name}`
+                : form.title
+            }}
           </h1>
           <div class="editor-state">
             <StatusBadge :status="form.status" /><span :class="{ unsaved: dirty }" role="status">{{
@@ -386,6 +434,13 @@ watch(tab, (value) => {
           ><h2>Informasi dasar</h2>
           <p class="panel-subtitle">Cerita Anda, dimulai dari detail yang personal.</p>
           <div class="form-grid">
+            <label class="form-field"
+              >Jenis acara<select v-model="form.event_type" aria-label="Jenis acara">
+                <option v-for="option in eventOptions" :key="option.value" :value="option.value">
+                  {{ option.label }}
+                </option>
+              </select></label
+            >
             <FormField
               v-for="field in basicFields"
               :key="field[0]"
@@ -418,7 +473,9 @@ watch(tab, (value) => {
               />
             </div>
           </div>
-          <h3>Video prewedding</h3>
+          <h3>
+            {{ isWedding ? 'Video prewedding' : 'Video acara' }}
+          </h3>
           <FormField
             v-model="form.video_url"
             label="URL MP4 atau YouTube"
@@ -428,11 +485,31 @@ watch(tab, (value) => {
             collection="video"
             label="Upload video MP4"
         /></template>
-        <WeddingImportExport v-else-if="tab === 'import-export'" :wedding="form" :blocked="Boolean(dirty) || pending" @updated="contentImported" @busy="pending = $event" />
-        <CustomerPortalManager v-else-if="tab === 'customer'" :wedding="form" :blocked="Boolean(dirty)" @updated="contentImported" @busy="pending = $event" />
+        <WeddingImportExport
+          v-else-if="tab === 'import-export'"
+          :wedding="form"
+          :blocked="Boolean(dirty) || pending"
+          @updated="contentImported"
+          @busy="pending = $event"
+        />
+        <CustomerPortalManager
+          v-else-if="tab === 'customer'"
+          :wedding="form"
+          :blocked="Boolean(dirty)"
+          @updated="contentImported"
+          @busy="pending = $event"
+        />
         <template v-else-if="tab === 'couple'"
-          ><h2>Dua hati, satu cerita.</h2>
-          <div class="couple-editor-grid">
+          ><h2>
+            {{ isWedding ? 'Dua hati, satu cerita.' : 'Data Acara' }}
+          </h2>
+          <EventDetailsForm
+            v-if="!isWedding"
+            v-model="form.event_details"
+            :event-type="form.event_type"
+            :wedding-id="form.id"
+            :disabled="pending" />
+          <div v-if="isWedding" class="couple-editor-grid">
             <section
               v-for="[role, label] in [
                 ['bride', 'Pengantin Wanita'],
@@ -457,7 +534,9 @@ watch(tab, (value) => {
         ></template>
         <template v-else-if="tab === 'events'"
           ><div class="panel-title">
-            <h2>Acara pernikahan</h2>
+            <h2>
+              {{ isWedding ? 'Acara pernikahan' : 'Agenda Acara' }}
+            </h2>
             <button class="p-button small" @click="addEvent">
               <Plus :size="16" />Tambah Acara
             </button>
@@ -494,13 +573,12 @@ watch(tab, (value) => {
                 v-model="event.type"
                 label="Jenis Acara"
                 type="select"
-                :options="[
-                  { value: 'akad', label: 'Akad' },
-                  { value: 'reception', label: 'Resepsi' },
-                  { value: 'ngunduh', label: 'Ngunduh Mantu' },
-                  { value: 'afterparty', label: 'After Party' },
-                  { value: 'other', label: 'Lainnya' },
-                ]"
+                :options="
+                  agendaOptions.map(([value, label]) => ({
+                    value,
+                    label,
+                  }))
+                "
               /><FormField v-model="event.date" label="Tanggal" type="date" required /><FormField
                 v-model="event.start_time"
                 label="Waktu Mulai"
@@ -533,7 +611,9 @@ watch(tab, (value) => {
         >
         <template v-else-if="tab === 'story'"
           ><div class="panel-title">
-            <h2>Love story</h2>
+            <h2>
+              {{ isWedding ? 'Love story' : 'Tentang Acara' }}
+            </h2>
             <button class="p-button small" @click="addStory">
               <Plus :size="16" />Tambah Cerita
             </button>
@@ -676,7 +756,9 @@ watch(tab, (value) => {
             type="url"
         /></template>
         <template v-else-if="['rsvp', 'wishes'].includes(tab)"
-          ><h2>{{ tab === 'rsvp' ? 'Konfirmasi kehadiran' : 'Ucapan & doa' }}</h2>
+          ><h2>
+            {{ tab === 'rsvp' ? 'Konfirmasi kehadiran' : 'Ucapan & doa' }}
+          </h2>
           <article v-for="record in guestRecords" :key="record.id" class="guest-record">
             <div>
               <strong>{{ record.name }}</strong>
@@ -693,7 +775,8 @@ watch(tab, (value) => {
             </button>
           </article>
           <p v-if="!guestRecords.length" class="empty-note">
-            Belum ada {{ tab === 'rsvp' ? 'konfirmasi kehadiran' : 'ucapan' }}.
+            Belum ada
+            {{ tab === 'rsvp' ? 'konfirmasi kehadiran' : 'ucapan' }}.
           </p>
           <button v-if="guestNext" class="p-button secondary" @click="loadGuests(true)">
             Muat lainnya
@@ -785,7 +868,7 @@ watch(tab, (value) => {
                   : 'Siap membagikan cerita ini?'
               }}
             </h2>
-            <p>Pastikan nama pengantin, tanggal, acara, template, dan slug sudah benar.</p>
+            <p>Pastikan data undangan, tanggal, agenda, template, dan slug sudah benar.</p>
             <div class="slug-preview">{{ window?.location?.origin || '' }}/w/{{ form.slug }}</div>
             <button
               v-if="form.status !== 'PUBLISHED'"

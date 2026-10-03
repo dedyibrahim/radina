@@ -1819,5 +1819,490 @@
     "category": "Romantic",
     "gallery_style": "Museum gallery",
     "style": "Classic European"
+  },
+  "nur-jannah": {
+    "name": "Nur Jannah",
+    "opening_text": "Dengan memohon rahmat Allah SWT, kami mengundang Anda untuk hadir pada hari bahagia Hanifa dan Fikri.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Nur Jannah",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Insan, Satu Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Akad & Walimah",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Kenangan penuh syukur",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Doa & Ucapan",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Syukur",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Semoga kebersamaan ini menjadi awal dari kehidupan yang penuh kasih dan keberkahan.",
+    "quote_source": "Doa keluarga",
+    "closing_text": "Terima kasih atas doa dan kehadiran Anda. Salam hangat dari keluarga Hanifa dan Fikri.",
+    "gallery_style": "Galeri kenangan penuh syukur",
+    "style": "Lengkung ivory dengan taman geometris",
+    "category": "Islamic",
+    "palette": {
+      "background": "#f5f3e8",
+      "ink": "#204c40",
+      "accent": "#b19656"
+    }
+  },
+  "mihrab-emerald": {
+    "name": "Mihrab Emerald",
+    "opening_text": "Dengan memohon rahmat Allah SWT, kami mengundang Anda untuk hadir pada hari bahagia Salma dan Hakim.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Mihrab Emerald",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Insan, Satu Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Akad & Walimah",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Kenangan penuh syukur",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Doa & Ucapan",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Syukur",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Semoga kebersamaan ini menjadi awal dari kehidupan yang penuh kasih dan keberkahan.",
+    "quote_source": "Doa keluarga",
+    "closing_text": "Terima kasih atas doa dan kehadiran Anda. Salam hangat dari keluarga Salma dan Hakim.",
+    "gallery_style": "Galeri kenangan penuh syukur",
+    "style": "Mihrab zamrud dengan bingkai emas",
+    "category": "Islamic",
+    "palette": {
+      "background": "#123d32",
+      "ink": "#f4ebd7",
+      "accent": "#c8a35c"
+    }
+  },
+  "sahara-gold": {
+    "name": "Sahara Gold",
+    "opening_text": "Dengan memohon rahmat Allah SWT, kami mengundang Anda untuk hadir pada hari bahagia Zahira dan Ilham.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Sahara Gold",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Insan, Satu Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Akad & Walimah",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Kenangan penuh syukur",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Doa & Ucapan",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Syukur",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Semoga kebersamaan ini menjadi awal dari kehidupan yang penuh kasih dan keberkahan.",
+    "quote_source": "Doa keluarga",
+    "closing_text": "Terima kasih atas doa dan kehadiran Anda. Salam hangat dari keluarga Zahira dan Ilham.",
+    "gallery_style": "Galeri kenangan penuh syukur",
+    "style": "Panel pasir dan pola bintang",
+    "category": "Islamic",
+    "palette": {
+      "background": "#f0e2cc",
+      "ink": "#754b32",
+      "accent": "#a67e3d"
+    }
+  },
+  "qamar-blue": {
+    "name": "Qamar Blue",
+    "opening_text": "Dengan memohon rahmat Allah SWT, kami mengundang Anda untuk hadir pada hari bahagia Maryam dan Rafi.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Qamar Blue",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Insan, Satu Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Akad & Walimah",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Kenangan penuh syukur",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Doa & Ucapan",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Syukur",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Semoga kebersamaan ini menjadi awal dari kehidupan yang penuh kasih dan keberkahan.",
+    "quote_source": "Doa keluarga",
+    "closing_text": "Terima kasih atas doa dan kehadiran Anda. Salam hangat dari keluarga Maryam dan Rafi.",
+    "gallery_style": "Galeri kenangan penuh syukur",
+    "style": "Langit biru dengan bulan dan konstelasi",
+    "category": "Islamic",
+    "palette": {
+      "background": "#122c48",
+      "ink": "#f5f0df",
+      "accent": "#d2b475"
+    }
+  },
+  "zahra-ivory": {
+    "name": "Zahra Ivory",
+    "opening_text": "Dengan memohon rahmat Allah SWT, kami mengundang Anda untuk hadir pada hari bahagia Safiya dan Yusuf.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Zahra Ivory",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Insan, Satu Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Akad & Walimah",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Kenangan penuh syukur",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Doa & Ucapan",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Syukur",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Semoga kebersamaan ini menjadi awal dari kehidupan yang penuh kasih dan keberkahan.",
+    "quote_source": "Doa keluarga",
+    "closing_text": "Terima kasih atas doa dan kehadiran Anda. Salam hangat dari keluarga Safiya dan Yusuf.",
+    "gallery_style": "Galeri kenangan penuh syukur",
+    "style": "Ivory dengan roset floral dan bingkai plum",
+    "category": "Islamic",
+    "palette": {
+      "background": "#faf4ef",
+      "ink": "#694658",
+      "accent": "#b17e70"
+    }
   }
 }

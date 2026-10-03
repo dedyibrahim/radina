@@ -1,4 +1,5 @@
 <script setup>
+import { eventOptions } from '../../services/invitationEvents'
 import { ref, onMounted } from 'vue'
 import {
   ArrowUpRight,
@@ -69,13 +70,13 @@ const faqs = [
   <main>
     <section class="landing-hero p-container">
       <div class="hero-copy">
-        <p class="p-eyebrow"><span></span>RADINA · DIGITAL WEDDING INVITATION</p>
+        <p class="p-eyebrow"><span></span>RADINA · DIGITAL INVITATION</p>
         <h1>
           Abadikan Momen<br />Bahagia Anda dalam<br /><em>Undangan Digital</em><br />yang Berkesan.
         </h1>
         <p>
-          Radina membantu Anda membuat undangan pernikahan digital yang elegan, modern, personal,
-          dan mudah dibagikan.
+          Radina membantu Anda membuat undangan digital untuk pernikahan, khitanan, acara kantor,
+          ulang tahun, aqiqah, dan acara lainnya. Mudah diisi dan dibagikan.
         </p>
         <div class="hero-actions">
           <RouterLink to="/templates" class="p-button"
@@ -111,6 +112,26 @@ const faqs = [
         </div>
       </div>
     </section>
+    <section class="p-container event-types-section">
+      <div class="p-centered-heading">
+        <p class="p-eyebrow">UNTUK SETIAP MOMEN</p>
+        <h2>Satu undangan, banyak cerita.</h2>
+        <p>Pilih jenis acara; isi, nama, dan preview mengikuti kebutuhan Anda.</p>
+      </div>
+      <div class="event-types-grid">
+        <RouterLink
+          v-for="option in eventOptions"
+          :key="option.value"
+          :to="{
+            path: '/templates',
+            query: { event_type: option.value },
+          }"
+          class="surface"
+          >{{ option.label }}<ArrowUpRight :size="17"
+        /></RouterLink>
+      </div>
+    </section>
+
     <section class="p-section p-container radina-gift-intro">
       <p class="p-eyebrow">WEDDING GIFT</p>
       <h2>Tanda kasih,<br /><em>langsung untuk mempelai.</em></h2>
@@ -202,7 +223,7 @@ const faqs = [
               { icon: Camera, label: 'Galeri kenangan' },
               { icon: MapPin, label: 'Peta lokasi' },
               { icon: MailCheck, label: 'RSVP & ucapan' },
-              { icon: Gift, label: 'Wedding gift' },
+              { icon: Gift, label: 'Hadiah opsional' },
               { icon: Heart, label: 'Bunga bergerak' },
             ]"
             :key="feature.label"
@@ -232,12 +253,23 @@ const faqs = [
       </div>
     </section>
     <section class="p-section p-container bouquet-teaser">
-      <img src="/images/bouquets/buket-05.jpg" alt="Buket bunga custom dengan boneka wisuda" width="960" height="1280" loading="lazy" />
+      <img
+        src="/images/bouquets/buket-05.jpg"
+        alt="Buket bunga custom dengan boneka wisuda"
+        width="960"
+        height="1280"
+        loading="lazy"
+      />
       <div>
         <p class="p-eyebrow">SEBUAH HADIAH, SEBUAH CERITA</p>
         <h2>Buket untuk<br /><em>momen istimewa.</em></h2>
-        <p>Bukan hanya undangan. Lengkapi wisuda, ulang tahun, dan hari bahagia dengan buket custom sesuai keinginan Anda. Harga mulai <strong>Rp100.000</strong>.</p>
-        <RouterLink to="/buket" class="p-button">Lihat Koleksi Buket<ArrowUpRight :size="17" /></RouterLink>
+        <p>
+          Bukan hanya undangan. Lengkapi wisuda, ulang tahun, dan hari bahagia dengan buket custom
+          sesuai keinginan Anda. Harga mulai <strong>Rp100.000</strong>.
+        </p>
+        <RouterLink to="/buket" class="p-button"
+          >Lihat Koleksi Buket<ArrowUpRight :size="17"
+        /></RouterLink>
       </div>
     </section>
     <section class="p-section p-container faq-section">
@@ -263,9 +295,55 @@ const faqs = [
   </main>
 </template>
 <style scoped>
-.bouquet-teaser { display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: center; }
-.bouquet-teaser img { width: 100%; height: auto; max-height: 460px; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 100px 100px 8px 8px; }
-.bouquet-teaser > div > p:not(.p-eyebrow) { max-width: 440px; color: #7c896b; font-size: 13px; line-height: 1.9; margin: 24px 0; }
-.bouquet-teaser strong { color: #7b4337; font-weight: 500; }
-@media (max-width: 700px) { .bouquet-teaser { grid-template-columns: 1fr; gap: 30px; } }
+.bouquet-teaser {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 60px;
+  align-items: center;
+}
+.bouquet-teaser img {
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 100px 100px 8px 8px;
+}
+.bouquet-teaser > div > p:not(.p-eyebrow) {
+  max-width: 440px;
+  color: #7c896b;
+  font-size: 13px;
+  line-height: 1.9;
+  margin: 24px 0;
+}
+.bouquet-teaser strong {
+  color: #7b4337;
+  font-weight: 500;
+}
+@media (max-width: 700px) {
+  .bouquet-teaser {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+</style>
+
+<style>
+.event-types-section {
+  padding-block: 60px;
+}
+.event-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 16px;
+}
+.event-types-grid a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 22px;
+  text-decoration: none;
+  color: inherit;
+}
 </style>

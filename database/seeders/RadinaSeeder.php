@@ -24,8 +24,8 @@ class RadinaSeeder extends Seeder
                 'template_key' => $entry['key'], 'component_name' => $entry['folder'].'.vue',
                 'name' => $entry['name'], 'category_id' => $category->id,
                 'description' => $entry['quote'], 'price' => 149000, 'status' => 'ACTIVE',
-                'is_featured' => false, 'thumbnail' => '/storage/templates/previews/'.$entry['key'].'.webp',
-                'preview_image' => '/storage/templates/previews/'.$entry['key'].'.webp',
+                'is_featured' => false, 'thumbnail' => $entry['thumbnail'] ?? '/storage/templates/previews/'.$entry['key'].'.webp',
+                'preview_image' => $entry['thumbnail'] ?? '/storage/templates/previews/'.$entry['key'].'.webp',
                 'features' => ['Playlist musik', 'RSVP & ucapan', 'Wedding gift', 'CMS bersama', 'Galeri interaktif', 'Responsive'],
             ]);
         }

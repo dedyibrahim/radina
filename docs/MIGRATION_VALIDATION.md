@@ -12,7 +12,7 @@ Sumber wedding: `dedyibrahim/radina-wedding-platform`, commit `d6500f0`. Bisnis 
 ## Pemeriksaan yang lulus
 
 - Build Vite produksi, termasuk 20 template dan panel lisensi.
-- Seluruh pengujian Laravel setelah penggantian katalog musik: **49 passed, 963 assertions**.
+- Seluruh pengujian Laravel setelah penambahan tema Islami dan jenis acara: **55 passed, 1261 assertions**.
 - Enam MP3 dari folder musik pemilik sama persis SHA-256-nya dengan salinan aplikasi; playback browser nyata, metadata durasi, katalog enam lagu, seluruh demo, pilihan dan playlist editor, serta layout 320/390/1440 px lulus. Laporan: `test-results/music-replacement/local-report.json`.
 - Migration musik lokal mengganti 50 record menjadi enam dan memperbarui 21 undangan; snapshot lisensi memastikan tiga lisensi, nol aktivasi, dan dua akun tetap identik. Katalog dan playlist lama dicadangkan terenkripsi sebelum perubahan.
 - Pengujian penggantian musik memastikan backup dapat didekripsi, seluruh playlist menggunakan ID/file baru, pengaturan pemutar tidak berubah, upload gagal tidak menghapus data, dan seeding berikutnya mempertahankan perubahan/tambahan/penghapusan musik oleh admin.
@@ -43,3 +43,12 @@ Semua transaksi browser dan reset pengujian menggunakan database `radina_wedding
 Hasil pemeriksaan di dokumen ini berasal dari pengujian lokal. Status penerapan produksi diperiksa terpisah melalui GitHub Actions dan HTTP pada `radina.net`. Rekening pembayaran dan WhatsApp bisnis telah diatur sesuai data pemilik; keduanya dapat diubah lewat `/admin/settings`. Isi undangan dan rekening hadiah pengantin demo tetap merupakan contoh. Cadangan sumber dan database sebelum migrasi berada pada `../.migration-backups/20261003-150421/`.
 
 PHP lokal 8.5 menampilkan pemberitahuan deprecation dari test runner vendor; pengujian tetap lulus. CI memakai PHP 8.2.
+
+## Penambahan tema Islami dan jenis acara
+
+- Build produksi memuat 25 template, termasuk lima tema Islamic baru dengan aset thumbnail SVG dan komposisi cover berbeda. PHP syntax seluruh 24 file yang berubah lulus; seluruh source yang berubah valid UTF-8 dan `git diff --check` bersih.
+- Enam pengujian backend tambahan mencakup lima demo Islamic, preview nonpernikahan tanpa perubahan database, harga server dan kolom wajib sesuai acara, penyimpanan/publish/RSVP untuk lima jenis nonpernikahan tanpa record pengantin, form pribadi khitanan dan persetujuan, CSV kantor dan tautan tamu, serta kompatibilitas fingerprint persetujuan pernikahan. Jenis acara berbentuk array ditolak sebagai validasi 422.
+- Empat pemeriksaan browser mencakup lima tema di 390/1440 px, seluruh jenis acara nonpernikahan di 320/390 px, tautan pilihan jenis acara dan slug otomatis, serta alur khitanan: editor admin, download CSV, unggah foto anak pada ruang pelanggan, submit/apply, persetujuan wajib, publish UI, dan link tamu personal. Kontras teks kartu acara pada lima tema minimal 4,5:1; tidak ditemukan error JavaScript, peringatan Vue, overflow horizontal, atau gambar rusak. Laporan: `test-results/event-invitations/local/report.json`.
+- Tujuh pemeriksaan browser ruang pelanggan pernikahan sebelumnya dijalankan kembali dan lulus, termasuk upload, koreksi, revisi, preview kedaluwarsa, publish, dan pencabutan tautan.
+- Upgrade lokal melalui snapshot terenkripsi mempertahankan tiga lisensi dan dua pengguna. Kolom lama pada pesanan/undangan pelanggan dibandingkan sebelum/sesudah migrasi dan seeding. Katalog menjadi 25 template, enam musik tetap tersedia, dan jumlah demo/undangan lokal menjadi 26. Script pemeriksaan: `test-results/event-invitations/protected-local-upgrade.php`.
+- Migration hanya menambah klasifikasi/data acara; tidak menghapus konten pelanggan, mengubah APP_KEY, mengganti akun, atau mereset tabel lisensi. Wedding lama tetap bertipe wedding dan memakai renderer sebelumnya. Metadata tersembunyi dikecualikan dari fingerprint wedding agar persetujuan lama yang sama tetap berlaku.

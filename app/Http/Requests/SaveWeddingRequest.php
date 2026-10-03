@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\SafeMediaUrl;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Services\InvitationEvent;
 
 class SaveWeddingRequest extends FormRequest
 {
@@ -17,8 +18,11 @@ class SaveWeddingRequest extends FormRequest
     {
         $wedding = $this->route('wedding');
         $media = ['nullable', 'string', 'max:2048', new SafeMediaUrl];
+        $eventType = $this->input('event_type', $wedding?->event_type ?? 'wedding');
+        $eventType = is_string($eventType) ? $eventType : 'wedding';
         $rules = [
             'expected_updated_at' => 'required|date', 'title' => 'required|string|max:255',
+            'event_type' => ['sometimes', Rule::in(array_keys(InvitationEvent::types()))],
             'slug' => ['required', 'string', 'min:3', 'max:80', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', Rule::unique('weddings', 'slug')->ignore($wedding?->id), Rule::unique('orders', 'slug')->ignore($wedding?->order_id)],
             'template_id' => ['required', 'integer', Rule::exists('templates', 'id')], 'wedding_date' => 'nullable|date_format:Y-m-d',
             'quote' => 'nullable|string|max:5000', 'quote_source' => 'nullable|string|max:255', 'opening_text' => 'nullable|string|max:5000', 'closing_text' => 'nullable|string|max:5000', 'hashtag' => 'nullable|string|max:120',
@@ -47,14 +51,15 @@ class SaveWeddingRequest extends FormRequest
             'music.shuffle' => 'sometimes|boolean', 'music.repeat' => 'sometimes|boolean',
         ];
         foreach (['bride', 'groom'] as $role) {
-            $rules[$role] = 'required|array';
-            $rules[$role.'.full_name'] = 'required|string|min:2|max:120';
+            $rules[$role] = ($eventType === 'wedding' ? 'required' : 'nullable').'|array';
+            $rules[$role.'.full_name'] = ($eventType === 'wedding' ? 'required' : 'nullable').'|string|min:2|max:120';
             foreach (['nickname', 'father_name', 'mother_name', 'family_order'] as $field) {
                 $rules[$role.'.'.$field] = 'nullable|string|max:120';
             }
             $rules[$role.'.instagram'] = 'nullable|regex:/^[a-zA-Z0-9_.]{1,30}$/';
             $rules[$role.'.photo'] = $media;
         }
+        $rules += InvitationEvent::rules('event_details', $eventType);
         foreach (['music', 'gallery', 'story', 'rsvp', 'wishes', 'gift', 'livestream', 'countdown', 'video', 'maps'] as $feature) {
             $rules['settings.enable_'.$feature] = 'required|boolean';
         }

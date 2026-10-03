@@ -1,10 +1,10 @@
-# Radina Wedding + License Server
+# Radina Invitations + License Server
 
-RadinaNet sekarang menjalankan bisnis undangan pernikahan dari https://github.com/dedyibrahim/radina-wedding-platform. Backend Laravel 10 dan server lisensi aplikasi yang sudah ada dipertahankan. Frontend Vue 3 berada di `frontend/` dan menggunakan API Laravel dengan sesi Sanctum.
+RadinaNet menjalankan bisnis undangan digital untuk berbagai acara, diadaptasi dari https://github.com/dedyibrahim/radina-wedding-platform. Backend Laravel 10 dan server lisensi aplikasi yang sudah ada dipertahankan. Frontend Vue 3 berada di `frontend/` dan menggunakan API Laravel dengan sesi Sanctum.
 
 ## Fitur
 
-- Marketplace 20 template, pencarian, kategori, favorit, preview, dan pemesanan.
+- Marketplace 25 template, pencarian, kategori, favorit, preview, dan pemesanan.
 - Cek pesanan, transfer manual, konfirmasi WhatsApp, dan verifikasi pembayaran admin.
 - CMS undangan: pasangan, acara, cerita, galeri, video, livestream, playlist musik, pengaturan bagian, dan hadiah bank/e-wallet/QRIS/fisik.
 - Preview, publikasi, RSVP, ucapan, dan moderasi ucapan.
@@ -53,7 +53,7 @@ php artisan test
 
 `Tests/TestCase.php` memeriksa nama database dan lingkungan sebelum `RefreshDatabase` dapat menjalankan reset. Pengujian mencakup pembayaran, publikasi, hak akses, upload, hadiah terenkripsi, musik, pergantian template, serta kompatibilitas dan preservasi lisensi.
 
-Pengujian browser harus memakai server dengan database uji, `TEST_URL`, `TEST_ADMIN_EMAIL`, dan `TEST_ADMIN_PASSWORD`. Jalankan `npm.cmd run test:e2e` untuk perjalanan pelanggan/admin/tamu, dan `npm.cmd run test:integration` untuk lisensi, 20 preview, dan pemeriksaan responsif. Hasil tersimpan pada `test-results/`.
+Pengujian browser harus memakai server dengan database uji, `TEST_URL`, `TEST_ADMIN_EMAIL`, dan `TEST_ADMIN_PASSWORD`. Jalankan `npm.cmd run test:e2e` untuk perjalanan pelanggan/admin/tamu, dan `npm.cmd run test:integration` untuk lisensi, 25 preview, dan pemeriksaan responsif. Hasil tersimpan pada `test-results/`.
 
 Lihat `docs/DEPLOY_SHARED_HOSTING.md` untuk deployment. Migrasi lokal tidak mempublikasikan perubahan ke hosting.
 
@@ -85,3 +85,17 @@ Katalog menggunakan enam file MP3 dari folder musik pemilik, disalin tanpa konve
 Migration `2026_10_03_000010` mengganti seluruh katalog lama dan playlist semua undangan, termasuk undangan pelanggan yang aktif, dengan musik baru sesuai permintaan pemilik. Playlist baru mempertahankan jumlah lagu hingga enam; undangan tanpa playlist mendapat satu lagu dan demo memakai dua lagu. Volume, shuffle, repeat, autoplay, status publikasi, dan data undangan lainnya tetap mengikuti pengaturan tersimpan. Persetujuan pelanggan atas preview perlu diperbarui bila konten musik berubah.
 
 Sebelum mengganti data, file baru diverifikasi dengan ukuran dan SHA-256 serta dipasang di storage publik. Katalog dan playlist sebelumnya dicadangkan terenkripsi pada `storage/app/music-catalog-backups/`. Migrasi berjalan satu kali; seeding berikutnya memasang aset tanpa menghapus katalog atau menimpa perubahan musik admin. Media upload pelanggan dan file runtime lama dipertahankan. Perlindungan lisensi deployment tetap aktif.
+
+## Jenis acara dan lima tema Islami
+
+Jenis acara tersedia pada koleksi, detail template, dan pemesanan: **Pernikahan, Khitanan, Acara Kantor, Ulang Tahun, Aqiqah, dan Acara Lainnya**. Pilihan diteruskan ke preview dan pesanan. Form nonpernikahan memakai judul acara dan penyelenggara; khitanan, aqiqah, dan ulang tahun juga memakai nama anak/tokoh yang dirayakan. Tidak perlu mengisi nama pengantin untuk acara tersebut.
+
+Lima tema tambahan pada kategori **Islamic** adalah **Nur Jannah**, **Mihrab Emerald**, **Sahara Gold**, **Qamar Blue**, dan **Zahra Ivory**. Tema Sakinah sebelumnya tetap tersedia, sehingga kategori Islamic berisi enam desain. Buka `/templates?category=islamic` dan pilih jenis acara untuk melihat contoh yang sesuai. Desain tambahan memiliki cover, warna, dan ornamen berbeda; setiap preview dapat dibuka sebelum pemesanan.
+
+Di editor admin, **Informasi Dasar ? Jenis acara** menentukan form **Pengantin** atau **Data Acara**, label tanggal, checklist publish, dan renderer. Form pelanggan pribadi mengikuti jenis acara yang ditentukan admin. Foto anak atau logo penyelenggara, agenda, cerita/informasi acara, galeri, musik, RSVP, ucapan, peta, dan link personal tamu dapat digunakan. Hadiah dimatikan pada undangan nonpernikahan baru; admin dapat mengaktifkannya bila diperlukan. Setelah mengganti jenis acara pada undangan lama, periksa judul, teks, dan agenda pada preview sebelum menyimpan/publish.
+
+Tab **Impor / Ekspor** menampilkan **Unduh Template Acara** pada undangan nonpernikahan. CSV memakai `event_details.host_name`, nama anak/tokoh, keluarga, deskripsi, dan foto/logo sebagai pengganti kolom pengantin. Jenis acara mengikuti editor admin dan tidak dapat diganti melalui CSV atau form pelanggan. Impor/ekspor tamu dan persetujuan preview berlaku untuk semua jenis acara.
+
+Migration `2026_10_03_000011` menambah kolom klasifikasi dan data acara. Undangan/pesanan lama otomatis bertipe `wedding`; isi pasangan, URL `/w/{slug}`, musik, dan publikasi tetap tersedia. Penambahan metadata yang tidak terlihat tidak membatalkan persetujuan pernikahan yang isinya tetap sama. Tabel/model lisensi dan perlindungan CI/CD tetap menggunakan kontrak sebelumnya.
+
+Pengujian browser khusus acara: `npm run test:events`, memakai server dan database uji terpisah dengan `TEST_URL`, `TEST_ADMIN_EMAIL`, serta `TEST_ADMIN_PASSWORD`. Mode `READ_ONLY_PRODUCTION=1` hanya mengizinkan pemeriksaan tampilan/API di `radina.net`; tidak membuat pesanan, mengubah undangan, atau menjalankan migrasi.

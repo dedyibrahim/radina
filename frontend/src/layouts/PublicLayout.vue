@@ -9,8 +9,12 @@ import { whatsappLink } from '../services/whatsapp'
 const platform = usePlatformStore(),
   menu = ref(false),
   route = useRoute()
-const contactLink = computed(() => whatsappLink(platform.settings.whatsapp_number,
-  'Halo Radina, saya ingin bertanya tentang layanan wedding dan buket custom.'))
+const contactLink = computed(() =>
+  whatsappLink(
+    platform.settings.whatsapp_number,
+    'Halo Radina, saya ingin bertanya tentang undangan digital untuk berbagai acara dan buket custom.',
+  ),
+)
 onMounted(() => platform.load())
 watch(
   () => route.fullPath,
@@ -42,7 +46,8 @@ watch(
       </button>
     </header>
     <div v-if="platform.error" class="platform-load-error" role="alert">
-      {{ platform.error }} <button @click="platform.load()">Coba lagi</button>
+      {{ platform.error }}
+      <button @click="platform.load()">Coba lagi</button>
     </div>
     <RouterView />
     <footer class="public-footer">
@@ -51,11 +56,9 @@ watch(
       </div>
       <p>{{ platform.settings.footer }}</p>
       <div>
-        <RouterLink to="/templates">Template</RouterLink
-        ><RouterLink to="/buket">Buket</RouterLink
+        <RouterLink to="/templates">Template</RouterLink><RouterLink to="/buket">Buket</RouterLink
         ><RouterLink to="/check-order">Cek Pesanan</RouterLink
-        ><a :href="contactLink" target="_blank" rel="noopener noreferrer"
-          >Hubungi Kami</a
+        ><a :href="contactLink" target="_blank" rel="noopener noreferrer">Hubungi Kami</a
         ><RouterLink to="/admin/login">Admin</RouterLink>
       </div>
       <small

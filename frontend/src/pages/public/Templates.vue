@@ -1,5 +1,7 @@
 <script setup>
 import { ref, watch, onMounted, computed, onUnmounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { eventOptions } from '../../services/invitationEvents'
 import { Search } from 'lucide-vue-next'
 import { api, errorMessage } from '../../services/api'
 import { usePlatformStore } from '../../stores/platform'
@@ -8,6 +10,21 @@ import PageState from '../../components/PageState.vue'
 import { useSeo } from '../../composables/useSeo'
 import { useTemplateCollection } from '../../composables/useTemplateCollection'
 import TemplateComparison from '../../components/TemplateComparison.vue'
+const route = useRoute(),
+  router = useRouter()
+const eventType = ref(
+  eventOptions.some((option) => option.value === route.query.event_type)
+    ? route.query.event_type
+    : 'wedding',
+)
+watch(eventType, (value) =>
+  router.replace({
+    query: {
+      ...route.query,
+      event_type: value === 'wedding' ? undefined : value,
+    },
+  }),
+)
 const { favorites, comparison, message } = useTemplateCollection()
 const showComparison = ref(false),
   favoritesOnly = ref(false)
@@ -18,7 +35,7 @@ const displayedTemplates = computed(() =>
 )
 const platform = usePlatformStore(),
   search = ref(''),
-  category = ref(''),
+  category = ref(route.query.category || ''),
   sort = ref('popular'),
   templates = ref([]),
   loading = ref(true),
@@ -75,7 +92,8 @@ onMounted(() => load())
 onUnmounted(() => clearTimeout(timer))
 useSeo(() => ({
   title: `Koleksi Template — ${platform.settings.company_name || 'Radina'}`,
-  description: 'Temukan template undangan pernikahan digital yang sesuai dengan cerita cinta Anda.',
+  description:
+    'Temukan undangan digital untuk pernikahan, khitanan, acara kantor, ulang tahun, aqiqah, dan acara lainnya.',
 }))
 </script>
 <template>
@@ -86,6 +104,13 @@ useSeo(() => ({
       <p>Pilih yang paling dekat dengan hati Anda.</p>
     </div>
     <div class="market-toolbar">
+      <label class="form-field"
+        >Jenis acara<select v-model="eventType" aria-label="Jenis acara">
+          <option v-for="option in eventOptions" :key="option.value" :value="option.value">
+            {{ option.label }}
+          </option>
+        </select></label
+      >
       <label class="search-control"
         ><Search :size="18" /><input
           v-model="search"
@@ -121,6 +146,7 @@ useSeo(() => ({
         v-for="template in displayedTemplates"
         :key="template.id"
         :template="template"
+        :event-type="eventType"
       />
     </div>
     <PageState v-else title="Belum ada desain dalam kategori ini" /><button
@@ -131,12 +157,18 @@ useSeo(() => ({
     >
       {{ loading ? 'Memuat…' : 'Lihat lebih banyak' }}
     </button>
-    <p v-if="message" class="collection-message" role="status">{{ message }}</p>
+    <p v-if="message" class="collection-message" role="status">
+      {{ message }}
+    </p>
     <div v-if="comparison.length" class="comparison-tray">
       <span>{{ comparison.length }} / 3 desain dipilih</span
       ><button class="p-button" @click="showComparison = true">Bandingkan</button>
     </div>
-    <TemplateComparison :open="showComparison" @close="showComparison = false" />
+    <TemplateComparison
+      :open="showComparison"
+      :event-type="eventType"
+      @close="showComparison = false"
+    />
   </main>
 </template>
 <style>

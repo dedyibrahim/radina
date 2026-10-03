@@ -1,10 +1,11 @@
 <script setup>
-import { ref, reactive, watch, onMounted } from 'vue'
+import { ref, reactive, watch, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ArrowRight, ArrowLeft, LockKeyhole, Check } from 'lucide-vue-next'
 import { api, errorMessage, formatMoney } from '../../services/api'
 import FormField from '../../components/FormField.vue'
 import PageState from '../../components/PageState.vue'
+import { eventOptions, eventProfile } from '../../services/invitationEvents'
 const route = useRoute(),
   router = useRouter(),
   template = ref(null),
@@ -15,6 +16,12 @@ const route = useRoute(),
   slugTouched = ref(false)
 const location = window.location
 const form = reactive({
+  event_type: eventOptions.some((option) => option.value === route.query.event_type)
+    ? route.query.event_type
+    : 'wedding',
+  event_title: '',
+  host_name: '',
+  honoree_name: '',
   customer_name: '',
   whatsapp: '',
   email: '',
@@ -22,15 +29,23 @@ const form = reactive({
   groom_name: '',
   slug: '',
 })
+const isWedding = computed(() => form.event_type === 'wedding')
+const profile = computed(() => eventProfile(form.event_type))
 watch(
-  () => [form.bride_name, form.groom_name],
+  () => [form.bride_name, form.groom_name, form.event_title, form.event_type],
   () => {
     if (!slugTouched.value)
-      form.slug = `${form.bride_name.split(' ')[0]}-${form.groom_name.split(' ')[0]}`
+      form.slug = (
+        isWedding.value
+          ? `${form.bride_name.split(' ')[0]}-${form.groom_name.split(' ')[0]}`
+          : form.event_title
+      )
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase()
+        .replace(/\s+/g, '-')
         .replace(/[^a-z0-9-]/g, '')
+        .replace(/-+/g, '-')
         .replace(/^-+|-+$/g, '')
   },
 )
@@ -60,7 +75,12 @@ async function submit() {
   pending.value = true
   error.value = ''
   try {
-    const order = (await api.post('/orders', { ...form, template_id: template.value.id })).data.data
+    const order = (
+      await api.post('/orders', {
+        ...form,
+        template_id: template.value.id,
+      })
+    ).data.data
     sessionStorage.setItem(`order:${order.order_number}`, order.whatsapp)
     router.push(`/order/success/${order.order_number}`)
   } catch (e) {
@@ -98,13 +118,34 @@ async function submit() {
           /><FormField v-model="form.email" label="Email (opsional)" type="email" />
           <div class="form-step">
             <span>02</span>
-            <h2>Hari bahagia Anda</h2>
+            <h2>Detail undangan</h2>
           </div>
-          <FormField v-model="form.bride_name" label="Nama Pengantin Wanita" required /><FormField
-            v-model="form.groom_name"
-            label="Nama Pengantin Pria"
-            required
-          /><FormField
+          <label class="form-field"
+            >Jenis acara<select v-model="form.event_type" aria-label="Jenis acara">
+              <option v-for="option in eventOptions" :key="option.value" :value="option.value">
+                {{ option.label }}
+              </option>
+            </select></label
+          >
+          <template v-if="!isWedding"
+            ><FormField v-model="form.event_title" label="Judul acara" required /><FormField
+              v-model="form.host_name"
+              :label="profile.host_label"
+              required /><FormField
+              v-if="profile.honoree"
+              v-model="form.honoree_name"
+              :label="profile.honoree_label"
+              required
+          /></template>
+          <template v-if="isWedding"
+            ><FormField
+              v-model="form.bride_name"
+              label="Nama Pengantin Wanita"
+              required /><FormField
+              v-model="form.groom_name"
+              label="Nama Pengantin Pria"
+              required /></template
+          ><FormField
             v-model="form.slug"
             label="Slug Undangan"
             required
@@ -129,8 +170,10 @@ async function submit() {
               <dd>{{ form.whatsapp }}</dd>
             </div>
             <div>
-              <dt>Pengantin</dt>
-              <dd>{{ form.bride_name }} & {{ form.groom_name }}</dd>
+              <dt>{{ profile.label }}</dt>
+              <dd>
+                {{ isWedding ? `${form.bride_name} & ${form.groom_name}` : form.event_title }}
+              </dd>
             </div>
             <div>
               <dt>Template</dt>

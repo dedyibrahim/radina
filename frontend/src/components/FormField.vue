@@ -5,6 +5,7 @@ defineProps({
   label: String,
   type: { type: String, default: 'text' },
   required: Boolean,
+  disabled: Boolean,
   placeholder: String,
   options: Array,
   help: String,
@@ -20,6 +21,7 @@ const id = useId()
       :id="id"
       :value="modelValue"
       :required="required"
+      :disabled="disabled"
       :placeholder="placeholder"
       rows="4"
       @input="$emit('update:modelValue', $event.target.value)"
@@ -29,6 +31,7 @@ const id = useId()
       :id="id"
       :value="modelValue"
       :required="required"
+      :disabled="disabled"
       @change="$emit('update:modelValue', $event.target.value)"
     >
       <option v-for="option in options" :key="option.value" :value="option.value">
@@ -40,6 +43,7 @@ const id = useId()
       :type="type"
       :value="modelValue"
       :required="required"
+      :disabled="disabled"
       :placeholder="placeholder"
       @input="
         $emit(

@@ -8,7 +8,11 @@ const design = inject('weddingDesign', 'amore')
 const items = computed(() =>
   [
     { id: 'home', label: 'Home', icon: House },
-    { id: 'couple', label: 'Couple', icon: Heart },
+    {
+      id: 'couple',
+      label: wedding.isWedding ? 'Couple' : 'Profil',
+      icon: Heart,
+    },
     { id: 'event', label: 'Event', icon: CalendarDays },
     { id: 'gallery', label: 'Gallery', icon: Images },
     { id: 'gift', label: 'Gift', icon: Gift },

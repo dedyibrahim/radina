@@ -41,7 +41,9 @@ async function confirm() {
   pending.value = true
   try {
     order.value = (
-      await api.patch(`/admin/orders/${order.value.id}/payment`, { reference: reference.value })
+      await api.patch(`/admin/orders/${order.value.id}/payment`, {
+        reference: reference.value,
+      })
     ).data.data
     dialog.value = ''
     ui.toast('Pembayaran dikonfirmasi. Undangan dapat dikelola.')
@@ -70,7 +72,11 @@ async function changeStatus(status) {
   }
   pending.value = true
   try {
-    order.value = (await api.patch(`/admin/orders/${order.value.id}/status`, { status })).data.data
+    order.value = (
+      await api.patch(`/admin/orders/${order.value.id}/status`, {
+        status,
+      })
+    ).data.data
     dialog.value = ''
     ui.toast('Status pesanan diperbarui.')
   } catch (e) {
@@ -143,18 +149,30 @@ function handleStatusChange(event) {
             </div>
             <div>
               <dt>Tanggal</dt>
-              <dd>{{ new Date(order.created_at).toLocaleString('id-ID') }}</dd>
+              <dd>
+                {{ new Date(order.created_at).toLocaleString('id-ID') }}
+              </dd>
             </div>
           </dl>
-          <h2>Pengantin</h2>
+          <h2>
+            {{ order.event_type === 'wedding' ? 'Pengantin' : 'Detail Acara' }}
+          </h2>
           <dl class="summary-list">
             <div>
-              <dt>Wanita</dt>
-              <dd>{{ order.bride_name }}</dd>
+              <dt>
+                {{ order.event_type === 'wedding' ? 'Wanita' : 'Judul acara' }}
+              </dt>
+              <dd>
+                {{ order.event_type === 'wedding' ? order.bride_name : order.event_title }}
+              </dd>
             </div>
             <div>
-              <dt>Pria</dt>
-              <dd>{{ order.groom_name }}</dd>
+              <dt>
+                {{ order.event_type === 'wedding' ? 'Pria' : 'Penyelenggara' }}
+              </dt>
+              <dd>
+                {{ order.event_type === 'wedding' ? order.groom_name : order.host_name }}
+              </dd>
             </div>
             <div>
               <dt>Slug</dt>
@@ -186,11 +204,15 @@ function handleStatusChange(event) {
             </div>
             <div>
               <dt>Status pembayaran</dt>
-              <dd><StatusBadge :status="order.payment.status" /></dd>
+              <dd>
+                <StatusBadge :status="order.payment.status" />
+              </dd>
             </div>
             <div v-if="order.payment.confirmed_at">
               <dt>Dikonfirmasi</dt>
-              <dd>{{ new Date(order.payment.confirmed_at).toLocaleString('id-ID') }}</dd>
+              <dd>
+                {{ new Date(order.payment.confirmed_at).toLocaleString('id-ID') }}
+              </dd>
             </div>
             <div v-if="order.payment.confirmed_by">
               <dt>Oleh admin</dt>
@@ -223,7 +245,9 @@ function handleStatusChange(event) {
       </section>
       <BaseModal :open="Boolean(dialog)" title="Konfirmasi tindakan" @close="dialog = ''"
         ><div class="platform">
-          <h2>{{ dialog === 'payment' ? 'Konfirmasi pembayaran?' : 'Batalkan pesanan?' }}</h2>
+          <h2>
+            {{ dialog === 'payment' ? 'Konfirmasi pembayaran?' : 'Batalkan pesanan?' }}
+          </h2>
           <p class="modal-description">
             {{
               dialog === 'payment'

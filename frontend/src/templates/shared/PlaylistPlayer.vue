@@ -2,12 +2,17 @@
 import { ref, inject } from 'vue'
 import { Music2, Pause, Play, SkipBack, SkipForward, ChevronUp } from 'lucide-vue-next'
 const expanded = ref(false)
+const wedding = inject('wedding')
 const { playing, toggle, currentTrack, tracks, next, previous } = inject('weddingAudio')
 </script>
 <template>
-  <aside class="playlist-player" aria-label="Wedding music player">
+  <aside
+    class="playlist-player"
+    :aria-label="wedding.isWedding ? 'Wedding music player' : 'Pemutar musik acara'"
+  >
     <div v-if="expanded" class="playlist-details">
-      <small>WEDDING SOUNDTRACK</small><strong>{{ currentTrack?.title }}</strong
+      <small>{{ wedding.isWedding ? 'WEDDING SOUNDTRACK' : 'MUSIK ACARA' }}</small
+      ><strong>{{ currentTrack?.title }}</strong
       ><span>{{ currentTrack?.artist }}</span>
       <div class="playlist-controls">
         <button aria-label="Lagu sebelumnya" :disabled="tracks.length < 2" @click="previous">

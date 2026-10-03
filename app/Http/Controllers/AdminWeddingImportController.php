@@ -18,14 +18,14 @@ class AdminWeddingImportController extends Controller
     {
         $this->service->ensurePaid($wedding->order);
 
-        return ImportCsv::download('template-data-pernikahan.csv', ['bagian', 'kunci', 'nilai', 'petunjuk'], $this->csv->rows());
+        return ImportCsv::download('template-data-'.($wedding->event_type === 'wedding' ? 'pernikahan' : 'acara').'.csv', ['bagian', 'kunci', 'nilai', 'petunjuk'], $this->csv->rows(null, $wedding->event_type ?? 'wedding'));
     }
 
     public function export(Request $request, Wedding $wedding)
     {
         $this->service->ensurePaid($wedding->order);
 
-        return ImportCsv::download('data-pernikahan-'.$wedding->slug.'.csv', ['bagian', 'kunci', 'nilai', 'petunjuk'], $this->csv->rows($this->csv->data($wedding, $request)));
+        return ImportCsv::download('data-'.($wedding->event_type === 'wedding' ? 'pernikahan' : 'acara').'-'.$wedding->slug.'.csv', ['bagian', 'kunci', 'nilai', 'petunjuk'], $this->csv->rows($this->csv->data($wedding, $request)));
     }
 
     public function preview(Request $request, Wedding $wedding)

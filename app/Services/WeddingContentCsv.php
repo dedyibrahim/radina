@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 
 class WeddingContentCsv
 {
-    private function fields(): array
+    private function fields(string $eventType = 'wedding'): array
     {
         $fields = [];
         $add = function ($prefix, $section, $items) use (&$fields) {
@@ -22,8 +22,12 @@ class WeddingContentCsv
             }
         };
         $add('', 'Informasi dasar', ['title' => 'Judul undangan', 'slug' => 'Alamat undangan: huruf kecil dan tanda -; kosongkan untuk mempertahankan', 'wedding_date' => 'Tanggal: YYYY-MM-DD', 'hashtag' => 'Hashtag', 'opening_text' => 'Kalimat pembuka', 'quote' => 'Kutipan', 'quote_source' => 'Sumber kutipan', 'closing_text' => 'Kalimat penutup', 'cover_image' => 'URL foto cover', 'hero_image' => 'URL foto utama', 'closing_image' => 'URL foto penutup', 'video_url' => 'URL video MP4/YouTube']);
-        foreach (['bride' => 'Pengantin wanita', 'groom' => 'Pengantin pria'] as $role => $label) {
+        foreach ($eventType === 'wedding' ? ['bride' => 'Pengantin wanita', 'groom' => 'Pengantin pria'] : [] as $role => $label) {
             $add($role.'.', $label, ['full_name' => 'Nama lengkap', 'nickname' => 'Nama panggilan', 'father_name' => 'Nama ayah', 'mother_name' => 'Nama ibu', 'family_order' => 'Keterangan anak dalam keluarga', 'instagram' => 'Username Instagram tanpa @', 'photo' => 'URL foto pengantin']);
+        }
+        if ($eventType !== 'wedding') {
+            $profile = InvitationEvent::profile($eventType);
+            $add('event_details.', 'Data acara', ['host_name' => $profile['host_label'], 'honoree_name' => $profile['honoree_label'] ?? 'Nama tokoh acara (opsional)', 'father_name' => 'Nama ayah (opsional)', 'mother_name' => 'Nama ibu (opsional)', 'description' => 'Deskripsi penyelenggara / acara', 'photo' => 'URL foto atau logo']);
         }
         $add('music.', 'Musik', ['music_url' => 'URL audio', 'volume' => 'Volume 0-100', 'autoplay_after_open' => 'Putar otomatis: ya/tidak', 'shuffle' => 'Acak lagu: ya/tidak', 'repeat' => 'Ulangi lagu: ya/tidak']);
         $add('livestream.', 'Live streaming', ['platform' => 'Platform', 'url' => 'URL siaran']);
@@ -38,11 +42,11 @@ class WeddingContentCsv
     private function groups(): array
     {
         return [
-            'events' => ['Acara', 20, ['type' => 'Jenis: akad/reception/ngunduh/afterparty/other', 'title' => 'Nama acara', 'date' => 'Tanggal: YYYY-MM-DD', 'start_time' => 'Jam mulai: HH:MM', 'end_time' => 'Jam selesai: HH:MM', 'timezone' => 'Asia/Jakarta, Asia/Makassar, atau Asia/Jayapura', 'venue' => 'Nama lokasi', 'address' => 'Alamat lokasi', 'google_maps_url' => 'URL Google Maps']],
-            'stories' => ['Love story', 30, ['date_label' => 'Tanggal/tahun cerita', 'title' => 'Judul cerita', 'description' => 'Isi cerita', 'image' => 'URL foto cerita']],
+            'events' => ['Acara', 20, ['type' => 'Jenis agenda: other, ceremony, syukuran, meeting, seminar, gathering, celebration, akad, reception, ngunduh, afterparty', 'title' => 'Nama acara', 'date' => 'Tanggal: YYYY-MM-DD', 'start_time' => 'Jam mulai: HH:MM', 'end_time' => 'Jam selesai: HH:MM', 'timezone' => 'Asia/Jakarta, Asia/Makassar, atau Asia/Jayapura', 'venue' => 'Nama lokasi', 'address' => 'Alamat lokasi', 'google_maps_url' => 'URL Google Maps']],
+            'stories' => ['Cerita / informasi acara', 30, ['date_label' => 'Tanggal/tahun cerita', 'title' => 'Judul cerita', 'description' => 'Isi cerita', 'image' => 'URL foto cerita']],
             'gallery' => ['Galeri', 50, ['image' => 'URL foto', 'caption' => 'Keterangan foto']],
             'music.playlist' => ['Playlist', 10, ['title' => 'Judul lagu', 'artist' => 'Artis', 'url' => 'URL audio', 'cover' => 'URL cover', 'duration' => 'Durasi dalam detik']],
-            'gift_methods' => ['Hadiah pengantin', 30, ['type' => 'BANK/EWALLET/QRIS/PHYSICAL', 'provider' => 'Nama bank/e-wallet', 'account_number' => 'Nomor rekening: format kolom sebagai Teks', 'account_name' => 'Nama pemilik rekening', 'logo' => 'URL logo', 'qr_image' => 'URL gambar QRIS', 'recipient_name' => 'Penerima hadiah fisik', 'phone' => 'Nomor telepon: format kolom sebagai Teks', 'address' => 'Alamat hadiah fisik', 'description' => 'Catatan', 'is_active' => 'Aktif: ya/tidak']],
+            'gift_methods' => ['Hadiah', 30, ['type' => 'BANK/EWALLET/QRIS/PHYSICAL', 'provider' => 'Nama bank/e-wallet', 'account_number' => 'Nomor rekening: format kolom sebagai Teks', 'account_name' => 'Nama pemilik rekening', 'logo' => 'URL logo', 'qr_image' => 'URL gambar QRIS', 'recipient_name' => 'Penerima hadiah fisik', 'phone' => 'Nomor telepon: format kolom sebagai Teks', 'address' => 'Alamat hadiah fisik', 'description' => 'Catatan', 'is_active' => 'Aktif: ya/tidak']],
         ];
     }
 
@@ -57,10 +61,10 @@ class WeddingContentCsv
         return $data;
     }
 
-    public function rows(?array $data = null): array
+    public function rows(?array $data = null, string $eventType = 'wedding'): array
     {
         $rows = [];
-        foreach ($this->fields() as $key => [$section, $label]) {
+        foreach ($this->fields($data['event_type'] ?? $eventType) as $key => [$section, $label]) {
             $rows[] = [$section, $key, $this->cell(Arr::get($data ?? [], $key)), $label];
         }
         foreach ($this->groups() as $group => [$section, $max, $fields]) {
@@ -102,7 +106,7 @@ class WeddingContentCsv
             }
             $seen[$key] = true;
             $path = $key;
-            $label = $this->fields()[$key][1] ?? null;
+            $label = $this->fields($wedding->event_type ?? 'wedding')[$key][1] ?? null;
             foreach ($this->groups() as $group => [$section, $max, $fields]) {
                 if (preg_match('/^'.preg_quote($group, '/').'\.([1-9][0-9]*)\.([a-z_]+)$/', $key, $match) && isset($fields[$match[2]]) && (int) $match[1] <= $max) {
                     $index = (int) $match[1] - 1;
@@ -113,7 +117,7 @@ class WeddingContentCsv
                             ImportCsv::fail('Baris '.$row['_row'].': nomor '.$section.' harus berurutan mulai 1.');
                         }
                         Arr::set($data, $group.'.'.$index, match ($group) {
-                            'events' => ['type' => 'reception', 'timezone' => 'Asia/Jakarta', 'address' => '', 'google_maps_url' => ''],
+                            'events' => ['type' => $wedding->event_type === 'wedding' ? 'reception' : 'other', 'timezone' => 'Asia/Jakarta', 'address' => '', 'google_maps_url' => ''],
                             'gift_methods' => ['type' => 'BANK', 'is_active' => true],
                             default => [],
                         });

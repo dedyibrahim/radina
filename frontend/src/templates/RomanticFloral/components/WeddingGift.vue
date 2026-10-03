@@ -12,7 +12,7 @@ const { wedding, active, address, downloading, tabs, methods, copy, download } =
 <template>
   <section id="gift" class="section gift-section">
     <FlowerMotion /><SectionHeading
-      eyebrow="WEDDING GIFT"
+      :eyebrow="wedding.isWedding ? 'WEDDING GIFT' : 'TANDA KASIH'"
       title="Tanda Kasih"
       subtitle="Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan tanda kasih, Anda dapat memberikan hadiah melalui pilihan berikut."
     />
@@ -67,7 +67,8 @@ const { wedding, active, address, downloading, tabs, methods, copy, download } =
       </article>
     </div>
     <p class="sample-note">
-      Transfer dilakukan melalui aplikasi bank/e-wallet Anda langsung ke mempelai.
+      Transfer dilakukan melalui aplikasi bank/e-wallet Anda langsung ke
+      {{ wedding.isWedding ? 'mempelai' : 'penerima hadiah' }}.
     </p>
     <BaseModal :open="Boolean(address)" title="Alamat pengiriman hadiah" @close="address = null"
       ><div v-if="address" class="address-modal">

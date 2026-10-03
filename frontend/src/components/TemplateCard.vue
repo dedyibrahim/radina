@@ -1,7 +1,7 @@
 <script setup>
 import { ArrowUpRight, Eye, Heart } from 'lucide-vue-next'
 import { formatMoney } from '../services/api'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useTemplateCollection } from '../composables/useTemplateCollection'
 const { favorites, comparison, favorite, compare } = useTemplateCollection()
 const hovering = ref(false)
@@ -11,11 +11,17 @@ function startPreview(event) {
   previewScale.value = event.currentTarget.clientWidth / 390
   hovering.value = true
 }
-defineProps({ template: Object })
+const props = defineProps({
+  template: Object,
+  eventType: { type: String, default: 'wedding' },
+})
+const eventQuery = computed(() =>
+  props.eventType !== 'wedding' ? `?event_type=${props.eventType}` : '',
+)
 </script>
 <template>
   <article class="template-card" @mouseenter="startPreview" @mouseleave="hovering = false">
-    <RouterLink :to="`/templates/${template.slug}`" class="template-image"
+    <RouterLink :to="`/templates/${template.slug}${eventQuery}`" class="template-image"
       ><img
         :src="template.thumbnail || template.preview_image"
         :alt="template.name"
@@ -24,7 +30,7 @@ defineProps({ template: Object })
       >
       <div v-if="hovering" class="template-mini-preview" aria-hidden="true">
         <iframe
-          :src="`/templates/${template.slug}/preview?mini=1`"
+          :src="`/templates/${template.slug}/preview?mini=1${eventType !== 'wedding' ? `&event_type=${eventType}` : ''}`"
           :style="{ transform: `scale(${previewScale})` }"
           title="Mini template preview"
           tabindex="-1"
@@ -64,9 +70,13 @@ defineProps({ template: Object })
         {{ formatMoney(template.price) }} <span>/ undangan</span>
       </div>
       <div class="template-card-actions">
-        <RouterLink :to="`/templates/${template.slug}/preview`" class="p-button secondary"
+        <RouterLink
+          :to="`/templates/${template.slug}/preview${eventQuery}`"
+          class="p-button secondary"
           ><Eye :size="15" />Live Preview</RouterLink
-        ><RouterLink :to="`/order/${template.slug}`" class="p-button">Gunakan Template</RouterLink>
+        ><RouterLink :to="`/order/${template.slug}${eventQuery}`" class="p-button"
+          >Gunakan Template</RouterLink
+        >
       </div>
     </div>
   </article>

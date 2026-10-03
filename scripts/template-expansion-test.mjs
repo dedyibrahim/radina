@@ -69,7 +69,10 @@ try {
   assert.equal(templates.length, 56)
   assert.equal(categories.length, 11)
   const counts = Object.fromEntries(
-    categories.map((c) => [c.name, templates.filter((t) => t.category_id === c.id).length]),
+    categories.map((c) => [
+      c.name,
+      templates.filter((t) => String(t.category_id) === String(c.id)).length,
+    ]),
   )
   for (const [category, count] of Object.entries(counts))
     assert(count >= 5, `${category}: ${count}`)

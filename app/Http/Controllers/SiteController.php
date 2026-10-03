@@ -12,14 +12,18 @@ class SiteController extends Controller
 {
     public function index(Request $request, PlatformSettings $settings)
     {
-        $known = preg_match('~^(?:/|/buket|/templates(?:/[^/]+(?:/preview)?)?|/order/(?:success/)?[^/]+|/check-order|/admin(?:/.*)?|/preview/wedding/[^/]+)$~', '/'.$request->path()) || $request->path() === '/';
+        $known = preg_match('~^(?:/|/buket|/pelanggan/[a-f0-9]{64}|/templates(?:/[^/]+(?:/preview)?)?|/order/(?:success/)?[^/]+|/check-order|/admin(?:/.*)?|/preview/wedding/[^/]+)$~', '/'.$request->path()) || $request->path() === '/';
         $metadata = $settings->all();
         if ($request->is('buket')) {
             $metadata['seo_title'] = 'Buket Custom Mulai Rp100.000 | Radina';
             $metadata['seo_description'] = 'Buket untuk wisuda, ulang tahun, dan momen istimewa. Mulai Rp100.000, bisa custom. Pesan melalui WhatsApp 081289903664.';
             $metadata['seo_image'] = '/images/bouquets/buket-05.jpg';
         }
-        return $this->html($metadata, null, $known ? 200 : 404);
+        $response = $this->html($metadata, null, $known ? 200 : 404);
+        if ($request->is('pelanggan/*')) {
+            $response->header('Cache-Control', 'private, no-store')->header('Referrer-Policy', 'no-referrer')->header('X-Robots-Tag', 'noindex, nofollow');
+        }
+        return $response;
     }
 
     public function retired(PlatformSettings $settings)
@@ -81,7 +85,7 @@ class SiteController extends Controller
             }
         }
         $html = str_replace('</head>', '<link rel="canonical" href="'.e($w ? url('/w/'.$w->slug) : request()->url()).'" /></head>', $html);
-        if ($status >= 400 || request()->is('admin*', 'preview/*', 'order/*', 'check-order')) {
+        if ($status >= 400 || request()->is('admin*', 'pelanggan/*', 'preview/*', 'order/*', 'check-order')) {
             $html = str_replace('</head>', '<meta name="robots" content="noindex,nofollow" /></head>', $html);
         }
 

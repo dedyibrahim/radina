@@ -72,6 +72,11 @@ class Wedding extends Model
         return $this->hasMany(Media::class);
     }
 
+    public function customerPortal()
+    {
+        return $this->hasOne(WeddingCustomerPortal::class);
+    }
+
     public function loadContent()
     {
         return $this->load(['template.category', 'couples', 'events', 'stories', 'gallery', 'gifts', 'giftMethods', 'settings']);

@@ -16,6 +16,7 @@ class WeddingResource extends JsonResource
 
         return [
             'id' => $this->id, 'order_id' => $this->order_id, 'template_id' => $this->template_id, 'slug' => $this->slug, 'status' => $this->status,
+            ...($isAdmin ? ['customer_whatsapp' => $this->order?->whatsapp] : []),
             'publish_at' => $this->publish_at, 'published_at' => $this->published_at, 'updated_at' => $this->updated_at,
             'title' => $this->title, 'wedding_date' => $this->wedding_date?->format('Y-m-d'), 'is_demo' => $this->is_demo,
             'bride' => $couples->get('bride'), 'groom' => $couples->get('groom'),

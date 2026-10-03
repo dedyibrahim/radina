@@ -136,24 +136,8 @@ class WeddingService
             $wedding = Wedding::lockForUpdate()->findOrFail($wedding->id);
             $this->ensurePaid($order);
             $wedding->loadContent();
-            $errors = [];
-            foreach (['bride', 'groom'] as $role) {
-                if (! $wedding->couples->firstWhere('role', $role)?->full_name) {
-                    $errors[$role] = 'Nama pengantin wajib diisi.';
-                }
-            }
-            if (! $wedding->wedding_date) {
-                $errors['wedding_date'] = 'Tanggal pernikahan wajib diisi.';
-            }
-            if ($wedding->events->isEmpty()) {
-                $errors['events'] = 'Tambahkan minimal satu acara.';
-            }
-            if (! $wedding->template || ! $wedding->slug) {
-                $errors['template'] = 'Template dan slug wajib diisi.';
-            }
-            if ($errors) {
-                throw ValidationException::withMessages($errors);
-            }
+            $this->validateForPublication($wedding);
+            CustomerPortalService::assertApproved($wedding);
             if ($order->status === 'CONTENT_PROCESS') {
                 $this->workflow->transition($order, 'READY', $adminId);
             }
@@ -162,5 +146,28 @@ class WeddingService
 
             return $wedding->fresh()->loadContent();
         });
+    }
+
+    public function validateForPublication(Wedding $wedding): void
+    {
+        $wedding->loadContent();
+        $errors = [];
+        foreach (['bride', 'groom'] as $role) {
+            if (! $wedding->couples->firstWhere('role', $role)?->full_name) {
+                $errors[$role] = 'Nama pengantin wajib diisi.';
+            }
+        }
+        if (! $wedding->wedding_date) {
+            $errors['wedding_date'] = 'Tanggal pernikahan wajib diisi.';
+        }
+        if ($wedding->events->isEmpty()) {
+            $errors['events'] = 'Tambahkan minimal satu acara.';
+        }
+        if (! $wedding->template || ! $wedding->slug) {
+            $errors['template'] = 'Template dan slug wajib diisi.';
+        }
+        if ($errors) {
+            throw ValidationException::withMessages($errors);
+        }
     }
 }

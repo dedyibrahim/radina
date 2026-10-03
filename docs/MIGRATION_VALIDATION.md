@@ -12,7 +12,7 @@ Sumber wedding: `dedyibrahim/radina-wedding-platform`, commit `d6500f0`. Bisnis 
 ## Pemeriksaan yang lulus
 
 - Build Vite produksi, termasuk 20 template dan panel lisensi.
-- Seluruh pengujian Laravel setelah penambahan impor pelanggan dan tamu: **37 passed, 710 assertions**. Laporan JUnit: `test-results/backend.xml`.
+- Seluruh pengujian Laravel setelah penambahan ruang pelanggan dan persetujuan: **46 passed, 820 assertions**. Laporan JUnit: `test-results/backend.xml`.
 - Perjalanan browser nyata: pilih template, pesan, cek pesanan, bayar/verifikasi, CMS, upload gambar, preview, publikasi, RSVP, ucapan, dan persistensi setelah reload.
 - Pemeriksaan responsif halaman publik, admin, editor, dan undangan pada 320, 360, 375, 390, 414, 430, 768, 1024, 1280, dan 1440 px. Laporan: `test-results/platform/report.json`.
 - CRUD lisensi melalui browser; token salah, aktivasi berulang, dua perangkat, penolakan perangkat ketiga, cabut/aktifkan, dan penghapusan. Login admin tanpa CSRF ditolak, sedangkan endpoint aktivasi tetap memakai kontrak token desktop.
@@ -22,6 +22,9 @@ Sumber wedding: `dedyibrahim/radina-wedding-platform`, commit `d6500f0`. Bisnis 
 - Pengujian upgrade dari skema lisensi lama menjalankan migration wedding dan seeder, lalu memastikan seluruh lisensi, aktivasi, dan kredensial akun identik.
 - Regresi login dengan domain Sanctum kosong/tidak cocok, session dan logout, CSRF, CAPTCHA wajib/salah/kedaluwarsa/sekali pakai, akses admin aktif, serta batas login dan CAPTCHA yang terpisah.
 - Empat pemeriksaan browser buket/kontak: 17 foto asli, harga mulai Rp100.000, tautan produk beserta referensi foto, nomor WhatsApp yang sama pada wedding/buket, redirect `/bucket`, dan layout/tombol mengambang 320?1440 px. Laporan: `test-results/bouquets/report.json`.
+- Tujuh pemeriksaan browser ruang pelanggan: tautan/WhatsApp pelanggan, draf dan CSRF tanpa login admin, unggahan foto dan penerapan pengajuan, blok publish sebelum persetujuan, catatan revisi dan preview kedaluwarsa, persetujuan/publish, tampilan 320/390/768/1440 px, serta pembatalan akses saat token diganti/dicabut. Laporan: `test-results/customer-portal/report.json`.
+- Pengujian lanjutan versi preview lulus (**17 assertions**) dan memastikan form pelanggan mengikuti hasil koreksi admin setelah pengajuan diterapkan.
+- Sembilan pengujian ruang pelanggan: token terenkripsi dan akses terbatas, draf terpisah dari konten aktif, validasi pengajuan, penerapan data/publish dengan preservasi lisensi, persetujuan berdasarkan konten terbaru, revisi terenkripsi, masa berlaku/pergantian/pencabutan token, penolakan perubahan kolom terlindungi/media undangan lain, unggahan batch atomik, dan konflik versi.
 - Enam pemeriksaan browser impor: template pelanggan asli diunduh, diisi dan diimpor; rekening hadiah diekspor tanpa kehilangan nol; tamu dan link diimpor/diekspor dengan deduplikasi; baris salah menjaga daftar lama; perubahan manual belum disimpan menghalangi impor; layout 320/390/768/1440 px; undangan dipublish dan link ekspor menampilkan nama tamu yang benar. Laporan: `test-results/wedding-import/report.json`.
 - Tujuh pengujian impor: template kosong dan akses admin, pratinjau tanpa perubahan database, penyimpanan atomik, data lisensi/akun tetap identik, validasi konten/URL, penolakan versi editor kedaluwarsa, deduplikasi tamu, file UTF-16, keamanan ekspor spreadsheet, dan pembatasan undangan.
 - Tiga pemeriksaan browser pembayaran: kedua rekening dan tombol salin tepat, pesanan wedding baru memakai rekening pemilik dan kontak WhatsApp sebenarnya tanpa pemberitahuan demo, serta layout 320/390/768/1440 px. Laporan: `test-results/payment-accounts/report.json`.

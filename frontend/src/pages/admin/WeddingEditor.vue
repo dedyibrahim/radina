@@ -4,6 +4,7 @@ import SectionManager from '../../components/SectionManager.vue'
 import WeddingGiftManager from '../../components/WeddingGiftManager.vue'
 import WeddingRenderer from '../../components/WeddingRenderer.vue'
 import WeddingImportExport from '../../components/WeddingImportExport.vue'
+import CustomerPortalManager from '../../components/CustomerPortalManager.vue'
 import { nextTick } from 'vue'
 import { scrollToSection } from '../../composables/useSectionNavigation'
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
@@ -42,6 +43,7 @@ const route = useRoute(),
 const window = globalThis.window
 const tabs = [
   ['basic', 'Informasi Dasar'],
+  ['customer', 'Pelanggan'],
   ['import-export', 'Impor / Ekspor'],
   ['template', 'Template'],
   ['sections', 'Section Manager'],
@@ -427,6 +429,7 @@ watch(tab, (value) => {
             label="Upload video MP4"
         /></template>
         <WeddingImportExport v-else-if="tab === 'import-export'" :wedding="form" :blocked="Boolean(dirty) || pending" @updated="contentImported" @busy="pending = $event" />
+        <CustomerPortalManager v-else-if="tab === 'customer'" :wedding="form" :blocked="Boolean(dirty)" @updated="contentImported" @busy="pending = $event" />
         <template v-else-if="tab === 'couple'"
           ><h2>Dua hati, satu cerita.</h2>
           <div class="couple-editor-grid">

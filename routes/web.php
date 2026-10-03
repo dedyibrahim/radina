@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminTemplateController;
 use App\Http\Controllers\AdminWeddingController;
 use App\Http\Controllers\AdminWeddingImportController;
+use App\Http\Controllers\AdminCustomerPortalController;
+use App\Http\Controllers\CustomerPortalController;
 use App\Http\Controllers\AdminInviteeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MediaController;
@@ -42,6 +44,11 @@ Route::prefix('api/admin')->middleware('throttle:api')->group(function () {
         Route::put('/weddings/{wedding}', [AdminWeddingController::class, 'update']);
         Route::get('/weddings/{wedding}/preview', [AdminWeddingController::class, 'show']);
         Route::post('/weddings/{wedding}/publish', [AdminWeddingController::class, 'publish']);
+        Route::get('/weddings/{wedding}/customer-portal', [AdminCustomerPortalController::class, 'show']);
+        Route::post('/weddings/{wedding}/customer-portal', [AdminCustomerPortalController::class, 'issue']);
+        Route::delete('/weddings/{wedding}/customer-portal', [AdminCustomerPortalController::class, 'revoke']);
+        Route::post('/weddings/{wedding}/customer-portal/apply', [AdminCustomerPortalController::class, 'apply']);
+        Route::post('/weddings/{wedding}/customer-portal/review', [AdminCustomerPortalController::class, 'review']);
         Route::get('/weddings/{wedding}/content/template', [AdminWeddingImportController::class, 'template']);
         Route::get('/weddings/{wedding}/content/export', [AdminWeddingImportController::class, 'export']);
         Route::post('/weddings/{wedding}/content/preview', [AdminWeddingImportController::class, 'preview']);
@@ -67,6 +74,14 @@ Route::prefix('api/admin')->middleware('throttle:api')->group(function () {
         Route::get('/settings', [AdminSettingsController::class, 'show']);
         Route::put('/settings', [AdminSettingsController::class, 'update']);
     });
+});
+
+Route::prefix('api/customer-portals/{token}')->middleware('throttle:api')->group(function () {
+    Route::get('/', [CustomerPortalController::class, 'show']);
+    Route::put('/', [CustomerPortalController::class, 'save']);
+    Route::get('/preview', [CustomerPortalController::class, 'preview']);
+    Route::post('/response', [CustomerPortalController::class, 'respond']);
+    Route::post('/media', [CustomerPortalController::class, 'media']);
 });
 
 Route::get('/assets/{file}', [SiteController::class, 'asset']);

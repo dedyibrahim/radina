@@ -8,8 +8,10 @@ const props = defineProps({
   collection: { type: String, default: 'couple' },
   multiple: Boolean,
   label: { type: String, default: 'Upload foto' },
+  uploadPath: { type: String, default: '/admin/media' },
+  disabled: Boolean,
 })
-const emit = defineEmits(['update:modelValue', 'uploaded'])
+const emit = defineEmits(['update:modelValue', 'uploaded', 'busy'])
 const pending = ref(false),
   progress = ref(0),
   error = ref(''),
@@ -19,6 +21,7 @@ async function upload(event) {
   if (!files.length) return
   error.value = ''
   pending.value = true
+  emit('busy', true)
   progress.value = 0
   if (files[0].type.startsWith('image/')) temporary.value = URL.createObjectURL(files[0])
   try {
@@ -26,7 +29,7 @@ async function upload(event) {
     if (props.weddingId) data.append('wedding_id', props.weddingId)
     data.append('collection', props.collection)
     files.forEach((file) => data.append('files[]', file))
-    const response = await api.post('/admin/media', data, {
+    const response = await api.post(props.uploadPath, data, {
       onUploadProgress: (event) => {
         progress.value = Math.round((event.loaded / (event.total || event.loaded)) * 100)
       },
@@ -37,6 +40,7 @@ async function upload(event) {
     error.value = errorMessage(e)
   } finally {
     pending.value = false
+    emit('busy', false)
     URL.revokeObjectURL(temporary.value)
     temporary.value = ''
     event.target.value = ''
@@ -53,7 +57,7 @@ onUnmounted(() => URL.revokeObjectURL(temporary.value))
       <img :src="temporary || modelValue" :alt="label" /><button
         type="button"
         class="icon-button"
-        :disabled="pending"
+        :disabled="pending || disabled"
         aria-label="Hapus foto"
         @click="$emit('update:modelValue', '')"
       >
@@ -73,8 +77,9 @@ onUnmounted(() => URL.revokeObjectURL(temporary.value))
       }}</small
       ><input
         type="file"
+        :aria-label="label"
         :multiple="multiple"
-        :disabled="pending"
+        :disabled="pending || disabled"
         :accept="
           ['music', 'music-library'].includes(collection)
             ? '.mp3,.wav,.ogg'

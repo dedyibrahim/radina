@@ -56,3 +56,14 @@ php artisan test
 Pengujian browser harus memakai server dengan database uji, `TEST_URL`, `TEST_ADMIN_EMAIL`, dan `TEST_ADMIN_PASSWORD`. Jalankan `npm.cmd run test:e2e` untuk perjalanan pelanggan/admin/tamu, dan `npm.cmd run test:integration` untuk lisensi, 20 preview, dan pemeriksaan responsif. Hasil tersimpan pada `test-results/`.
 
 Lihat `docs/DEPLOY_SHARED_HOSTING.md` untuk deployment. Migrasi lokal tidak mempublikasikan perubahan ke hosting.
+
+## Impor data pelanggan dan daftar tamu
+
+Pada halaman kelola `/admin/weddings/{id}`, buka tab **Impor / Ekspor**.
+
+1. Unduh **Template Pernikahan**, bagikan ke pelanggan, dan minta mereka mengisi kolom `nilai`. Nama pengantin, acara, cerita, URL galeri/musik, pengaturan fitur, dan metode hadiah dapat diimpor sekaligus. Kolom kosong mempertahankan data tersimpan. Foto lokal tetap diunggah melalui editor.
+2. Simpan spreadsheet sebagai **CSV UTF-8**, unggah, pilih **Periksa Data Pernikahan**, lalu tinjau perubahan dan pilih **Impor & Simpan Pernikahan**. Perubahan langsung disimpan; undangan aktif langsung memakai konten baru. Simpan perubahan editor sebelum impor.
+3. Unduh **Template Tamu**, isi kolom `nama` dan `alamat` (satu tamu/keluarga per baris), lalu periksa dan impor. Batas 1.000 baris / 2 MB per file, 10.000 tamu per undangan. Nama dan alamat yang sama, tanpa membedakan huruf besar/kecil, dilewati saat impor ulang. Tidak ada data lama yang dihapus oleh impor.
+4. Pilih **Unduh Tautan Tamu** untuk CSV berisi nama, alamat, dan link personal siap dibagikan. Nama yang sama di alamat berbeda mendapat token berbeda. Tautan memakai slug undangan terkini, dan baru bisa dibuka ketika undangan dipublish. Alamat tidak disertakan pada URL publik.
+
+CSV mendukung pemisah titik koma, koma, dan tab serta file UTF-16 dari Excel. Tanggal harus `YYYY-MM-DD`, jam `HH:MM`, dan pilihan fitur `ya`/`tidak`. Format kolom nilai sebagai Teks sebelum mengisi nomor rekening/telepon agar nol di depan tidak hilang. Ekspor melindungi nilai dari formula spreadsheet. Galat data menggagalkan seluruh impor; sesi editor yang berubah sejak pratinjau ditolak agar perubahan lain tidak tertimpa. Impor hanya tersedia bagi admin aktif dan undangan dengan pembayaran terkonfirmasi.

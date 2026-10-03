@@ -3,6 +3,7 @@ import MusicSelector from '../../components/MusicSelector.vue'
 import SectionManager from '../../components/SectionManager.vue'
 import WeddingGiftManager from '../../components/WeddingGiftManager.vue'
 import WeddingRenderer from '../../components/WeddingRenderer.vue'
+import WeddingImportExport from '../../components/WeddingImportExport.vue'
 import { nextTick } from 'vue'
 import { scrollToSection } from '../../composables/useSectionNavigation'
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
@@ -41,6 +42,7 @@ const route = useRoute(),
 const window = globalThis.window
 const tabs = [
   ['basic', 'Informasi Dasar'],
+  ['import-export', 'Impor / Ekspor'],
   ['template', 'Template'],
   ['sections', 'Section Manager'],
   ['couple', 'Pengantin'],
@@ -300,6 +302,10 @@ function giftsUpdated(result) {
   previous.updated_at = result.updated_at
   baseline.value = JSON.stringify(previous)
 }
+function contentImported(result) {
+  form.value = normalize(result)
+  baseline.value = JSON.stringify(form.value)
+}
 function requestTemplate(t) {
   templatePicker.value = false
   selectedTemplate.value = t
@@ -366,6 +372,7 @@ watch(tab, (value) => {
           v-for="item in tabs"
           :key="item[0]"
           :class="{ selected: tab === item[0] }"
+          :disabled="pending"
           @click="item[0] === 'preview' ? openPreview() : (tab = item[0])"
         >
           {{ item[1] }}
@@ -419,6 +426,7 @@ watch(tab, (value) => {
             collection="video"
             label="Upload video MP4"
         /></template>
+        <WeddingImportExport v-else-if="tab === 'import-export'" :wedding="form" :blocked="Boolean(dirty) || pending" @updated="contentImported" @busy="pending = $event" />
         <template v-else-if="tab === 'couple'"
           ><h2>Dua hati, satu cerita.</h2>
           <div class="couple-editor-grid">

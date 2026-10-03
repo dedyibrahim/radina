@@ -1,11 +1,12 @@
 <script setup>
 import RadinaLogo from './RadinaLogo.vue'
 import { computed } from 'vue'
-import { Copy, MessageCircle, ArrowUpRight, CheckCircle2 } from 'lucide-vue-next'
+import { MessageCircle, ArrowUpRight, CheckCircle2 } from 'lucide-vue-next'
 import { api, formatMoney, errorMessage } from '../services/api'
 import { usePlatformStore } from '../stores/platform'
 import { useUiStore } from '../stores/ui'
 import StatusBadge from './StatusBadge.vue'
+import PaymentBankAccounts from './PaymentBankAccounts.vue'
 const props = defineProps({ order: Object })
 const platform = usePlatformStore(),
   ui = useUiStore()
@@ -16,14 +17,6 @@ const whatsapp = computed(() => {
     ? `https://wa.me/${platform.settings.whatsapp_number}?text=${encodeURIComponent(text)}`
     : ''
 })
-async function copy() {
-  try {
-    await navigator.clipboard.writeText(platform.settings.bank_account)
-    ui.toast('Nomor rekening berhasil disalin.')
-  } catch {
-    ui.toast('Salin nomor rekening secara manual.')
-  }
-}
 async function review() {
   try {
     await api.post('/orders/payment-review', {
@@ -58,13 +51,7 @@ async function review() {
       </div>
     </dl>
     <template v-if="waiting"
-      ><div class="payment-bank">
-        <p class="p-eyebrow">TRANSFER MANUAL</p>
-        <h3>{{ platform.settings.bank_name }}</h3>
-        <strong>{{ platform.settings.bank_account }}</strong>
-        <p>{{ platform.settings.bank_account_name }}</p>
-        <button class="text-link" @click="copy"><Copy :size="15" />Salin Nomor Rekening</button>
-      </div>
+      ><PaymentBankAccounts />
       <p v-if="platform.settings.payment_notice" class="alert">
         {{ platform.settings.payment_notice }}
       </p>

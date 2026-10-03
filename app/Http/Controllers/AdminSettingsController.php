@@ -20,6 +20,9 @@ class AdminSettingsController extends Controller
         $data = $request->validate([
             'company_name' => 'required|string|max:120', 'whatsapp_number' => 'required|regex:/^[1-9][0-9]{8,14}$/', 'email' => 'required|email|max:255',
             'bank_name' => 'required|string|max:60', 'bank_account' => 'required|string|max:60', 'bank_account_name' => 'required|string|max:120',
+            'secondary_bank_name' => 'nullable|required_with:secondary_bank_account,secondary_bank_account_name|string|max:60',
+            'secondary_bank_account' => 'nullable|required_with:secondary_bank_name,secondary_bank_account_name|string|max:60',
+            'secondary_bank_account_name' => 'nullable|required_with:secondary_bank_name,secondary_bank_account|string|max:120',
             'instagram' => 'nullable|url:http,https|max:2048', 'footer' => 'nullable|string|max:500', 'seo_title' => 'nullable|string|max:120', 'seo_description' => 'nullable|string|max:500',
             'logo' => ['nullable', 'string', 'max:2048', new SafeMediaUrl],
             'payment_notice' => 'nullable|string|max:1000',

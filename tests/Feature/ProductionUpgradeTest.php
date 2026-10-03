@@ -38,6 +38,14 @@ class ProductionUpgradeTest extends TestCase
             $this->assertDatabaseCount('templates', 20);
             $this->assertDatabaseHas('system_settings', ['key' => 'whatsapp_number', 'value' => '6281289903664']);
             $this->getJson('/api/settings')->assertOk()->assertJsonPath('data.whatsapp_number', '6281289903664');
+            $this->getJson('/api/settings')->assertOk()
+                ->assertJsonPath('data.bank_name', 'Bank Mandiri')
+                ->assertJsonPath('data.bank_account', '1680001279155')
+                ->assertJsonPath('data.bank_account_name', 'Dedy Ibrahim')
+                ->assertJsonPath('data.secondary_bank_name', 'Bank BCA')
+                ->assertJsonPath('data.secondary_bank_account', '8721354342')
+                ->assertJsonPath('data.secondary_bank_account_name', 'Dedy Ibrahim')
+                ->assertJsonPath('data.payment_notice', '');
             $this->assertTrue($admin->fresh()->admin->active);
         } finally {
             $this->artisan('migrate:fresh', ['--force' => true])->assertSuccessful();

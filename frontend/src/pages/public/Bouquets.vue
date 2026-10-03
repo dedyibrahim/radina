@@ -4,6 +4,7 @@ import { ArrowUpRight, Flower2, Heart, MessageCircle, Palette } from 'lucide-vue
 import { usePlatformStore } from '../../stores/platform'
 import { whatsappLink } from '../../services/whatsapp'
 import { useSeo } from '../../composables/useSeo'
+import PaymentBankAccounts from '../../components/PaymentBankAccounts.vue'
 const platform = usePlatformStore()
 const bouquets = Array.from({ length: 17 }, (_, i) => {
   const number = String(i + 1).padStart(2, '0')
@@ -61,6 +62,12 @@ useSeo(() => ({ title: 'Buket Custom Mulai Rp100.000 | Radina',
         </article>
       </div>
     </section>
+    <section class="bouquet-payment p-container">
+      <p class="p-eyebrow">PEMBAYARAN PESANAN BUKET</p>
+      <h2>Siap untuk <em>momen Anda.</em></h2>
+      <p>Pilih desain dan sepakati total pesanan melalui WhatsApp terlebih dahulu. Setelah itu, transfer ke salah satu rekening berikut dan kirim bukti pembayaran kepada kami.</p>
+      <PaymentBankAccounts />
+    </section>
     <section class="bouquet-custom p-container">
       <p class="p-eyebrow">PUNYA IDE SENDIRI?</p>
       <h2>Mari buat buket<br /><em>versi Anda.</em></h2>
@@ -102,6 +109,8 @@ useSeo(() => ({ title: 'Buket Custom Mulai Rp100.000 | Radina',
 .bouquet-custom { text-align: center; background: #f1f0e3; padding-top: 60px; padding-bottom: 60px; margin-bottom: 70px; border-radius: 12px; }
 .bouquet-custom p:not(.p-eyebrow) { max-width: 520px; margin: 25px auto; color: #7c896b; line-height: 1.9; font-size: 13px; }
 .bouquet-custom a { margin: auto; }
+.bouquet-payment { max-width: 820px; padding-top: 0; padding-bottom: 65px; }
+.bouquet-payment > p:not(.p-eyebrow) { color: #7c896b; font-size: 13px; line-height: 1.9; margin: 22px 0 28px; }
 @media (max-width: 900px) {
   .bouquet-hero { gap: 35px; }
   .bouquet-benefits { grid-template-columns: 1fr; gap: 22px; }

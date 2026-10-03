@@ -170,6 +170,18 @@ class PlatformWorkflowTest extends TestCase
         $this->assertDatabaseMissing('wedding_gift_methods', ['id' => $second]);
     }
 
+    public function test_secondary_payment_account_must_be_complete_and_can_be_disabled(): void
+    {
+        $this->admin();
+        $settings = SystemSetting::pluck('value', 'key')->all();
+        $partial = array_replace($settings, ['secondary_bank_account' => '', 'secondary_bank_account_name' => '']);
+        $this->putJson('/api/admin/settings', $partial)->assertUnprocessable()->assertJsonValidationErrors(['secondary_bank_account', 'secondary_bank_account_name']);
+        $this->getJson('/api/settings')->assertOk()->assertJsonPath('data.secondary_bank_account', '8721354342');
+        $this->putJson('/api/admin/settings', $settings)->assertOk()->assertJsonPath('data.bank_account', '1680001279155')->assertJsonPath('data.secondary_bank_account', '8721354342');
+        $disabled = array_replace($settings, ['secondary_bank_name' => '', 'secondary_bank_account' => '', 'secondary_bank_account_name' => '']);
+        $this->putJson('/api/admin/settings', $disabled)->assertOk()->assertJsonPath('data.secondary_bank_account', null)->assertJsonPath('data.bank_account', '1680001279155');
+    }
+
     public function test_template_switch_preserves_content_guests_gifts_and_payment(): void
     {
         $this->admin();

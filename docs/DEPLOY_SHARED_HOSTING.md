@@ -16,7 +16,7 @@ PHP 8.2 dengan PDO MySQL, GD, mbstring, fileinfo, intl, curl, OpenSSL diperlukan
 4. Jalankan `php artisan optimize:clear`, `php artisan migrate --force`, dan `php artisan db:seed --force`. Akun admin lama diberi akses wedding tanpa mengganti password; lisensi tidak disemai ulang.
 5. Media `/storage` dapat dilayani langsung oleh Laravel dari disk publik jika hosting tidak menyediakan symlink. Path di luar disk publik dan file konfigurasi privat ditolak.
 6. Periksa `/api/license/activate` memakai aplikasi desktop yang sudah ada, lalu `/admin/licenses`, katalog, dan preview. Pastikan jumlah/key/aktivasi lisensi sama dengan cadangan.
-7. Isi rekening dan kontak sebenarnya melalui `/admin/settings` sebelum menerima pembayaran.
+7. Migration mengatur rekening Mandiri `1680001279155` dan BCA `8721354342` a/n Dedy Ibrahim serta kontak WhatsApp `081289903664`. Perubahan berikutnya dapat dilakukan melalui `/admin/settings`.
 
 Endpoint aktivasi lisensi tetap pada domain dan URL sebelumnya. Data berita lama dipertahankan sebagai arsip database. Kode bisnis berita tidak lagi digunakan; URL berita mengembalikan 410.
 

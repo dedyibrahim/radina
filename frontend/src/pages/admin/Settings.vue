@@ -17,14 +17,17 @@ const fields = [
   ['company_name', 'Nama platform'],
   ['whatsapp_number', 'WhatsApp admin (format 628…)'],
   ['email', 'Email'],
-  ['bank_name', 'Bank'],
-  ['bank_account', 'Nomor rekening'],
-  ['bank_account_name', 'Nama pemilik rekening'],
+  ['bank_name', 'Bank utama'],
+  ['bank_account', 'Nomor rekening utama'],
+  ['bank_account_name', 'Pemilik rekening utama'],
+  ['secondary_bank_name', 'Bank kedua (opsional)'],
+  ['secondary_bank_account', 'Nomor rekening kedua'],
+  ['secondary_bank_account_name', 'Pemilik rekening kedua'],
   ['instagram', 'URL Instagram'],
   ['footer', 'Footer'],
   ['seo_title', 'SEO title'],
   ['seo_description', 'SEO description'],
-  ['payment_notice', 'Catatan pembayaran (kosongkan setelah rekening asli dikonfigurasi)'],
+  ['payment_notice', 'Catatan pembayaran (opsional)'],
 ]
 async function load() {
   try {

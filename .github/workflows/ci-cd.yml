@@ -240,9 +240,7 @@ jobs:
 
           # Fail before upload if authentication or the production directory is invalid.
           lftp <<LFTP
-          set cmd:fail-exit yes
-          set net:max-retries 1
-          set net:timeout 15
+          source scripts/deployment/ftp-settings.lftp
           $FTP_TLS_SETTINGS
           open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER"
           cd "$FTP_SERVER_DIR"
@@ -254,9 +252,7 @@ jobs:
           rm -f /tmp/radina-previous-release-manifest.json
 
           lftp <<LFTP || true
-          set cmd:fail-exit yes
-          set net:max-retries 2
-          set net:timeout 15
+          source scripts/deployment/ftp-settings.lftp
           $FTP_TLS_SETTINGS
           open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER"
           cd "$FTP_SERVER_DIR"
@@ -432,9 +428,7 @@ jobs:
           fi
 
           lftp <<LFTP
-          set cmd:fail-exit yes
-          set net:max-retries 3
-          set net:timeout 20
+          source scripts/deployment/ftp-settings.lftp
           $FTP_TLS_SETTINGS
           open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER"
           mirror --reverse --verbose --parallel=2 \
@@ -494,9 +488,7 @@ jobs:
           fi
 
           lftp <<LFTP
-          set cmd:fail-exit yes
-          set net:max-retries 3
-          set net:timeout 20
+          source scripts/deployment/ftp-settings.lftp
           $FTP_TLS_SETTINGS
           open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER"
           cd "$FTP_SERVER_DIR"

@@ -24,6 +24,8 @@ Endpoint aktivasi lisensi tetap pada domain dan URL sebelumnya. Data berita lama
 
 Environment `production` menggunakan secrets `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`, `DEPLOY_HOOK_SECRET`, serta variables `FTP_PROTOCOL`, `FTP_SERVER_DIR`, `DEPLOY_URL`. `DEPLOY_URL` wajib HTTPS. Server menggunakan `.env` produksi; kredensial produksi tidak dikirim dari CI.
 
+Seluruh tahap FTP menggunakan `scripts/deployment/ftp-settings.lftp`: IPv4 diprioritaskan dengan fallback IPv6, mode pasif, timeout 30 detik, serta maksimal 3 percobaan dengan jeda bertahap. Pemeriksaan login dan direktori tetap wajib sebelum upload. Error `max-retries exceeded` menunjukkan percobaan koneksi habis; periksa akses server FTP, firewall hosting, dan konfigurasi server bila percobaan berikutnya tetap gagal. Deployment tidak melewati pemeriksaan koneksi atau perlindungan lisensi.
+
 Deploy hook memverifikasi signature, commit, manifest file, dan SHA-256 `database/seeders/WeddingPlatformSeeder.php` sebelum migrasi dan seeding. Nama header `X-Seed-Sql-Sha256` dipertahankan untuk protokol hook lama, tetapi isinya sekarang digest seeder wedding. Source SQL portal berita tidak lagi dipakai.
 
 Sebelum migrasi, hook membuat cadangan terenkripsi tabel `licenses`, `license_activations`, dan `users` di `_app/storage/app/deploy-backups/`. Cadangan diverifikasi sebelum migrasi dimulai. Setelah migrasi dan setelah seeding, seluruh record lama diperiksa: key, aturan lisensi, identitas perangkat, dan kredensial akun harus tetap sama. Pembaruan waktu aktivasi dan penambahan perangkat oleh aplikasi desktop saat deployment tetap diperbolehkan. Kegagalan pemeriksaan menghentikan deployment dan marker commit produksi tidak diperbarui.

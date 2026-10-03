@@ -1,0 +1,12 @@
+# Shared by preflight, manifest download, upload, and the successful release marker.
+# Prefer IPv4 while retaining IPv6 fallback; shared hosting can advertise an
+# IPv6 address that is unreachable from the GitHub runner.
+set cmd:fail-exit yes
+set dns:order "inet inet6"
+set dns:fatal-timeout 30
+set net:max-retries 3
+set net:timeout 30
+set net:reconnect-interval-base 5
+set net:reconnect-interval-multiplier 2
+set net:reconnect-interval-max 15
+set ftp:passive-mode true

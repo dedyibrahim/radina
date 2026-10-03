@@ -1,15 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdminGiftController;
-use App\Http\Controllers\AdminMusicController;
-use App\Http\Controllers\AdminOrderController;
-use App\Http\Controllers\AdminSettingsController;
-use App\Http\Controllers\AdminTemplateController;
-use App\Http\Controllers\AdminWeddingController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PublicController;
-use App\Http\Controllers\LicenseAdminController;
 use App\Http\Controllers\Api\LicenseActivationController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,43 +16,5 @@ Route::get('/weddings/{slug}', [PublicController::class, 'wedding']);
 Route::get('/weddings/{slug}/wishes', [PublicController::class, 'wishes']);
 Route::post('/weddings/{slug}/rsvp', [PublicController::class, 'rsvp'])->middleware('throttle:10,1');
 Route::post('/weddings/{slug}/wishes', [PublicController::class, 'wish'])->middleware('throttle:10,1');
-Route::post('/admin/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 Route::post('/license/activate', [LicenseActivationController::class, 'activate'])
     ->withoutMiddleware(\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
-Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->group(function () {
-    Route::get('/licenses', [LicenseAdminController::class, 'index']);
-    Route::post('/licenses', [LicenseAdminController::class, 'store']);
-    Route::patch('/licenses/{license}', [LicenseAdminController::class, 'update']);
-    Route::patch('/licenses/{license}/toggle-status', [LicenseAdminController::class, 'toggleStatus']);
-    Route::delete('/licenses/{license}', [LicenseAdminController::class, 'destroy']);
-    Route::get('/me', [AuthController::class, 'me']);
-    Route::get('/music', [AdminMusicController::class, 'index']);
-    Route::post('/music', [AdminMusicController::class, 'store']);
-    Route::put('/music/{music}', [AdminMusicController::class, 'update']);
-    Route::delete('/music/{music}', [AdminMusicController::class, 'destroy']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/dashboard', [AdminOrderController::class, 'dashboard']);
-    Route::get('/orders', [AdminOrderController::class, 'index']);
-    Route::get('/orders/{order}', [AdminOrderController::class, 'show']);
-    Route::patch('/orders/{order}/payment', [AdminOrderController::class, 'payment']);
-    Route::patch('/orders/{order}/status', [AdminOrderController::class, 'status']);
-    Route::post('/orders/{order}/wedding', [AdminOrderController::class, 'wedding']);
-    Route::get('/weddings/{wedding}', [AdminWeddingController::class, 'show']);
-    Route::put('/weddings/{wedding}', [AdminWeddingController::class, 'update']);
-    Route::get('/weddings/{wedding}/preview', [AdminWeddingController::class, 'show']);
-    Route::post('/weddings/{wedding}/publish', [AdminWeddingController::class, 'publish']);
-    Route::get('/weddings/{wedding}/gifts', [AdminGiftController::class, 'index']);
-    Route::post('/weddings/{wedding}/gifts', [AdminGiftController::class, 'store']);
-    Route::patch('/weddings/{wedding}/gifts/reorder', [AdminGiftController::class, 'reorder']);
-    Route::put('/weddings/{wedding}/gifts/{gift}', [AdminGiftController::class, 'update']);
-    Route::delete('/weddings/{wedding}/gifts/{gift}', [AdminGiftController::class, 'destroy']);
-    Route::get('/weddings/{wedding}/rsvps', [AdminWeddingController::class, 'rsvps']);
-    Route::get('/weddings/{wedding}/wishes', [AdminWeddingController::class, 'wishes']);
-    Route::patch('/weddings/{wedding}/wishes/{wish}', [AdminWeddingController::class, 'moderate']);
-    Route::post('/media', [MediaController::class, 'store']);
-    Route::get('/templates', [AdminTemplateController::class, 'index']);
-    Route::post('/templates', [AdminTemplateController::class, 'store']);
-    Route::put('/templates/{template}', [AdminTemplateController::class, 'update']);
-    Route::get('/settings', [AdminSettingsController::class, 'show']);
-    Route::put('/settings', [AdminSettingsController::class, 'update']);
-});

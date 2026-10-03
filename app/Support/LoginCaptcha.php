@@ -7,6 +7,7 @@ use Illuminate\Contracts\Session\Session;
 class LoginCaptcha
 {
     public const SESSION_KEY = 'login_captcha_answer';
+    public const EXPIRES_KEY = 'login_captcha_expires_at';
 
     public static function generate(Session $session): string
     {
@@ -14,6 +15,7 @@ class LoginCaptcha
         $secondNumber = random_int(1, 9);
 
         $session->put(self::SESSION_KEY, $firstNumber + $secondNumber);
+        $session->put(self::EXPIRES_KEY, now()->addMinutes(5)->timestamp);
 
         return "{$firstNumber} + {$secondNumber}";
     }
@@ -21,8 +23,9 @@ class LoginCaptcha
     public static function matches(Session $session, mixed $answer): bool
     {
         $expectedAnswer = $session->pull(self::SESSION_KEY);
+        $expiresAt = $session->pull(self::EXPIRES_KEY);
 
-        if ($expectedAnswer === null || ! is_numeric($answer)) {
+        if ($expectedAnswer === null || $expiresAt === null || now()->timestamp >= $expiresAt || ! is_numeric($answer)) {
             return false;
         }
 

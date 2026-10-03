@@ -12,7 +12,7 @@ Sumber wedding: `dedyibrahim/radina-wedding-platform`, commit `d6500f0`. Bisnis 
 ## Pemeriksaan yang lulus
 
 - Build Vite produksi, termasuk 20 template dan panel lisensi.
-- Seluruh pengujian Laravel setelah penguatan deployment: **22 passed, 489 assertions**. Laporan JUnit: `test-results/backend.xml`.
+- Seluruh pengujian Laravel setelah penguatan deployment: **29 passed, 599 assertions**. Laporan JUnit: `test-results/backend.xml`.
 - Perjalanan browser nyata: pilih template, pesan, cek pesanan, bayar/verifikasi, CMS, upload gambar, preview, publikasi, RSVP, ucapan, dan persistensi setelah reload.
 - Pemeriksaan responsif halaman publik, admin, editor, dan undangan pada 320, 360, 375, 390, 414, 430, 768, 1024, 1280, dan 1440 px. Laporan: `test-results/platform/report.json`.
 - CRUD lisensi melalui browser; token salah, aktivasi berulang, dua perangkat, penolakan perangkat ketiga, cabut/aktifkan, dan penghapusan. Login admin tanpa CSRF ditolak, sedangkan endpoint aktivasi tetap memakai kontrak token desktop.
@@ -20,6 +20,8 @@ Sumber wedding: `dedyibrahim/radina-wedding-platform`, commit `d6500f0`. Bisnis 
 - Pemeriksaan sintaks 113 file PHP tanpa kegagalan; route cache berhasil dibuat dan dibersihkan; `git diff --check` bersih.
 - Website lokal merespons HTTP 200 dan katalog memuat 20 template.
 - Pengujian upgrade dari skema lisensi lama menjalankan migration wedding dan seeder, lalu memastikan seluruh lisensi, aktivasi, dan kredensial akun identik.
+- Regresi login dengan domain Sanctum kosong/tidak cocok, session dan logout, CSRF, CAPTCHA wajib/salah/kedaluwarsa/sekali pakai, akses admin aktif, serta batas login dan CAPTCHA yang terpisah.
+- Delapan pemeriksaan browser login: tampilkan/sembunyikan password, layout 320/390/768/1440 px, CSRF, CAPTCHA/password salah, login dan reload dashboard, logout, dan login kembali. Laporan: `test-results/admin-login/report.json`.
 - Pengujian cadangan deployment terenkripsi, deteksi perubahan/hilangnya lisensi, aktivasi desktop saat deployment, serta media hosting tanpa symlink.
 - Dua pengujian script cleanup membuktikan file lisensi, `.env`, storage, dan path di luar daftar berita tidak dapat dihapus.
 
@@ -27,6 +29,6 @@ Semua transaksi browser dan reset pengujian menggunakan database `radina_wedding
 
 ## Batas hasil
 
-Perubahan diterapkan dan diuji lokal, belum diunggah ke hosting produksi. Rekening, WhatsApp, dan isi contoh dari proyek wedding tetap berstatus demo dan dapat diatur lewat `/admin/settings`. Cadangan sumber dan database sebelum migrasi berada pada `../.migration-backups/20261003-150421/`.
+Hasil pemeriksaan di dokumen ini berasal dari pengujian lokal. Status penerapan produksi diperiksa terpisah melalui GitHub Actions dan HTTP pada `radina.net`. Rekening, WhatsApp, dan isi contoh dari proyek wedding tetap berstatus demo dan dapat diatur lewat `/admin/settings`. Cadangan sumber dan database sebelum migrasi berada pada `../.migration-backups/20261003-150421/`.
 
 PHP lokal 8.5 menampilkan pemberitahuan deprecation dari test runner vendor; pengujian tetap lulus. CI memakai PHP 8.2.

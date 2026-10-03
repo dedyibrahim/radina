@@ -31,3 +31,9 @@ Sebelum migrasi, hook membuat cadangan terenkripsi tabel `licenses`, `license_ac
 Upload FTP tidak menggunakan opsi delete/mirror-delete. `.env` dan runtime storage dikeluarkan dari upload; APP_KEY, token, database, upload pelanggan, dan sesi produksi tidak ditimpa. File berita yang dihapus dari Git dibersihkan melalui daftar path yang diizinkan, setelah migrasi dan pemeriksaan lisensi berhasil. Script cleanup menolak file lisensi, akun, `.env`, storage, vendor, serta path yang tidak dikenal. Tabel berita lama dalam database tetap sebagai arsip.
 
 Rollback menggunakan cadangan source/build sebelumnya dan `.env` yang sama. Tabel berita lama tetap tersedia; jangan melakukan rollback destruktif pada tabel wedding setelah ada transaksi pelanggan. Simpan cadangan database sebelum setiap perubahan produksi.
+
+## Login admin
+
+Endpoint `/api/admin/*` menggunakan middleware `web` untuk session, cookie, dan CSRF secara eksplisit. Login tidak bergantung pada apakah domain `radina.net` tercantum di `SANCTUM_STATEFUL_DOMAINS`. Kredensial administrator lama tetap digunakan.
+
+Login menampilkan tombol tampilkan/sembunyikan kata sandi serta CAPTCHA penjumlahan. Soal CAPTCHA tersimpan dalam session, berlaku 5 menit, dan hanya dapat dipakai sekali. Jawaban yang salah, kedaluwarsa, atau tanpa session ditolak sebelum pemeriksaan password. Setelah login gagal, halaman mengambil soal baru. Rate limit login tetap 5 permintaan per menit. CAPTCHA tidak membutuhkan API key eksternal.

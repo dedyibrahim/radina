@@ -1,3 +1,4 @@
+import { solveLoginCaptcha } from './support/login-captcha.mjs'
 ﻿import { chromium } from '@playwright/test'
 import { mkdir, writeFile, readFile } from 'node:fs/promises'
 import assert from 'node:assert/strict'
@@ -182,6 +183,7 @@ try {
   await page.goto(base + '/admin/login')
   await page.getByLabel('Email admin').fill(env.ADMIN_EMAIL)
   await page.getByLabel('Kata sandi').fill(env.ADMIN_PASSWORD)
+  await solveLoginCaptcha(page);
   await page.getByRole('button', { name: 'Masuk ke Workspace' }).click()
   await page.waitForURL(base + '/admin')
   const demo = (await req('GET', '/admin/weddings/1')).data.data

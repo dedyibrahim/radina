@@ -1,3 +1,4 @@
+import { solveLoginCaptcha } from './support/login-captcha.mjs'
 import { chromium } from '@playwright/test'
 import { mkdir, writeFile } from 'node:fs/promises'
 import assert from 'node:assert/strict'
@@ -18,6 +19,7 @@ try {
   assert.equal(csrf.status(), 419, 'Admin login without CSRF must be rejected')
   await page.getByLabel('Email admin').fill(process.env.TEST_ADMIN_EMAIL)
   await page.getByLabel('Kata sandi').fill(process.env.TEST_ADMIN_PASSWORD)
+  await solveLoginCaptcha(page);
   await page.getByRole('button', { name: 'Masuk ke Workspace' }).click()
   await page.waitForURL('**/admin')
   await page.goto(`${base}/admin/licenses`, { waitUntil: 'networkidle' })

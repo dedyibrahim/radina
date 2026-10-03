@@ -1,3 +1,4 @@
+import { solveLoginCaptcha } from './support/login-captcha.mjs'
 import {chromium} from '@playwright/test'
 import assert from 'node:assert/strict'
 import {readFile} from 'node:fs/promises'
@@ -40,7 +41,8 @@ try {
  await page.goto('http://127.0.0.1:5173/admin/login',{waitUntil:'networkidle'})
  await page.getByLabel('Email admin').fill(env.ADMIN_EMAIL.replace(/^"|"$/g,''))
  await page.getByLabel('Kata sandi').fill(env.ADMIN_PASSWORD.replace(/^"|"$/g,''))
- await page.getByRole('button',{name:'Masuk ke Workspace'}).click()
+ await solveLoginCaptcha(page);
+  await page.getByRole('button',{name:'Masuk ke Workspace'}).click()
  await page.waitForURL('**/admin')
  const library=await page.evaluate(async()=> (await fetch('/api/admin/music',{headers:{Accept:'application/json'}})).json())
  assert(library.data.length>=50,'50 playable demo tracks must be installed')

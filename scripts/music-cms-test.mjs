@@ -1,3 +1,4 @@
+import { solveLoginCaptcha } from './support/login-captcha.mjs'
 import { chromium } from '@playwright/test'
 import { readFile,writeFile } from 'node:fs/promises'
 import assert from 'node:assert/strict'
@@ -9,7 +10,8 @@ async function req(method,path,body){return page.evaluate(async({method,path,bod
 let snapshot,weddingId,trackId
 try{
 await page.goto('http://127.0.0.1:5173/admin/login',{waitUntil:'networkidle'})
-await page.getByLabel('Email admin').fill(env.ADMIN_EMAIL || 'admin@everafter.test');await page.getByLabel('Kata sandi').fill(env.ADMIN_PASSWORD || 'ChangeMe!2026');await page.getByRole('button',{name:'Masuk ke Workspace'}).click();await page.waitForURL('**/admin')
+await page.getByLabel('Email admin').fill(env.ADMIN_EMAIL || 'admin@everafter.test');await page.getByLabel('Kata sandi').fill(env.ADMIN_PASSWORD || 'ChangeMe!2026');await solveLoginCaptcha(page);
+  await page.getByRole('button',{name:'Masuk ke Workspace'}).click();await page.waitForURL('**/admin')
 await page.goto('http://127.0.0.1:5173/admin/music',{waitUntil:'networkidle'});await page.getByRole('button',{name:'Tambah Musik'}).click()
 const dialog=page.getByRole('dialog');await dialog.getByLabel('Judul lagu').fill('Radina UI Test Original');await dialog.getByLabel('Artist',{exact:true}).fill('Owned test audio');await dialog.getByLabel('Audio URL').fill('/music/wedding-song.mp3');await dialog.getByLabel('Durasi (detik)').fill('48');await dialog.getByRole('button',{name:'Simpan Musik'}).click();await dialog.waitFor({state:'hidden'})
 const library=(await req('GET','/admin/music')).data.data;trackId=library.find(t=>t.title==='Radina UI Test Original').id

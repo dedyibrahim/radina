@@ -24,6 +24,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        RateLimiter::for('admin-login', fn (Request $request) => Limit::perMinute(5)->by($request->ip()));
+        RateLimiter::for('admin-captcha', fn (Request $request) => Limit::perMinute(30)->by($request->ip()));
+
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(max(1, config('platform.api_rate_limit', 60)))->by($request->user()?->id ?: $request->ip());
         });

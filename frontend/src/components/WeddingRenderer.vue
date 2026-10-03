@@ -3,6 +3,7 @@ import { computed, ref, provide } from 'vue'
 import { useAudio } from '../composables/useAudio'
 import { templateRegistry } from '../templates/templateRegistry'
 import CelebrationInvitation from '../templates/shared/CelebrationInvitation.vue'
+import { presetFor } from '../templates/contentPresets'
 const props = defineProps({
   wedding: { type: Object, required: true },
   preview: Boolean,
@@ -25,7 +26,9 @@ const audio = useAudio(
 provide('weddingAudio', audio)
 provide('invitationOpened', invitationOpened)
 const selectedTemplate = computed(() =>
-  props.wedding.event_type && props.wedding.event_type !== 'wedding'
+  props.wedding.event_type &&
+  props.wedding.event_type !== 'wedding' &&
+  !presetFor(props.wedding.template?.template_key).studio
     ? CelebrationInvitation
     : templateRegistry[props.wedding.template?.template_key || 'romantic-floral'],
 )

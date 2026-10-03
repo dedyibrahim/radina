@@ -60,6 +60,9 @@ useSeo(() => ({
         >
         <div class="detail-price">{{ formatMoney(template.price) }}<small>per undangan</small></div>
         <div class="detail-features">
+          <span v-for="animation in template.animations?.labels || []" :key="animation"
+            ><Check :size="16" />{{ animation }}</span
+          >
           <span v-for="feature in template.features" :key="feature"
             ><Check :size="16" />{{ feature }}</span
           >

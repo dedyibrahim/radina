@@ -1,5 +1,12 @@
 import { defineAsyncComponent } from 'vue'
+import studio from '../../../config/template-studio.json'
 export const templateRegistry = {
+  ...Object.fromEntries(
+    Object.keys(studio).map((key) => [
+      key,
+      defineAsyncComponent(() => import('./shared/StudioInvitation.vue')),
+    ]),
+  ),
   'nur-jannah': defineAsyncComponent(() => import('./NurJannah/index.vue')),
   'mihrab-emerald': defineAsyncComponent(() => import('./MihrabEmerald/index.vue')),
   'sahara-gold': defineAsyncComponent(() => import('./SaharaGold/index.vue')),
@@ -28,6 +35,11 @@ export const templateRegistry = {
   blush: defineAsyncComponent(() => import('./Blush/index.vue')),
 }
 export const templateOptions = [
+  ...Object.entries(studio).map(([value, entry]) => ({
+    value,
+    label: entry.name,
+    component: entry.component,
+  })),
   { value: 'nur-jannah', label: 'Nur Jannah', component: 'NurJannah.vue' },
   {
     value: 'mihrab-emerald',

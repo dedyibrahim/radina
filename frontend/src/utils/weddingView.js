@@ -47,6 +47,7 @@ export function weddingView(data) {
   return {
     id: data.id,
     templateKey: data.template?.template_key,
+    motion: preset.motion || ['sparkles'],
     eventType,
     isWedding,
     occasionLabel: profile.label,

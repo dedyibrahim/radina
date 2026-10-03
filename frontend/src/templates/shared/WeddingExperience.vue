@@ -5,6 +5,7 @@ import AudioPlayer from './PlaylistPlayer.vue'
 import FloatingNavigation from '../RomanticFloral/components/FloatingNavigation.vue'
 import BaseToast from '../../components/BaseToast.vue'
 import BotanicalOrnament from '../RomanticFloral/components/BotanicalOrnament.vue'
+import SceneMotion from './SceneMotion.vue'
 import { useWedding } from '../../composables/useWedding'
 import { getGuestName } from '../../composables/useGuest'
 const props = defineProps({
@@ -17,6 +18,7 @@ const props = defineProps({
   presentationComponents: { type: Object, default: () => ({}) },
 })
 const wedding = useWedding(props)
+const motionOn = ref(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
 provide('weddingDesign', props.design)
 const opened = inject('invitationOpened', ref(false)),
   guest = getGuestName(),
@@ -43,7 +45,10 @@ async function openInvitation() {
 onUnmounted(() => clearTimeout(timer))
 </script>
 <template>
-  <div class="wedding-page" :class="[`theme-${theme}`, `design-${design}`]">
+  <div
+    class="wedding-page"
+    :class="[`theme-${theme}`, `design-${design}`, { 'motion-off': !motionOn }]"
+  >
     <div class="desktop-ambience" aria-hidden="true">
       <BotanicalOrnament class="ambient-left" /><BotanicalOrnament class="ambient-right" />
       <div class="desktop-note">
@@ -73,6 +78,7 @@ onUnmounted(() => clearTimeout(timer))
       </div>
     </div>
     <main class="invitation-shell" id="invitation" tabindex="-1">
+      <SceneMotion :effects="wedding.motion" @change="motionOn = $event" />
       <Transition name="cover" mode="out-in"
         ><component
           :is="coverComponent"

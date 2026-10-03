@@ -4,7 +4,7 @@ RadinaNet menjalankan bisnis undangan digital untuk berbagai acara, diadaptasi d
 
 ## Fitur
 
-- Marketplace 25 template, pencarian, kategori, favorit, preview, dan pemesanan.
+- Marketplace 56 template dalam 11 kategori, setiap kategori minimal lima desain; pencarian, kategori, favorit, preview, dan pemesanan.
 - Cek pesanan, transfer manual, konfirmasi WhatsApp, dan verifikasi pembayaran admin.
 - CMS undangan: pasangan, acara, cerita, galeri, video, livestream, playlist musik, pengaturan bagian, dan hadiah bank/e-wallet/QRIS/fisik.
 - Preview, publikasi, RSVP, ucapan, dan moderasi ucapan.
@@ -53,7 +53,7 @@ php artisan test
 
 `Tests/TestCase.php` memeriksa nama database dan lingkungan sebelum `RefreshDatabase` dapat menjalankan reset. Pengujian mencakup pembayaran, publikasi, hak akses, upload, hadiah terenkripsi, musik, pergantian template, serta kompatibilitas dan preservasi lisensi.
 
-Pengujian browser harus memakai server dengan database uji, `TEST_URL`, `TEST_ADMIN_EMAIL`, dan `TEST_ADMIN_PASSWORD`. Jalankan `npm.cmd run test:e2e` untuk perjalanan pelanggan/admin/tamu, dan `npm.cmd run test:integration` untuk lisensi, 25 preview, dan pemeriksaan responsif. Hasil tersimpan pada `test-results/`.
+Pengujian browser harus memakai server dengan database uji, `TEST_URL`, `TEST_ADMIN_EMAIL`, dan `TEST_ADMIN_PASSWORD`. Jalankan `npm.cmd run test:e2e` untuk perjalanan pelanggan/admin/tamu, dan `npm.cmd run test:integration` untuk lisensi, preview, dan pemeriksaan responsif. Hasil tersimpan pada `test-results/`.
 
 Lihat `docs/DEPLOY_SHARED_HOSTING.md` untuk deployment. Migrasi lokal tidak mempublikasikan perubahan ke hosting.
 
@@ -99,3 +99,13 @@ Tab **Impor / Ekspor** menampilkan **Unduh Template Acara** pada undangan nonper
 Migration `2026_10_03_000011` menambah kolom klasifikasi dan data acara. Undangan/pesanan lama otomatis bertipe `wedding`; isi pasangan, URL `/w/{slug}`, musik, dan publikasi tetap tersedia. Penambahan metadata yang tidak terlihat tidak membatalkan persetujuan pernikahan yang isinya tetap sama. Tabel/model lisensi dan perlindungan CI/CD tetap menggunakan kontrak sebelumnya.
 
 Pengujian browser khusus acara: `npm run test:events`, memakai server dan database uji terpisah dengan `TEST_URL`, `TEST_ADMIN_EMAIL`, serta `TEST_ADMIN_PASSWORD`. Mode `READ_ONLY_PRODUCTION=1` hanya mengizinkan pemeriksaan tampilan/API di `radina.net`; tidak membuat pesanan, mengubah undangan, atau menjalankan migrasi.
+
+## Katalog dan animasi undangan
+
+Katalog berisi **56 template**: Romantic, Minimalist, Traditional, Modern, Destination, Luxury, Garden, Cinematic, Vintage, dan Creative masing-masing **5 desain**, serta Islamic **6 desain**. Sebanyak 31 desain baru memakai komposisi berbeda seperti kolase foto, gerbang wayang, kartu pos, tirai gala, amplop, piringan hitam, dan pesta balon. Thumbnail WebP diambil dari cover undangan yang benar-benar dirender. Seluruh desain dapat digunakan untuk enam jenis acara.
+
+Semua template memiliki minimal dua efek gerakan yang sesuai desain, dari 19 efek: confetti, balon, origami, lentera, hati, pita, daun, kelopak, geometri, dandelion, aurora, kilau, ombak, burung, gelembung, kunang-kunang, film, bintang, dan bintang jatuh. Pembukaan undangan menampilkan semburan partikel. Tombol **Animasi ON/OFF** menyimpan pilihan perangkat; partikel otomatis berhenti bila perangkat memilih gerakan rendah, tab tidak aktif, atau preview di luar layar. Partikel tidak menghalangi tombol dan form.
+
+`config/template-studio.json` mendefinisikan 31 komposisi baru; `config/template-presets.json` tetap menjadi sumber preset seluruh template. `config/motion-effects.json` berisi nama efek untuk katalog. Seeding menambah desain/demo tanpa mengganti data, harga/status yang disesuaikan admin, persetujuan pelanggan, musik, atau lisensi.
+
+Jalankan `npm.cmd run test:templates` dengan `TEST_URL=http://127.0.0.1:8001` dan server yang menggunakan database uji untuk memeriksa semua 56 preview, jumlah tiap kategori, lima jenis nonpernikahan, dan kontrol animasi. Tambahkan `CAPTURE_TEMPLATE_COVERS=1` hanya ketika perlu menghasilkan ulang 31 thumbnail. Gunakan `READ_ONLY_PRODUCTION=1` dan `TEST_URL=https://radina.net` untuk pemeriksaan tanpa mutasi di produksi; mode ini membatasi laju permintaan dan tidak menulis aset.

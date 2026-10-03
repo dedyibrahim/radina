@@ -9,8 +9,9 @@ try {
  await page.goto('http://127.0.0.1:5173/templates',{waitUntil:'networkidle'})
  await page.locator('.template-card').first().waitFor()
  const all=[]
- for(let p=1;p<=3;p++){const result=await (await page.request.get(`http://127.0.0.1:8000/api/templates?page=${p}&sort=newest`)).json();all.push(...result.data)}
- assert.equal(new Set(all.map(t=>t.template_key)).size,25)
+ let lastPage=1
+ for(let p=1;p<=lastPage;p++){const result=await (await page.request.get(`http://127.0.0.1:8000/api/templates?page=${p}&sort=newest`)).json();lastPage=result.meta.last_page;all.push(...result.data)}
+ assert.equal(new Set(all.map(t=>t.template_key)).size,56)
  for(const card of all){assert(card.music_style.length);assert(card.gallery_style);assert(/\.(webp|svg)$/.test(card.thumbnail))}
  const cat=await (await page.request.get('http://127.0.0.1:8000/api/categories')).json()
  assert.equal(cat.data.length,11)
@@ -48,5 +49,5 @@ try {
  assert.equal(library.data.length,6,'The six supplied music tracks must be installed')
  for(const track of library.data.slice(0,3)){const response=await page.request.get(`http://127.0.0.1:8000${track.file_url}`);assert(response.ok())}
  assert.deepEqual(errors,[])
- console.log('PASS: 25 catalog entries, 11 filters, favorites persistence, comparison limit/modal, 6-track supplied music library')
+ console.log('PASS: 56 catalog entries, 11 filters, favorites persistence, comparison limit/modal, 6-track supplied music library')
 } finally {await browser.close()}

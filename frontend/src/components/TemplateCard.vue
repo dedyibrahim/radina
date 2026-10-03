@@ -66,6 +66,9 @@ const eventQuery = computed(() =>
       </div>
       <p>{{ template.style || template.category?.name }} · Mobile-first</p>
       <p class="template-description">{{ template.description }}</p>
+      <p v-if="template.animations?.labels?.length" class="template-motion-label">
+        {{ template.animations.labels.join(' · ') }}
+      </p>
       <div class="template-card-price">
         {{ formatMoney(template.price) }} <span>/ undangan</span>
       </div>

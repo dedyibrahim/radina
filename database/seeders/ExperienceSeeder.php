@@ -48,7 +48,8 @@ class ExperienceSeeder extends Seeder
                 $preset = TemplateContent::preset($key);
                 $demoDefinition = collect(json_decode(File::get(config_path('additional-template-demos.json')), true))->firstWhere('key', $key);
                 $heroPhotos = [1, 16, 4, 13, 11, 10, 15, 0, 2, -1, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 1, 4, 13, 21, 22];
-                $heroPhoto = $heroPhotos[$i] > 0 ? '/storage/templates/experiences/photo-'.$heroPhotos[$i].'.webp' : ($heroPhotos[$i] === 0 ? $source->hero_image : $source->closing_image);
+                $photoNumber = $demoDefinition['hero_photo'] ?? ($heroPhotos[$i] ?? (($i % 30) + 1));
+                $heroPhoto = $photoNumber > 0 ? '/storage/templates/experiences/photo-'.$photoNumber.'.webp' : ($photoNumber === 0 ? $source->hero_image : $source->closing_image);
                 // Existing customer prices, visibility, featured flags, and CMS data are preserved.
                 $template->update(['name' => $preset['name'], 'description' => $quote.' · '.$preset['name']]);
                 $slug = 'radina-demo-'.$key;

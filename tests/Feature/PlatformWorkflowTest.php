@@ -133,7 +133,7 @@ class PlatformWorkflowTest extends TestCase
 
     public function test_radina_catalog_and_gift_methods_use_one_contract(): void
     {
-        $this->assertSame(25, Template::count());
+        $this->assertSame(56, Template::count());
         foreach (TemplateCatalog::KEYS as $key) {
             $this->getJson('/api/templates/'.$key.'/preview')->assertOk()->assertJsonPath('data.template.template_key', $key)->assertJsonStructure(['data' => ['bride', 'groom', 'events', 'stories', 'gallery', 'gift_methods', 'settings']]);
         }

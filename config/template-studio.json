@@ -1,0 +1,592 @@
+{
+  "rose-ribbon": {
+    "name": "Rose Ribbon",
+    "category": "Romantic",
+    "layout": "ribbon",
+    "family": "card",
+    "art": "rose",
+    "palette": {
+      "background": "#faeff0",
+      "ink": "#69333f",
+      "accent": "#b77683",
+      "highlight": "#f4d7df"
+    },
+    "motion": [
+      "petals",
+      "hearts",
+      "ribbons"
+    ],
+    "component": "RoseRibbon.vue",
+    "hero_photo": 4
+  },
+  "linen-atelier": {
+    "name": "Linen Atelier",
+    "category": "Minimalist",
+    "layout": "columns",
+    "family": "split",
+    "art": "lines",
+    "palette": {
+      "background": "#f5f1e8",
+      "ink": "#35372f",
+      "accent": "#938064",
+      "highlight": "#e3d9c5"
+    },
+    "motion": [
+      "geometry",
+      "seeds"
+    ],
+    "component": "LinenAtelier.vue",
+    "hero_photo": 11
+  },
+  "quiet-form": {
+    "name": "Quiet Form",
+    "category": "Minimalist",
+    "layout": "sculpture",
+    "family": "arch",
+    "art": "sculpture",
+    "palette": {
+      "background": "#e8ede8",
+      "ink": "#253d35",
+      "accent": "#7c9784",
+      "highlight": "#c8d8ce"
+    },
+    "motion": [
+      "orbs",
+      "geometry"
+    ],
+    "component": "QuietForm.vue",
+    "hero_photo": 18
+  },
+  "ivory-grid": {
+    "name": "Ivory Grid",
+    "category": "Minimalist",
+    "layout": "grid",
+    "family": "collage",
+    "art": "lines",
+    "palette": {
+      "background": "#fffaf0",
+      "ink": "#37332b",
+      "accent": "#91836e",
+      "highlight": "#e8dfc9"
+    },
+    "motion": [
+      "geometry",
+      "sparkles"
+    ],
+    "component": "IvoryGrid.vue",
+    "hero_photo": 25
+  },
+  "wayang-senja": {
+    "name": "Wayang Senja",
+    "category": "Traditional",
+    "layout": "gate",
+    "family": "arch",
+    "art": "wayang",
+    "palette": {
+      "background": "#392225",
+      "ink": "#fae9cb",
+      "accent": "#bd8c4d",
+      "highlight": "#69393d"
+    },
+    "motion": [
+      "lanterns",
+      "leaves"
+    ],
+    "component": "WayangSenja.vue",
+    "hero_photo": 2
+  },
+  "batik-kencana": {
+    "name": "Batik Kencana",
+    "category": "Traditional",
+    "layout": "medallion",
+    "family": "arch",
+    "art": "batik",
+    "palette": {
+      "background": "#f3e3c8",
+      "ink": "#553a23",
+      "accent": "#a47734",
+      "highlight": "#dec19c"
+    },
+    "motion": [
+      "geometry",
+      "sparkles"
+    ],
+    "component": "BatikKencana.vue",
+    "hero_photo": 9
+  },
+  "songket-raya": {
+    "name": "Songket Raya",
+    "category": "Traditional",
+    "layout": "woven",
+    "family": "card",
+    "art": "songket",
+    "palette": {
+      "background": "#253329",
+      "ink": "#f4e8cb",
+      "accent": "#b99b5d",
+      "highlight": "#566448"
+    },
+    "motion": [
+      "ribbons",
+      "lanterns"
+    ],
+    "component": "SongketRaya.vue",
+    "hero_photo": 16
+  },
+  "aurora-glass": {
+    "name": "Aurora Glass",
+    "category": "Modern",
+    "layout": "glass",
+    "family": "card",
+    "art": "aurora",
+    "palette": {
+      "background": "#edf1fc",
+      "ink": "#292f58",
+      "accent": "#7a7eb8",
+      "highlight": "#c9caf1"
+    },
+    "motion": [
+      "orbs",
+      "sparkles"
+    ],
+    "component": "AuroraGlass.vue",
+    "hero_photo": 23
+  },
+  "urban-signature": {
+    "name": "Urban Signature",
+    "category": "Modern",
+    "layout": "split",
+    "family": "split",
+    "art": "lines",
+    "palette": {
+      "background": "#ece8df",
+      "ink": "#252f32",
+      "accent": "#a96445",
+      "highlight": "#d8a17d"
+    },
+    "motion": [
+      "geometry",
+      "ribbons"
+    ],
+    "component": "UrbanSignature.vue",
+    "hero_photo": 30
+  },
+  "riviera-postcard": {
+    "name": "Riviera Postcard",
+    "category": "Destination",
+    "layout": "postcard",
+    "family": "letter",
+    "art": "waves",
+    "palette": {
+      "background": "#edf5f2",
+      "ink": "#24535a",
+      "accent": "#9a7452",
+      "highlight": "#c6dfd9"
+    },
+    "motion": [
+      "waves",
+      "birds"
+    ],
+    "component": "RivieraPostcard.vue",
+    "hero_photo": 7
+  },
+  "santorini-sky": {
+    "name": "Santorini Sky",
+    "category": "Destination",
+    "layout": "terrace",
+    "family": "arch",
+    "art": "waves",
+    "palette": {
+      "background": "#f9fbf5",
+      "ink": "#254d7d",
+      "accent": "#578cb7",
+      "highlight": "#d5eaf4"
+    },
+    "motion": [
+      "waves",
+      "bubbles"
+    ],
+    "component": "SantoriniSky.vue",
+    "hero_photo": 14
+  },
+  "desert-horizon": {
+    "name": "Desert Horizon",
+    "category": "Destination",
+    "layout": "horizon",
+    "family": "poster",
+    "art": "dunes",
+    "palette": {
+      "background": "#efe0c9",
+      "ink": "#623c2d",
+      "accent": "#bc8050",
+      "highlight": "#d9b989"
+    },
+    "motion": [
+      "seeds",
+      "sparkles"
+    ],
+    "component": "DesertHorizon.vue",
+    "hero_photo": 21
+  },
+  "golden-atelier": {
+    "name": "Golden Atelier",
+    "category": "Luxury",
+    "layout": "crest",
+    "family": "arch",
+    "art": "deco",
+    "palette": {
+      "background": "#262720",
+      "ink": "#f5edd5",
+      "accent": "#bea567",
+      "highlight": "#58553c"
+    },
+    "motion": [
+      "sparkles",
+      "geometry"
+    ],
+    "component": "GoldenAtelier.vue",
+    "hero_photo": 28
+  },
+  "velvet-gala": {
+    "name": "Velvet Gala",
+    "category": "Luxury",
+    "layout": "curtain",
+    "family": "poster",
+    "art": "curtains",
+    "palette": {
+      "background": "#3d2338",
+      "ink": "#ffeddf",
+      "accent": "#c89974",
+      "highlight": "#794260"
+    },
+    "motion": [
+      "ribbons",
+      "sparkles"
+    ],
+    "component": "VelvetGala.vue",
+    "hero_photo": 5
+  },
+  "pearl-palace": {
+    "name": "Pearl Palace",
+    "category": "Luxury",
+    "layout": "pearl",
+    "family": "arch",
+    "art": "pearls",
+    "palette": {
+      "background": "#f7f1e9",
+      "ink": "#5e4b3f",
+      "accent": "#af9370",
+      "highlight": "#e9d5bb"
+    },
+    "motion": [
+      "bubbles",
+      "sparkles"
+    ],
+    "component": "PearlPalace.vue",
+    "hero_photo": 12
+  },
+  "olive-grove": {
+    "name": "Olive Grove",
+    "category": "Garden",
+    "layout": "window",
+    "family": "split",
+    "art": "branches",
+    "palette": {
+      "background": "#f0f1de",
+      "ink": "#344f35",
+      "accent": "#789268",
+      "highlight": "#ccd4ad"
+    },
+    "motion": [
+      "leaves",
+      "fireflies"
+    ],
+    "component": "OliveGrove.vue",
+    "hero_photo": 19
+  },
+  "wildflower-meadow": {
+    "name": "Wildflower Meadow",
+    "category": "Garden",
+    "layout": "meadow",
+    "family": "card",
+    "art": "meadow",
+    "palette": {
+      "background": "#fbf1df",
+      "ink": "#6b4935",
+      "accent": "#ac7659",
+      "highlight": "#e9c9a9"
+    },
+    "motion": [
+      "petals",
+      "seeds"
+    ],
+    "component": "WildflowerMeadow.vue",
+    "hero_photo": 26
+  },
+  "fern-serenade": {
+    "name": "Fern Serenade",
+    "category": "Garden",
+    "layout": "fern",
+    "family": "arch",
+    "art": "branches",
+    "palette": {
+      "background": "#143f35",
+      "ink": "#f2eee0",
+      "accent": "#9ead79",
+      "highlight": "#34624f"
+    },
+    "motion": [
+      "leaves",
+      "fireflies"
+    ],
+    "component": "FernSerenade.vue",
+    "hero_photo": 3
+  },
+  "glasshouse-morning": {
+    "name": "Glasshouse Morning",
+    "category": "Garden",
+    "layout": "greenhouse",
+    "family": "collage",
+    "art": "greenhouse",
+    "palette": {
+      "background": "#edf4e8",
+      "ink": "#315040",
+      "accent": "#91a58a",
+      "highlight": "#cfdfca"
+    },
+    "motion": [
+      "bubbles",
+      "birds"
+    ],
+    "component": "GlasshouseMorning.vue",
+    "hero_photo": 10
+  },
+  "golden-hour": {
+    "name": "Golden Hour",
+    "category": "Cinematic",
+    "layout": "film",
+    "family": "poster",
+    "art": "film",
+    "palette": {
+      "background": "#302825",
+      "ink": "#ffefd7",
+      "accent": "#cda067",
+      "highlight": "#835e44"
+    },
+    "motion": [
+      "film",
+      "sparkles"
+    ],
+    "component": "GoldenHour.vue",
+    "hero_photo": 17
+  },
+  "starlight-premiere": {
+    "name": "Starlight Premiere",
+    "category": "Cinematic",
+    "layout": "marquee",
+    "family": "card",
+    "art": "marquee",
+    "palette": {
+      "background": "#172132",
+      "ink": "#f8eddb",
+      "accent": "#c2a45e",
+      "highlight": "#394565"
+    },
+    "motion": [
+      "stars",
+      "confetti"
+    ],
+    "component": "StarlightPremiere.vue",
+    "hero_photo": 24
+  },
+  "silver-screen": {
+    "name": "Silver Screen",
+    "category": "Cinematic",
+    "layout": "clapper",
+    "family": "collage",
+    "art": "film",
+    "palette": {
+      "background": "#eceae5",
+      "ink": "#24282c",
+      "accent": "#7b7b75",
+      "highlight": "#cec9bd"
+    },
+    "motion": [
+      "film",
+      "geometry"
+    ],
+    "component": "SilverScreen.vue",
+    "hero_photo": 1
+  },
+  "motion-picture": {
+    "name": "Motion Picture",
+    "category": "Cinematic",
+    "layout": "reel",
+    "family": "arch",
+    "art": "film",
+    "palette": {
+      "background": "#233343",
+      "ink": "#eaf0eb",
+      "accent": "#9eaf9d",
+      "highlight": "#526a73"
+    },
+    "motion": [
+      "film",
+      "shootingStars"
+    ],
+    "component": "MotionPicture.vue",
+    "hero_photo": 8
+  },
+  "sepia-memories": {
+    "name": "Sepia Memories",
+    "category": "Vintage",
+    "layout": "journal",
+    "family": "letter",
+    "art": "paper",
+    "palette": {
+      "background": "#f2e5cd",
+      "ink": "#664b34",
+      "accent": "#a88a62",
+      "highlight": "#ddc6a4"
+    },
+    "motion": [
+      "seeds",
+      "paper"
+    ],
+    "component": "SepiaMemories.vue",
+    "hero_photo": 15
+  },
+  "postal-romance": {
+    "name": "Postal Romance",
+    "category": "Vintage",
+    "layout": "envelope",
+    "family": "letter",
+    "art": "postal",
+    "palette": {
+      "background": "#efe2cf",
+      "ink": "#624137",
+      "accent": "#a96c56",
+      "highlight": "#d8b8a0"
+    },
+    "motion": [
+      "paper",
+      "hearts"
+    ],
+    "component": "PostalRomance.vue",
+    "hero_photo": 22
+  },
+  "vinyl-vows": {
+    "name": "Vinyl Vows",
+    "category": "Vintage",
+    "layout": "record",
+    "family": "arch",
+    "art": "vinyl",
+    "palette": {
+      "background": "#e3d6bd",
+      "ink": "#3e3430",
+      "accent": "#956a4e",
+      "highlight": "#c29a76"
+    },
+    "motion": [
+      "geometry",
+      "sparkles"
+    ],
+    "component": "VinylVows.vue",
+    "hero_photo": 29
+  },
+  "art-deco-letter": {
+    "name": "Art Deco Letter",
+    "category": "Vintage",
+    "layout": "deco",
+    "family": "card",
+    "art": "deco",
+    "palette": {
+      "background": "#203d3c",
+      "ink": "#f1e6c8",
+      "accent": "#b99d60",
+      "highlight": "#55716a"
+    },
+    "motion": [
+      "ribbons",
+      "geometry"
+    ],
+    "component": "ArtDecoLetter.vue",
+    "hero_photo": 6
+  },
+  "confetti-club": {
+    "name": "Confetti Club",
+    "category": "Creative",
+    "layout": "party",
+    "family": "festival",
+    "art": "confetti",
+    "palette": {
+      "background": "#fff1dc",
+      "ink": "#673755",
+      "accent": "#d27b53",
+      "highlight": "#f0c46b"
+    },
+    "motion": [
+      "confetti",
+      "ribbons"
+    ],
+    "component": "ConfettiClub.vue",
+    "hero_photo": 13
+  },
+  "balloon-fiesta": {
+    "name": "Balloon Fiesta",
+    "category": "Creative",
+    "layout": "balloons",
+    "family": "festival",
+    "art": "balloons",
+    "palette": {
+      "background": "#e9f1fa",
+      "ink": "#314768",
+      "accent": "#7a8bb9",
+      "highlight": "#d9c3e9"
+    },
+    "motion": [
+      "balloons",
+      "confetti"
+    ],
+    "component": "BalloonFiesta.vue",
+    "hero_photo": 21
+  },
+  "origami-dream": {
+    "name": "Origami Dream",
+    "category": "Creative",
+    "layout": "origami",
+    "family": "collage",
+    "art": "origami",
+    "palette": {
+      "background": "#f7ecde",
+      "ink": "#684d3e",
+      "accent": "#b68c68",
+      "highlight": "#e5c0a8"
+    },
+    "motion": [
+      "paper",
+      "birds"
+    ],
+    "component": "OrigamiDream.vue",
+    "hero_photo": 27
+  },
+  "retro-festival": {
+    "name": "Retro Festival",
+    "category": "Creative",
+    "layout": "festival",
+    "family": "festival",
+    "art": "festival",
+    "palette": {
+      "background": "#fae5a3",
+      "ink": "#274854",
+      "accent": "#b66246",
+      "highlight": "#e6a46a"
+    },
+    "motion": [
+      "confetti",
+      "ribbons"
+    ],
+    "component": "RetroFestival.vue",
+    "hero_photo": 4
+  }
+}

@@ -19,4 +19,12 @@ class TemplateContent
             'closing_text' => $preset['closing_text'], 'quote' => $preset['quote'], 'quote_source' => $preset['quote_source']];
         // section_order remains null until an admin explicitly reorders it; changing templates adopts its recommended order.
     }
+
+    public static function animations(?string $key): array
+    {
+        $labels = json_decode(file_get_contents(config_path('motion-effects.json')), true, 512, JSON_THROW_ON_ERROR);
+        $effects = self::preset($key)['motion'] ?? ['sparkles'];
+
+        return ['effects' => $effects, 'labels' => array_map(fn ($effect) => $labels[$effect], $effects)];
+    }
 }

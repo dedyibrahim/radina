@@ -87,7 +87,11 @@
     "quote": "Where love blooms, a lifetime begins.",
     "quote_source": "Our promise",
     "closing_text": "May our love bloom with every prayer you bring.",
-    "gallery_style": "Floral masonry"
+    "gallery_style": "Floral masonry",
+    "motion": [
+      "petals",
+      "hearts"
+    ]
   },
   "elegant-luxury": {
     "name": "Noir Élégance",
@@ -178,7 +182,11 @@
     "quote": "Some promises deserve an extraordinary evening.",
     "quote_source": "Our promise",
     "closing_text": "Your presence completes our most extraordinary evening.",
-    "gallery_style": "Asymmetric editorial grid"
+    "gallery_style": "Asymmetric editorial grid",
+    "motion": [
+      "sparkles",
+      "ribbons"
+    ]
   },
   "minimalist-white": {
     "name": "Pure",
@@ -268,7 +276,11 @@
     "quote": "Simply you. Simply us. Always.",
     "quote_source": "Our promise",
     "closing_text": "Thank you for sharing this simple, beautiful day with us.",
-    "gallery_style": "Clean grid"
+    "gallery_style": "Clean grid",
+    "motion": [
+      "geometry",
+      "seeds"
+    ]
   },
   "nusantara-heritage": {
     "name": "Nusantara",
@@ -358,7 +370,11 @@
     "quote": "Dua hati, dua keluarga, satu ikatan yang dirawat dengan cinta.",
     "quote_source": "Our promise",
     "closing_text": "Kehadiran dan doa restu Anda menjadi kehormatan bagi kedua keluarga kami.",
-    "gallery_style": "Framed heritage gallery"
+    "gallery_style": "Framed heritage gallery",
+    "motion": [
+      "lanterns",
+      "geometry"
+    ]
   },
   "garden-dream": {
     "name": "Verdant Vows",
@@ -448,7 +464,11 @@
     "quote": "Our love grows gently, like a garden after rain.",
     "quote_source": "Our promise",
     "closing_text": "Thank you for growing this garden of memories with us.",
-    "gallery_style": "Garden photo board"
+    "gallery_style": "Garden photo board",
+    "motion": [
+      "leaves",
+      "fireflies"
+    ]
   },
   "classic-vintage": {
     "name": "Heritage Letters",
@@ -538,7 +558,11 @@
     "quote": "In every letter, in every lifetime, I would choose you.",
     "quote_source": "Our promise",
     "closing_text": "With love, and a lifetime of stories still to write.",
-    "gallery_style": "Vintage album"
+    "gallery_style": "Vintage album",
+    "motion": [
+      "paper",
+      "seeds"
+    ]
   },
   "midnight-romance": {
     "name": "After Dark",
@@ -628,7 +652,11 @@
     "quote": "Even the longest night leads us back to each other.",
     "quote_source": "Our promise",
     "closing_text": "Thank you for being the light in our unforgettable night.",
-    "gallery_style": "Night snap reel"
+    "gallery_style": "Night snap reel",
+    "motion": [
+      "orbs",
+      "shootingStars"
+    ]
   },
   "sakinah": {
     "name": "Sakinah",
@@ -718,7 +746,11 @@
     "quote": "Dan dijadikan-Nya di antaramu rasa kasih dan sayang.",
     "quote_source": "QS. Ar-Rum: 21",
     "closing_text": "Semoga Allah SWT memberkahi pernikahan kami dan setiap langkah keluarga yang kami bangun.",
-    "gallery_style": "Geometric gallery"
+    "gallery_style": "Geometric gallery",
+    "motion": [
+      "stars",
+      "lanterns"
+    ]
   },
   "eternal-story": {
     "name": "Frame by Frame",
@@ -807,7 +839,11 @@
     "quote": "Every frame of our story led me to you.",
     "quote_source": "Our promise",
     "closing_text": "Thank you for being part of the story. The next chapter begins together.",
-    "gallery_style": "Cinematic reel"
+    "gallery_style": "Cinematic reel",
+    "motion": [
+      "film",
+      "sparkles"
+    ]
   },
   "blush": {
     "name": "Daydream",
@@ -897,7 +933,11 @@
     "quote": "All the little things became our greatest adventure.",
     "quote_source": "Our promise",
     "closing_text": "Bring your smiles. We will keep them in our favourite daydream.",
-    "gallery_style": "Creative collage"
+    "gallery_style": "Creative collage",
+    "motion": [
+      "confetti",
+      "bubbles"
+    ]
   },
   "celestial": {
     "name": "Celestial",
@@ -989,7 +1029,11 @@
     "closing_text": "We are grateful for every moment shared with you. With love, Luna & Rayhan.",
     "category": "Dreamy",
     "gallery_style": "Star-map grid",
-    "style": "Dreamy / Celestial"
+    "style": "Dreamy / Celestial",
+    "motion": [
+      "stars",
+      "shootingStars"
+    ]
   },
   "editorial": {
     "name": "Editorial",
@@ -1081,7 +1125,11 @@
     "closing_text": "We are grateful for every moment shared with you. With love, Bianca & Julian.",
     "category": "Modern",
     "gallery_style": "Editorial spread",
-    "style": "Fashion Editorial"
+    "style": "Fashion Editorial",
+    "motion": [
+      "geometry",
+      "ribbons"
+    ]
   },
   "ocean-vows": {
     "name": "Ocean Vows",
@@ -1173,7 +1221,11 @@
     "closing_text": "We are grateful for every moment shared with you. With love, Marina & Rio.",
     "category": "Destination",
     "gallery_style": "Coastal reel",
-    "style": "Beach Destination"
+    "style": "Beach Destination",
+    "motion": [
+      "waves",
+      "bubbles"
+    ]
   },
   "royal-heritage": {
     "name": "Royal Heritage",
@@ -1265,7 +1317,11 @@
     "closing_text": "We are grateful for every moment shared with you. With love, Aurelia & Alexander.",
     "category": "Luxury",
     "gallery_style": "Palace wall",
-    "style": "Royal Luxury"
+    "style": "Royal Luxury",
+    "motion": [
+      "sparkles",
+      "lanterns"
+    ]
   },
   "paper-petals": {
     "name": "Paper & Petals",
@@ -1357,7 +1413,11 @@
     "closing_text": "We are grateful for every moment shared with you. With love, Hana & Theo.",
     "category": "Romantic",
     "gallery_style": "Scattered polaroids",
-    "style": "Handcrafted Romantic"
+    "style": "Handcrafted Romantic",
+    "motion": [
+      "paper",
+      "petals"
+    ]
   },
   "botanica": {
     "name": "Botanica",
@@ -1449,7 +1509,11 @@
     "closing_text": "We are grateful for every moment shared with you. With love, Maya & Rafael.",
     "category": "Destination",
     "gallery_style": "Travel journal",
-    "style": "Tropical Destination"
+    "style": "Tropical Destination",
+    "motion": [
+      "leaves",
+      "birds"
+    ]
   },
   "monochrome": {
     "name": "Monochrome",
@@ -1541,7 +1605,11 @@
     "closing_text": "We are grateful for every moment shared with you. With love, Alena & Nathan.",
     "category": "Minimalist",
     "gallery_style": "Exhibition wall",
-    "style": "Black & White Documentary"
+    "style": "Black & White Documentary",
+    "motion": [
+      "geometry",
+      "film"
+    ]
   },
   "blossom-east": {
     "name": "Blossom East",
@@ -1633,7 +1701,11 @@
     "closing_text": "We are grateful for every moment shared with you. With love, Reina & Kenji.",
     "category": "Traditional",
     "gallery_style": "Art gallery",
-    "style": "Oriental Modern"
+    "style": "Oriental Modern",
+    "motion": [
+      "petals",
+      "lanterns"
+    ]
   },
   "neon-love": {
     "name": "Neon Love",
@@ -1725,7 +1797,11 @@
     "closing_text": "We are grateful for every moment shared with you. With love, Kiara & Ezra.",
     "category": "Modern",
     "gallery_style": "Urban snap reel",
-    "style": "Urban Modern"
+    "style": "Urban Modern",
+    "motion": [
+      "orbs",
+      "confetti"
+    ]
   },
   "timeless-romance": {
     "name": "Timeless Romance",
@@ -1818,7 +1894,11 @@
     "closing_text": "We are grateful for every moment shared with you. With love, Eleanor & William.",
     "category": "Romantic",
     "gallery_style": "Museum gallery",
-    "style": "Classic European"
+    "style": "Classic European",
+    "motion": [
+      "hearts",
+      "sparkles"
+    ]
   },
   "nur-jannah": {
     "name": "Nur Jannah",
@@ -1915,7 +1995,11 @@
       "background": "#f5f3e8",
       "ink": "#204c40",
       "accent": "#b19656"
-    }
+    },
+    "motion": [
+      "stars",
+      "geometry"
+    ]
   },
   "mihrab-emerald": {
     "name": "Mihrab Emerald",
@@ -2012,7 +2096,11 @@
       "background": "#123d32",
       "ink": "#f4ebd7",
       "accent": "#c8a35c"
-    }
+    },
+    "motion": [
+      "lanterns",
+      "sparkles"
+    ]
   },
   "sahara-gold": {
     "name": "Sahara Gold",
@@ -2109,7 +2197,11 @@
       "background": "#f0e2cc",
       "ink": "#754b32",
       "accent": "#a67e3d"
-    }
+    },
+    "motion": [
+      "seeds",
+      "geometry"
+    ]
   },
   "qamar-blue": {
     "name": "Qamar Blue",
@@ -2206,7 +2298,11 @@
       "background": "#122c48",
       "ink": "#f5f0df",
       "accent": "#d2b475"
-    }
+    },
+    "motion": [
+      "stars",
+      "shootingStars"
+    ]
   },
   "zahra-ivory": {
     "name": "Zahra Ivory",
@@ -2303,6 +2399,3204 @@
       "background": "#faf4ef",
       "ink": "#694658",
       "accent": "#b17e70"
-    }
+    },
+    "motion": [
+      "petals",
+      "sparkles"
+    ]
+  },
+  "rose-ribbon": {
+    "name": "Rose Ribbon",
+    "opening_text": "Sebuah janji dibungkus kelembutan pita dan kasih.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Rose Ribbon",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Rose Ribbon",
+    "style": "Rose Ribbon ? Romantic",
+    "category": "Romantic",
+    "palette": {
+      "background": "#faeff0",
+      "ink": "#69333f",
+      "accent": "#b77683",
+      "highlight": "#f4d7df"
+    },
+    "motion": [
+      "petals",
+      "hearts",
+      "ribbons"
+    ],
+    "studio": true
+  },
+  "linen-atelier": {
+    "name": "Linen Atelier",
+    "opening_text": "Dalam kesederhanaan, kami menemukan ruang untuk selamanya.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Linen Atelier",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Linen Atelier",
+    "style": "Linen Atelier ? Minimalist",
+    "category": "Minimalist",
+    "palette": {
+      "background": "#f5f1e8",
+      "ink": "#35372f",
+      "accent": "#938064",
+      "highlight": "#e3d9c5"
+    },
+    "motion": [
+      "geometry",
+      "seeds"
+    ],
+    "studio": true
+  },
+  "quiet-form": {
+    "name": "Quiet Form",
+    "opening_text": "Bentuk yang tenang, niat yang utuh, dan satu perjalanan baru.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Quiet Form",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Quiet Form",
+    "style": "Quiet Form ? Minimalist",
+    "category": "Minimalist",
+    "palette": {
+      "background": "#e8ede8",
+      "ink": "#253d35",
+      "accent": "#7c9784",
+      "highlight": "#c8d8ce"
+    },
+    "motion": [
+      "orbs",
+      "geometry"
+    ],
+    "studio": true
+  },
+  "ivory-grid": {
+    "name": "Ivory Grid",
+    "opening_text": "Setiap detail kecil mengisi hari yang berarti bagi kami.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Ivory Grid",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Ivory Grid",
+    "style": "Ivory Grid ? Minimalist",
+    "category": "Minimalist",
+    "palette": {
+      "background": "#fffaf0",
+      "ink": "#37332b",
+      "accent": "#91836e",
+      "highlight": "#e8dfc9"
+    },
+    "motion": [
+      "geometry",
+      "sparkles"
+    ],
+    "studio": true
+  },
+  "wayang-senja": {
+    "name": "Wayang Senja",
+    "opening_text": "Dengan restu keluarga, dua perjalanan dipertemukan dalam tradisi.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Wayang Senja",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Wayang Senja",
+    "style": "Wayang Senja ? Traditional",
+    "category": "Traditional",
+    "palette": {
+      "background": "#392225",
+      "ink": "#fae9cb",
+      "accent": "#bd8c4d",
+      "highlight": "#69393d"
+    },
+    "motion": [
+      "lanterns",
+      "leaves"
+    ],
+    "studio": true
+  },
+  "batik-kencana": {
+    "name": "Batik Kencana",
+    "opening_text": "Semoga ikatan ini seindah ragam kencana yang diwariskan keluarga.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Batik Kencana",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Batik Kencana",
+    "style": "Batik Kencana ? Traditional",
+    "category": "Traditional",
+    "palette": {
+      "background": "#f3e3c8",
+      "ink": "#553a23",
+      "accent": "#a47734",
+      "highlight": "#dec19c"
+    },
+    "motion": [
+      "geometry",
+      "sparkles"
+    ],
+    "studio": true
+  },
+  "songket-raya": {
+    "name": "Songket Raya",
+    "opening_text": "Kami merajut ikatan baru dalam kehangatan keluarga dan budaya.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Songket Raya",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Songket Raya",
+    "style": "Songket Raya ? Traditional",
+    "category": "Traditional",
+    "palette": {
+      "background": "#253329",
+      "ink": "#f4e8cb",
+      "accent": "#b99b5d",
+      "highlight": "#566448"
+    },
+    "motion": [
+      "ribbons",
+      "lanterns"
+    ],
+    "studio": true
+  },
+  "aurora-glass": {
+    "name": "Aurora Glass",
+    "opening_text": "Di bawah warna langit baru, kami memulai cerita bersama.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Aurora Glass",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Aurora Glass",
+    "style": "Aurora Glass ? Modern",
+    "category": "Modern",
+    "palette": {
+      "background": "#edf1fc",
+      "ink": "#292f58",
+      "accent": "#7a7eb8",
+      "highlight": "#c9caf1"
+    },
+    "motion": [
+      "orbs",
+      "sparkles"
+    ],
+    "studio": true
+  },
+  "urban-signature": {
+    "name": "Urban Signature",
+    "opening_text": "Satu kota, dua langkah, dan tanda tangan untuk masa depan.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Urban Signature",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Urban Signature",
+    "style": "Urban Signature ? Modern",
+    "category": "Modern",
+    "palette": {
+      "background": "#ece8df",
+      "ink": "#252f32",
+      "accent": "#a96445",
+      "highlight": "#d8a17d"
+    },
+    "motion": [
+      "geometry",
+      "ribbons"
+    ],
+    "studio": true
+  },
+  "riviera-postcard": {
+    "name": "Riviera Postcard",
+    "opening_text": "Salam dari perjalanan yang membawa kami pada hari bahagia ini.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Riviera Postcard",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Riviera Postcard",
+    "style": "Riviera Postcard ? Destination",
+    "category": "Destination",
+    "palette": {
+      "background": "#edf5f2",
+      "ink": "#24535a",
+      "accent": "#9a7452",
+      "highlight": "#c6dfd9"
+    },
+    "motion": [
+      "waves",
+      "birds"
+    ],
+    "studio": true
+  },
+  "santorini-sky": {
+    "name": "Santorini Sky",
+    "opening_text": "Seperti langit dan laut, kami memilih bertemu di cakrawala yang sama.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Santorini Sky",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Santorini Sky",
+    "style": "Santorini Sky ? Destination",
+    "category": "Destination",
+    "palette": {
+      "background": "#f9fbf5",
+      "ink": "#254d7d",
+      "accent": "#578cb7",
+      "highlight": "#d5eaf4"
+    },
+    "motion": [
+      "waves",
+      "bubbles"
+    ],
+    "studio": true
+  },
+  "desert-horizon": {
+    "name": "Desert Horizon",
+    "opening_text": "Di antara langkah jauh dan matahari hangat, kami menemukan rumah.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Desert Horizon",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Desert Horizon",
+    "style": "Desert Horizon ? Destination",
+    "category": "Destination",
+    "palette": {
+      "background": "#efe0c9",
+      "ink": "#623c2d",
+      "accent": "#bc8050",
+      "highlight": "#d9b989"
+    },
+    "motion": [
+      "seeds",
+      "sparkles"
+    ],
+    "studio": true
+  },
+  "golden-atelier": {
+    "name": "Golden Atelier",
+    "opening_text": "Sebuah perayaan hangat untuk janji yang kami jaga dengan sepenuh hati.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Golden Atelier",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Golden Atelier",
+    "style": "Golden Atelier ? Luxury",
+    "category": "Luxury",
+    "palette": {
+      "background": "#262720",
+      "ink": "#f5edd5",
+      "accent": "#bea567",
+      "highlight": "#58553c"
+    },
+    "motion": [
+      "sparkles",
+      "geometry"
+    ],
+    "studio": true
+  },
+  "velvet-gala": {
+    "name": "Velvet Gala",
+    "opening_text": "Tirai terbuka untuk bab terindah dalam perjalanan kami.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Velvet Gala",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Velvet Gala",
+    "style": "Velvet Gala ? Luxury",
+    "category": "Luxury",
+    "palette": {
+      "background": "#3d2338",
+      "ink": "#ffeddf",
+      "accent": "#c89974",
+      "highlight": "#794260"
+    },
+    "motion": [
+      "ribbons",
+      "sparkles"
+    ],
+    "studio": true
+  },
+  "pearl-palace": {
+    "name": "Pearl Palace",
+    "opening_text": "Kami mengundang Anda merayakan cinta yang bertumbuh dengan lembut.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Pearl Palace",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Pearl Palace",
+    "style": "Pearl Palace ? Luxury",
+    "category": "Luxury",
+    "palette": {
+      "background": "#f7f1e9",
+      "ink": "#5e4b3f",
+      "accent": "#af9370",
+      "highlight": "#e9d5bb"
+    },
+    "motion": [
+      "bubbles",
+      "sparkles"
+    ],
+    "studio": true
+  },
+  "olive-grove": {
+    "name": "Olive Grove",
+    "opening_text": "Di bawah naungan pohon dan doa, kami melangkah menjadi keluarga.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Olive Grove",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Olive Grove",
+    "style": "Olive Grove ? Garden",
+    "category": "Garden",
+    "palette": {
+      "background": "#f0f1de",
+      "ink": "#344f35",
+      "accent": "#789268",
+      "highlight": "#ccd4ad"
+    },
+    "motion": [
+      "leaves",
+      "fireflies"
+    ],
+    "studio": true
+  },
+  "wildflower-meadow": {
+    "name": "Wildflower Meadow",
+    "opening_text": "Seperti bunga liar, kasih kami tumbuh dengan bebas dan sederhana.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Wildflower Meadow",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Wildflower Meadow",
+    "style": "Wildflower Meadow ? Garden",
+    "category": "Garden",
+    "palette": {
+      "background": "#fbf1df",
+      "ink": "#6b4935",
+      "accent": "#ac7659",
+      "highlight": "#e9c9a9"
+    },
+    "motion": [
+      "petals",
+      "seeds"
+    ],
+    "studio": true
+  },
+  "fern-serenade": {
+    "name": "Fern Serenade",
+    "opening_text": "Dalam rimbun yang tenang, satu janji kami ucapkan untuk selamanya.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Fern Serenade",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Fern Serenade",
+    "style": "Fern Serenade ? Garden",
+    "category": "Garden",
+    "palette": {
+      "background": "#143f35",
+      "ink": "#f2eee0",
+      "accent": "#9ead79",
+      "highlight": "#34624f"
+    },
+    "motion": [
+      "leaves",
+      "fireflies"
+    ],
+    "studio": true
+  },
+  "glasshouse-morning": {
+    "name": "Glasshouse Morning",
+    "opening_text": "Pagi yang jernih menjadi awal untuk cerita yang kami rawat bersama.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Glasshouse Morning",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Glasshouse Morning",
+    "style": "Glasshouse Morning ? Garden",
+    "category": "Garden",
+    "palette": {
+      "background": "#edf4e8",
+      "ink": "#315040",
+      "accent": "#91a58a",
+      "highlight": "#cfdfca"
+    },
+    "motion": [
+      "bubbles",
+      "birds"
+    ],
+    "studio": true
+  },
+  "golden-hour": {
+    "name": "Golden Hour",
+    "opening_text": "Cahaya terakhir sore menyimpan bingkai pertama perjalanan kami.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Golden Hour",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Golden Hour",
+    "style": "Golden Hour ? Cinematic",
+    "category": "Cinematic",
+    "palette": {
+      "background": "#302825",
+      "ink": "#ffefd7",
+      "accent": "#cda067",
+      "highlight": "#835e44"
+    },
+    "motion": [
+      "film",
+      "sparkles"
+    ],
+    "studio": true
+  },
+  "starlight-premiere": {
+    "name": "Starlight Premiere",
+    "opening_text": "Anda diundang pada pemutaran pertama bab baru hidup kami.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Starlight Premiere",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Starlight Premiere",
+    "style": "Starlight Premiere ? Cinematic",
+    "category": "Cinematic",
+    "palette": {
+      "background": "#172132",
+      "ink": "#f8eddb",
+      "accent": "#c2a45e",
+      "highlight": "#394565"
+    },
+    "motion": [
+      "stars",
+      "confetti"
+    ],
+    "studio": true
+  },
+  "silver-screen": {
+    "name": "Silver Screen",
+    "opening_text": "Setiap adegan sederhana membawa kami pada satu janji yang nyata.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Silver Screen",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Silver Screen",
+    "style": "Silver Screen ? Cinematic",
+    "category": "Cinematic",
+    "palette": {
+      "background": "#eceae5",
+      "ink": "#24282c",
+      "accent": "#7b7b75",
+      "highlight": "#cec9bd"
+    },
+    "motion": [
+      "film",
+      "geometry"
+    ],
+    "studio": true
+  },
+  "motion-picture": {
+    "name": "Motion Picture",
+    "opening_text": "Perjalanan ini terus bergerak, dan kami ingin Anda ada di dalamnya.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Motion Picture",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Motion Picture",
+    "style": "Motion Picture ? Cinematic",
+    "category": "Cinematic",
+    "palette": {
+      "background": "#233343",
+      "ink": "#eaf0eb",
+      "accent": "#9eaf9d",
+      "highlight": "#526a73"
+    },
+    "motion": [
+      "film",
+      "shootingStars"
+    ],
+    "studio": true
+  },
+  "sepia-memories": {
+    "name": "Sepia Memories",
+    "opening_text": "Kenangan yang ditulis pelan membawa kami pada hari yang tak terlupakan.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Sepia Memories",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Sepia Memories",
+    "style": "Sepia Memories ? Vintage",
+    "category": "Vintage",
+    "palette": {
+      "background": "#f2e5cd",
+      "ink": "#664b34",
+      "accent": "#a88a62",
+      "highlight": "#ddc6a4"
+    },
+    "motion": [
+      "seeds",
+      "paper"
+    ],
+    "studio": true
+  },
+  "postal-romance": {
+    "name": "Postal Romance",
+    "opening_text": "Surat ini membawa kabar tentang dua hati yang memilih menjadi rumah.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Postal Romance",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Postal Romance",
+    "style": "Postal Romance ? Vintage",
+    "category": "Vintage",
+    "palette": {
+      "background": "#efe2cf",
+      "ink": "#624137",
+      "accent": "#a96c56",
+      "highlight": "#d8b8a0"
+    },
+    "motion": [
+      "paper",
+      "hearts"
+    ],
+    "studio": true
+  },
+  "vinyl-vows": {
+    "name": "Vinyl Vows",
+    "opening_text": "Seperti melodi favorit, kami memilih mengulang kebahagiaan bersama.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Vinyl Vows",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Vinyl Vows",
+    "style": "Vinyl Vows ? Vintage",
+    "category": "Vintage",
+    "palette": {
+      "background": "#e3d6bd",
+      "ink": "#3e3430",
+      "accent": "#956a4e",
+      "highlight": "#c29a76"
+    },
+    "motion": [
+      "geometry",
+      "sparkles"
+    ],
+    "studio": true
+  },
+  "art-deco-letter": {
+    "name": "Art Deco Letter",
+    "opening_text": "Di antara garis waktu, kami menemukan janji yang tak lekang.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Art Deco Letter",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Art Deco Letter",
+    "style": "Art Deco Letter ? Vintage",
+    "category": "Vintage",
+    "palette": {
+      "background": "#203d3c",
+      "ink": "#f1e6c8",
+      "accent": "#b99d60",
+      "highlight": "#55716a"
+    },
+    "motion": [
+      "ribbons",
+      "geometry"
+    ],
+    "studio": true
+  },
+  "confetti-club": {
+    "name": "Confetti Club",
+    "opening_text": "Rayakan kabar bahagia kami dengan tawa dan warna yang Anda bawa.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Confetti Club",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Confetti Club",
+    "style": "Confetti Club ? Creative",
+    "category": "Creative",
+    "palette": {
+      "background": "#fff1dc",
+      "ink": "#673755",
+      "accent": "#d27b53",
+      "highlight": "#f0c46b"
+    },
+    "motion": [
+      "confetti",
+      "ribbons"
+    ],
+    "studio": true
+  },
+  "balloon-fiesta": {
+    "name": "Balloon Fiesta",
+    "opening_text": "Ada banyak alasan untuk tersenyum, dan hari ini kami ingin berbagi.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Balloon Fiesta",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Balloon Fiesta",
+    "style": "Balloon Fiesta ? Creative",
+    "category": "Creative",
+    "palette": {
+      "background": "#e9f1fa",
+      "ink": "#314768",
+      "accent": "#7a8bb9",
+      "highlight": "#d9c3e9"
+    },
+    "motion": [
+      "balloons",
+      "confetti"
+    ],
+    "studio": true
+  },
+  "origami-dream": {
+    "name": "Origami Dream",
+    "opening_text": "Dari lipatan kecil sebuah pertemuan, lahir mimpi yang ingin kami rawat.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Origami Dream",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Origami Dream",
+    "style": "Origami Dream ? Creative",
+    "category": "Creative",
+    "palette": {
+      "background": "#f7ecde",
+      "ink": "#684d3e",
+      "accent": "#b68c68",
+      "highlight": "#e5c0a8"
+    },
+    "motion": [
+      "paper",
+      "birds"
+    ],
+    "studio": true
+  },
+  "retro-festival": {
+    "name": "Retro Festival",
+    "opening_text": "Mari berkumpul, berdansa dalam kebahagiaan, dan membuat kenangan baru.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Bahagia Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua Hati, Satu Cerita",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Perjalanan Retro Festival",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Dengan Penuh Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Kebahagiaan tumbuh ketika kita berbagi ruang untuk saling menemani.",
+    "quote_source": "Janji kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Kehangatan hari ini menjadi kenangan kami.",
+    "gallery_style": "Galeri kenangan Retro Festival",
+    "style": "Retro Festival ? Creative",
+    "category": "Creative",
+    "palette": {
+      "background": "#fae5a3",
+      "ink": "#274854",
+      "accent": "#b66246",
+      "highlight": "#e6a46a"
+    },
+    "motion": [
+      "confetti",
+      "ribbons"
+    ],
+    "studio": true
   }
 }

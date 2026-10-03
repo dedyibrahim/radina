@@ -15,6 +15,7 @@ class TemplateResource extends JsonResource
         return [
             'style' => $preset['style'] ?? $preset['category'] ?? $this->category?->name,
             'event_types' => array_keys(InvitationEvent::types()),
+            'animations' => TemplateContent::animations($this->template_key),
             'music_style' => $preset['mood'] ?? [],
             'gallery_style' => $preset['gallery_style'] ?? 'Photography collection',
             'id' => $this->id, 'name' => $this->name, 'slug' => $this->slug, 'description' => $this->description, 'thumbnail' => $this->thumbnail, 'preview_image' => $this->preview_image,

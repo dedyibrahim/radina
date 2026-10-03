@@ -423,5 +423,935 @@
         "text": "Safiya dan Yusuf mengundang Anda merayakan awal perjalanan keluarga mereka."
       }
     ]
+  },
+  {
+    "key": "rose-ribbon",
+    "folder": "RoseRibbon",
+    "name": "Rose Ribbon",
+    "category": "Romantic",
+    "thumbnail": "/images/templates/rose-ribbon.svg",
+    "bride": "Savitri",
+    "groom": "Jatmiko",
+    "quote": "Sebuah janji dibungkus kelembutan pita dan kasih.",
+    "venue": "Paviliun Rose Ribbon",
+    "hero_photo": 4,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Savitri dan Jatmiko mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Savitri dan Jatmiko."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Savitri dan Jatmiko."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Savitri dan Jatmiko mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "linen-atelier",
+    "folder": "LinenAtelier",
+    "name": "Linen Atelier",
+    "category": "Minimalist",
+    "thumbnail": "/images/templates/linen-atelier.svg",
+    "bride": "Anindita",
+    "groom": "Mahendra",
+    "quote": "Dalam kesederhanaan, kami menemukan ruang untuk selamanya.",
+    "venue": "Paviliun Linen Atelier",
+    "hero_photo": 11,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Anindita dan Mahendra mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Anindita dan Mahendra."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Anindita dan Mahendra."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Anindita dan Mahendra mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "quiet-form",
+    "folder": "QuietForm",
+    "name": "Quiet Form",
+    "category": "Minimalist",
+    "thumbnail": "/images/templates/quiet-form.svg",
+    "bride": "Kinanti",
+    "groom": "Satria",
+    "quote": "Bentuk yang tenang, niat yang utuh, dan satu perjalanan baru.",
+    "venue": "Paviliun Quiet Form",
+    "hero_photo": 18,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Kinanti dan Satria mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Kinanti dan Satria."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Kinanti dan Satria."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Kinanti dan Satria mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "ivory-grid",
+    "folder": "IvoryGrid",
+    "name": "Ivory Grid",
+    "category": "Minimalist",
+    "thumbnail": "/images/templates/ivory-grid.svg",
+    "bride": "Tanaya",
+    "groom": "Arditya",
+    "quote": "Setiap detail kecil mengisi hari yang berarti bagi kami.",
+    "venue": "Paviliun Ivory Grid",
+    "hero_photo": 25,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Tanaya dan Arditya mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Tanaya dan Arditya."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Tanaya dan Arditya."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Tanaya dan Arditya mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "wayang-senja",
+    "folder": "WayangSenja",
+    "name": "Wayang Senja",
+    "category": "Traditional",
+    "thumbnail": "/images/templates/wayang-senja.svg",
+    "bride": "Puspita",
+    "groom": "Wicaksana",
+    "quote": "Dengan restu keluarga, dua perjalanan dipertemukan dalam tradisi.",
+    "venue": "Paviliun Wayang Senja",
+    "hero_photo": 2,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Puspita dan Wicaksana mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Puspita dan Wicaksana."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Puspita dan Wicaksana."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Puspita dan Wicaksana mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "batik-kencana",
+    "folder": "BatikKencana",
+    "name": "Batik Kencana",
+    "category": "Traditional",
+    "thumbnail": "/images/templates/batik-kencana.svg",
+    "bride": "Gayatri",
+    "groom": "Pramudya",
+    "quote": "Semoga ikatan ini seindah ragam kencana yang diwariskan keluarga.",
+    "venue": "Paviliun Batik Kencana",
+    "hero_photo": 9,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Gayatri dan Pramudya mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Gayatri dan Pramudya."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Gayatri dan Pramudya."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Gayatri dan Pramudya mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "songket-raya",
+    "folder": "SongketRaya",
+    "name": "Songket Raya",
+    "category": "Traditional",
+    "thumbnail": "/images/templates/songket-raya.svg",
+    "bride": "Prameswari",
+    "groom": "Adiwangsa",
+    "quote": "Kami merajut ikatan baru dalam kehangatan keluarga dan budaya.",
+    "venue": "Paviliun Songket Raya",
+    "hero_photo": 16,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Prameswari dan Adiwangsa mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Prameswari dan Adiwangsa."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Prameswari dan Adiwangsa."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Prameswari dan Adiwangsa mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "aurora-glass",
+    "folder": "AuroraGlass",
+    "name": "Aurora Glass",
+    "category": "Modern",
+    "thumbnail": "/images/templates/aurora-glass.svg",
+    "bride": "Lavanya",
+    "groom": "Leon",
+    "quote": "Di bawah warna langit baru, kami memulai cerita bersama.",
+    "venue": "Paviliun Aurora Glass",
+    "hero_photo": 23,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Lavanya dan Leon mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Lavanya dan Leon."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Lavanya dan Leon."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Lavanya dan Leon mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "urban-signature",
+    "folder": "UrbanSignature",
+    "name": "Urban Signature",
+    "category": "Modern",
+    "thumbnail": "/images/templates/urban-signature.svg",
+    "bride": "Nadine",
+    "groom": "Ezra",
+    "quote": "Satu kota, dua langkah, dan tanda tangan untuk masa depan.",
+    "venue": "Paviliun Urban Signature",
+    "hero_photo": 30,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Nadine dan Ezra mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Nadine dan Ezra."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Nadine dan Ezra."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Nadine dan Ezra mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "riviera-postcard",
+    "folder": "RivieraPostcard",
+    "name": "Riviera Postcard",
+    "category": "Destination",
+    "thumbnail": "/images/templates/riviera-postcard.svg",
+    "bride": "Arunika",
+    "groom": "Samudra",
+    "quote": "Salam dari perjalanan yang membawa kami pada hari bahagia ini.",
+    "venue": "Paviliun Riviera Postcard",
+    "hero_photo": 7,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Arunika dan Samudra mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Arunika dan Samudra."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Arunika dan Samudra."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Arunika dan Samudra mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "santorini-sky",
+    "folder": "SantoriniSky",
+    "name": "Santorini Sky",
+    "category": "Destination",
+    "thumbnail": "/images/templates/santorini-sky.svg",
+    "bride": "Dewanti",
+    "groom": "Marcell",
+    "quote": "Seperti langit dan laut, kami memilih bertemu di cakrawala yang sama.",
+    "venue": "Paviliun Santorini Sky",
+    "hero_photo": 14,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Dewanti dan Marcell mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Dewanti dan Marcell."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Dewanti dan Marcell."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Dewanti dan Marcell mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "desert-horizon",
+    "folder": "DesertHorizon",
+    "name": "Desert Horizon",
+    "category": "Destination",
+    "thumbnail": "/images/templates/desert-horizon.svg",
+    "bride": "Isyana",
+    "groom": "Rangga",
+    "quote": "Di antara langkah jauh dan matahari hangat, kami menemukan rumah.",
+    "venue": "Paviliun Desert Horizon",
+    "hero_photo": 21,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Isyana dan Rangga mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Isyana dan Rangga."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Isyana dan Rangga."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Isyana dan Rangga mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "golden-atelier",
+    "folder": "GoldenAtelier",
+    "name": "Golden Atelier",
+    "category": "Luxury",
+    "thumbnail": "/images/templates/golden-atelier.svg",
+    "bride": "Adelia",
+    "groom": "Darius",
+    "quote": "Sebuah perayaan hangat untuk janji yang kami jaga dengan sepenuh hati.",
+    "venue": "Paviliun Golden Atelier",
+    "hero_photo": 28,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Adelia dan Darius mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Adelia dan Darius."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Adelia dan Darius."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Adelia dan Darius mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "velvet-gala",
+    "folder": "VelvetGala",
+    "name": "Velvet Gala",
+    "category": "Luxury",
+    "thumbnail": "/images/templates/velvet-gala.svg",
+    "bride": "Seraphina",
+    "groom": "Nathan",
+    "quote": "Tirai terbuka untuk bab terindah dalam perjalanan kami.",
+    "venue": "Paviliun Velvet Gala",
+    "hero_photo": 5,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Seraphina dan Nathan mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Seraphina dan Nathan."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Seraphina dan Nathan."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Seraphina dan Nathan mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "pearl-palace",
+    "folder": "PearlPalace",
+    "name": "Pearl Palace",
+    "category": "Luxury",
+    "thumbnail": "/images/templates/pearl-palace.svg",
+    "bride": "Valencia",
+    "groom": "Alexander",
+    "quote": "Kami mengundang Anda merayakan cinta yang bertumbuh dengan lembut.",
+    "venue": "Paviliun Pearl Palace",
+    "hero_photo": 12,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Valencia dan Alexander mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Valencia dan Alexander."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Valencia dan Alexander."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Valencia dan Alexander mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "olive-grove",
+    "folder": "OliveGrove",
+    "name": "Olive Grove",
+    "category": "Garden",
+    "thumbnail": "/images/templates/olive-grove.svg",
+    "bride": "Astari",
+    "groom": "Dirga",
+    "quote": "Di bawah naungan pohon dan doa, kami melangkah menjadi keluarga.",
+    "venue": "Paviliun Olive Grove",
+    "hero_photo": 19,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Astari dan Dirga mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Astari dan Dirga."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Astari dan Dirga."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Astari dan Dirga mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "wildflower-meadow",
+    "folder": "WildflowerMeadow",
+    "name": "Wildflower Meadow",
+    "category": "Garden",
+    "thumbnail": "/images/templates/wildflower-meadow.svg",
+    "bride": "Kalyana",
+    "groom": "Bhaskara",
+    "quote": "Seperti bunga liar, kasih kami tumbuh dengan bebas dan sederhana.",
+    "venue": "Paviliun Wildflower Meadow",
+    "hero_photo": 26,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Kalyana dan Bhaskara mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Kalyana dan Bhaskara."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Kalyana dan Bhaskara."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Kalyana dan Bhaskara mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "fern-serenade",
+    "folder": "FernSerenade",
+    "name": "Fern Serenade",
+    "category": "Garden",
+    "thumbnail": "/images/templates/fern-serenade.svg",
+    "bride": "Nirmala",
+    "groom": "Dipta",
+    "quote": "Dalam rimbun yang tenang, satu janji kami ucapkan untuk selamanya.",
+    "venue": "Paviliun Fern Serenade",
+    "hero_photo": 3,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Nirmala dan Dipta mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Nirmala dan Dipta."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Nirmala dan Dipta."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Nirmala dan Dipta mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "glasshouse-morning",
+    "folder": "GlasshouseMorning",
+    "name": "Glasshouse Morning",
+    "category": "Garden",
+    "thumbnail": "/images/templates/glasshouse-morning.svg",
+    "bride": "Cahyaning",
+    "groom": "Aruna",
+    "quote": "Pagi yang jernih menjadi awal untuk cerita yang kami rawat bersama.",
+    "venue": "Paviliun Glasshouse Morning",
+    "hero_photo": 10,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Cahyaning dan Aruna mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Cahyaning dan Aruna."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Cahyaning dan Aruna."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Cahyaning dan Aruna mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "golden-hour",
+    "folder": "GoldenHour",
+    "name": "Golden Hour",
+    "category": "Cinematic",
+    "thumbnail": "/images/templates/golden-hour.svg",
+    "bride": "Elysia",
+    "groom": "Rafael",
+    "quote": "Cahaya terakhir sore menyimpan bingkai pertama perjalanan kami.",
+    "venue": "Paviliun Golden Hour",
+    "hero_photo": 17,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Elysia dan Rafael mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Elysia dan Rafael."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Elysia dan Rafael."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Elysia dan Rafael mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "starlight-premiere",
+    "folder": "StarlightPremiere",
+    "name": "Starlight Premiere",
+    "category": "Cinematic",
+    "thumbnail": "/images/templates/starlight-premiere.svg",
+    "bride": "Miranda",
+    "groom": "Theo",
+    "quote": "Anda diundang pada pemutaran pertama bab baru hidup kami.",
+    "venue": "Paviliun Starlight Premiere",
+    "hero_photo": 24,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Miranda dan Theo mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Miranda dan Theo."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Miranda dan Theo."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Miranda dan Theo mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "silver-screen",
+    "folder": "SilverScreen",
+    "name": "Silver Screen",
+    "category": "Cinematic",
+    "thumbnail": "/images/templates/silver-screen.svg",
+    "bride": "Aveline",
+    "groom": "Dominic",
+    "quote": "Setiap adegan sederhana membawa kami pada satu janji yang nyata.",
+    "venue": "Paviliun Silver Screen",
+    "hero_photo": 1,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Aveline dan Dominic mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Aveline dan Dominic."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Aveline dan Dominic."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Aveline dan Dominic mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "motion-picture",
+    "folder": "MotionPicture",
+    "name": "Motion Picture",
+    "category": "Cinematic",
+    "thumbnail": "/images/templates/motion-picture.svg",
+    "bride": "Celestia",
+    "groom": "Gabriel",
+    "quote": "Perjalanan ini terus bergerak, dan kami ingin Anda ada di dalamnya.",
+    "venue": "Paviliun Motion Picture",
+    "hero_photo": 8,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Celestia dan Gabriel mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Celestia dan Gabriel."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Celestia dan Gabriel."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Celestia dan Gabriel mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "sepia-memories",
+    "folder": "SepiaMemories",
+    "name": "Sepia Memories",
+    "category": "Vintage",
+    "thumbnail": "/images/templates/sepia-memories.svg",
+    "bride": "Wening",
+    "groom": "Abimanyu",
+    "quote": "Kenangan yang ditulis pelan membawa kami pada hari yang tak terlupakan.",
+    "venue": "Paviliun Sepia Memories",
+    "hero_photo": 15,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Wening dan Abimanyu mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Wening dan Abimanyu."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Wening dan Abimanyu."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Wening dan Abimanyu mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "postal-romance",
+    "folder": "PostalRomance",
+    "name": "Postal Romance",
+    "category": "Vintage",
+    "thumbnail": "/images/templates/postal-romance.svg",
+    "bride": "Tisya",
+    "groom": "Damian",
+    "quote": "Surat ini membawa kabar tentang dua hati yang memilih menjadi rumah.",
+    "venue": "Paviliun Postal Romance",
+    "hero_photo": 22,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Tisya dan Damian mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Tisya dan Damian."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Tisya dan Damian."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Tisya dan Damian mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "vinyl-vows",
+    "folder": "VinylVows",
+    "name": "Vinyl Vows",
+    "category": "Vintage",
+    "thumbnail": "/images/templates/vinyl-vows.svg",
+    "bride": "Auretta",
+    "groom": "Malik",
+    "quote": "Seperti melodi favorit, kami memilih mengulang kebahagiaan bersama.",
+    "venue": "Paviliun Vinyl Vows",
+    "hero_photo": 29,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Auretta dan Malik mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Auretta dan Malik."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Auretta dan Malik."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Auretta dan Malik mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "art-deco-letter",
+    "folder": "ArtDecoLetter",
+    "name": "Art Deco Letter",
+    "category": "Vintage",
+    "thumbnail": "/images/templates/art-deco-letter.svg",
+    "bride": "Florentina",
+    "groom": "Edgar",
+    "quote": "Di antara garis waktu, kami menemukan janji yang tak lekang.",
+    "venue": "Paviliun Art Deco Letter",
+    "hero_photo": 6,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Florentina dan Edgar mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Florentina dan Edgar."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Florentina dan Edgar."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Florentina dan Edgar mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "confetti-club",
+    "folder": "ConfettiClub",
+    "name": "Confetti Club",
+    "category": "Creative",
+    "thumbnail": "/images/templates/confetti-club.svg",
+    "bride": "Arabelle",
+    "groom": "Felix",
+    "quote": "Rayakan kabar bahagia kami dengan tawa dan warna yang Anda bawa.",
+    "venue": "Paviliun Confetti Club",
+    "hero_photo": 13,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Arabelle dan Felix mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Arabelle dan Felix."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Arabelle dan Felix."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Arabelle dan Felix mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "balloon-fiesta",
+    "folder": "BalloonFiesta",
+    "name": "Balloon Fiesta",
+    "category": "Creative",
+    "thumbnail": "/images/templates/balloon-fiesta.svg",
+    "bride": "Clarissa",
+    "groom": "Hugo",
+    "quote": "Ada banyak alasan untuk tersenyum, dan hari ini kami ingin berbagi.",
+    "venue": "Paviliun Balloon Fiesta",
+    "hero_photo": 21,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Clarissa dan Hugo mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Clarissa dan Hugo."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Clarissa dan Hugo."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Clarissa dan Hugo mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "origami-dream",
+    "folder": "OrigamiDream",
+    "name": "Origami Dream",
+    "category": "Creative",
+    "thumbnail": "/images/templates/origami-dream.svg",
+    "bride": "Elowen",
+    "groom": "Kai",
+    "quote": "Dari lipatan kecil sebuah pertemuan, lahir mimpi yang ingin kami rawat.",
+    "venue": "Paviliun Origami Dream",
+    "hero_photo": 27,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Elowen dan Kai mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Elowen dan Kai."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Elowen dan Kai."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Elowen dan Kai mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
+  },
+  {
+    "key": "retro-festival",
+    "folder": "RetroFestival",
+    "name": "Retro Festival",
+    "category": "Creative",
+    "thumbnail": "/images/templates/retro-festival.svg",
+    "bride": "Feliciana",
+    "groom": "Oscar",
+    "quote": "Mari berkumpul, berdansa dalam kebahagiaan, dan membuat kenangan baru.",
+    "venue": "Paviliun Retro Festival",
+    "hero_photo": 4,
+    "story": [
+      {
+        "title": "Sebuah Pertemuan",
+        "text": "Feliciana dan Oscar mulai mengenal satu sama lain dari sebuah pertemuan sederhana."
+      },
+      {
+        "title": "Tumbuh Bersama",
+        "text": "Percakapan dan waktu menguatkan niat baik Feliciana dan Oscar."
+      },
+      {
+        "title": "Restu Keluarga",
+        "text": "Keluarga memberi doa untuk langkah baru Feliciana dan Oscar."
+      },
+      {
+        "title": "Hari yang Dinanti",
+        "text": "Kini Feliciana dan Oscar mengundang Anda menjadi bagian dari hari bahagia mereka."
+      }
+    ]
   }
 ]

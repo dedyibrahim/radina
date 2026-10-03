@@ -12,6 +12,7 @@ __pycache__/
 /public/video
 /public/images/templates
 /public/images/demos
+/public/images/bouquets
 /public/images/*.webp
 /public/storage
 /storage/*.key

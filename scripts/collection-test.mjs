@@ -45,8 +45,8 @@ try {
   await page.getByRole('button',{name:'Masuk ke Workspace'}).click()
  await page.waitForURL('**/admin')
  const library=await page.evaluate(async()=> (await fetch('/api/admin/music',{headers:{Accept:'application/json'}})).json())
- assert(library.data.length>=50,'50 playable demo tracks must be installed')
+ assert.equal(library.data.length,6,'The six supplied music tracks must be installed')
  for(const track of library.data.slice(0,3)){const response=await page.request.get(`http://127.0.0.1:8000${track.file_url}`);assert(response.ok())}
  assert.deepEqual(errors,[])
- console.log('PASS: 20 catalog entries, 11 filters, favorites persistence, comparison limit/modal, 50-track library')
+ console.log('PASS: 20 catalog entries, 11 filters, favorites persistence, comparison limit/modal, 6-track supplied music library')
 } finally {await browser.close()}

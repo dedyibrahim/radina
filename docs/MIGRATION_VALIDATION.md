@@ -12,7 +12,10 @@ Sumber wedding: `dedyibrahim/radina-wedding-platform`, commit `d6500f0`. Bisnis 
 ## Pemeriksaan yang lulus
 
 - Build Vite produksi, termasuk 20 template dan panel lisensi.
-- Seluruh pengujian Laravel setelah penambahan ruang pelanggan dan persetujuan: **46 passed, 820 assertions**. Laporan JUnit: `test-results/backend.xml`.
+- Seluruh pengujian Laravel setelah penggantian katalog musik: **49 passed, 963 assertions**.
+- Enam MP3 dari folder musik pemilik sama persis SHA-256-nya dengan salinan aplikasi; playback browser nyata, metadata durasi, katalog enam lagu, seluruh demo, pilihan dan playlist editor, serta layout 320/390/1440 px lulus. Laporan: `test-results/music-replacement/local-report.json`.
+- Migration musik lokal mengganti 50 record menjadi enam dan memperbarui 21 undangan; snapshot lisensi memastikan tiga lisensi, nol aktivasi, dan dua akun tetap identik. Katalog dan playlist lama dicadangkan terenkripsi sebelum perubahan.
+- Pengujian penggantian musik memastikan backup dapat didekripsi, seluruh playlist menggunakan ID/file baru, pengaturan pemutar tidak berubah, upload gagal tidak menghapus data, dan seeding berikutnya mempertahankan perubahan/tambahan/penghapusan musik oleh admin.
 - Perjalanan browser nyata: pilih template, pesan, cek pesanan, bayar/verifikasi, CMS, upload gambar, preview, publikasi, RSVP, ucapan, dan persistensi setelah reload.
 - Pemeriksaan responsif halaman publik, admin, editor, dan undangan pada 320, 360, 375, 390, 414, 430, 768, 1024, 1280, dan 1440 px. Laporan: `test-results/platform/report.json`.
 - CRUD lisensi melalui browser; token salah, aktivasi berulang, dua perangkat, penolakan perangkat ketiga, cabut/aktifkan, dan penghapusan. Login admin tanpa CSRF ditolak, sedangkan endpoint aktivasi tetap memakai kontrak token desktop.

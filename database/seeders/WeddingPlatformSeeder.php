@@ -4,12 +4,14 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Media;
+use App\Models\MusicTrack;
 use App\Models\Order;
 use App\Models\SystemSetting;
 use App\Models\Template;
 use App\Models\TemplateCategory;
 use App\Models\User;
 use App\Models\Wedding;
+use App\Services\MusicCatalogService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -61,7 +63,8 @@ class WeddingPlatformSeeder extends Seeder
 
             return;
         }
-        DB::transaction(function () use ($admin, $template) {
+        $demoTracks = MusicTrack::where('is_active', true)->orderBy('id')->limit(2)->get();
+        DB::transaction(function () use ($admin, $template, $demoTracks) {
             $order = Order::create(['order_number' => 'WD-DEMO-0001', 'template_id' => $template->id, 'customer_name' => 'Demo Radina', 'whatsapp' => '6281234567890', 'bride_name' => 'Alya Putri Ramadhani', 'groom_name' => 'Rizky Pratama', 'slug' => 'demo-romantic-floral', 'total' => 0, 'status' => 'PUBLISHED']);
             $order->update(['is_demo' => true]);
             $order->payment()->create(['amount' => 0, 'status' => 'PAID', 'confirmed_by' => $admin->id, 'confirmed_at' => now()]);
@@ -71,7 +74,7 @@ class WeddingPlatformSeeder extends Seeder
                 'quote_source' => 'QS. Ar-Rum: 21', 'opening_text' => 'Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan pernikahan kami.',
                 'closing_text' => 'Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.',
                 'hashtag' => '#AlyaRizkyWedding', 'cover_image' => '/storage/templates/demo/cover.webp', 'hero_image' => '/storage/templates/demo/hero.webp', 'closing_image' => '/storage/templates/demo/closing.webp',
-                'music_url' => '/storage/templates/demo/wedding-song.mp3', 'video_url' => '/storage/templates/demo/our-story.mp4', 'volume' => 40, 'published_at' => now(),
+                'music_url' => $demoTracks->first()?->file_url, 'music_playlist' => app(MusicCatalogService::class)->playlist($demoTracks->all()), 'video_url' => '/storage/templates/demo/our-story.mp4', 'volume' => 40, 'published_at' => now(),
                 'shipping_gift' => ['recipient' => 'Alya Putri Ramadhani', 'address' => 'Alamat pengiriman contoh — konfirmasi dengan pasangan.', 'phone' => ''],
             ]);
             $w->update(['is_demo' => true]);

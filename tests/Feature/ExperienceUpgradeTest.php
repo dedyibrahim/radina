@@ -85,7 +85,7 @@ class ExperienceUpgradeTest extends TestCase
 
     public function test_twenty_demos_have_distinct_couples_and_content(): void
     {
-        $this->assertGreaterThanOrEqual(50, MusicTrack::count());
+        $this->assertSame(6, MusicTrack::count());
         $this->getJson('/api/templates?sort=popular')->assertOk()->assertJsonPath('meta.total', 20);
         $this->getJson('/api/categories')->assertOk()->assertJsonCount(11, 'data');
         $names = [];
@@ -102,6 +102,9 @@ class ExperienceUpgradeTest extends TestCase
         }
         $this->assertCount(20, array_unique($names));
         $this->assertCount(20, array_unique($openings));
-        $this->assertCount(20, array_unique($music));
+        $this->assertCount(6, array_unique($music));
+        foreach (array_unique($music) as $url) {
+            $this->assertMatchesRegularExpression('~^/storage/music-library/radina-0[1-6]\\.mp3$~', $url);
+        }
     }
 }

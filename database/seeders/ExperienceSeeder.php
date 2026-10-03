@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Template;
 use App\Models\Wedding;
 use App\Services\TemplateContent;
+use App\Services\MusicCatalogService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -20,21 +21,13 @@ class ExperienceSeeder extends Seeder
         foreach (File::glob($public.'/images/demos/*.webp') as $path) {
             Storage::disk('public')->put('templates/experiences/'.basename($path), File::get($path));
         }
-        foreach (File::glob($public.'/music/library/*.mp3') as $path) {
-            Storage::disk('public')->put('music-library/'.basename($path), File::get($path));
-        }
+        app(MusicCatalogService::class)->installFiles();
         foreach (File::glob($public.'/images/templates/previews/*.webp') as $path) {
             $key = pathinfo($path, PATHINFO_FILENAME);
             Storage::disk('public')->put('templates/previews/'.basename($path), File::get($path));
             $template = Template::where('template_key', $key)->first();
             if ($template && (str_ends_with($template->thumbnail ?? '', '.svg') || str_contains($template->thumbnail ?? '', '/templates/demo/') || str_contains($template->thumbnail ?? '', '/templates/previews/'))) {
                 $template->update(['thumbnail' => '/storage/templates/previews/'.basename($path), 'preview_image' => '/storage/templates/previews/'.basename($path)]);
-            }
-        }
-        if (File::exists($public.'/music/library/catalog.json')) {
-            foreach (json_decode(File::get($public.'/music/library/catalog.json'), true) as $track) {
-                $track['file_url'] = '/storage/music-library/'.basename($track['file_url']);
-                MusicTrack::firstOrCreate(['title' => $track['title'], 'artist' => 'Radina Originals'], $track);
             }
         }
         $source = Wedding::where('is_demo', true)->where('slug', 'demo-romantic-floral')->first() ?? Wedding::where('is_demo', true)->first();
@@ -62,20 +55,8 @@ class ExperienceSeeder extends Seeder
                 if (Wedding::where('slug', $slug)->where('is_demo', false)->exists()) {
                     return;
                 }
-                $demoMusicNumbers = [1, 4, 2, 7, 3, 9, 10, 6, 5, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
                 $existing = Wedding::where('slug', $slug)->where('is_demo', true)->first();
                 if ($existing) {
-                    $savedPlaylist = $existing->music_playlist ?? [];
-                    $legacySeedPlaylist = count($savedPlaylist) === 2 && ! array_key_exists('cover', $savedPlaylist[0])
-                        && collect($savedPlaylist)->every(fn ($t) => ($t['artist'] ?? '') === 'Radina Originals' && preg_match('~^/storage/music-library/track-(?:[1-9]|10)\.mp3$~', $t['url'] ?? ''));
-                    if ($i < 10 && $legacySeedPlaylist) {
-                        $track = MusicTrack::where('file_url', '/storage/music-library/track-'.$demoMusicNumbers[$i].'.mp3')->first();
-                        $next = MusicTrack::where('file_url', '/storage/music-library/track-'.($i + 21).'.mp3')->first();
-                        if ($track && $next) {
-                            $playlist = collect([$track, $next])->map(fn ($t) => ['library_id' => $t->id, 'title' => $t->title, 'artist' => $t->artist, 'url' => $t->file_url, 'duration' => $t->duration])->all();
-                            $existing->update(['music_url' => $track->file_url, 'music_playlist' => $playlist]);
-                        }
-                    }
                     if ($demoDefinition && data_get($existing->section_content, 'home.heading') === $preset['name']) {
                         $content = $existing->section_content;
                         $content['home']['heading'] = $preset['sections']['home']['heading'];
@@ -90,16 +71,6 @@ class ExperienceSeeder extends Seeder
                     if ($demoDefinition && $existing->gallery()->orderBy('sort_order')->pluck('image')->all() === array_map(fn ($j) => '/storage/templates/experiences/photo-'.((($i * 2 + $j) % 19) + 1).'.webp', range(0, 5))) {
                         foreach ($existing->gallery()->orderBy('sort_order')->get() as $j => $photo) {
                             $photo->update(['image' => '/storage/templates/experiences/photo-'.(21 + (($i - 10 + $j) % 10)).'.webp']);
-                        }
-                    }
-                    // Finish newly seeded demos if assets were installed afterwards.
-                    // Any invitation edited after creation keeps its saved playlist.
-                    if ($i >= 10 && abs($existing->updated_at->diffInSeconds($existing->created_at)) <= 2) {
-                        $track = MusicTrack::where('file_url', '/storage/music-library/track-'.($i + 1).'.mp3')->first();
-                        if ($track && $existing->music_url !== $track->file_url) {
-                            $next = MusicTrack::where('file_url', '/storage/music-library/track-'.($i + 21).'.mp3')->first();
-                            $playlist = collect([$track, $next])->filter()->map(fn ($t) => ['library_id' => $t->id, 'title' => $t->title, 'artist' => $t->artist, 'url' => $t->file_url, 'duration' => $t->duration])->values()->all();
-                            $existing->update(['music_url' => $track->file_url, 'music_playlist' => $playlist]);
                         }
                     }
                     if ($existing->hero_image === '/storage/templates/experiences/photo-'.($i + 11).'.webp' || $existing->hero_image === $source->hero_image) {
@@ -130,10 +101,10 @@ class ExperienceSeeder extends Seeder
 
                     return Storage::disk('public')->exists($path) ? '/storage/'.$path : $source->hero_image;
                 };
-                $music = MusicTrack::where('file_url', '/storage/music-library/track-'.$demoMusicNumbers[$i].'.mp3')->first()
-                    ?? MusicTrack::where('category', $preset['mood'][0])->first() ?? MusicTrack::first();
-                $next = MusicTrack::where('file_url', '/storage/music-library/track-'.($i + 21).'.mp3')->first() ?? MusicTrack::where('id', '!=', $music?->id)->first();
-                $playlist = collect([$music, $next])->filter()->map(fn ($t) => ['library_id' => $t->id, 'title' => $t->title, 'artist' => $t->artist, 'url' => $t->file_url, 'duration' => $t->duration])->values()->all();
+                $availableMusic = MusicTrack::where('is_active', true)->orderBy('id')->get();
+                $music = $availableMusic->isNotEmpty() ? $availableMusic[$i % $availableMusic->count()] : null;
+                $next = $availableMusic->count() > 1 ? $availableMusic[($i + 1) % $availableMusic->count()] : null;
+                $playlist = app(MusicCatalogService::class)->playlist(collect([$music, $next])->filter()->all());
                 $w = Wedding::create(['order_id' => $order->id, 'template_id' => $template->id, 'slug' => $slug, 'status' => 'PUBLISHED', 'title' => 'The Wedding of '.$bride.' & '.$groom, 'wedding_date' => '2026-12-12', 'is_demo' => true, 'published_at' => now(), 'cover_image' => $photo($i + 1), 'hero_image' => $photo($i + 11), 'closing_image' => $photo($i + 1), 'hashtag' => '#'.$bride.$groom.'Wedding', 'quote' => $quote, 'quote_source' => $key === 'sakinah' ? 'QS. Ar-Rum: 21' : 'Our promise', 'opening_text' => $preset['opening_text'], 'closing_text' => 'Dengan penuh cinta, '.$bride.' & '.$groom.' berterima kasih atas setiap doa dan kenangan yang Anda bagikan.', 'section_content' => $preset['sections'], 'music_url' => $music?->file_url ?? $source->music_url, 'music_playlist' => $playlist, 'music_repeat' => true, 'autoplay_after_open' => true, 'volume' => 40]);
                 $w->update(['cover_image' => $heroPhoto, 'hero_image' => $heroPhoto, 'closing_image' => $heroPhoto]);
                 foreach (['bride' => $bride, 'groom' => $groom] as $role => $name) {

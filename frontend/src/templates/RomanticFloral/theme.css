@@ -1,0 +1,42 @@
+.wedding-page:not(.theme-floral) .hero-section {
+  background: var(--ivory);
+}
+.wedding-page:not(.theme-floral) .arch-outline {
+  border-color: var(--gold);
+  border-radius: inherit;
+}
+.wedding-page:not(.theme-floral) .person strong,
+.wedding-page:not(.theme-floral) .person > p,
+.wedding-page:not(.theme-floral) .social-link,
+.wedding-page:not(.theme-floral) .hero-bottom,
+.wedding-page:not(.theme-floral) .location-info > p,
+.wedding-page:not(.theme-floral) .timeline p,
+.wedding-page:not(.theme-floral) .quote-source,
+.wedding-page:not(.theme-floral) .arabic {
+  color: var(--ink);
+}
+.wedding-page:not(.theme-floral) .countdown > div {
+  background: var(--cream);
+  border-color: var(--gold);
+}
+.wedding-page:not(.theme-floral) .countdown span,
+.wedding-page:not(.theme-floral) .countdown p {
+  color: var(--ink);
+}
+.wedding-page:not(.theme-floral) .wish-card {
+  background: var(--cream);
+  color: var(--ink);
+}
+.wedding-page:not(.theme-floral) .button {
+  background: var(--ink);
+  color: var(--ivory);
+  border-color: var(--gold);
+}
+.wedding-page:not(.theme-floral) .button-outline {
+  background: transparent;
+  color: var(--ink);
+}
+.wedding-page:not(.theme-floral) .cover-invite .button {
+  background: var(--ivory);
+  color: var(--ink);
+}

@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Http\Requests;
+
+use App\Rules\SafeMediaUrl;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class SaveWeddingRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return (bool) $this->user()?->admin?->active;
+    }
+
+    public function rules(): array
+    {
+        $wedding = $this->route('wedding');
+        $media = ['nullable', 'string', 'max:2048', new SafeMediaUrl];
+        $rules = [
+            'expected_updated_at' => 'required|date', 'title' => 'required|string|max:255',
+            'slug' => ['required', 'string', 'min:3', 'max:80', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', Rule::unique('weddings', 'slug')->ignore($wedding?->id), Rule::unique('orders', 'slug')->ignore($wedding?->order_id)],
+            'template_id' => ['required', 'integer', Rule::exists('templates', 'id')], 'wedding_date' => 'nullable|date_format:Y-m-d',
+            'quote' => 'nullable|string|max:5000', 'quote_source' => 'nullable|string|max:255', 'opening_text' => 'nullable|string|max:5000', 'closing_text' => 'nullable|string|max:5000', 'hashtag' => 'nullable|string|max:120',
+            'cover_image' => $media, 'hero_image' => $media, 'closing_image' => $media, 'video_url' => $media,
+            'music' => 'required|array', 'music.music_url' => $media, 'music.volume' => 'required|integer|min:0|max:100', 'music.autoplay_after_open' => 'required|boolean',
+            'livestream' => 'required|array', 'livestream.platform' => 'nullable|string|max:60', 'livestream.url' => ['nullable', 'url:http,https', 'max:2048'],
+            'shipping_gift' => 'nullable|array', 'shipping_gift.recipient' => 'nullable|string|max:120', 'shipping_gift.address' => 'nullable|string|max:1000', 'shipping_gift.phone' => 'nullable|string|max:30',
+            'events' => 'present|array|max:20', 'events.*.type' => 'required|string|max:60', 'events.*.title' => 'required|string|max:120',
+            'events.*.date' => 'required|date_format:Y-m-d', 'events.*.start_time' => 'required|date_format:H:i', 'events.*.end_time' => 'required|date_format:H:i',
+            'events.*.timezone' => ['required', Rule::in(['Asia/Jakarta', 'Asia/Makassar', 'Asia/Jayapura'])],
+            'events.*.venue' => 'required|string|max:255', 'events.*.address' => 'nullable|string|max:1000', 'events.*.google_maps_url' => ['nullable', 'url:http,https', 'max:2048'],
+            'stories' => 'present|array|max:30', 'stories.*.date_label' => 'required|string|max:60', 'stories.*.title' => 'required|string|max:120', 'stories.*.description' => 'required|string|max:3000', 'stories.*.image' => $media,
+            'gallery' => 'present|array|max:50', 'gallery.*.image' => ['required', 'string', 'max:2048', new SafeMediaUrl], 'gallery.*.caption' => 'nullable|string|max:255',
+            'gifts' => 'present|array|max:10', 'gifts.*.bank' => 'required|string|max:60', 'gifts.*.account_number' => 'required|string|max:60', 'gifts.*.account_name' => 'required|string|max:120', 'gifts.*.logo' => $media,
+            'settings' => 'required|array',
+            'section_content' => 'nullable|array:opening,home,couple,parents,quote,date,story,event,gallery,video,location,gift,rsvp,wishes,livestream,closing',
+            'section_content.*' => 'array:enabled,heading,subheading,content',
+            'section_content.*.enabled' => 'sometimes|boolean', 'section_content.*.heading' => 'nullable|string|max:255',
+            'section_content.*.subheading' => 'nullable|string|max:1000', 'section_content.*.content' => 'nullable|string|max:5000',
+            'section_order' => 'nullable|array|max:15',
+            'section_order.*' => ['required', 'distinct', Rule::in(['home', 'couple', 'quote', 'date', 'story', 'event', 'gallery', 'video', 'location', 'gift', 'rsvp', 'wishes', 'livestream', 'closing'])],
+            'music.playlist' => 'sometimes|array|max:10', 'music.playlist.*' => 'array:library_id,title,artist,url,cover,duration',
+            'music.playlist.*.library_id' => 'nullable|integer|min:1', 'music.playlist.*.title' => 'required|string|max:255',
+            'music.playlist.*.artist' => 'nullable|string|max:255', 'music.playlist.*.url' => ['required', 'string', 'max:2048', new SafeMediaUrl],
+            'music.playlist.*.cover' => $media, 'music.playlist.*.duration' => 'nullable|integer|min:0|max:7200',
+            'music.shuffle' => 'sometimes|boolean', 'music.repeat' => 'sometimes|boolean',
+        ];
+        foreach (['bride', 'groom'] as $role) {
+            $rules[$role] = 'required|array';
+            $rules[$role.'.full_name'] = 'required|string|min:2|max:120';
+            foreach (['nickname', 'father_name', 'mother_name', 'family_order'] as $field) {
+                $rules[$role.'.'.$field] = 'nullable|string|max:120';
+            }
+            $rules[$role.'.instagram'] = 'nullable|regex:/^[a-zA-Z0-9_.]{1,30}$/';
+            $rules[$role.'.photo'] = $media;
+        }
+        foreach (['music', 'gallery', 'story', 'rsvp', 'wishes', 'gift', 'livestream', 'countdown', 'video', 'maps'] as $feature) {
+            $rules['settings.enable_'.$feature] = 'required|boolean';
+        }
+        if ($wedding?->status === 'PUBLISHED') {
+            $rules['wedding_date'] = 'required|date_format:Y-m-d';
+            $rules['events'] = 'required|array|min:1|max:20';
+        }
+
+        return $rules;
+    }
+
+    public function after(): array
+    {
+        return [function ($validator) {
+            foreach ($this->input('events', []) as $index => $event) {
+                if (($event['end_time'] ?? '') <= ($event['start_time'] ?? '')) {
+                    $validator->errors()->add("events.$index.end_time", 'Waktu selesai harus setelah waktu mulai.');
+                }
+            }
+        }];
+    }
+}

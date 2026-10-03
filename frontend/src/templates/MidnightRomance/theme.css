@@ -1,0 +1,41 @@
+.theme-midnight {
+  --ivory: #18191e;
+  --cream: #25232b;
+  --ink: #f5e5df;
+  --sage: #d6a093;
+  --gold: #bf8b76;
+}
+.theme-midnight .hero-image-wrap {
+  width: calc(100% - 24px);
+  border-radius: 160px 8px 160px 8px;
+  aspect-ratio: 3/4;
+}
+.theme-midnight .hero-image-wrap img {
+  border-radius: 160px 8px 160px 8px;
+  filter: contrast(1.15);
+}
+.theme-midnight .flower-motion,
+.theme-midnight .hero-floral {
+  display: none;
+}
+.theme-midnight .hero-title h1 {
+  font-family: var(--serif);
+  font-size: clamp(3.2rem, 14vw, 6rem);
+}
+.theme-midnight .section {
+  background-image: radial-gradient(ellipse at top, #482a3540, transparent 65%);
+}
+.theme-midnight .event-card,
+.theme-midnight .bank-card {
+  background: #25232b;
+  border: 1px solid #bf8b7660;
+}
+.theme-midnight .desktop-ambience {
+  background: radial-gradient(ellipse, #482a35, #121317);
+}
+.theme-midnight .cover-shade {
+  background: linear-gradient(#19101bcc, #341d3266, #110d19dd);
+}
+.theme-midnight .hero-title {
+  max-width: 100%;
+}

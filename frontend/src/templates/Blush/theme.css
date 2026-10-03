@@ -1,0 +1,37 @@
+.theme-blush {
+  --ivory: #fff1f4;
+  --cream: #f4e2ef;
+  --ink: #684d65;
+  --sage: #94607c;
+  --gold: #bd8aa1;
+}
+.theme-blush .section {
+  background-image: radial-gradient(ellipse at 90% 10%, #ded0ed80, transparent 60%);
+}
+.theme-blush .hero-image-wrap {
+  width: 80%;
+  border-radius: 38% 62% 48% 52% / 50% 45% 55% 50%;
+  border: 8px solid #ffffff80;
+}
+.theme-blush .hero-image-wrap img {
+  border-radius: inherit;
+}
+.theme-blush .hero-title h1 {
+  font-size: clamp(3.5rem, 15vw, 6rem);
+}
+.theme-blush .flower-motion {
+  opacity: 0.65;
+}
+.theme-blush .event-card,
+.theme-blush .bank-card {
+  border: 0;
+  background: #fff9;
+  border-radius: 28px;
+  box-shadow: 0 10px 25px #94607c0d;
+}
+.theme-blush .desktop-ambience {
+  background: linear-gradient(135deg, #f6d8df, #ded4ef, #dceaf0);
+}
+.theme-blush .cover-frame {
+  border-radius: 150px 150px 30px 30px;
+}

@@ -1,0 +1,82 @@
+.hero-amore {
+  padding-bottom: 80px;
+  min-height: auto;
+}
+.hero-amore h1 {
+  font-size: clamp(2.8rem, 12vw, 4.5rem);
+}
+.hero-amore h1 i {
+  display: inline;
+}
+.couple-amore .person-composition {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: center;
+  text-align: left;
+}
+.couple-amore .person-composition:nth-child(2) figure {
+  order: 2;
+}
+.couple-amore figure {
+  aspect-ratio: 3/5;
+  border-radius: 45% 45% 30% 30%;
+}
+.couple-amore .person-copy h3 {
+  font-size: clamp(1.5rem, 6vw, 2.4rem);
+}
+.story-amore .story-composition {
+  border-left: 1px solid #c9a795;
+  margin-left: 10px;
+  padding-left: 30px;
+  text-align: left;
+}
+.story-amore .story-chapter:before {
+  content: '✿';
+  position: absolute;
+  left: -44px;
+  top: 22px;
+  font-size: 26px;
+  color: #b98b87;
+  background: #fff9f3;
+}
+.design-amore .gallery-grid {
+  display: block;
+  columns: 2;
+  column-gap: 12px;
+}
+.design-amore .gallery-item {
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 12px;
+  width: 100%;
+  aspect-ratio: auto;
+}
+.design-amore .gallery-item img {
+  height: auto;
+  aspect-ratio: 3/4;
+}
+.design-amore .gallery-item:nth-child(3n) img {
+  aspect-ratio: 1;
+}
+.design-amore .gift-section {
+  background: #f1dfd6;
+}
+.design-amore .bank-card {
+  border-radius: 0 0 15px 15px;
+  border-top: 16px solid #d5b1a7;
+  background: #fffaf0;
+}
+@media (max-width: 359px) {
+  .couple-amore .person-composition {
+    gap: 12px;
+  }
+  .couple-amore .person-copy h3 {
+    font-size: 1.4rem;
+  }
+}
+.design-amore .design-cover h1,
+.design-amore .design-hero h1 {
+  font-size: clamp(2.5rem, var(--name-scale, 15vw), 6.4rem);
+  letter-spacing: -0.025em;
+}

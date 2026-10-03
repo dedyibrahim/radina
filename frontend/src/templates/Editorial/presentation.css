@@ -1,0 +1,133 @@
+.design-editorial {
+  --ivory: #faf8f3;
+  --cream: #faf8f3;
+  --ink: #191919;
+  --gold: #79716c;
+  --rose: #79716c;
+  --muted: #191919;
+  --theme-bg: #faf8f3;
+  --theme-ink: #191919;
+}
+
+/* 12: the masthead and articles use an editorial column system. */
+.issue-masthead {
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 20px;
+}
+.issue-masthead h1 {
+  font-size: clamp(2rem, 8vw, 4rem);
+}
+.issue-cover {
+  height: 260px;
+  margin: 0;
+}
+.issue-cover figcaption {
+  font-size: 10px;
+  margin-top: 8px;
+}
+.cover-editorial {
+  justify-content: flex-start;
+  padding-top: 35px;
+}
+.edition-title {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 10px;
+  border-top: 3px solid currentColor;
+  padding-top: 15px;
+}
+.edition-title h1 {
+  grid-column: 1/-1;
+  order: 3;
+}
+.edition-title span {
+  font-size: 10px;
+}
+.editorial-full {
+  margin: 0;
+}
+.editorial-full img {
+  aspect-ratio: 4/5;
+}
+.editorial-full figcaption {
+  font-size: 9px;
+  letter-spacing: 2px;
+  margin-top: 12px;
+}
+.interview-spread {
+  margin: 40px 0 70px;
+}
+.interview-spread header {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  border-top: 2px solid currentColor;
+  padding: 12px 0;
+  font-size: 10px;
+}
+.interview-spread header b {
+  font-size: 24px;
+}
+.interview-biography {
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 25px;
+}
+.article-chapters article {
+  margin-bottom: 65px;
+}
+.article-chapters header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 2px solid currentColor;
+  padding: 15px 0;
+  font-size: 11px;
+}
+.article-chapters header b {
+  font-size: 28px;
+}
+.article-columns p {
+  column-count: 2;
+  column-gap: 22px;
+}
+.article-chapters figure {
+  margin-top: 22px;
+}
+.celebration-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+.celebration-columns article {
+  border-top: 3px solid currentColor;
+  padding-top: 15px;
+}
+.celebration-columns header b {
+  display: block;
+  font-size: 45px;
+}
+.celebration-columns h3 {
+  font-size: 25px;
+}
+.celebration-columns .button {
+  padding: 12px 9px;
+  font-size: 10px;
+}
+.design-editorial .gallery-grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.design-editorial .gallery-item:nth-child(3n + 1) {
+  grid-column: 1/-1;
+  aspect-ratio: 16/9;
+}
+.design-editorial .gallery-item {
+  border-radius: 0;
+}
+.design-editorial .bank-card {
+  border: 0;
+  border-top: 2px solid currentColor;
+  border-radius: 0;
+  background: transparent;
+}

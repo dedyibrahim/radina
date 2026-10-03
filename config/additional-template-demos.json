@@ -1,0 +1,282 @@
+[
+  {
+    "key": "celestial",
+    "folder": "Celestial",
+    "name": "Celestial",
+    "category": "Dreamy",
+    "bride": "Luna",
+    "groom": "Rayhan",
+    "quote": "Two souls, written in the stars.",
+    "venue": "Moonlight Observatory",
+    "story": [
+      {
+        "title": "A night of stars",
+        "text": "It began with a shared evening beneath the stars. Luna and Rayhan found a reason to stay."
+      },
+      {
+        "title": "Our favourite orbit",
+        "text": "Small moments became our favourite memories, carried into our favourite orbit."
+      },
+      {
+        "title": "Under the same moon",
+        "text": "A promise shared at Moonlight Observatory became the beginning of our forever."
+      },
+      {
+        "title": "A new constellation",
+        "text": "We invite you to join Luna and Rayhan as our next chapter begins."
+      }
+    ]
+  },
+  {
+    "key": "editorial",
+    "folder": "Editorial",
+    "name": "Editorial",
+    "category": "Modern",
+    "bride": "Bianca",
+    "groom": "Julian",
+    "quote": "A new issue. A lifetime together.",
+    "venue": "The Editorial Atelier",
+    "story": [
+      {
+        "title": "The first interview",
+        "text": "It began with a conversation that deserved another chapter. Bianca and Julian found a reason to stay."
+      },
+      {
+        "title": "Our shared edition",
+        "text": "Small moments became our favourite memories, carried into our shared edition."
+      },
+      {
+        "title": "The cover story",
+        "text": "A promise shared at The Editorial Atelier became the beginning of our forever."
+      },
+      {
+        "title": "A lifetime issue",
+        "text": "We invite you to join Bianca and Julian as our next chapter begins."
+      }
+    ]
+  },
+  {
+    "key": "ocean-vows",
+    "folder": "OceanVows",
+    "name": "Ocean Vows",
+    "category": "Destination",
+    "bride": "Marina",
+    "groom": "Rio",
+    "quote": "Where the horizon meets our forever.",
+    "venue": "Oceanfront Pavilion",
+    "story": [
+      {
+        "title": "Across the horizon",
+        "text": "It began with an unexpected walk beside the sea. Marina and Rio found a reason to stay."
+      },
+      {
+        "title": "Tides brought us closer",
+        "text": "Small moments became our favourite memories, carried into tides brought us closer."
+      },
+      {
+        "title": "A promise by the shore",
+        "text": "A promise shared at Oceanfront Pavilion became the beginning of our forever."
+      },
+      {
+        "title": "Our destination",
+        "text": "We invite you to join Marina and Rio as our next chapter begins."
+      }
+    ]
+  },
+  {
+    "key": "royal-heritage",
+    "folder": "RoyalHeritage",
+    "name": "Royal Heritage",
+    "category": "Luxury",
+    "bride": "Aurelia",
+    "groom": "Alexander",
+    "quote": "A celebration worthy of our shared history.",
+    "venue": "Royal Conservatory",
+    "story": [
+      {
+        "title": "An elegant introduction",
+        "text": "It began with a celebration with our closest friends. Aurelia and Alexander found a reason to stay."
+      },
+      {
+        "title": "The courtship",
+        "text": "Small moments became our favourite memories, carried into the courtship."
+      },
+      {
+        "title": "A promise of honour",
+        "text": "A promise shared at Royal Conservatory became the beginning of our forever."
+      },
+      {
+        "title": "Our grand celebration",
+        "text": "We invite you to join Aurelia and Alexander as our next chapter begins."
+      }
+    ]
+  },
+  {
+    "key": "paper-petals",
+    "folder": "PaperPetals",
+    "name": "Paper & Petals",
+    "category": "Romantic",
+    "bride": "Hana",
+    "groom": "Theo",
+    "quote": "Small notes, pressed petals, endless love.",
+    "venue": "The Paper Garden",
+    "story": [
+      {
+        "title": "A handwritten hello",
+        "text": "It began with a tiny note we kept for years. Hana and Theo found a reason to stay."
+      },
+      {
+        "title": "Little notes of love",
+        "text": "Small moments became our favourite memories, carried into little notes of love."
+      },
+      {
+        "title": "The ribbon we tied",
+        "text": "A promise shared at The Paper Garden became the beginning of our forever."
+      },
+      {
+        "title": "Our favourite page",
+        "text": "We invite you to join Hana and Theo as our next chapter begins."
+      }
+    ]
+  },
+  {
+    "key": "botanica",
+    "folder": "Botanica",
+    "name": "Botanica",
+    "category": "Destination",
+    "bride": "Maya",
+    "groom": "Rafael",
+    "quote": "An island escape, a promise to stay.",
+    "venue": "Palm Retreat",
+    "story": [
+      {
+        "title": "The island encounter",
+        "text": "It began with a journey through an island garden. Maya and Rafael found a reason to stay."
+      },
+      {
+        "title": "A journey through palms",
+        "text": "Small moments became our favourite memories, carried into a journey through palms."
+      },
+      {
+        "title": "A sunset promise",
+        "text": "A promise shared at Palm Retreat became the beginning of our forever."
+      },
+      {
+        "title": "Welcome to our retreat",
+        "text": "We invite you to join Maya and Rafael as our next chapter begins."
+      }
+    ]
+  },
+  {
+    "key": "monochrome",
+    "folder": "Monochrome",
+    "name": "Monochrome",
+    "category": "Minimalist",
+    "bride": "Alena",
+    "groom": "Nathan",
+    "quote": "Life in contrast. Love in focus.",
+    "venue": "Studio Twenty",
+    "story": [
+      {
+        "title": "The first frame",
+        "text": "It began with an ordinary day we never forgot. Alena and Nathan found a reason to stay."
+      },
+      {
+        "title": "Life in focus",
+        "text": "Small moments became our favourite memories, carried into life in focus."
+      },
+      {
+        "title": "The decisive moment",
+        "text": "A promise shared at Studio Twenty became the beginning of our forever."
+      },
+      {
+        "title": "Our next exposure",
+        "text": "We invite you to join Alena and Nathan as our next chapter begins."
+      }
+    ]
+  },
+  {
+    "key": "blossom-east",
+    "folder": "BlossomEast",
+    "name": "Blossom East",
+    "category": "Traditional",
+    "bride": "Reina",
+    "groom": "Kenji",
+    "quote": "Like a blossom, love arrives in its own time.",
+    "venue": "Blossom Art House",
+    "story": [
+      {
+        "title": "A spring encounter",
+        "text": "It began with a quiet afternoon among spring blossoms. Reina and Kenji found a reason to stay."
+      },
+      {
+        "title": "The quiet blossom",
+        "text": "Small moments became our favourite memories, carried into the quiet blossom."
+      },
+      {
+        "title": "A promise in ink",
+        "text": "A promise shared at Blossom Art House became the beginning of our forever."
+      },
+      {
+        "title": "A story in full bloom",
+        "text": "We invite you to join Reina and Kenji as our next chapter begins."
+      }
+    ]
+  },
+  {
+    "key": "neon-love",
+    "folder": "NeonLove",
+    "name": "Neon Love",
+    "category": "Modern",
+    "bride": "Kiara",
+    "groom": "Ezra",
+    "quote": "Two hearts. One city. Our electric moment.",
+    "venue": "The Skyline Loft",
+    "story": [
+      {
+        "title": "The first station",
+        "text": "It began with a city street that brought us together. Kiara and Ezra found a reason to stay."
+      },
+      {
+        "title": "Our city nights",
+        "text": "Small moments became our favourite memories, carried into our city nights."
+      },
+      {
+        "title": "Next stop: forever",
+        "text": "A promise shared at The Skyline Loft became the beginning of our forever."
+      },
+      {
+        "title": "Arriving together",
+        "text": "We invite you to join Kiara and Ezra as our next chapter begins."
+      }
+    ]
+  },
+  {
+    "key": "timeless-romance",
+    "folder": "TimelessRomance",
+    "name": "Timeless Romance",
+    "category": "Romantic",
+    "bride": "Eleanor",
+    "groom": "William",
+    "quote": "Some promises never go out of style.",
+    "venue": "Maison de Romance",
+    "story": [
+      {
+        "title": "A timeless introduction",
+        "text": "It began with a meeting that felt familiar from the beginning. Eleanor and William found a reason to stay."
+      },
+      {
+        "title": "A gentle courtship",
+        "text": "Small moments became our favourite memories, carried into a gentle courtship."
+      },
+      {
+        "title": "The treasured promise",
+        "text": "A promise shared at Maison de Romance became the beginning of our forever."
+      },
+      {
+        "title": "A classic beginning",
+        "text": "We invite you to join Eleanor and William as our next chapter begins."
+      }
+    ]
+  }
+]

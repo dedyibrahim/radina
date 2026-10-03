@@ -1,0 +1,23 @@
+<script setup>
+import { inject } from 'vue'
+const wedding = inject('wedding')
+</script>
+<template>
+  <section id="closing" class="new-closing closing-celestial">
+    <p v-if="wedding.sections.closing?.heading" class="closing-heading">
+      {{ wedding.sections.closing.heading }}
+    </p>
+    <p v-if="wedding.sections.closing?.subheading">{{ wedding.sections.closing.subheading }}</p>
+    <div class="sky-speckles" aria-hidden="true"></div>
+    <span class="crescent" aria-hidden="true">☾</span>
+    <div class="sky-farewell">
+      <h2>{{ wedding.bride.shortName }} <i>&</i> {{ wedding.groom.shortName }}</h2>
+      <p>{{ wedding.sections.closing?.content || wedding.closingText }}</p>
+    </div>
+    <figure>
+      <img v-if="wedding.closing" :src="wedding.closing" alt="Pasangan pengantin" loading="lazy" />
+    </figure>
+    <small>{{ wedding.socialMedia.hashtag }}</small>
+    <footer>RADINA · DIGITAL WEDDING INVITATION</footer>
+  </section>
+</template>

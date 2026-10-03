@@ -1,0 +1,98 @@
+.theme-cinematic {
+  --ivory: #151718;
+  --cream: #222628;
+  --ink: #f1e9dd;
+  --sage: #ddcbb1;
+  --gold: #b79b78;
+}
+.theme-cinematic .hero-section {
+  padding: 0;
+  position: relative;
+  isolation: isolate;
+  justify-content: center;
+}
+.theme-cinematic .hero-image-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  aspect-ratio: auto;
+}
+.theme-cinematic .hero-image-wrap img {
+  height: 100%;
+  width: 100%;
+  border-radius: 0;
+  object-fit: cover;
+}
+.theme-cinematic .hero-section:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#0005, #0002, #000b);
+  z-index: -1;
+  pointer-events: none;
+}
+.theme-cinematic .hero-title,
+.theme-cinematic .hero-top,
+.theme-cinematic .hero-bottom {
+  color: white;
+  z-index: 1;
+}
+.theme-cinematic .hero-title {
+  margin: auto 0 10px;
+}
+.theme-cinematic .hero-bottom {
+  margin-top: auto;
+}
+.theme-cinematic .hero-floral,
+.theme-cinematic .flower-motion {
+  display: none;
+}
+.theme-cinematic .invitation-content {
+  display: flex;
+  flex-direction: column;
+}
+.theme-cinematic .hero-section {
+  order: -3;
+}
+.theme-cinematic .story-section {
+  order: -2;
+}
+.theme-cinematic .quote-section {
+  order: -1;
+}
+.theme-cinematic .timeline-item {
+  padding-block: 25px;
+}
+.theme-cinematic .section-heading h2 {
+  font-size: clamp(2.8rem, 10vw, 4.7rem);
+}
+.theme-cinematic .event-card,
+.theme-cinematic .bank-card {
+  background: #222628;
+  border-color: #b79b78;
+}
+.theme-cinematic .desktop-ambience {
+  background: #16191b;
+}
+.theme-cinematic .hero-section {
+  background: transparent !important;
+}
+.theme-cinematic .hero-bottom {
+  color: white !important;
+}
+.theme-cinematic .cover-frame {
+  inset: 16px;
+  border: 0;
+  border-top: 1px solid #ffffff70;
+  border-bottom: 1px solid #ffffff70;
+}
+.theme-cinematic .cover-content {
+  text-align: left;
+  padding-left: 20px;
+}
+.theme-cinematic .couple-names {
+  letter-spacing: -3px;
+}

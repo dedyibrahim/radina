@@ -1,179 +1,33 @@
-# Deployment Shared Hosting dengan GitHub Actions
+# Deployment Radina Wedding dan Lisensi
 
-Workflow `.github/workflows/ci-cd.yml` menjalankan test Laravel, build Vite, membuat paket production, lalu mengunggahnya ke `public_html` melalui FTP atau FTPS. Migrasi production dapat berjalan otomatis melalui deployment hook HTTPS tanpa SSH.
+Workflow `.github/workflows/ci-cd.yml` melakukan test MySQL terpisah, build frontend wedding, membuat ZIP produksi, dan menyiapkan upload FTP/FTPS serta deployment hook yang ditandatangani.
 
-## Persyaratan Hosting
+## Struktur hosting
 
-- PHP 8.1 atau lebih baru; PHP 8.2 direkomendasikan.
-- MySQL 8 atau MariaDB yang kompatibel.
-- Ekstensi PHP: `bcmath`, `ctype`, `curl`, `dom`, `fileinfo`, `mbstring`, `openssl`, `pdo_mysql`, `tokenizer`, dan `xml`.
-- Akses FTP ke `public_html`.
-- HTTPS aktif pada domain production.
+Document root memuat `index.php`, `.htaccess`, `assets/`, `brand/`, `images/`, `music/`, `video/`, dan `favicon.svg`. Laravel berada di `_app/`, termasuk `frontend/dist/index.html`, `frontend/public/`, konfigurasi, database, vendor, serta storage. `.htaccess` dalam `_app` menolak akses HTTP langsung ke source dan konfigurasi privat.
 
-Workflow membuat struktur berikut:
+PHP 8.2 dengan PDO MySQL, GD, mbstring, fileinfo, intl, curl, OpenSSL diperlukan. Node 22 hanya diperlukan pada mesin build. Simpan `.env` produksi di `_app/.env`; jangan mengganti `APP_KEY`, kredensial database, `LICENSE_ACTIVATION_TOKEN`, atau `LICENSE_PRODUCT_NAME` dari instalasi lisensi yang sudah berjalan. Gunakan `APP_NAME=Radina` dan `APP_URL` domain produksi. Isi `SANCTUM_STATEFUL_DOMAINS` dengan hostname produksi tanpa protokol.
 
-```text
-/public_html/
-|-- _app/         <- source Laravel, diblokir oleh .htaccess
-|   |-- app/
-|   |-- bootstrap/
-|   |-- storage/
-|   |-- vendor/
-|   `-- artisan
-|-- build/
-|-- images/
-|-- .htaccess
-`-- index.php
-```
+## Migrasi pertama dari portal berita
 
-`index.php` di root `public_html` diarahkan ke aplikasi dalam `_app`. Folder `_app` dilindungi dari akses browser menggunakan `.htaccess`.
+1. Cadangkan source, `.env`, seluruh database, dan `storage/app/public` produksi.
+2. Jalankan pengujian dan build sebelum upload. Workflow selalu membawa aplikasi, konfigurasi, migration, seeder, frontend hasil build, dan aset demo secara lengkap, termasuk saat transisi pertama. ZIP tersedia sebagai artifact alternatif.
+3. Pertahankan `.env`, storage pengguna, dan database produksi. Jangan menjalankan `migrate:fresh` atau mengganti APP_KEY.
+4. Jalankan `php artisan optimize:clear`, `php artisan migrate --force`, dan `php artisan db:seed --force`. Akun admin lama diberi akses wedding tanpa mengganti password; lisensi tidak disemai ulang.
+5. Media `/storage` dapat dilayani langsung oleh Laravel dari disk publik jika hosting tidak menyediakan symlink. Path di luar disk publik dan file konfigurasi privat ditolak.
+6. Periksa `/api/license/activate` memakai aplikasi desktop yang sudah ada, lalu `/admin/licenses`, katalog, dan preview. Pastikan jumlah/key/aktivasi lisensi sama dengan cadangan.
+7. Isi rekening dan kontak sebenarnya melalui `/admin/settings` sebelum menerima pembayaran.
 
-## GitHub Environment
+Endpoint aktivasi lisensi tetap pada domain dan URL sebelumnya. Data berita lama dipertahankan sebagai arsip database. Kode bisnis berita tidak lagi digunakan; URL berita mengembalikan 410.
 
-Buka `Settings > Environments > production` pada repository GitHub.
+## GitHub Actions
 
-Tambahkan secrets:
+Environment `production` menggunakan secrets `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`, `DEPLOY_HOOK_SECRET`, serta variables `FTP_PROTOCOL`, `FTP_SERVER_DIR`, `DEPLOY_URL`. `DEPLOY_URL` wajib HTTPS. Server menggunakan `.env` produksi; kredensial produksi tidak dikirim dari CI.
 
-| Secret | Keterangan |
-| --- | --- |
-| `FTP_SERVER` | Host FTP, misalnya `ftp.domain.com` |
-| `FTP_USERNAME` | Username FTP |
-| `FTP_PASSWORD` | Password FTP |
-| `DEPLOY_HOOK_SECRET` | Secret acak untuk signature migrasi |
+Deploy hook memverifikasi signature, commit, manifest file, dan SHA-256 `database/seeders/WeddingPlatformSeeder.php` sebelum migrasi dan seeding. Nama header `X-Seed-Sql-Sha256` dipertahankan untuk protokol hook lama, tetapi isinya sekarang digest seeder wedding. Source SQL portal berita tidak lagi dipakai.
 
-Tambahkan variables:
+Sebelum migrasi, hook membuat cadangan terenkripsi tabel `licenses`, `license_activations`, dan `users` di `_app/storage/app/deploy-backups/`. Cadangan diverifikasi sebelum migrasi dimulai. Setelah migrasi dan setelah seeding, seluruh record lama diperiksa: key, aturan lisensi, identitas perangkat, dan kredensial akun harus tetap sama. Pembaruan waktu aktivasi dan penambahan perangkat oleh aplikasi desktop saat deployment tetap diperbolehkan. Kegagalan pemeriksaan menghentikan deployment dan marker commit produksi tidak diperbarui.
 
-| Variable | Contoh | Keterangan |
-| --- | --- | --- |
-| `FTP_PROTOCOL` | `ftp` atau `ftps` | Protokol server |
-| `FTP_SERVER_DIR` | `/public_html/` | Folder web utama pada koneksi FTP |
-| `DEPLOY_URL` | `https://domainanda.com` | URL production tanpa garis miring di akhir |
+Upload FTP tidak menggunakan opsi delete/mirror-delete. `.env` dan runtime storage dikeluarkan dari upload; APP_KEY, token, database, upload pelanggan, dan sesi produksi tidak ditimpa. File berita yang dihapus dari Git dibersihkan melalui daftar path yang diizinkan, setelah migrasi dan pemeriksaan lisensi berhasil. Script cleanup menolak file lisensi, akun, `.env`, storage, vendor, serta path yang tidak dikenal. Tabel berita lama dalam database tetap sebagai arsip.
 
-Periksa folder yang terlihat setelah login FTP:
-
-- Jika terlihat folder `public_html`, gunakan `FTP_SERVER_DIR=/public_html/`.
-- Jika langsung terlihat `index.php`, `_app`, `images`, atau isi website, gunakan `FTP_SERVER_DIR=/`.
-
-Nilai ini mengikuti posisi awal akun FTP, bukan hanya document root domain.
-
-Gunakan `FTP_PROTOCOL=ftp` jika hosting hanya memberikan FTP biasa. Gunakan `ftps` hanya jika provider memberikan hostname FTPS resmi dengan sertifikat valid.
-
-Secrets database tidak diperlukan di GitHub. Job CI memakai MySQL sementara, sedangkan database production hanya dikonfigurasi melalui `public_html/_app/.env`.
-
-## Konfigurasi `.env` Production
-
-File `.env` tidak dikirim workflow. Upload secara manual ke:
-
-```text
-public_html/_app/.env
-```
-
-Contoh konfigurasi:
-
-```dotenv
-APP_NAME="Radina News"
-APP_ENV=production
-APP_KEY=
-APP_DEBUG=false
-APP_URL=https://domainanda.com
-
-LOG_CHANNEL=stack
-LOG_LEVEL=error
-
-DB_CONNECTION=mysql
-DB_HOST=localhost
-DB_PORT=3306
-DB_DATABASE=nama_database
-DB_USERNAME=user_database
-DB_PASSWORD=password_database
-
-CACHE_DRIVER=file
-FILESYSTEM_DISK=local
-QUEUE_CONNECTION=sync
-SESSION_DRIVER=file
-
-WRITER_DEFAULT_ARTICLE_FEE=25000
-WRITER_MINIMUM_WITHDRAWAL=50000
-
-DEPLOY_HOOK_ENABLED=true
-DEPLOY_HOOK_SECRET=masukkan_secret_acak_64_karakter
-DEPLOY_HOOK_SIGNATURE_TTL=300
-```
-
-Jika belum memiliki `APP_KEY`, jalankan `php artisan key:generate` dari komputer lokal lalu salin nilainya. Jangan mengganti `APP_KEY` setelah aplikasi digunakan.
-
-## Migrasi Otomatis Tanpa SSH
-
-Setelah upload FTP selesai, GitHub Actions memanggil `/deploy-hook.php`. Hook mandiri membersihkan cache konfigurasi/route lama, kemudian menjalankan:
-
-```bash
-php artisan migrate --force
-php artisan db:seed --class=Database\\Seeders\\DatabaseSeeder --force
-```
-
-Buat secret acak:
-
-```bash
-
-
-php -r "echo bin2hex(random_bytes(32)), PHP_EOL;"
-```
-
-Simpan nilai yang sama pada:
-
-1. GitHub Environment secret `DEPLOY_HOOK_SECRET`.
-2. `public_html/_app/.env` pada `DEPLOY_HOOK_SECRET`.
-
-Hook dilindungi HMAC SHA-256, timestamp maksimal lima menit, commit SHA, dan file lock untuk mencegah deployment paralel. `DEPLOY_URL` wajib HTTPS dan secret tidak dikirim dalam request.
-
-Workflow juga mengunggah `.radina-release-commit` ke folder target. Hook memeriksanya sebelum menyentuh database. Jika folder FTP salah, respons akan menunjukkan fase `upload-path` atau `upload-version`.
-
-File `database/import/portal_berita.sql` selalu diunggah ulang dan diverifikasi dengan SHA-256 sebelum seeder berjalan. Jika transfer FTP terputus atau file terpotong, hook berhenti pada fase `seed-source` tanpa mengubah data.
-
-Semua file incremental juga dicatat dalam `.radina-release-manifest.json` beserta ukuran dan SHA-256. Hook memverifikasi setiap file sebelum migration. Upload FTP dibatasi dua koneksi paralel agar lebih stabil pada shared hosting. File rusak akan dilaporkan pada fase `release-files`.
-
-Folder runtime `_app/app` dan `_app/routes` selalu disinkronkan pada setiap deployment. Ini mencegah controller atau route tertinggal ketika marker commit production tidak lagi sesuai dengan isi hosting.
-
-Migration dan seeder selalu dijalankan otomatis pada deployment production. Workflow berhenti sebelum upload jika `DEPLOY_URL` atau `DEPLOY_HOOK_SECRET` belum dikonfigurasi.
-
-## Deployment Pertama
-
-1. Buat database dan user database pada panel hosting.
-2. Konfigurasikan GitHub Environment.
-3. Jalankan workflow `CI/CD Shared Hosting`.
-4. Download artifact `radina-production-...`.
-5. Ekstrak artifact hingga mendapatkan `radina-production.zip`.
-6. Upload ZIP ke `public_html` melalui File Manager, lalu pilih **Extract**.
-7. Hapus ZIP dari hosting setelah ekstraksi.
-8. Upload `.env` ke `public_html/_app/.env`.
-9. Pastikan permission `_app/storage` dan `_app/bootstrap/cache` dapat ditulis PHP.
-10. Jalankan kembali workflow agar deployment hook menjalankan migrasi pertama.
-
-Seeder berjalan otomatis setelah migration. Prosesnya idempotent: password admin existing tidak direset, lisensi existing tidak ditimpa, dan artikel portal diarahkan ke akun Shara.
-
-## Deployment Berikutnya
-
-Setiap push ke `main` akan:
-
-1. Menjalankan seluruh test dengan MySQL.
-2. Membangun frontend production.
-3. Membuat ZIP production sebagai artifact.
-4. Membaca marker commit production `.radina-deploy-commit`.
-5. Membuat staging yang hanya berisi file berubah sejak deployment berhasil terakhir.
-6. Mengunggah staging melalui FTP tanpa `--delete` dan tanpa memindai seluruh release.
-7. Menjalankan migration dan seeder production melalui HTTPS.
-8. Memperbarui marker commit hanya setelah seluruh deployment berhasil.
-
-File `_app/.env`, upload pengguna, session, cache runtime, dan log tidak dihapus oleh sinkronisasi FTP.
-
-Workflow tidak menghapus file atau folder lain dalam `public_html`, termasuk subdomain, `error_log`, dan arsip manual. Jika sebuah file aplikasi memang perlu dihapus, hapus manual melalui File Manager setelah deployment.
-
-Jika `composer.lock` berubah, download artifact ZIP terbaru lalu upload dan ekstrak kembali agar dependency production ikut diperbarui.
-
-## Rollback
-
-1. Revert commit bermasalah.
-2. Push hasil revert ke `main`.
-3. Workflow mengunggah versi kode sebelumnya.
-
-Rollback kode tidak otomatis membatalkan perubahan database. Migrasi destruktif harus memiliki strategi rollback terpisah.
+Rollback menggunakan cadangan source/build sebelumnya dan `.env` yang sama. Tabel berita lama tetap tersedia; jangan melakukan rollback destruktif pada tabel wedding setelah ada transaksi pelanggan. Simpan cadangan database sebelum setiap perubahan produksi.

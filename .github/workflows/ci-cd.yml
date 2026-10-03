@@ -25,7 +25,7 @@ jobs:
       DB_CONNECTION: mysql
       DB_HOST: 127.0.0.1
       DB_PORT: 3306
-      DB_DATABASE: laravel_testing
+      DB_DATABASE: radina_wedding_test
       DB_USERNAME: laravel
       DB_PASSWORD: laravel
 
@@ -33,7 +33,7 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_DATABASE: laravel_testing
+          MYSQL_DATABASE: radina_wedding_test
           MYSQL_USER: laravel
           MYSQL_PASSWORD: laravel
           MYSQL_ROOT_PASSWORD: root
@@ -55,13 +55,13 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.2"
-          extensions: bcmath, ctype, curl, dom, fileinfo, json, mbstring, openssl, pdo_mysql, tokenizer, xml
+          extensions: bcmath, ctype, curl, dom, fileinfo, json, mbstring, openssl, pdo_mysql, gd, intl, tokenizer, xml
           coverage: none
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: npm
 
       - name: Cache Composer packages
@@ -90,6 +90,9 @@ jobs:
 
       - name: Run automated tests
         run: php artisan test
+
+      - name: Verify news cleanup cannot delete license files
+        run: python3 scripts/deployment/test_news_cleanup.py
 
   deploy:
     name: Deploy production
@@ -135,13 +138,13 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.2"
-          extensions: bcmath, ctype, curl, dom, fileinfo, json, mbstring, openssl, pdo_mysql, tokenizer, xml
+          extensions: bcmath, ctype, curl, dom, fileinfo, json, mbstring, openssl, pdo_mysql, gd, intl, tokenizer, xml
           coverage: none
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: npm
 
       - name: Install production PHP dependencies
@@ -160,9 +163,16 @@ jobs:
 
           rsync -a ./ release/_app/ \
             --exclude-from=.deployignore \
-            --exclude="public/"
+            --exclude="/public/"
 
           rsync -a public/ release/
+
+          # Runtime data belongs to the production installation, never the release.
+          rm -rf release/storage release/_app/storage
+          mkdir -p release/_app/storage/app/public \
+            release/_app/storage/framework/cache/data \
+            release/_app/storage/framework/sessions \
+            release/_app/storage/framework/views release/_app/storage/logs
 
           sed -i "s#__DIR__.'/../storage#__DIR__.'/_app/storage#g" release/index.php
           sed -i "s#__DIR__.'/../vendor#__DIR__.'/_app/vendor#g" release/index.php
@@ -272,7 +282,6 @@ jobs:
         run: |
           mkdir -p incremental-release
 
-          frontend_changed=false
           composer_changed=false
 
           while IFS=$'\t' read -r status first_path second_path; do
@@ -287,11 +296,8 @@ jobs:
             fi
 
             case "$path" in
-              .github/*|docs/*|tests/*|README*|.gitignore|.gitattributes|.editorconfig|.deployignore)
+              .env*|storage/*|vendor/*|scripts/*|test-results/*|public/storage*|.github/*|docs/*|tests/*|README*|.gitignore|.gitattributes|.editorconfig|.deployignore)
                 continue
-                ;;
-              resources/js/*|resources/css/*|package.json|package-lock.json|vite.config.*|tailwind.config.*|postcss.config.*)
-                frontend_changed=true
                 ;;
               composer.json|composer.lock)
                 composer_changed=true
@@ -308,21 +314,35 @@ jobs:
             fi
           done < <(git diff --name-status --find-renames "$BASE_SHA" "$GITHUB_SHA")
 
-          if [ "$frontend_changed" = true ]; then
-            rm -rf incremental-release/build incremental-release/_app/bootstrap/ssr
-            cp -a release/build incremental-release/build
-            mkdir -p incremental-release/_app/bootstrap
-            cp -a release/_app/bootstrap/ssr incremental-release/_app/bootstrap/ssr
-          fi
-
-          rm -rf incremental-release/_app/app incremental-release/_app/routes
+          # Always ship a coherent application, migrations, catalog, and built SPA.
           mkdir -p incremental-release/_app
-          cp -a release/_app/app incremental-release/_app/app
-          cp -a release/_app/routes incremental-release/_app/routes
+          for runtime_dir in app routes config database; do
+            rm -rf "incremental-release/_app/$runtime_dir"
+            cp -a "release/_app/$runtime_dir" "incremental-release/_app/$runtime_dir"
+          done
+          mkdir -p incremental-release/_app/frontend
+          for frontend_dir in dist public; do
+            rm -rf "incremental-release/_app/frontend/$frontend_dir"
+            cp -a "release/_app/frontend/$frontend_dir" "incremental-release/_app/frontend/$frontend_dir"
+          done
+          for asset_dir in assets brand images music video; do
+            rm -rf "incremental-release/$asset_dir"
+            if [ -d "release/$asset_dir" ]; then cp -a "release/$asset_dir" "incremental-release/$asset_dir"; fi
+          done
+          cp -a release/favicon.svg incremental-release/favicon.svg
+          cp -a release/_app/.htaccess incremental-release/_app/.htaccess
 
-          mkdir -p incremental-release/_app/database/import
-          cp -a release/_app/database/import/portal_berita.sql \
-            incremental-release/_app/database/import/portal_berita.sql
+          python3 scripts/deployment/prepare_news_cleanup.py "$BASE_SHA" "$GITHUB_SHA" \
+            > /tmp/radina-news-cleanup.lftp
+
+          if find incremental-release -type f \( -name '.env' -o -name '.env.*' \) | grep -q .; then
+            echo "::error::A deployment must never contain production environment files."
+            exit 1
+          fi
+          if [ -e incremental-release/_app/storage ] || [ -e incremental-release/storage ]; then
+            echo "::error::A deployment must never upload runtime storage."
+            exit 1
+          fi
 
           mkdir -p incremental-release/_app/bootstrap/cache
           cp -a release/_app/bootstrap/cache/packages.php \
@@ -403,7 +423,7 @@ jobs:
         shell: bash
         run: |
           timestamp="$(date +%s)"
-          seed_sql_sha256="$(sha256sum database/import/portal_berita.sql | awk '{print $1}')"
+          seed_sql_sha256="$(sha256sum database/seeders/WeddingPlatformSeeder.php | awk '{print $1}')"
           release_manifest_sha256="$(sha256sum incremental-release/.radina-release-manifest.json | awk '{print $1}')"
           signature="$(printf '%s\n%s\n%s\n%s' "$timestamp" "$GITHUB_SHA" "$seed_sql_sha256" "$release_manifest_sha256" | openssl dgst -sha256 -hmac "$DEPLOY_HOOK_SECRET" -hex | awk '{print $2}')"
 
@@ -428,6 +448,13 @@ jobs:
             exit 1
           fi
 
+          python3 - "$response_file" <<'PY'
+          import json, sys
+          result = json.load(open(sys.argv[1]))
+          if result.get('licenses_preserved') is not True or result.get('license_backup_created') is not True:
+              raise SystemExit('Production did not confirm the license backup and preservation checks.')
+          PY
+
       - name: Mark successful production commit
         shell: bash
         run: |
@@ -450,6 +477,7 @@ jobs:
           $FTP_TLS_SETTINGS
           open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER"
           cd "$FTP_SERVER_DIR"
+          source /tmp/radina-news-cleanup.lftp
           put /tmp/radina-current-commit -o .radina-deploy-commit
           bye
           LFTP

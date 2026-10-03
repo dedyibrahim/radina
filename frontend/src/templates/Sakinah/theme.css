@@ -1,0 +1,36 @@
+.theme-sakinah {
+  --ivory: #faf6e9;
+  --cream: #eae9d7;
+  --ink: #43513a;
+  --sage: #647659;
+  --gold: #baa269;
+}
+.theme-sakinah .flower-motion {
+  display: none;
+}
+.theme-sakinah .hero-image-wrap {
+  border-radius: 50% 50% 0 0;
+  border: 5px double var(--gold);
+  padding: 7px;
+}
+.theme-sakinah .section-heading:before {
+  content: '✧';
+  font-size: 35px;
+  color: var(--gold);
+}
+.theme-sakinah .section {
+  background-image: radial-gradient(circle at 10px 10px, #baa26920 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.theme-sakinah .event-card {
+  border-radius: 100px 100px 8px 8px;
+  border: 1px solid var(--gold);
+  padding-top: 48px;
+  background: #faf6e9;
+}
+.theme-sakinah .desktop-ambience {
+  background: #d8dec9;
+}
+.theme-sakinah .cover-frame {
+  border-radius: 220px 220px 0 0;
+}

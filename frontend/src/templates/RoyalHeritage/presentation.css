@@ -1,0 +1,124 @@
+.design-royal-heritage {
+  --ivory: #113b32;
+  --cream: #113b32;
+  --ink: #fff6df;
+  --gold: #c7aa61;
+  --rose: #c7aa61;
+  --muted: #fff6df;
+  --theme-bg: #113b32;
+  --theme-ink: #fff6df;
+}
+
+/* 14: ceremonial double doors and symmetric portraits. */
+.cover-royal-heritage {
+  border: 12px double var(--gold);
+}
+.royal-door {
+  position: absolute;
+  inset: 0 50% 0 0;
+  border: 1px solid var(--gold);
+  background: repeating-linear-gradient(45deg, transparent 0 25px, #c7aa6110 26px 27px);
+  z-index: -1;
+  transform-origin: left;
+  transition: transform 0.8s;
+}
+.royal-door.right {
+  inset: 0 0 0 50%;
+  transform-origin: right;
+}
+.cover-leave-active .royal-door.left {
+  transform: perspective(800px) rotateY(-85deg);
+}
+.cover-leave-active .royal-door.right {
+  transform: perspective(800px) rotateY(85deg);
+}
+.royal-crest {
+  text-align: center;
+  padding: 40px 0;
+}
+.royal-crest > span {
+  display: block;
+  border: 2px double var(--gold);
+  border-radius: 50% 50% 40% 40%;
+  padding: 30px;
+  width: 140px;
+  margin: 0 auto 35px;
+  font-size: 28px;
+}
+.royal-portrait {
+  border: 4px double var(--gold);
+  padding: 20px;
+  text-align: center;
+}
+.royal-portrait img {
+  aspect-ratio: 3/4;
+  border-radius: 50% 50% 0 0;
+}
+.crest-mini {
+  font-size: 40px;
+  display: block;
+  color: var(--gold);
+  margin: 15px auto;
+}
+.royal-family {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  position: relative;
+}
+.royal-family article {
+  text-align: center;
+}
+.royal-family figure {
+  border: 4px double var(--gold);
+  padding: 7px;
+}
+.royal-family h3 {
+  font-size: clamp(1.4rem, 5vw, 2rem);
+}
+.royal-union {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ivory);
+  padding: 8px;
+  color: var(--gold);
+}
+.royal-chronicle li {
+  position: relative;
+  padding: 0 0 45px 35px;
+  border-left: 1px solid var(--gold);
+  margin-left: 10px;
+}
+.chronicle-seal {
+  position: absolute;
+  left: -15px;
+  background: var(--ivory);
+  border: 1px solid var(--gold);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+}
+.royal-chronicle figure {
+  padding: 8px;
+  border: 3px double var(--gold);
+  margin-top: 20px;
+}
+.royal-summons article {
+  text-align: center;
+  border: 5px double var(--gold);
+  padding: 35px 20px;
+  margin-bottom: 35px;
+}
+.design-royal-heritage .gallery-item {
+  padding: 8px;
+  border: 4px double var(--gold);
+  border-radius: 0;
+}
+.design-royal-heritage .bank-card {
+  border: 4px double var(--gold);
+  border-radius: 0;
+  background: transparent;
+}

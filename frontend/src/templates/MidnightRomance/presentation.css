@@ -1,0 +1,98 @@
+.design-dark .flower-motion {
+  display: none;
+}
+.cover-dark h1 {
+  font-size: clamp(4rem, 18vw, 7rem);
+  letter-spacing: -4px;
+}
+.cover-dark:after {
+  background: linear-gradient(180deg, #15101c33, #15101ccf) !important;
+}
+.hero-dark {
+  align-items: flex-start;
+  text-align: left;
+  justify-content: flex-end;
+  padding-bottom: 120px;
+}
+.hero-dark h1 {
+  font-size: clamp(4rem, 19vw, 7rem);
+}
+.couple-dark {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.couple-dark figure {
+  height: 75svh;
+}
+.couple-dark .person-copy {
+  padding: 28px;
+}
+.story-dark .story-composition {
+  border-left: 1px solid #b87988;
+  padding-left: 28px;
+  box-shadow: -5px 0 15px -13px #eea4c4;
+  text-align: left;
+}
+.story-dark .story-chapter:before {
+  content: '';
+  position: absolute;
+  left: -34px;
+  top: 25px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d2a0a6;
+  box-shadow: 0 0 20px #ff93b5;
+}
+.design-dark .event-card {
+  background: #ffffff08;
+  border: 1px solid #ffffff26;
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+}
+.design-dark .gallery-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+  gap: 12px;
+}
+.design-dark .gallery-item {
+  flex: 0 0 82%;
+  scroll-snap-align: center;
+  aspect-ratio: 3/4;
+}
+.design-dark .bank-card {
+  background: #ffffff0c;
+  border: 1px solid #ffffff22;
+  backdrop-filter: blur(12px);
+}
+.design-dark .floating-nav {
+  backdrop-filter: blur(20px);
+  background: #19121b99;
+  border: 1px solid #fff2;
+}
+.design-dark .design-cover h1,
+.design-dark .design-hero h1 {
+  font-size: clamp(2.5rem, var(--name-scale, 15vw), 6.4rem);
+  letter-spacing: -0.025em;
+}
+
+.design-dark .reveal-ready {
+  filter: blur(7px);
+  transform: scale(0.98);
+  transition:
+    opacity 1s ease,
+    filter 1s ease,
+    transform 1s ease;
+}
+.design-dark .reveal-ready.is-visible {
+  filter: blur(0);
+  transform: scale(1);
+}
+@media (min-width: 768px) {
+  .design-dark .couple-layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+}

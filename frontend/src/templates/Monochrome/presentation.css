@@ -1,0 +1,120 @@
+.design-monochrome {
+  --ivory: #f5f5f5;
+  --cream: #f5f5f5;
+  --ink: #121212;
+  --gold: #777777;
+  --rose: #777777;
+  --muted: #121212;
+  --theme-bg: #f5f5f5;
+  --theme-ink: #121212;
+}
+
+/* 17: documentary, grayscale, exhibition captions. No metallic accents. */
+.design-monochrome img {
+  filter: grayscale(1);
+}
+.design-monochrome .invitation-shell {
+  filter: grayscale(1);
+}
+.cover-monochrome {
+  background: #111;
+  color: white;
+  padding-bottom: 20px;
+}
+.contrast-intro h1 {
+  font-family: Arial, sans-serif;
+  font-weight: 300;
+  letter-spacing: -3px;
+}
+.contrast-reveal {
+  height: 36svh;
+  margin: 0;
+  animation: contrast-reveal 1.5s ease both;
+}
+.documentary-hero {
+  margin: -24px -24px 0;
+}
+.documentary-hero img {
+  height: 68svh;
+}
+.documentary-hero figcaption {
+  padding: 25px;
+}
+.documentary-hero h1 {
+  font-family: Arial, sans-serif;
+  font-size: clamp(2rem, 9vw, 4rem);
+}
+.documentary-people article {
+  margin-bottom: 60px;
+}
+.documentary-people img {
+  aspect-ratio: 4/5;
+}
+.documentary-people figcaption {
+  border-bottom: 1px solid currentColor;
+  letter-spacing: 1px;
+}
+.documentary-caption {
+  padding-top: 12px;
+}
+.documentary-archive > figure {
+  margin: 0 0 65px;
+}
+.documentary-archive figcaption {
+  padding-top: 20px;
+}
+.documentary-archive header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid currentColor;
+  padding-top: 15px;
+}
+.documentary-archive header b {
+  font-size: 30px;
+}
+.documentary-archive header span {
+  font-size: 9px;
+}
+.type-only-events > div {
+  border-top: 1px solid currentColor;
+  padding: 30px 0;
+}
+.type-only-events dt {
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+.type-only-events dd {
+  margin: 20px 0 0;
+  display: grid;
+  grid-template-columns: 75px minmax(0, 1fr);
+  gap: 20px;
+}
+.type-only-events dd > time {
+  font-size: 13px;
+  writing-mode: vertical-rl;
+}
+.design-monochrome .gallery-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+.design-monochrome .gallery-item {
+  border-radius: 0;
+  aspect-ratio: 4/3;
+}
+.design-monochrome .bank-card {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid currentColor;
+  border-radius: 0;
+}
+.design-monochrome .button {
+  background: #222;
+  color: white;
+  border-color: #222;
+}
+.design-monochrome .button-outline {
+  background: transparent;
+  color: inherit;
+}

@@ -1,0 +1,93 @@
+import { chromium } from '@playwright/test'
+import { mkdir, writeFile } from 'node:fs/promises'
+import assert from 'node:assert/strict'
+const sizes = [[320,568],[360,800],[375,812],[390,844],[414,896],[430,932],[768,1024],[1024,768],[1280,720],[1440,900]]
+const baseURL = process.env.TEST_URL || 'http://localhost:5173'
+await mkdir('test-results', { recursive: true })
+const browser = await chromium.launch({ headless: true, ...(process.env.TEST_BROWSER_CHANNEL ? {channel:process.env.TEST_BROWSER_CHANNEL} : {}) })
+const report = []
+try {
+ for (const [width,height] of sizes) {
+  const context = await browser.newContext({ viewport:{width,height}, hasTouch:true, permissions:['clipboard-read','clipboard-write'], reducedMotion:'reduce' })
+  const page = await context.newPage()
+  const errors = []
+  page.on('pageerror', e => errors.push(e.message))
+  page.on('console', msg => { if(msg.type()==='error') errors.push(msg.text()) })
+  await page.goto(`${baseURL}/?to=${encodeURIComponent('Dedy Ibrahim dan Keluarga Besar Ramadhani Pratama yang Berbahagia')}`,{waitUntil:'networkidle'})
+  async function overflow(label) {
+   const dimensions = await page.evaluate(() => ({ viewport:innerWidth, content:document.documentElement.scrollWidth }))
+   assert(dimensions.content <= dimensions.viewport, `${label} overflow at ${width}: ${JSON.stringify(dimensions)}`)
+  }
+  await overflow('cover')
+  const guest = page.locator('.guest-name')
+  assert(await guest.evaluate(el => el.scrollWidth <= el.clientWidth), 'Guest overflow')
+  await page.screenshot({path:`test-results/cover-${width}.png`,fullPage:true})
+  await page.getByRole('button',{name:'Buka Undangan'}).click()
+  await page.locator('#rsvp').waitFor({state:'attached'})
+  await page.waitForTimeout(300)
+  await page.getByRole('button',{name:'Matikan musik'}).waitFor()
+  await overflow('invitation')
+  for (const section of await page.locator('.section').all()) { await section.scrollIntoViewIfNeeded(); await page.waitForTimeout(30); await overflow('section') }
+  await page.locator('#home').scrollIntoViewIfNeeded()
+  await page.locator('.floating-nav a[href="#home"][aria-current="location"]').waitFor()
+  await page.screenshot({path:`test-results/hero-${width}.png`,fullPage:false})
+  await page.screenshot({path:`test-results/invitation-${width}.png`,fullPage:true})
+  const imageErrors = await page.locator('img').evaluateAll(imgs => imgs.filter(img => img.complete && img.naturalWidth===0).map(img=>img.src))
+  assert.equal(imageErrors.length,0,`Missing images: ${imageErrors}`)
+  assert.equal(await page.locator('.countdown > div').count(),4)
+  await page.locator('#rsvp-name').fill('Dedy Ibrahim')
+  await page.getByLabel('Tambah jumlah tamu').click()
+  await page.getByRole('radio',{name:'Hadir',exact:true}).check()
+  await page.locator('#rsvp-message').fill('Sampai jumpa di hari bahagia kalian.')
+  await page.getByRole('button',{name:'Kirim Konfirmasi'}).click()
+  await page.getByText('Terkirim! Terima kasih atas konfirmasinya.').waitFor()
+  const saved = await page.evaluate(()=>JSON.parse(localStorage.getItem('alya-rizky-v1:rsvps')))
+  assert.equal(saved[0].guests,2)
+  await page.locator('#wish-name').fill('Dedy')
+  await page.locator('#wish-message').fill('Semoga selalu bahagia dan penuh cinta.')
+  await page.getByRole('button',{name:'Kirim Ucapan'}).click()
+  await page.locator('.wish').first().getByText('Dedy',{exact:true}).waitFor()
+  await page.getByRole('button',{name:'Kirim Hadiah',exact:true}).click()
+  const dialog = page.getByRole('dialog')
+  await dialog.waitFor()
+  const box = await dialog.boundingBox()
+  assert(box.x>=0 && box.y>=0 && box.x+box.width<=width+1 && box.y+box.height<=height+1,'Modal outside viewport')
+  await overflow('gift modal')
+  await page.keyboard.press('Escape')
+  await page.locator('.gallery-item').first().click()
+  await page.getByRole('dialog').waitFor()
+  await page.keyboard.press('ArrowRight')
+  await page.locator('.lightbox-controls').getByText('2 / 6').waitFor()
+  await page.locator('.lightbox').evaluate(el => {
+    const start = new Event('touchstart',{bubbles:true}); Object.defineProperty(start,'touches',{value:[{clientX:200}]}); el.dispatchEvent(start)
+    const end = new Event('touchend',{bubbles:true}); Object.defineProperty(end,'changedTouches',{value:[{clientX:90}]}); el.dispatchEvent(end)
+  })
+  await page.locator('.lightbox-controls').getByText('3 / 6').waitFor()
+  await page.keyboard.press('Escape')
+  await page.getByRole('button',{name:'Salin Rekening'}).first().click()
+  await page.getByText('Nomor rekening berhasil disalin.').waitFor()
+  const downloadPromise = page.waitForEvent('download')
+  await page.getByRole('button',{name:'Simpan Tanggal'}).click()
+  const download = await downloadPromise
+  assert.equal(download.suggestedFilename(),'Alya-Rizky-Wedding.ics')
+  await page.getByRole('button',{name:'Muat video cerita cinta'}).click()
+  await page.locator('video').evaluate(el=>new Promise((resolve,reject)=>{if(el.readyState>=1)resolve();else{el.onloadedmetadata=resolve;el.onerror=()=>reject(new Error('Video unavailable'))}}))
+  assert.equal(await page.locator('video').evaluate(el=>el.autoplay),false)
+  assert.equal(errors.length,0,`Browser errors: ${errors.join('\n')}`)
+  report.push({width,height,status:'passed',consoleErrors:errors,missingImages:imageErrors})
+  console.log(`PASS ${width} × ${height}`)
+  await context.close()
+ }
+ const context=await browser.newContext({viewport:{width:844,height:390},reducedMotion:'reduce'})
+ const page=await context.newPage()
+ await page.goto(baseURL)
+ assert.equal(await page.locator('.guest-name').textContent(),'Tamu Undangan')
+ await page.getByRole('button',{name:'Buka Undangan'}).click()
+ await page.locator('#rsvp').waitFor({state:'attached'})
+ assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Landscape overflow')
+ report.push({width:844,height:390,status:'passed',note:'landscape and default guest'})
+ await context.close()
+} finally {
+ await writeFile('test-results/responsive-report.json',JSON.stringify(report,null,2))
+ await browser.close()
+}

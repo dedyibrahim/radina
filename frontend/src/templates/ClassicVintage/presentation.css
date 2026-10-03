@@ -1,0 +1,113 @@
+.cover-letters {
+  background: #cbb694;
+  justify-content: center;
+  padding: 50px 22px;
+}
+.cover-letters h1 {
+  font-size: clamp(3rem, 14vw, 5rem);
+}
+.cover-letters .cover-invitation {
+  margin-top: 28px;
+}
+.hero-letters {
+  min-height: auto;
+  padding: 45px 22px;
+  background: #e5d6b9;
+}
+.hero-letters .hero-scroll {
+  display: block;
+}
+.hero-letters {
+  padding-bottom: 90px;
+}
+.couple-letters figure {
+  aspect-ratio: 3/4;
+  background: white;
+  padding: 10px 10px 38px;
+  box-shadow: 4px 5px 0 #53442a18;
+  transform: rotate(-4deg);
+}
+.couple-letters .person-composition:nth-child(2) figure {
+  transform: rotate(4deg);
+}
+.couple-letters img {
+  filter: sepia(0.4);
+}
+.story-letters .story-chapter {
+  background: #f9f0dd;
+  padding: 16px;
+  box-shadow: 4px 5px 0 #b7a38b;
+  transform: rotate(-2deg);
+}
+.story-letters .story-chapter:nth-child(even) {
+  transform: rotate(2deg);
+}
+.story-letters .chapter-number {
+  border: 1px dashed #876947;
+  padding: 8px;
+  display: inline-block;
+  transform: rotate(-5deg);
+}
+.design-letters .event-card {
+  border: 1px dashed #957b57;
+  border-radius: 0;
+  background: #fff5de;
+  box-shadow: 5px 5px 0 #beaa8d;
+}
+.design-letters .gallery-grid {
+  gap: 22px 16px;
+  overflow: visible;
+}
+.design-letters .gallery-item {
+  padding: 7px 7px 25px;
+  background: white;
+  box-shadow: 3px 5px 15px #26341b18;
+  border-radius: 0;
+  transform: rotate(-5deg);
+}
+.design-letters .gallery-item:nth-child(even) {
+  transform: rotate(5deg);
+}
+.design-letters .gallery-item img {
+  filter: sepia(0.45);
+}
+.design-letters .bank-card {
+  border: 1px dashed #9b7e58;
+  border-radius: 0;
+  background: #faf1da;
+}
+.closing-letters {
+  background: #eedfc4;
+}
+.closing-letters .closing-letter {
+  border: 1px solid #bda584;
+  background: #fff6e1;
+  padding: 28px;
+  text-align: left;
+}
+.design-letters .floating-nav {
+  border-radius: 0;
+  background: #f5e6ca;
+  border-top: 3px solid #ac8c63;
+}
+.design-letters .design-cover h1,
+.design-letters .design-hero h1 {
+  font-size: clamp(2.5rem, var(--name-scale, 15vw), 6.4rem);
+  letter-spacing: -0.025em;
+}
+
+.cover-letters .envelope-flap {
+  transform-origin: top;
+  transition: transform 0.7s ease;
+}
+.cover-leave-active .envelope-flap {
+  transform: rotateX(170deg);
+}
+.cover-leave-active .letter-sheet {
+  transform: translateY(-50px) rotate(0);
+  transition: transform 0.7s ease;
+}
+
+.design-letters .invitation-letter h1 {
+  font-style: italic;
+}

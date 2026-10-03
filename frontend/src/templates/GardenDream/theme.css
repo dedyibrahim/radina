@@ -1,0 +1,33 @@
+.theme-garden {
+  --ivory: #f1f5eb;
+  --cream: #e3ead9;
+  --ink: #34482f;
+  --sage: #526c4b;
+  --gold: #a1aa7d;
+}
+.theme-garden .hero-image-wrap {
+  border-radius: 50% 50% 5px 5px;
+  border: 9px double #a1aa7d;
+  padding: 7px;
+}
+.theme-garden .section {
+  background-image: radial-gradient(ellipse at 0 100%, #c5d9b540, transparent 50%);
+}
+.theme-garden .couple-grid {
+  gap: 45px;
+}
+.theme-garden .bride-portrait,
+.theme-garden .groom-portrait {
+  border-radius: 50%;
+}
+.theme-garden .event-card {
+  background: #fff9;
+  border-radius: 120px 120px 12px 12px;
+  padding-top: 50px;
+}
+.theme-garden .desktop-ambience {
+  background: radial-gradient(ellipse, #e3ead9, #b3c5a3);
+}
+.theme-garden .portrait-wrap > img {
+  border-radius: 50%;
+}

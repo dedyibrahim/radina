@@ -1,0 +1,56 @@
+.theme-minimal {
+  --ivory: #fff;
+  --cream: #f5f3ee;
+  --ink: #3e3d3b;
+  --sage: #79756c;
+  --gold: #b6a991;
+}
+.theme-minimal .flower-motion,
+.theme-minimal .botanical-ornament,
+.theme-minimal .hero-floral,
+.theme-minimal .hero-top {
+  display: none;
+}
+.theme-minimal .hero-image-wrap {
+  border-radius: 0;
+  width: calc(100% - 48px);
+  aspect-ratio: 4/5;
+}
+.theme-minimal .hero-image-wrap img {
+  border-radius: 0;
+}
+.theme-minimal .hero-title h1 {
+  font-size: clamp(3rem, 12vw, 5rem);
+  font-weight: 300;
+}
+.theme-minimal .section {
+  padding-block: 85px;
+}
+.theme-minimal .event-card,
+.theme-minimal .bank-card {
+  border-radius: 0;
+  border: 0;
+  border-top: 1px solid #ddd;
+  background: transparent;
+}
+.theme-minimal .section-heading .eyebrow {
+  letter-spacing: 4px;
+}
+.theme-minimal .desktop-ambience {
+  background: #f2f1ed;
+}
+.theme-minimal .arch-outline {
+  display: none;
+}
+.theme-minimal .portrait-wrap > img {
+  border-radius: 0;
+}
+.theme-minimal .cover-frame {
+  border: 0;
+}
+.theme-minimal .cover-floral {
+  display: none;
+}
+.theme-minimal .couple-names {
+  font-weight: 300;
+}

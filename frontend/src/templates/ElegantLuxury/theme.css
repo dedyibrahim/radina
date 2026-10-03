@@ -1,0 +1,55 @@
+.theme-luxury {
+  --ivory: #241d19;
+  --cream: #302720;
+  --ink: #f1e0c4;
+  --sage: #cfac74;
+  --gold: #d7b477;
+}
+.theme-luxury .hero-image-wrap {
+  border-radius: 0;
+  border: 1px solid var(--gold);
+  padding: 12px;
+  width: 85%;
+}
+.theme-luxury .hero-image-wrap img {
+  border-radius: 0;
+}
+.theme-luxury .hero-title h1 {
+  font-size: clamp(3rem, 11vw, 5.8rem);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+.theme-luxury .section {
+  border-bottom: 1px solid #d7b47744;
+}
+.theme-luxury .section-heading:before {
+  content: '◆';
+  display: block;
+  color: var(--gold);
+  margin-bottom: 15px;
+}
+.theme-luxury .flower-motion,
+.theme-luxury .hero-floral {
+  display: none;
+}
+.theme-luxury .event-card {
+  border: 1px solid var(--gold);
+  border-radius: 0;
+  background: transparent;
+}
+.theme-luxury .desktop-ambience {
+  background: radial-gradient(ellipse, #655035, #16110e);
+}
+@media (max-width: 359px) {
+  .theme-luxury .hero-title h1 {
+    letter-spacing: 1px;
+  }
+}
+.theme-luxury .couple-names {
+  font-size: clamp(3.6rem, 17vw, 6rem);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+.theme-luxury .hero-title {
+  max-width: 100%;
+}

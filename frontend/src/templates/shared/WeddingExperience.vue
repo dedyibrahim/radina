@@ -1,0 +1,83 @@
+<script setup>
+import { ref, provide, inject, nextTick, onUnmounted, watch } from 'vue'
+import InvitationContent from './DesignContent.vue'
+import AudioPlayer from './PlaylistPlayer.vue'
+import FloatingNavigation from '../RomanticFloral/components/FloatingNavigation.vue'
+import BaseToast from '../../components/BaseToast.vue'
+import BotanicalOrnament from '../RomanticFloral/components/BotanicalOrnament.vue'
+import { useWedding } from '../../composables/useWedding'
+import { getGuestName } from '../../composables/useGuest'
+const props = defineProps({
+  wedding: { type: Object, required: true },
+  preview: Boolean,
+  theme: { type: String, default: 'floral' },
+  design: { type: String, default: 'amore' },
+  coverComponent: { type: Object, required: true },
+  heroComponent: { type: Object, required: true },
+  presentationComponents: { type: Object, default: () => ({}) },
+})
+const wedding = useWedding(props)
+provide('weddingDesign', props.design)
+const opened = inject('invitationOpened', ref(false)),
+  guest = getGuestName(),
+  toast = ref('')
+const { error, play } = inject('weddingAudio')
+let timer
+function showToast(message) {
+  toast.value = message
+  clearTimeout(timer)
+  timer = setTimeout(() => {
+    toast.value = ''
+  }, 4500)
+}
+watch(error, (value) => {
+  if (value) showToast(value)
+})
+async function openInvitation() {
+  if (wedding.settings.enable_music && wedding.music && wedding.autoplayAfterOpen) play()
+  opened.value = true
+  await nextTick()
+  window.scrollTo({ top: 0, behavior: 'instant' })
+  document.getElementById('invitation')?.focus({ preventScroll: true })
+}
+onUnmounted(() => clearTimeout(timer))
+</script>
+<template>
+  <div class="wedding-page" :class="[`theme-${theme}`, `design-${design}`]">
+    <div class="desktop-ambience" aria-hidden="true">
+      <BotanicalOrnament class="ambient-left" /><BotanicalOrnament class="ambient-right" />
+      <div class="desktop-note">
+        <div class="desktop-monogram">
+          {{ Array.from(wedding.bride.shortName)[0] }} <em>&</em>
+          {{ Array.from(wedding.groom.shortName)[0] }}
+        </div>
+        <div class="tiny-divider"><span></span><i>✦</i><span></span></div>
+        <p>A PROMISE<br />OF FOREVER</p>
+        <small>{{ wedding.date.day }} {{ wedding.date.month }} {{ wedding.date.year }}</small>
+      </div>
+      <div class="desktop-right-note">
+        <span>Love is a journey.</span>
+        <p>Thank you for being<br />a part of ours.</p>
+      </div>
+    </div>
+    <main class="invitation-shell" id="invitation" tabindex="-1">
+      <Transition name="cover" mode="out-in"
+        ><component
+          :is="coverComponent"
+          v-if="!opened"
+          :guest="guest"
+          @open="openInvitation" /><InvitationContent
+          v-else
+          :hero-component="heroComponent"
+          :presentation-components="presentationComponents"
+          :design="design"
+          :guest="guest"
+          @toast="showToast"
+      /></Transition>
+    </main>
+    <template v-if="opened"
+      ><AudioPlayer
+        v-if="wedding.settings.enable_music && wedding.music" /><FloatingNavigation /></template
+    ><BaseToast :message="toast" />
+  </div>
+</template>

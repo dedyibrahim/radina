@@ -1,0 +1,131 @@
+.hero-daydream h1 {
+  font-size: clamp(2.8rem, 12vw, 4.5rem);
+}
+.hero-daydream h1 i {
+  display: inline;
+}
+.cover-daydream {
+  background: #f8e6e5;
+  color: #654c70;
+  justify-content: center;
+  padding-top: 35px;
+}
+.cover-daydream h1 {
+  font-size: clamp(2.8rem, 13vw, 5rem);
+}
+.cover-daydream .cover-invitation {
+  margin-top: 0;
+}
+.hero-daydream {
+  min-height: auto;
+  background: linear-gradient(140deg, #fbe5df, #e9e0f5);
+  padding-bottom: 90px;
+}
+.hero-daydream .collage-main {
+  border-radius: 45% 45% 30% 30%;
+  transform: rotate(-5deg);
+}
+.hero-daydream .collage-small {
+  border-radius: 12px;
+}
+.couple-daydream figure {
+  aspect-ratio: 3/4;
+  background: white;
+  padding: 10px 10px 38px;
+  box-shadow: 4px 5px 0 #53442a18;
+  transform: rotate(-4deg);
+}
+.couple-daydream .person-composition:nth-child(2) figure {
+  transform: rotate(4deg);
+}
+.couple-daydream .person-copy {
+  background: #fff6fa;
+  border-radius: 0 0 35px 0;
+  padding: 28px;
+}
+.story-daydream .story-chapter {
+  background: #eee0f4;
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: 7px 8px 0 #e0b9c44a;
+}
+.story-daydream .story-chapter:nth-child(even) {
+  background: #fbe2cf;
+  transform: rotate(2deg);
+}
+.design-daydream .event-card {
+  border: 0;
+  border-radius: 20px;
+  background: #f0dfef;
+  position: relative;
+}
+.design-daydream .event-card:before,
+.design-daydream .event-card:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #fff9f5;
+}
+.design-daydream .event-card:before {
+  left: -13px;
+}
+.design-daydream .event-card:after {
+  right: -13px;
+}
+.design-daydream .gallery-grid {
+  gap: 22px 16px;
+  overflow: visible;
+}
+.design-daydream .gallery-item {
+  border: 5px solid white;
+  border-radius: 35px 12px 40px 10px;
+  transform: rotate(-4deg);
+}
+.design-daydream .gallery-item:nth-child(even) {
+  transform: rotate(4deg);
+}
+.design-daydream .bank-card {
+  border: 0;
+  border-top: 15px solid #dbb6d0;
+  background: #fff0f7;
+  border-radius: 0 0 20px 20px;
+}
+.closing-daydream {
+  background: linear-gradient(160deg, #efdae7, #dce4ef);
+  color: #604e63;
+}
+.closing-daydream > img {
+  position: relative;
+  width: 75%;
+  height: 40svh;
+  border: 8px solid white;
+  border-radius: 120px 120px 20px 20px;
+  z-index: 0;
+  margin: 20px;
+}
+.closing-daydream:after {
+  display: none;
+}
+.design-daydream .floating-nav {
+  background: #f8edf6;
+  border: 2px solid white;
+  border-radius: 24px;
+}
+.design-daydream .design-cover h1,
+.design-daydream .design-hero h1 {
+  font-size: clamp(2.5rem, var(--name-scale, 15vw), 6.4rem);
+  letter-spacing: -0.025em;
+}
+
+.design-daydream .hero-copy h1,
+.design-daydream .section-heading h2 {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+.design-daydream .hero-copy h1 {
+  font-size: clamp(2.3rem, var(--name-scale, 14vw), 4.5rem);
+}

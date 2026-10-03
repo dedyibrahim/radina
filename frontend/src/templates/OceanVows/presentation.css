@@ -1,0 +1,130 @@
+.design-ocean-vows {
+  --ivory: #eef8fa;
+  --cream: #eef8fa;
+  --ink: #17465a;
+  --gold: #70b6c8;
+  --rose: #70b6c8;
+  --muted: #17465a;
+  --theme-bg: #eef8fa;
+  --theme-ink: #17465a;
+}
+
+/* 13: a horizon, a shoreline, then a destination itinerary. */
+.ocean-cover-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.ocean-cover-photo:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#09283215, #092832d9);
+}
+.cover-ocean-vows {
+  color: white;
+  justify-content: flex-end;
+}
+.horizon-title {
+  margin-top: 50svh;
+  text-align: center;
+}
+.wave-line {
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 120%;
+  height: 50px;
+  border-radius: 50% 50% 0 0;
+  background: #eef8fa;
+  animation: wave-rock 8s ease-in-out infinite;
+  pointer-events: none;
+}
+.cover-ocean-vows .wave-line {
+  z-index: -1;
+}
+.ocean-horizon {
+  position: relative;
+  height: 78svh;
+  margin: -24px -24px 0;
+  overflow: hidden;
+}
+.ocean-horizon:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent, #143c4e99);
+}
+.ocean-horizon h1 {
+  position: absolute;
+  bottom: 60px;
+  left: 25px;
+  right: 25px;
+  color: white;
+  z-index: 1;
+}
+.shoreline-people article {
+  margin-bottom: 60px;
+}
+.wave-portrait {
+  border-radius: 45% 55% 40% 60%;
+  overflow: hidden;
+  margin: 0 25px;
+}
+.shoreline-biography {
+  text-align: center;
+  padding: 25px 0;
+}
+.tidal-journey article {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 15px;
+  margin-bottom: 50px;
+}
+.wave-marker {
+  grid-row: 1/3;
+  font-size: 38px;
+  color: var(--gold);
+  border-right: 1px solid var(--gold);
+}
+.tidal-journey figure {
+  grid-column: 2;
+}
+.coastal-itinerary article {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  gap: 10px 15px;
+  padding: 35px 0;
+  border-bottom: 1px solid var(--gold);
+}
+.coastal-itinerary time {
+  font-size: 20px;
+}
+.coastal-itinerary > article > span {
+  grid-column: 1;
+  font-size: 35px;
+  color: var(--gold);
+}
+.coastal-itinerary > article > div {
+  grid-column: 2;
+  grid-row: 1/3;
+}
+.design-ocean-vows .gallery-grid,
+.design-neon-love .gallery-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 15px;
+  padding-bottom: 15px;
+}
+.design-ocean-vows .gallery-item,
+.design-neon-love .gallery-item {
+  flex: 0 0 83%;
+  scroll-snap-align: center;
+  aspect-ratio: 3/4;
+}
+.design-ocean-vows .bank-card {
+  background: #fffcf4;
+  border: 0;
+  border-radius: 35px 35px 5px 5px;
+}

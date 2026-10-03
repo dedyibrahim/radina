@@ -1,0 +1,128 @@
+.cover-pure {
+  background: #fff;
+  color: #242424;
+  justify-content: flex-start;
+  padding-top: 12svh;
+}
+.cover-pure h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(4rem, 19vw, 8rem);
+  letter-spacing: -3px;
+  margin: 45px 0;
+}
+.cover-pure .cover-invitation {
+  margin-top: 50px;
+}
+.hero-pure {
+  min-height: auto;
+  padding: 0;
+  text-align: left;
+  background: white;
+}
+.design-pure .flower-motion {
+  display: none;
+}
+.design-pure .tiny-divider,
+.design-pure .botanical-ornament {
+  display: none;
+}
+.couple-pure .couple-layout {
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  text-align: left;
+}
+.couple-pure figure {
+  aspect-ratio: 3/4;
+}
+.couple-pure .person-copy h3 {
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+}
+.story-pure .story-chapter {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  border-top: 1px solid #ddd;
+  padding-top: 18px;
+  text-align: left;
+}
+.story-pure .story-chapter > img {
+  display: none;
+}
+.story-pure .chapter-copy {
+  display: contents;
+}
+.story-pure .chapter-copy h3,
+.story-pure .chapter-copy p {
+  grid-column: 2;
+}
+.story-pure .chapter-number {
+  font-size: 28px;
+  grid-row: 1/3;
+}
+.design-pure .event-card {
+  box-shadow: none;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0;
+  text-align: left;
+  padding: 25px 0;
+}
+.design-pure .event-number {
+  float: right;
+  font-size: 55px;
+}
+.design-pure .event-venue {
+  align-items: flex-start;
+}
+.design-pure .gallery-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.design-pure .gallery-item {
+  aspect-ratio: 1;
+  border-radius: 0;
+  grid-row: auto;
+  grid-column: auto;
+}
+.design-pure .bank-card {
+  background: none;
+  border: 0;
+  border-top: 1px solid currentColor;
+  box-shadow: none;
+  border-radius: 0;
+  text-align: left;
+}
+.closing-pure {
+  background: #fff;
+  color: #222;
+  text-align: left;
+}
+.design-pure .floating-nav {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 12px #0001;
+}
+@media (min-width: 768px) {
+  .design-pure .floating-nav {
+    top: 15px;
+    bottom: auto;
+  }
+  .design-pure .music-player {
+    bottom: 24px;
+  }
+}
+@media (max-width: 359px) {
+  .couple-pure .couple-layout {
+    gap: 12px;
+  }
+}
+.design-pure .design-cover h1,
+.design-pure .design-hero h1 {
+  font-size: clamp(2.5rem, var(--name-scale, 15vw), 6.4rem);
+  letter-spacing: -0.025em;
+}
+
+.design-pure .reveal-ready,
+.design-pure .reveal-ready.is-visible {
+  transform: none;
+}

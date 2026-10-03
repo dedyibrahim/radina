@@ -1,0 +1,1823 @@
+{
+  "romantic-floral": {
+    "name": "Amore Bloom",
+    "opening_text": "Two hearts, one journey, and a lifetime to share.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Piano"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Amore Bloom",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "The people in our story",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "A promise to keep",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Love, in full bloom",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Join our celebration",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Our little forever",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Will you join us?",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Words of love",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, always",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Where love blooms, a lifetime begins.",
+    "quote_source": "Our promise",
+    "closing_text": "May our love bloom with every prayer you bring.",
+    "gallery_style": "Floral masonry"
+  },
+  "elegant-luxury": {
+    "name": "Noir Élégance",
+    "opening_text": "An extraordinary evening. An everlasting promise.",
+    "order": [
+      "home",
+      "couple",
+      "event",
+      "gallery",
+      "story",
+      "quote",
+      "date",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Jazz",
+      "Classic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Noir Élégance",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "The people in our story",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "A promise to keep",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "The chapters",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "An invitation to elegance",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "The editorial",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Will you join us?",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Words of love",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, always",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Some promises deserve an extraordinary evening.",
+    "quote_source": "Our promise",
+    "closing_text": "Your presence completes our most extraordinary evening.",
+    "gallery_style": "Asymmetric editorial grid"
+  },
+  "minimalist-white": {
+    "name": "Pure",
+    "opening_text": "We're getting married.",
+    "order": [
+      "home",
+      "couple",
+      "event",
+      "date",
+      "gallery",
+      "quote",
+      "story",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Piano",
+      "Acoustic"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Pure",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "The people in our story",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "A promise to keep",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Us, in four moments",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Mark your calendar",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Selected memories",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Will you join us?",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Words of love",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, always",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Simply you. Simply us. Always.",
+    "quote_source": "Our promise",
+    "closing_text": "Thank you for sharing this simple, beautiful day with us.",
+    "gallery_style": "Clean grid"
+  },
+  "nusantara-heritage": {
+    "name": "Nusantara",
+    "opening_text": "Dengan penuh rasa syukur, kami mengundang Anda menjadi bagian dari hari bahagia kami.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Traditional",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Nusantara",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Mempelai",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "A promise to keep",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Kisah yang terukir",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Pawiwahan · Hari Bahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Will you join us?",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Words of love",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, always",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Dua hati, dua keluarga, satu ikatan yang dirawat dengan cinta.",
+    "quote_source": "Our promise",
+    "closing_text": "Kehadiran dan doa restu Anda menjadi kehormatan bagi kedua keluarga kami.",
+    "gallery_style": "Framed heritage gallery"
+  },
+  "garden-dream": {
+    "name": "Verdant Vows",
+    "opening_text": "Together, beneath the trees and open skies.",
+    "order": [
+      "home",
+      "quote",
+      "story",
+      "couple",
+      "event",
+      "date",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Acoustic",
+      "Folk"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Verdant Vows",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "The people in our story",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "A promise to keep",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Growing together",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Meet us in the garden",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "The memory board",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Will you join us?",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Words of love",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, always",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Our love grows gently, like a garden after rain.",
+    "quote_source": "Our promise",
+    "closing_text": "Thank you for growing this garden of memories with us.",
+    "gallery_style": "Garden photo board"
+  },
+  "classic-vintage": {
+    "name": "Heritage Letters",
+    "opening_text": "A timeless story, written together.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "quote",
+      "event",
+      "gallery",
+      "date",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Jazz",
+      "Classic"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Heritage Letters",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "The people in our story",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "A promise to keep",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Pages from our scrapbook",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "You are cordially invited",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "The family album",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Will you join us?",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Words of love",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, always",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "In every letter, in every lifetime, I would choose you.",
+    "quote_source": "Our promise",
+    "closing_text": "With love, and a lifetime of stories still to write.",
+    "gallery_style": "Vintage album"
+  },
+  "midnight-romance": {
+    "name": "After Dark",
+    "opening_text": "Meet us where the stars begin.",
+    "order": [
+      "home",
+      "couple",
+      "gallery",
+      "story",
+      "event",
+      "date",
+      "quote",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Modern",
+      "Cinematic"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "After Dark",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "The people in our story",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "A promise to keep",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Our constellation",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "One unforgettable night",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "After hours",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Will you join us?",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Words of love",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, always",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Even the longest night leads us back to each other.",
+    "quote_source": "Our promise",
+    "closing_text": "Thank you for being the light in our unforgettable night.",
+    "gallery_style": "Night snap reel"
+  },
+  "sakinah": {
+    "name": "Sakinah",
+    "opening_text": "Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan pernikahan kami.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "event",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Sakinah",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Dua insan, satu doa",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "A promise to keep",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Langkah menuju sakinah",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Akad & Walimatul Ursy",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Kenangan penuh syukur",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Will you join us?",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Words of love",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, always",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Dan dijadikan-Nya di antaramu rasa kasih dan sayang.",
+    "quote_source": "QS. Ar-Rum: 21",
+    "closing_text": "Semoga Allah SWT memberkahi pernikahan kami dan setiap langkah keluarga yang kami bangun.",
+    "gallery_style": "Geometric gallery"
+  },
+  "eternal-story": {
+    "name": "Frame by Frame",
+    "opening_text": "Every story has a beginning. This is ours.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "gallery",
+      "event",
+      "date",
+      "quote",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Cinematic"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Frame by Frame",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "The people in our story",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "A promise to keep",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "A story in chapters",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "The next scene",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "The reel",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Will you join us?",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Words of love",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "A film about us",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Every frame of our story led me to you.",
+    "quote_source": "Our promise",
+    "closing_text": "Thank you for being part of the story. The next chapter begins together.",
+    "gallery_style": "Cinematic reel"
+  },
+  "blush": {
+    "name": "Daydream",
+    "opening_text": "Our favourite adventure starts with you.",
+    "order": [
+      "home",
+      "couple",
+      "story",
+      "gallery",
+      "event",
+      "date",
+      "quote",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Acoustic",
+      "Upbeat"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Daydream",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "The people in our story",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "A promise to keep",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Little things, big love",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "A ticket to our happy day",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Our happy collection",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Will you join us?",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Words of love",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, always",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "All the little things became our greatest adventure.",
+    "quote_source": "Our promise",
+    "closing_text": "Bring your smiles. We will keep them in our favourite daydream.",
+    "gallery_style": "Creative collage"
+  },
+  "celestial": {
+    "name": "Celestial",
+    "opening_text": "Two souls, written in the stars.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "story",
+      "date",
+      "event",
+      "livestream",
+      "gallery",
+      "video",
+      "location",
+      "gift",
+      "rsvp",
+      "wishes",
+      "closing"
+    ],
+    "mood": [
+      "Ambient",
+      "Piano"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Written in the stars",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Two lives, one promise",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Words we carry",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Written in the stars",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Under the same moon",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Our constellation",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Moonlight wishes",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Join our day",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Your words, our keepsake",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, Luna & Rayhan",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Two souls, written in the stars.",
+    "quote_source": "Our promise",
+    "closing_text": "We are grateful for every moment shared with you. With love, Luna & Rayhan.",
+    "category": "Dreamy",
+    "gallery_style": "Star-map grid",
+    "style": "Dreamy / Celestial"
+  },
+  "editorial": {
+    "name": "Editorial",
+    "opening_text": "A new issue. A lifetime together.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "event",
+      "livestream",
+      "gallery",
+      "video",
+      "quote",
+      "date",
+      "gift",
+      "location",
+      "rsvp",
+      "wishes",
+      "closing"
+    ],
+    "mood": [
+      "Classic",
+      "Jazz"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "The wedding issue",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Two lives, one promise",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Words we carry",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "The chapters",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "The celebration issue",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "The photo spread",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "A token of love",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Join our day",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Your words, our keepsake",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, Bianca & Julian",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "A new issue. A lifetime together.",
+    "quote_source": "Our promise",
+    "closing_text": "We are grateful for every moment shared with you. With love, Bianca & Julian.",
+    "category": "Modern",
+    "gallery_style": "Editorial spread",
+    "style": "Fashion Editorial"
+  },
+  "ocean-vows": {
+    "name": "Ocean Vows",
+    "opening_text": "Where the horizon meets our forever.",
+    "order": [
+      "home",
+      "event",
+      "livestream",
+      "couple",
+      "story",
+      "gallery",
+      "video",
+      "date",
+      "quote",
+      "location",
+      "gift",
+      "rsvp",
+      "wishes",
+      "closing"
+    ],
+    "mood": [
+      "Acoustic",
+      "Tropical"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "At the edge of forever",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Two lives, one promise",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Words we carry",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Tides of us",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Your destination itinerary",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "By the shore",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Gifts from the shore",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Join our day",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Your words, our keepsake",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, Marina & Rio",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Where the horizon meets our forever.",
+    "quote_source": "Our promise",
+    "closing_text": "We are grateful for every moment shared with you. With love, Marina & Rio.",
+    "category": "Destination",
+    "gallery_style": "Coastal reel",
+    "style": "Beach Destination"
+  },
+  "royal-heritage": {
+    "name": "Royal Heritage",
+    "opening_text": "A celebration worthy of our shared history.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "date",
+      "event",
+      "livestream",
+      "story",
+      "gallery",
+      "video",
+      "gift",
+      "location",
+      "rsvp",
+      "wishes",
+      "closing"
+    ],
+    "mood": [
+      "Orchestral",
+      "Classic"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "The celebration of a lifetime",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Two lives, one promise",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Words we carry",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Our chronicle",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "A royal invitation",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "The portrait gallery",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "A gracious gesture",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Join our day",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Your words, our keepsake",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, Aurelia & Alexander",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "A celebration worthy of our shared history.",
+    "quote_source": "Our promise",
+    "closing_text": "We are grateful for every moment shared with you. With love, Aurelia & Alexander.",
+    "category": "Luxury",
+    "gallery_style": "Palace wall",
+    "style": "Royal Luxury"
+  },
+  "paper-petals": {
+    "name": "Paper & Petals",
+    "opening_text": "Small notes, pressed petals, endless love.",
+    "order": [
+      "home",
+      "couple",
+      "story",
+      "gallery",
+      "video",
+      "quote",
+      "event",
+      "livestream",
+      "date",
+      "gift",
+      "location",
+      "rsvp",
+      "wishes",
+      "closing"
+    ],
+    "mood": [
+      "Acoustic",
+      "Piano"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "A little note for you",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Two lives, one promise",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Words we carry",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Notes from our journal",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "A note for your calendar",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Collected memories",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "A little gift tag",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Join our day",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Your words, our keepsake",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, Hana & Theo",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Small notes, pressed petals, endless love.",
+    "quote_source": "Our promise",
+    "closing_text": "We are grateful for every moment shared with you. With love, Hana & Theo.",
+    "category": "Romantic",
+    "gallery_style": "Scattered polaroids",
+    "style": "Handcrafted Romantic"
+  },
+  "botanica": {
+    "name": "Botanica",
+    "opening_text": "An island escape, a promise to stay.",
+    "order": [
+      "home",
+      "couple",
+      "event",
+      "livestream",
+      "location",
+      "story",
+      "gallery",
+      "video",
+      "quote",
+      "date",
+      "gift",
+      "rsvp",
+      "wishes",
+      "closing"
+    ],
+    "mood": [
+      "Tropical",
+      "Acoustic"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Our destination: together",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Two lives, one promise",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Words we carry",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Our island journey",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "The resort programme",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "The travel journal",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Island wishes",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Join our day",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Your words, our keepsake",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, Maya & Rafael",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "An island escape, a promise to stay.",
+    "quote_source": "Our promise",
+    "closing_text": "We are grateful for every moment shared with you. With love, Maya & Rafael.",
+    "category": "Destination",
+    "gallery_style": "Travel journal",
+    "style": "Tropical Destination"
+  },
+  "monochrome": {
+    "name": "Monochrome",
+    "opening_text": "Life in contrast. Love in focus.",
+    "order": [
+      "home",
+      "story",
+      "gallery",
+      "video",
+      "couple",
+      "event",
+      "livestream",
+      "quote",
+      "date",
+      "gift",
+      "location",
+      "rsvp",
+      "wishes",
+      "closing"
+    ],
+    "mood": [
+      "Piano",
+      "Jazz"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "A documentary of us",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Two lives, one promise",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Words we carry",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "The archive",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "The programme",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "An exhibition of us",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Gifts, simply",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Join our day",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Your words, our keepsake",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, Alena & Nathan",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Life in contrast. Love in focus.",
+    "quote_source": "Our promise",
+    "closing_text": "We are grateful for every moment shared with you. With love, Alena & Nathan.",
+    "category": "Minimalist",
+    "gallery_style": "Exhibition wall",
+    "style": "Black & White Documentary"
+  },
+  "blossom-east": {
+    "name": "Blossom East",
+    "opening_text": "Like a blossom, love arrives in its own time.",
+    "order": [
+      "home",
+      "quote",
+      "couple",
+      "story",
+      "event",
+      "livestream",
+      "date",
+      "gallery",
+      "video",
+      "gift",
+      "location",
+      "rsvp",
+      "wishes",
+      "closing"
+    ],
+    "mood": [
+      "Instrumental",
+      "Ambient"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "A promise in bloom",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Two lives, one promise",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Words we carry",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "A story in bloom",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "An invitation in bloom",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "The art of together",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "A heartfelt offering",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Join our day",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Your words, our keepsake",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, Reina & Kenji",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Like a blossom, love arrives in its own time.",
+    "quote_source": "Our promise",
+    "closing_text": "We are grateful for every moment shared with you. With love, Reina & Kenji.",
+    "category": "Traditional",
+    "gallery_style": "Art gallery",
+    "style": "Oriental Modern"
+  },
+  "neon-love": {
+    "name": "Neon Love",
+    "opening_text": "Two hearts. One city. Our electric moment.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "gallery",
+      "video",
+      "event",
+      "livestream",
+      "date",
+      "quote",
+      "gift",
+      "location",
+      "rsvp",
+      "wishes",
+      "closing"
+    ],
+    "mood": [
+      "Modern",
+      "Electronic Chill"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "This city. This love.",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Two lives, one promise",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Words we carry",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Our next stop",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Your wedding pass",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "City frames",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Send some love",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Join our day",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Your words, our keepsake",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, Kiara & Ezra",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Two hearts. One city. Our electric moment.",
+    "quote_source": "Our promise",
+    "closing_text": "We are grateful for every moment shared with you. With love, Kiara & Ezra.",
+    "category": "Modern",
+    "gallery_style": "Urban snap reel",
+    "style": "Urban Modern"
+  },
+  "timeless-romance": {
+    "name": "Timeless Romance",
+    "opening_text": "Some promises never go out of style.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "event",
+      "livestream",
+      "date",
+      "story",
+      "gallery",
+      "video",
+      "gift",
+      "location",
+      "rsvp",
+      "wishes",
+      "closing"
+    ],
+    "mood": [
+      "Classic",
+      "Piano",
+      "Orchestral"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "A celebration of love",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Two lives, one promise",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Words we carry",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Chapters of a romance",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "The formal programme",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "A gallery of romance",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "With our gratitude",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Join our day",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Your words, our keepsake",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "With love, Eleanor & William",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Some promises never go out of style.",
+    "quote_source": "Our promise",
+    "closing_text": "We are grateful for every moment shared with you. With love, Eleanor & William.",
+    "category": "Romantic",
+    "gallery_style": "Museum gallery",
+    "style": "Classic European"
+  }
+}

@@ -1,0 +1,550 @@
+/* Composition, rather than a palette swap. Business widgets retain their shared contract. */
+.design-cover,
+.design-hero,
+.design-closing {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(28px, 7vw, 64px);
+  text-align: center;
+}
+.design-cover h1,
+.design-hero h1 {
+  font-size: clamp(3.4rem, 15vw, 6.4rem);
+  line-height: 0.96;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+  margin: 20px 0;
+}
+.design-cover h1 i,
+.design-hero h1 i {
+  display: block;
+  font-size: 0.5em;
+  font-weight: 300;
+  margin: 12px 0;
+}
+.design-cover small,
+.design-hero small,
+.design-closing small {
+  font-size: 10px;
+  letter-spacing: 2.4px;
+  line-height: 1.8;
+}
+.cover-photo,
+.hero-full-photo,
+.design-closing > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+.design-cover:has(> .cover-photo):after,
+.design-hero:has(> .hero-full-photo):after,
+.design-closing:has(> img):after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #17151333, #17151330 30%, #171513c7);
+  z-index: -1;
+  pointer-events: none;
+}
+.design-cover:has(> .cover-photo),
+.design-hero:has(> .hero-full-photo),
+.design-closing:has(> img) {
+  color: #fff9ef;
+}
+.cover-invitation {
+  position: relative;
+  margin-top: auto;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  width: 100%;
+  padding-top: 28px;
+  z-index: 4;
+}
+.cover-invitation .button {
+  margin-top: 14px;
+  min-height: 48px;
+}
+.cover-guest {
+  font-size: clamp(1.2rem, 5vw, 1.6rem);
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+.cover-date {
+  letter-spacing: 2px;
+  font-size: 12px;
+}
+.cover-title {
+  margin-top: auto;
+  width: 100%;
+}
+.hero-copy {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+}
+.hero-copy p {
+  line-height: 1.9;
+  font-size: 13px;
+  max-width: 330px;
+  margin: 22px auto;
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 22px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  height: 44px;
+  width: 44px;
+  background: transparent;
+  color: inherit;
+  z-index: 4;
+}
+.floral-corner {
+  position: absolute;
+  top: 16px;
+  left: 10px;
+  font-size: 90px;
+  color: #dfb8b3;
+  opacity: 0.75;
+  pointer-events: none;
+  animation: botanical-sway 7s ease-in-out infinite;
+}
+.floral-corner span {
+  display: block;
+  font-size: 55px;
+  margin-top: -55px;
+  transform: rotate(30deg);
+}
+.editorial-collage {
+  position: relative;
+  width: 100%;
+  height: clamp(290px, 80vw, 470px);
+  margin: 8px 0 50px;
+}
+.editorial-collage img {
+  object-fit: cover;
+  box-shadow: 0 8px 35px #34221918;
+}
+.collage-main {
+  width: 76%;
+  height: 100%;
+  margin-left: 6%;
+  border-radius: 160px 160px 0 0;
+}
+.collage-small {
+  position: absolute;
+  width: 34%;
+  height: 42%;
+  border: 6px solid #fff9f2;
+}
+.collage-small.one {
+  left: -4%;
+  bottom: -18px;
+  transform: rotate(-8deg);
+}
+.collage-small.two {
+  right: -4%;
+  top: 20%;
+  transform: rotate(8deg);
+}
+.collage-note {
+  position: absolute;
+  right: 0;
+  bottom: -25px;
+  font:
+    italic 22px 'Cormorant Garamond',
+    serif;
+}
+.fashion-masthead {
+  position: absolute;
+  top: 26px;
+  left: 18px;
+  right: 18px;
+  border-bottom: 1px solid #fff8;
+  padding: 12px 0;
+  letter-spacing: 4px;
+  font-size: 11px;
+}
+.edition-label {
+  position: absolute;
+  bottom: 75px;
+  right: 22px;
+  font-size: 9px;
+  writing-mode: vertical-rl;
+  letter-spacing: 3px;
+}
+.pure-rule {
+  width: 70px;
+  border-top: 1px solid #bbb;
+  margin: 18px;
+}
+.pure-hero-header {
+  padding: 48px 26px 28px;
+  width: 100%;
+}
+.pure-hero-header h1 {
+  font-size: clamp(2.6rem, 11vw, 4.2rem);
+  letter-spacing: -2px;
+}
+.pure-hero-photo {
+  width: 100%;
+  height: 70svh;
+  object-fit: cover;
+}
+.pure-hero-caption {
+  padding: 24px 28px 90px;
+  font-size: 12px;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+}
+.gate {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 12%;
+  z-index: 3;
+  background: repeating-linear-gradient(45deg, #6c272f 0 9px, #a17a442d 9px 10px);
+  border: 3px double #b99156;
+  pointer-events: none;
+}
+.gate-left {
+  left: 0;
+}
+.gate-right {
+  right: 0;
+}
+.cover-leave-active .gate-left {
+  transform: translateX(-110%);
+}
+.cover-leave-active .gate-right {
+  transform: translateX(110%);
+}
+.gate {
+  transition: transform 0.8s ease;
+}
+.framed-hero-photo {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 4/5;
+  margin: 26px 0;
+  border: 8px double #b79157;
+  padding: 8px;
+}
+.framed-hero-photo img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.garden-arch {
+  position: absolute;
+  inset: 20px 14px 24%;
+  border: 5px double #dbe5c4;
+  border-radius: 180px 180px 0 0;
+  pointer-events: none;
+  color: #e3ecd3;
+  font-size: 100px;
+  text-align: left;
+  padding: 0 10px;
+  animation: botanical-sway 8s ease-in-out infinite;
+}
+.letter-sheet {
+  position: relative;
+  background: #f7edd8;
+  border: 1px solid #ae9774;
+  padding: 50px 20px 26px;
+  box-shadow: 0 20px 40px #523b2529;
+  width: 100%;
+  transform: rotate(-3deg);
+  color: #634a36;
+}
+.envelope-flap {
+  position: absolute;
+  inset: auto 0 0;
+  height: 38%;
+  background: #bc9f78;
+  clip-path: polygon(0 0, 50% 45%, 100% 0, 100% 100%, 0 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+.letter-stamp {
+  display: inline-block;
+  font-size: 9px;
+  letter-spacing: 2px;
+  padding: 10px;
+  border: 2px dotted #94714f;
+  transform: rotate(9deg);
+  margin: 12px;
+}
+.invitation-letter {
+  padding: 32px 20px;
+  background: #fbf4e5;
+  width: 100%;
+  border: 1px solid #c9b490;
+  box-shadow: 3px 3px 0 #baa78c;
+  text-align: left;
+}
+.invitation-letter h1 {
+  font-size: clamp(3rem, 14vw, 5rem);
+}
+.invitation-letter img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  filter: sepia(0.35);
+  padding: 8px;
+  background: white;
+  margin: 30px 0;
+}
+.invitation-letter p {
+  font-size: 13px;
+  line-height: 1.9;
+}
+.handwritten {
+  font:
+    italic 30px 'Cormorant Garamond',
+    serif;
+}
+.sakinah-arch {
+  width: 100%;
+  border: 2px solid #bfa974;
+  border-radius: 180px 180px 0 0;
+  padding: 38px 14px 20px;
+  background: #fffdf3;
+}
+.sakinah-arch img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 130px 130px 0 0;
+  margin: 25px 0 0;
+}
+.sakinah-arch h1 {
+  font-size: clamp(2.8rem, 13vw, 4.9rem);
+}
+.bismillah {
+  font-size: clamp(1.2rem, 5vw, 1.9rem);
+  font-family: serif;
+}
+.pastel-blob {
+  position: absolute;
+  width: 320px;
+  height: 360px;
+  border-radius: 47% 53% 62% 38%;
+  z-index: -1;
+  animation: daydream-morph 12s ease-in-out infinite;
+}
+.blob-one {
+  background: #dbcff0;
+  top: -80px;
+  right: -130px;
+}
+.blob-two {
+  background: #f4c9a8;
+  bottom: 80px;
+  left: -150px;
+  animation-delay: -6s;
+}
+.daydream-photo {
+  width: 75%;
+  height: 34svh;
+  object-fit: cover;
+  border-radius: 42% 55% 38% 45%;
+  transform: rotate(-6deg);
+  border: 6px solid white;
+}
+.doodle-heart {
+  position: absolute;
+  right: 12%;
+  top: 30%;
+  font-size: 70px;
+  transform: rotate(18deg);
+  pointer-events: none;
+}
+.design-couple h3,
+.design-story h3 {
+  font-size: clamp(1.8rem, 8vw, 3rem);
+  line-height: 1.12;
+  font-weight: 400;
+}
+.person-composition {
+  min-width: 0;
+}
+.person-composition figure {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+}
+.person-composition img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.person-copy {
+  padding: 24px 0;
+  line-height: 1.8;
+}
+.person-copy small {
+  letter-spacing: 2px;
+  font-size: 9px;
+}
+.person-copy h3 {
+  margin: 10px 0 18px;
+}
+.person-copy p,
+.person-copy a {
+  font-size: 12px;
+}
+.couple-layout {
+  display: grid;
+  gap: 36px;
+}
+.person-composition figcaption {
+  position: absolute;
+  bottom: 18px;
+  left: 20px;
+  color: #fff;
+  font:
+    clamp(3rem, 14vw, 5.5rem) 'Cormorant Garamond',
+    serif;
+}
+.photo-tape {
+  position: absolute;
+  top: 0;
+  left: 32%;
+  width: 40%;
+  height: 24px;
+  background: #cdb98d80;
+  transform: rotate(-12deg);
+}
+.story-composition {
+  position: relative;
+  display: grid;
+  gap: 30px;
+}
+.story-chapter {
+  position: relative;
+  min-width: 0;
+}
+.story-chapter img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+.chapter-copy {
+  padding: 24px 0;
+}
+.chapter-number {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+.chapter-copy p {
+  font-size: 12px;
+  line-height: 1.9;
+  margin-top: 15px;
+}
+.design-closing {
+  padding-bottom: 120px;
+}
+.closing-letter {
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+}
+.design-closing h2 {
+  font-size: clamp(3rem, 14vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 35px 0;
+}
+.design-closing h2 i {
+  display: block;
+  font-size: 0.5em;
+  margin: 10px;
+}
+.design-closing p {
+  font-size: 13px;
+  line-height: 1.9;
+  margin: 30px 0;
+}
+.design-closing footer {
+  font-size: 8px;
+  letter-spacing: 2px;
+  margin-top: 70px;
+}
+.closing-monogram {
+  font:
+    clamp(5rem, 25vw, 9rem) 'Cormorant Garamond',
+    serif;
+  line-height: 1.1;
+  margin: 45px 0;
+}
+@keyframes botanical-sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+@keyframes daydream-morph {
+  0%,
+  100% {
+    border-radius: 47% 53% 62% 38%;
+    transform: rotate(0);
+  }
+  50% {
+    border-radius: 62% 38% 45% 55%;
+    transform: rotate(15deg);
+  }
+}
+@media (max-width: 359px) {
+  .sakinah-arch {
+    padding: 30px 10px 10px;
+  }
+  .person-copy p {
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .design-cover *,
+  .design-content * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+.design-cover h1,
+.design-hero h1 {
+  font-size: clamp(2.5rem, var(--name-scale, 15vw), 6.4rem);
+  letter-spacing: -0.025em;
+}
+.design-cover h1,
+.design-hero h1,
+.design-closing h2 {
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+.progress-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+}
+.hero-kicker {
+  font-size: 10px !important;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.design-hero:has(>.hero-full-photo) .hero-copy p{color:#fff9ef}

@@ -1,0 +1,68 @@
+.hero-garden {
+  min-height: 100svh;
+}
+.hero-garden .hero-copy {
+  margin-top: auto;
+  margin-bottom: 65px;
+}
+.hero-garden h1 {
+  font-style: italic;
+}
+.couple-garden figure {
+  width: 75%;
+  aspect-ratio: 1;
+  margin: auto;
+  border-radius: 50%;
+  outline: 1px solid #77896b;
+  outline-offset: 10px;
+}
+.couple-garden .person-composition:nth-child(2) {
+  margin-top: 25px;
+}
+.story-garden .story-composition {
+  border-left: 2px dashed #9aac88;
+  border-radius: 90px 0 0 70px;
+  padding-left: 28px;
+  text-align: left;
+}
+.story-garden .story-chapter:nth-child(even) {
+  padding-left: 20px;
+}
+.design-garden .event-card {
+  background: #eef2e4;
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 8px 0 #9aaf82;
+  transform: rotate(-1deg);
+}
+.design-garden .event-card:nth-child(odd) {
+  transform: rotate(1deg);
+}
+.design-garden .gallery-grid {
+  gap: 22px 16px;
+  overflow: visible;
+}
+.design-garden .gallery-item {
+  padding: 7px 7px 25px;
+  background: white;
+  box-shadow: 3px 5px 15px #26341b18;
+  border-radius: 0;
+  transform: rotate(-5deg);
+}
+.design-garden .gallery-item:nth-child(even) {
+  transform: rotate(5deg);
+}
+.design-garden .bank-card {
+  border-radius: 0;
+  background: #f7f8e8;
+  border: 1px solid #9caf82;
+  transform: rotate(-1deg);
+}
+.design-garden .floating-nav button {
+  border-radius: 50% 0 50% 0;
+}
+.design-garden .design-cover h1,
+.design-garden .design-hero h1 {
+  font-size: clamp(2.5rem, var(--name-scale, 15vw), 6.4rem);
+  letter-spacing: -0.025em;
+}

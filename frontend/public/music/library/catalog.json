@@ -1,0 +1,452 @@
+[
+  {
+    "title": "Petals at Dawn",
+    "category": "Romantic",
+    "artist": "Radina Originals",
+    "file_url": "/music/library/track-1.mp3",
+    "duration": 24,
+    "is_active": true,
+    "is_featured": true
+  },
+  {
+    "title": "Quiet Promises",
+    "category": "Piano",
+    "artist": "Radina Originals",
+    "file_url": "/music/library/track-2.mp3",
+    "duration": 24,
+    "is_active": true,
+    "is_featured": true
+  },
+  {
+    "title": "Golden Hour",
+    "category": "Acoustic",
+    "artist": "Radina Originals",
+    "file_url": "/music/library/track-3.mp3",
+    "duration": 24,
+    "is_active": true,
+    "is_featured": true
+  },
+  {
+    "title": "A Timeless Letter",
+    "category": "Classic",
+    "artist": "Radina Originals",
+    "file_url": "/music/library/track-4.mp3",
+    "duration": 24,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Under the Stars",
+    "category": "Cinematic",
+    "artist": "Radina Originals",
+    "file_url": "/music/library/track-5.mp3",
+    "duration": 24,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "A Peaceful Journey",
+    "category": "Islamic",
+    "artist": "Radina Originals",
+    "file_url": "/music/library/track-6.mp3",
+    "duration": 24,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Homeward",
+    "category": "Traditional",
+    "artist": "Radina Originals",
+    "file_url": "/music/library/track-7.mp3",
+    "duration": 24,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Little Daydream",
+    "category": "Upbeat",
+    "artist": "Radina Originals",
+    "file_url": "/music/library/track-8.mp3",
+    "duration": 24,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Still Together",
+    "category": "Instrumental",
+    "artist": "Radina Originals",
+    "file_url": "/music/library/track-9.mp3",
+    "duration": 24,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Midnight Lights",
+    "category": "Modern",
+    "artist": "Radina Originals",
+    "file_url": "/music/library/track-10.mp3",
+    "duration": 24,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Moonlight Promise",
+    "artist": "Radina Originals",
+    "category": "Ambient",
+    "file_url": "/music/library/track-11.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "The Wedding Issue",
+    "artist": "Radina Originals",
+    "category": "Jazz",
+    "file_url": "/music/library/track-12.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Saltwater Serenade",
+    "artist": "Radina Originals",
+    "category": "Acoustic",
+    "file_url": "/music/library/track-13.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "A Royal Prelude",
+    "artist": "Radina Originals",
+    "category": "Orchestral",
+    "file_url": "/music/library/track-14.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Pressed Petals",
+    "artist": "Radina Originals",
+    "category": "Piano",
+    "file_url": "/music/library/track-15.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Palm Breeze",
+    "artist": "Radina Originals",
+    "category": "Tropical",
+    "file_url": "/music/library/track-16.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Silver Portraits",
+    "artist": "Radina Originals",
+    "category": "Classic",
+    "file_url": "/music/library/track-17.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Blossom Reverie",
+    "artist": "Radina Originals",
+    "category": "Instrumental",
+    "file_url": "/music/library/track-18.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "City Afterglow",
+    "artist": "Radina Originals",
+    "category": "Electronic Chill",
+    "file_url": "/music/library/track-19.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Maison Romance",
+    "artist": "Radina Originals",
+    "category": "Classic",
+    "file_url": "/music/library/track-20.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Ivory Morning",
+    "artist": "Radina Originals",
+    "category": "Romantic",
+    "file_url": "/music/library/track-21.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "A Gentle Yes",
+    "artist": "Radina Originals",
+    "category": "Piano",
+    "file_url": "/music/library/track-22.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Forever Shore",
+    "artist": "Radina Originals",
+    "category": "Acoustic",
+    "file_url": "/music/library/track-23.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "The Quiet Waltz",
+    "artist": "Radina Originals",
+    "category": "Classic",
+    "file_url": "/music/library/track-24.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Peaceful Steps",
+    "artist": "Radina Originals",
+    "category": "Islamic",
+    "file_url": "/music/library/track-25.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Golden Courtyard",
+    "artist": "Radina Originals",
+    "category": "Traditional",
+    "file_url": "/music/library/track-26.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Our First Scene",
+    "artist": "Radina Originals",
+    "category": "Cinematic",
+    "file_url": "/music/library/track-27.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Soft Skyline",
+    "artist": "Radina Originals",
+    "category": "Modern",
+    "file_url": "/music/library/track-28.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Paper Hearts",
+    "artist": "Radina Originals",
+    "category": "Upbeat",
+    "file_url": "/music/library/track-29.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Across the Garden",
+    "artist": "Radina Originals",
+    "category": "Folk",
+    "file_url": "/music/library/track-30.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Moonlight Promise II",
+    "artist": "Radina Originals",
+    "category": "Ambient",
+    "file_url": "/music/library/track-31.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "The Wedding Issue II",
+    "artist": "Radina Originals",
+    "category": "Jazz",
+    "file_url": "/music/library/track-32.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Saltwater Serenade II",
+    "artist": "Radina Originals",
+    "category": "Acoustic",
+    "file_url": "/music/library/track-33.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "A Royal Prelude II",
+    "artist": "Radina Originals",
+    "category": "Orchestral",
+    "file_url": "/music/library/track-34.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Pressed Petals II",
+    "artist": "Radina Originals",
+    "category": "Piano",
+    "file_url": "/music/library/track-35.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Palm Breeze II",
+    "artist": "Radina Originals",
+    "category": "Tropical",
+    "file_url": "/music/library/track-36.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Silver Portraits II",
+    "artist": "Radina Originals",
+    "category": "Classic",
+    "file_url": "/music/library/track-37.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Blossom Reverie II",
+    "artist": "Radina Originals",
+    "category": "Instrumental",
+    "file_url": "/music/library/track-38.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "City Afterglow II",
+    "artist": "Radina Originals",
+    "category": "Electronic Chill",
+    "file_url": "/music/library/track-39.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Maison Romance II",
+    "artist": "Radina Originals",
+    "category": "Classic",
+    "file_url": "/music/library/track-40.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Ivory Morning II",
+    "artist": "Radina Originals",
+    "category": "Romantic",
+    "file_url": "/music/library/track-41.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "A Gentle Yes II",
+    "artist": "Radina Originals",
+    "category": "Piano",
+    "file_url": "/music/library/track-42.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Forever Shore II",
+    "artist": "Radina Originals",
+    "category": "Acoustic",
+    "file_url": "/music/library/track-43.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "The Quiet Waltz II",
+    "artist": "Radina Originals",
+    "category": "Classic",
+    "file_url": "/music/library/track-44.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Peaceful Steps II",
+    "artist": "Radina Originals",
+    "category": "Islamic",
+    "file_url": "/music/library/track-45.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Golden Courtyard II",
+    "artist": "Radina Originals",
+    "category": "Traditional",
+    "file_url": "/music/library/track-46.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Our First Scene II",
+    "artist": "Radina Originals",
+    "category": "Cinematic",
+    "file_url": "/music/library/track-47.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Soft Skyline II",
+    "artist": "Radina Originals",
+    "category": "Modern",
+    "file_url": "/music/library/track-48.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Paper Hearts II",
+    "artist": "Radina Originals",
+    "category": "Upbeat",
+    "file_url": "/music/library/track-49.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  },
+  {
+    "title": "Across the Garden II",
+    "artist": "Radina Originals",
+    "category": "Folk",
+    "file_url": "/music/library/track-50.mp3",
+    "duration": 18,
+    "is_active": true,
+    "is_featured": false
+  }
+]

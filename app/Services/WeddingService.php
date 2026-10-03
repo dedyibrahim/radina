@@ -1,0 +1,166 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\MusicTrack;
+use App\Models\Order;
+use App\Models\Template;
+use App\Models\Wedding;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
+
+class WeddingService
+{
+    public function __construct(private OrderWorkflow $workflow) {}
+
+    public function ensurePaid(Order $order): void
+    {
+        if ($order->payment?->status !== 'PAID' || $order->status === 'CANCELLED') {
+            throw ValidationException::withMessages(['payment' => 'Pembayaran harus dikonfirmasi sebelum mengelola undangan.']);
+        }
+    }
+
+    public function create(Order $order, int $adminId): Wedding
+    {
+        return DB::transaction(function () use ($order, $adminId) {
+            $order = Order::lockForUpdate()->findOrFail($order->id);
+            $this->ensurePaid($order);
+            if ($order->wedding) {
+                return $order->wedding->loadContent();
+            }
+            $wedding = Wedding::create(['order_id' => $order->id, 'template_id' => $order->template_id, 'slug' => $order->slug, 'title' => mb_substr('The Wedding of '.$order->bride_name.' & '.$order->groom_name, 0, 255), 'status' => 'DRAFT']);
+            $wedding->update(TemplateContent::initial(Template::findOrFail($order->template_id)->template_key));
+            foreach (['bride', 'groom'] as $role) {
+                $wedding->couples()->create(['role' => $role, 'full_name' => $order->{$role.'_name'}, 'nickname' => explode(' ', $order->{$role.'_name'})[0]]);
+            }
+            $wedding->settings()->create([]);
+            $this->workflow->transition($order, 'CONTENT_PROCESS', $adminId);
+
+            return $wedding->loadContent();
+        });
+    }
+
+    public function save(Wedding $wedding, array $data, int $adminId): Wedding
+    {
+        return DB::transaction(function () use ($wedding, $data) {
+            $order = Order::lockForUpdate()->findOrFail($wedding->order_id);
+            $wedding = Wedding::lockForUpdate()->findOrFail($wedding->id);
+            $this->ensurePaid($order);
+            abort_if($data['expected_updated_at'] !== $wedding->updated_at->toJSON(), 409, 'Konten telah diubah di sesi lain. Muat ulang sebelum menyimpan.');
+            $selected = Template::findOrFail($data['template_id']);
+            if ($selected->status !== 'ACTIVE' && $selected->id !== $wedding->template_id) {
+                throw ValidationException::withMessages(['template_id' => 'Template yang dipilih tidak aktif.']);
+            }
+            $base = collect($data)->only(['title', 'slug', 'template_id', 'wedding_date', 'quote', 'quote_source', 'opening_text', 'closing_text', 'hashtag', 'cover_image', 'hero_image', 'closing_image', 'video_url', 'shipping_gift', 'section_content', 'section_order'])->all();
+            $base += ['music_url' => $data['music']['music_url'] ?? null, 'volume' => $data['music']['volume'], 'autoplay_after_open' => $data['music']['autoplay_after_open'], 'livestream_platform' => $data['livestream']['platform'] ?? null, 'livestream_url' => $data['livestream']['url'] ?? null];
+            if (array_key_exists('playlist', $data['music'])) {
+                $playlist = [];
+                foreach ($data['music']['playlist'] as $track) {
+                    if (! empty($track['library_id'])) {
+                        $library = MusicTrack::find($track['library_id']);
+                        $saved = collect($wedding->music_playlist ?? [])->firstWhere('library_id', $track['library_id']);
+                        if ($library?->is_active) {
+                            $playlist[] = ['library_id' => $library->id, 'title' => $library->title, 'artist' => $library->artist, 'url' => $library->file_url, 'cover' => $library->cover_image, 'duration' => $library->duration];
+                        } elseif ($saved) {
+                            $playlist[] = $saved;
+                        } else {
+                            throw ValidationException::withMessages(['music.playlist' => 'Lagu library tidak tersedia.']);
+                        }
+                    } else {
+                        $playlist[] = collect($track)->only(['title', 'artist', 'url', 'cover', 'duration'])->all();
+                    }
+                }
+                $base['music_playlist'] = $playlist;
+            }
+            if (array_key_exists('shuffle', $data['music'])) {
+                $base['music_shuffle'] = $data['music']['shuffle'];
+            }
+            if (array_key_exists('repeat', $data['music'])) {
+                $base['music_repeat'] = $data['music']['repeat'];
+            }
+            $wedding->update($base);
+            $order->update(['slug' => $data['slug']]);
+            foreach (['bride', 'groom'] as $role) {
+                $wedding->couples()->updateOrCreate(['role' => $role], collect($data[$role])->only(['full_name', 'nickname', 'father_name', 'mother_name', 'photo', 'instagram', 'family_order'])->all());
+            }
+            $fields = ['events' => ['type', 'title', 'date', 'start_time', 'end_time', 'timezone', 'venue', 'address', 'google_maps_url'], 'stories' => ['date_label', 'title', 'description', 'image'], 'gallery' => ['image', 'caption'], 'gifts' => ['bank', 'account_number', 'account_name', 'logo']];
+            foreach ($fields as $relation => $allowed) {
+                $existing = $wedding->{$relation}()->get();
+                $same = $existing->count() === count($data[$relation]);
+                foreach ($data[$relation] as $index => $entry) {
+                    if (! $same) {
+                        break;
+                    }
+                    $current = $existing[$index];
+                    if ((int) $current->sort_order !== $index) {
+                        $same = false;
+                        break;
+                    }
+                    foreach ($allowed as $field) {
+                        $saved = $current->{$field};
+                        $incoming = $entry[$field] ?? null;
+                        if (in_array($field, ['start_time', 'end_time'])) {
+                            $saved = substr((string) $saved, 0, 5);
+                            $incoming = substr((string) $incoming, 0, 5);
+                        }
+                        if ($field === 'date' && $saved instanceof \DateTimeInterface) {
+                            $saved = $saved->format('Y-m-d');
+                        }
+                        if ((string) $saved !== (string) $incoming) {
+                            $same = false;
+                            break;
+                        }
+                    }
+                }
+                if ($same) {
+                    continue;
+                }
+                $wedding->{$relation}()->delete();
+                foreach ($data[$relation] as $index => $entry) {
+                    $wedding->{$relation}()->create(collect($entry)->only($allowed)->all() + ['sort_order' => $index]);
+                }
+            }
+            $settings = collect($data['settings'])->filter(fn ($v, $key) => str_starts_with($key, 'enable_'))->all();
+            $wedding->settings()->updateOrCreate(['wedding_id' => $wedding->id], $settings);
+            // Microsecond precision avoids equal versions for rapid edits in the same second.
+            $wedding->touch();
+
+            return $wedding->fresh()->loadContent();
+        });
+    }
+
+    public function publish(Wedding $wedding, int $adminId): Wedding
+    {
+        return DB::transaction(function () use ($wedding, $adminId) {
+            $order = Order::lockForUpdate()->findOrFail($wedding->order_id);
+            $wedding = Wedding::lockForUpdate()->findOrFail($wedding->id);
+            $this->ensurePaid($order);
+            $wedding->loadContent();
+            $errors = [];
+            foreach (['bride', 'groom'] as $role) {
+                if (! $wedding->couples->firstWhere('role', $role)?->full_name) {
+                    $errors[$role] = 'Nama pengantin wajib diisi.';
+                }
+            }
+            if (! $wedding->wedding_date) {
+                $errors['wedding_date'] = 'Tanggal pernikahan wajib diisi.';
+            }
+            if ($wedding->events->isEmpty()) {
+                $errors['events'] = 'Tambahkan minimal satu acara.';
+            }
+            if (! $wedding->template || ! $wedding->slug) {
+                $errors['template'] = 'Template dan slug wajib diisi.';
+            }
+            if ($errors) {
+                throw ValidationException::withMessages($errors);
+            }
+            if ($order->status === 'CONTENT_PROCESS') {
+                $this->workflow->transition($order, 'READY', $adminId);
+            }
+            $this->workflow->transition($order, 'PUBLISHED', $adminId);
+            $wedding->update(['status' => 'PUBLISHED', 'published_at' => $wedding->published_at ?? now()]);
+
+            return $wedding->fresh()->loadContent();
+        });
+    }
+}

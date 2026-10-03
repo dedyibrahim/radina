@@ -1,0 +1,808 @@
+/* Structural defaults for the additional collection; individual compositions below. */
+.new-cover,
+.new-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--ivory);
+  color: var(--ink);
+  padding: clamp(24px, 6vw, 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 28px;
+}
+.new-cover h1,
+.new-hero h1 {
+  font-size: clamp(2.5rem, 11vw, 5.5rem);
+  line-height: 0.98;
+  overflow-wrap: anywhere;
+  font-weight: 400;
+  margin: 22px 0;
+  position: relative;
+}
+.new-cover h1 i,
+.new-hero h1 i {
+  font-size: 0.5em;
+  font-weight: 400;
+  padding: 0 0.12em;
+}
+.new-cover h2 {
+  font-size: clamp(3.3rem, 16vw, 7rem);
+  line-height: 0.85;
+  font-weight: 500;
+}
+.new-cover small,
+.new-hero small {
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+.new-cover p,
+.new-hero p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+.new-cover-guest {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+  margin-top: auto;
+  padding: 22px 0;
+  max-width: 100%;
+}
+.new-cover-guest strong {
+  font-size: 17px;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+.new-cover-guest .button {
+  max-width: 100%;
+  min-height: 48px;
+}
+.new-cover img,
+.new-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.new-hero .hero-scroll {
+  position: relative;
+  margin: 10px auto;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  min-width: 48px;
+  min-height: 48px;
+}
+.new-hero-copy {
+  text-align: center;
+  position: relative;
+}
+.new-couple h3,
+.new-story h3,
+.new-event h3 {
+  font-size: clamp(1.8rem, 7vw, 3rem);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  font-weight: 400;
+  margin: 14px 0;
+}
+.new-couple p,
+.new-story p,
+.new-event p {
+  font-size: 13px;
+  line-height: 1.9;
+  margin: 9px 0;
+  overflow-wrap: anywhere;
+}
+.new-couple article,
+.new-story article,
+.new-event article {
+  min-width: 0;
+  position: relative;
+}
+.new-couple img,
+.new-story img {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+.new-couple img {
+  aspect-ratio: 3/4;
+}
+.new-story img {
+  aspect-ratio: 4/3;
+}
+.new-couple figure,
+.new-story figure {
+  position: relative;
+  margin: 0;
+}
+.new-couple small,
+.new-story small,
+.new-event small {
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+.new-couple figcaption,
+.new-story figcaption {
+  font-size: 11px;
+  line-height: 1.8;
+  padding: 12px 0;
+}
+.new-couple a {
+  font-size: 12px;
+}
+.new-event .button {
+  margin-top: 18px;
+  max-width: 100%;
+}
+.new-event strong {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.new-story time {
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+.new-event ol,
+.new-story ol {
+  padding: 0;
+  list-style: none;
+}
+.new-cover h1 i,
+.new-hero h1 i {
+  display: inline;
+  margin: 0;
+}
+.new-cover > .new-cover-guest {
+  width: 100%;
+}
+.design-celestial .sound-disc,
+.design-royal-heritage .sound-disc,
+.design-neon-love .sound-disc,
+.design-celestial .playlist-details,
+.design-royal-heritage .playlist-details,
+.design-neon-love .playlist-details {
+  background: var(--ivory);
+  color: var(--ink);
+  border: 1px solid var(--gold);
+}
+.design-paper-petals .sound-disc {
+  border-radius: 10px;
+  background: #fffaf0;
+}
+.design-botanica .sound-disc {
+  border-radius: 50% 0 50% 50%;
+  background: #213e32;
+  color: #fff;
+}
+.design-monochrome .sound-disc {
+  background: #111;
+  color: #fff;
+  border: 1px solid #aaa;
+}
+.design-blossom-east .sound-disc {
+  background: #faf2e7;
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+}
+.design-timeless-romance .sound-disc {
+  background: #fffaf0;
+  border: 3px double var(--gold);
+}
+.design-celestial .flower-motion,
+.design-editorial .flower-motion,
+.design-ocean-vows .flower-motion,
+.design-royal-heritage .flower-motion,
+.design-botanica .flower-motion,
+.design-monochrome .flower-motion,
+.design-neon-love .flower-motion {
+  display: none;
+}
+.design-celestial .desktop-ambience,
+.design-royal-heritage .desktop-ambience,
+.design-neon-love .desktop-ambience {
+  background: var(--ivory);
+  color: var(--ink);
+}
+.design-celestial .ambient-left,
+.design-celestial .ambient-right,
+.design-monochrome .ambient-left,
+.design-monochrome .ambient-right,
+.design-neon-love .ambient-left,
+.design-neon-love .ambient-right,
+.design-editorial .ambient-left,
+.design-editorial .ambient-right {
+  display: none;
+}
+.design-celestial .floating-nav {
+  border-radius: 80px;
+  border: 1px solid var(--gold);
+  background: #15223de8;
+  color: var(--ink);
+}
+.design-editorial .floating-nav,
+.design-monochrome .floating-nav {
+  border-radius: 0;
+  background: var(--ivory);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+}
+.design-ocean-vows .floating-nav {
+  border-radius: 45% 45% 20px 20px;
+  background: #eef8faed;
+}
+.design-royal-heritage .floating-nav {
+  border: 2px double var(--gold);
+  border-radius: 10px;
+  background: var(--ivory);
+  color: var(--ink);
+}
+.design-paper-petals .floating-nav {
+  border-radius: 4px;
+  box-shadow: 4px 4px 0 #60473724;
+  background: #f5ead9;
+}
+.design-botanica .floating-nav {
+  border-radius: 6px;
+  background: #213e32;
+  color: #fff;
+}
+.design-blossom-east .floating-nav {
+  border-radius: 3px;
+  border-top: 2px solid var(--gold);
+}
+.design-neon-love .floating-nav {
+  background: #17172cdb;
+  color: #fff;
+  border: 1px solid #d889cf80;
+  box-shadow: 0 0 24px #ca77c329;
+  backdrop-filter: blur(18px);
+}
+.design-timeless-romance .floating-nav {
+  border-radius: 8px;
+  border: 1px double var(--gold);
+}
+@keyframes sky-drift {
+  to {
+    background-position:
+      60px 83px,
+      0 119px;
+  }
+}
+@keyframes wave-rock {
+  50% {
+    transform: translateY(8px) rotate(2deg);
+  }
+}
+@keyframes leaf-sway {
+  50% {
+    transform: rotate(-18deg);
+  }
+}
+@keyframes contrast-reveal {
+  from {
+    opacity: 0;
+    clip-path: inset(100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0);
+  }
+}
+@keyframes letter-lift {
+  to {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+}
+@media (min-width: 768px) {
+  .design-editorial .invitation-shell,
+  .design-monochrome .invitation-shell {
+    max-width: 850px;
+  }
+  .design-editorial .new-cover {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: center;
+  }
+  .design-editorial .new-cover-guest {
+    grid-column: 1/-1;
+  }
+  .design-editorial .issue-cover {
+    height: 60svh;
+  }
+  .design-editorial .interview-spread {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+  }
+  .interview-spread header {
+    grid-column: 1/-1;
+  }
+  .design-monochrome .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .design-monochrome .gallery-item:nth-child(3n) {
+    grid-column: 1/-1;
+  }
+  .design-blossom-east .floating-nav {
+    border-right: 2px solid var(--gold);
+  }
+  .celebration-columns {
+    gap: 40px;
+  }
+  .new-cover h1,
+  .new-hero h1 {
+    font-size: clamp(3rem, 6vw, 5.5rem);
+  }
+}
+@media (max-width: 359px) {
+  .royal-family {
+    grid-template-columns: 1fr;
+  }
+  .royal-union {
+    display: none;
+  }
+  .celebration-columns {
+    grid-template-columns: 1fr;
+  }
+  .article-columns p {
+    column-count: 1;
+  }
+  .new-cover,
+  .new-hero {
+    padding: 22px;
+  }
+  .new-couple,
+  .new-story,
+  .new-event {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sky-speckles,
+  .wave-line,
+  .palm-leaves,
+  .contrast-reveal {
+    animation: none;
+  }
+  .royal-door {
+    transition: none;
+  }
+  .cover-leave-active .classic-invitation {
+    animation: none;
+  }
+}
+.collection-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.collection-gallery figure,
+.collection-gallery article {
+  margin: 0;
+  position: relative;
+  min-width: 0;
+}
+.collection-gallery button {
+  position: relative;
+  width: 100%;
+  display: block;
+  background: transparent;
+  min-height: 44px;
+  overflow: hidden;
+}
+.collection-gallery img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+}
+.collection-gallery button > span {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: #fff;
+  color: #222;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+}
+.collection-gallery figcaption,
+.collection-gallery p,
+.collection-gallery small {
+  font-size: 10px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  margin-top: 12px;
+}
+.star-photo:nth-child(even) {
+  margin-top: 45px;
+}
+.star-photo > span {
+  display: block;
+  color: var(--gold);
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+.magazine-photo-spread article:nth-child(3n + 1) {
+  grid-column: 1/-1;
+}
+.magazine-photo-spread article:nth-child(3n + 1) img {
+  aspect-ratio: 16/9;
+}
+.magazine-photo-spread small {
+  display: block;
+  margin: 0 0 10px;
+}
+.coastal-photo-reel,
+.urban-snap-reel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 20px;
+  padding-bottom: 20px;
+}
+.coastal-photo-reel figure,
+.urban-snap-reel article {
+  flex: 0 0 84%;
+  scroll-snap-align: center;
+}
+.palace-photo-wall button,
+.museum-photo-gallery button {
+  border: 5px double var(--gold);
+  padding: 8px;
+}
+.scattered-photo-notes figure {
+  background: white;
+  padding: 8px 8px 20px;
+  transform: rotate(-3deg);
+  color: #604737;
+  margin-bottom: 20px;
+}
+.scattered-photo-notes figure:nth-child(even) {
+  transform: rotate(3deg);
+  margin-top: 35px;
+}
+.resort-travel-journal article:nth-child(3n) {
+  grid-column: 1/-1;
+}
+.resort-travel-journal article:nth-child(3n) img {
+  aspect-ratio: 16/9;
+}
+.resort-travel-journal article > div {
+  border-left: 3px solid var(--gold);
+  padding: 10px 12px;
+}
+.resort-travel-journal b {
+  font-size: 10px;
+}
+.documentary-exhibition {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.documentary-exhibition img {
+  aspect-ratio: 4/3;
+}
+.documentary-exhibition figcaption {
+  display: flex;
+  align-items: start;
+  gap: 25px;
+  border-bottom: 1px solid currentColor;
+}
+.documentary-exhibition figcaption b {
+  font-size: 24px;
+}
+.blossom-art-gallery figure:nth-child(even) {
+  margin-top: 35px;
+}
+.blossom-art-gallery button {
+  padding: 8px;
+  border: 1px solid var(--gold);
+}
+.urban-snap-reel header {
+  font-size: 9px;
+  letter-spacing: 2px;
+  padding: 12px;
+  border: 1px solid #d889cf60;
+}
+.museum-photo-gallery {
+  gap: 25px;
+}
+.museum-photo-gallery figcaption {
+  text-align: center;
+  font-style: italic;
+}
+.new-closing {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 60px clamp(22px, 6vw, 50px) 125px;
+  background: var(--ivory);
+  color: var(--ink);
+  min-height: 90svh;
+  text-align: center;
+}
+.new-closing h2 {
+  font-size: clamp(2.8rem, 11vw, 5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+  margin: 30px 0;
+}
+.new-closing p {
+  font-size: 13px;
+  line-height: 2;
+  overflow-wrap: anywhere;
+}
+.new-closing small,
+.new-closing footer {
+  font-size: 9px;
+  letter-spacing: 2px;
+  display: block;
+  margin: 25px 0;
+}
+.new-closing figure {
+  margin: 25px 0;
+  position: relative;
+}
+.new-closing img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+}
+.new-closing-monogram {
+  font-size: 80px;
+  color: var(--gold);
+  border: 5px double var(--gold);
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  margin: 40px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.closing-editorial header {
+  text-align: left;
+  border-top: 3px solid currentColor;
+}
+.closing-editorial header b {
+  font-size: clamp(2.6rem, 11vw, 4.5rem);
+  display: block;
+  line-height: 1;
+  font-family: Arial, sans-serif;
+}
+.closing-editorial img {
+  aspect-ratio: 16/9;
+}
+.closing-ocean-vows figure {
+  margin-left: -22px;
+  margin-right: -22px;
+}
+.closing-ocean-vows img {
+  aspect-ratio: 4/3;
+}
+.paper-thankyou {
+  position: relative;
+  background: #fffaf0;
+  padding: 35px 22px;
+  box-shadow: 8px 8px 0 #e6d6be;
+  transform: rotate(-2deg);
+}
+.paper-thankyou h2 {
+  font-style: italic;
+}
+.closing-botanica figure {
+  margin-bottom: -45px;
+}
+.resort-farewell {
+  position: relative;
+  background: var(--ivory);
+  max-width: 90%;
+  margin: auto;
+  padding: 25px 15px;
+  border-top: 3px solid var(--gold);
+}
+.closing-monochrome {
+  background: #111;
+  color: white;
+  min-height: 100svh;
+}
+.documentary-end {
+  text-align: left;
+  padding-top: 60px;
+}
+.documentary-end h2 {
+  font-family: Arial, sans-serif;
+  font-weight: 300;
+}
+.documentary-end > span {
+  display: block;
+  border-top: 1px solid #fff;
+  padding-top: 20px;
+  font-size: 11px;
+}
+.falling-blossom {
+  font-size: 70px;
+  color: var(--gold);
+  pointer-events: none;
+  display: block;
+  animation: blossom-fall 7s ease-in-out infinite;
+}
+.closing-blossom-east figure {
+  width: 65%;
+  margin-left: auto;
+}
+.closing-neon-love figure {
+  margin-left: -22px;
+  margin-right: -22px;
+}
+.city-farewell {
+  position: relative;
+  margin-top: -55px;
+  background: var(--ivory);
+  padding: 25px;
+  border-top: 1px solid var(--gold);
+}
+.city-farewell h2 {
+  text-shadow: 0 0 30px #d889cf80;
+  font-family: Arial, sans-serif;
+}
+.formal-thankyou {
+  border: 5px double var(--gold);
+  padding: 35px 20px;
+  background: #fffaf0;
+}
+.formal-thankyou h2 {
+  font-style: italic;
+}
+@keyframes blossom-fall {
+  50% {
+    transform: translateY(8px) rotate(12deg);
+  }
+}
+@media (min-width: 768px) {
+  .documentary-exhibition {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .documentary-exhibition figure:nth-child(3n) {
+    grid-column: 1/-1;
+  }
+  .magazine-photo-spread {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .magazine-photo-spread article:nth-child(3n + 1) {
+    grid-column: span 2;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .falling-blossom {
+    animation: none;
+  }
+}
+
+.new-cover .button {
+  background: var(--ink);
+  color: var(--ivory);
+  border: 1px solid var(--gold);
+}
+.orbit-marker {
+  font-size: 20px;
+  line-height: 22px;
+}
+.design-editorial .floating-nav .progress-number,
+.design-monochrome .floating-nav .progress-number {
+  font-size: 13px;
+  line-height: 18px;
+  min-height: 18px;
+  font-family: inherit;
+}
+.design-editorial .playlist-player,
+.design-monochrome .playlist-player {
+  bottom: calc(110px + env(safe-area-inset-bottom));
+}
+.design-celestial .expand-player,
+.design-royal-heritage .expand-player,
+.design-neon-love .expand-player {
+  background: var(--ivory);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+.design-celestial .invitation-form input:not([type='radio']),
+.design-celestial .invitation-form textarea,
+.design-royal-heritage .invitation-form input:not([type='radio']),
+.design-royal-heritage .invitation-form textarea,
+.design-neon-love .invitation-form input:not([type='radio']),
+.design-neon-love .invitation-form textarea {
+  background: #ffffff0a;
+  color: var(--ink);
+  border-color: var(--gold);
+}
+.design-celestial .invitation-form .radio-option:has(input:checked),
+.design-royal-heritage .invitation-form .radio-option:has(input:checked),
+.design-neon-love .invitation-form .radio-option:has(input:checked) {
+  background: #ffffff18;
+  color: var(--ink);
+  border-color: var(--gold);
+}
+.design-celestial .form-success,
+.design-royal-heritage .form-success,
+.design-neon-love .form-success {
+  color: #d2e4cb;
+}
+.design-celestial .form-error,
+.design-royal-heritage .form-error,
+.design-neon-love .form-error {
+  color: #ffc8c4;
+}
+@media (min-width: 768px) {
+  .design-editorial .playlist-player,
+  .design-monochrome .playlist-player {
+    bottom: 25px;
+  }
+}
+.ink-marker {
+  font-size: 13px;
+  color: var(--gold);
+  line-height: 22px;
+}
+@media (min-width: 1024px) {
+  .design-blossom-east .floating-nav {
+    left: auto;
+    right: 25px;
+    top: 50%;
+    bottom: auto;
+    width: 74px;
+    transform: translateY(-50%);
+    flex-direction: column;
+    border-left: 1px solid var(--gold);
+  }
+  .design-blossom-east .wedding-more-menu {
+    right: calc(100% + 8px);
+    bottom: 0;
+    flex-direction: column;
+  }
+  .design-blossom-east .playlist-player {
+    right: 115px;
+  }
+  .design-editorial .floating-nav,
+  .design-timeless-romance .floating-nav {
+    top: 70px;
+    bottom: auto;
+    max-width: 520px;
+  }
+  .design-editorial .wedding-more-menu,
+  .design-timeless-romance .wedding-more-menu {
+    top: calc(100% + 8px);
+    bottom: auto;
+  }
+}
+@media (min-width: 1024px) {
+  .design-editorial .new-hero,
+  .design-timeless-romance .new-hero {
+    padding-top: 170px;
+  }
+  .design-editorial .section,
+  .design-timeless-romance .section,
+  .design-editorial .new-closing,
+  .design-timeless-romance .new-closing {
+    scroll-margin-top: 155px;
+  }
+}

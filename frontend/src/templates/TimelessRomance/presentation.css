@@ -1,0 +1,113 @@
+.design-timeless-romance {
+  --ivory: #f6efdf;
+  --cream: #f6efdf;
+  --ink: #4e2932;
+  --gold: #aa8d56;
+  --rose: #aa8d56;
+  --muted: #4e2932;
+  --theme-bg: #f6efdf;
+  --theme-ink: #4e2932;
+}
+
+/* 20: classic European stationery and a museum-like photograph wall. */
+.cover-timeless-romance {
+  padding: 25px;
+}
+.classic-invitation {
+  border: 4px double var(--gold);
+  padding: 50px 20px;
+  text-align: center;
+  background: #fffaf0;
+}
+.classic-rule {
+  display: block;
+  font-size: 32px;
+  color: var(--gold);
+  margin: 15px auto;
+}
+.cover-leave-active .classic-invitation {
+  animation: letter-lift 0.65s ease forwards;
+}
+.european-title {
+  text-align: center;
+}
+.european-triptych {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  gap: 10px;
+  align-items: center;
+}
+.european-triptych img:first-child {
+  grid-column: 2;
+  grid-row: 1;
+  height: 48svh;
+}
+.european-triptych img:nth-child(2) {
+  grid-column: 1;
+  grid-row: 1;
+  height: 30svh;
+}
+.european-triptych img:nth-child(3) {
+  grid-column: 3;
+  grid-row: 1;
+  height: 30svh;
+}
+.classic-portraits article {
+  text-align: center;
+  padding: 25px 0 40px;
+  border-top: 1px solid var(--gold);
+}
+.classic-portraits figure {
+  width: 75%;
+  margin: 25px auto;
+  border: 4px double var(--gold);
+  padding: 8px;
+}
+.classic-portraits figure img {
+  border-radius: 48% 48% 0 0;
+}
+.classic-portraits article > span {
+  font-size: 30px;
+  color: var(--gold);
+}
+.romance-chapters article {
+  margin-bottom: 65px;
+  text-align: center;
+}
+.romance-chapters header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.romance-chapters header span {
+  font-size: 9px;
+  letter-spacing: 3px;
+}
+.romance-chapters header b {
+  font-size: 45px;
+  color: var(--gold);
+}
+.romance-chapters figure {
+  border: 4px double var(--gold);
+  padding: 7px;
+}
+.formal-programme article {
+  text-align: center;
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  padding: 40px 20px;
+  margin-bottom: 35px;
+}
+.design-timeless-romance .gallery-item {
+  border: 4px double var(--gold);
+  padding: 7px;
+  background: #fffaf0;
+  border-radius: 0;
+}
+.design-timeless-romance .bank-card {
+  background: #fffaf0;
+  border: 4px double var(--gold);
+  border-radius: 0;
+}

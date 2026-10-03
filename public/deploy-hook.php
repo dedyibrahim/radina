@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Dotenv\Dotenv;
 use Illuminate\Contracts\Console\Kernel;
+use App\Services\DeploymentLicenseGuard;
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, private');
@@ -71,7 +72,7 @@ $releaseManifestSha256 = (string) ($_SERVER['HTTP_X_RELEASE_MANIFEST_SHA256'] ??
 $signature = (string) ($_SERVER['HTTP_X_DEPLOY_SIGNATURE'] ?? '');
 $releaseCommitPath = __DIR__.'/.radina-release-commit';
 $releaseManifestPath = __DIR__.'/.radina-release-manifest.json';
-$seedSqlPath = $applicationRoot.'/database/import/portal_berita.sql';
+$seedSqlPath = $applicationRoot.'/database/seeders/WeddingPlatformSeeder.php';
 
 if (! $enabled) {
     respond(503, [
@@ -183,7 +184,7 @@ foreach ($releaseManifest['files'] as $relativePath => $metadata) {
 
 if (! is_file($seedSqlPath)) {
     respond(409, [
-        'message' => 'Seeder SQL source is missing.',
+        'message' => 'Wedding seeder source is missing.',
         'phase' => 'seed-source',
     ]);
 }
@@ -192,7 +193,7 @@ $uploadedSeedSqlSha256 = hash_file('sha256', $seedSqlPath);
 
 if (! hash_equals(strtolower($seedSqlSha256), strtolower($uploadedSeedSqlSha256))) {
     respond(409, [
-        'message' => 'Seeder SQL source is incomplete or corrupted.',
+        'message' => 'Wedding seeder source is incomplete or corrupted.',
         'phase' => 'seed-source',
         'expected_sha256' => $seedSqlSha256,
         'uploaded_sha256' => $uploadedSeedSqlSha256,
@@ -225,6 +226,10 @@ try {
     $kernel = $app->make(Kernel::class);
     $kernel->bootstrap();
 
+    $phase = 'license-backup';
+    $licenseGuard = $app->make(DeploymentLicenseGuard::class);
+    $protectedSnapshot = $licenseGuard->backup($commit);
+
     $phase = 'migration';
     $migrationExitCode = $kernel->call('migrate', [
         '--force' => true,
@@ -239,6 +244,9 @@ try {
             'commit' => $commit,
         ]);
     }
+
+    $phase = 'license-check-after-migration';
+    $licenseGuard->assertPreserved($protectedSnapshot);
 
     $phase = 'seeder';
     $seederExitCode = $kernel->call('db:seed', [
@@ -256,9 +264,14 @@ try {
         ]);
     }
 
+    $phase = 'license-check-after-seeding';
+    $licenseGuard->assertPreserved($protectedSnapshot);
+
     respond(200, [
         'message' => 'Database migration and seeding completed.',
         'commit' => $commit,
+        'licenses_preserved' => true,
+        'license_backup_created' => true,
     ]);
 } catch (Throwable $exception) {
     error_log(sprintf(

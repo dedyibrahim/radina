@@ -1,0 +1,590 @@
+/* Each design shares behavior and content, with its own composition and ornament language. */
+.wedding-page {
+  --theme-bg: var(--ivory);
+  --theme-ink: var(--ink);
+}
+.wedding-page .floating-nav button {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  min-height: 48px;
+  padding: 7px 3px;
+  background: transparent;
+  color: inherit;
+  font-size: 9px;
+  border-radius: 24px;
+}
+.wedding-page .floating-nav button.active {
+  background: var(--cream);
+  color: var(--ink);
+}
+.wedding-more-menu {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  background: var(--ivory);
+  color: var(--ink);
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+  padding: 12px;
+  display: flex;
+  gap: 8px;
+  box-shadow: 0 12px 30px #0002;
+}
+.wedding-more-menu button {
+  padding: 10px !important;
+  font-size: 12px !important;
+}
+.wedding-page .section {
+  background: var(--ivory);
+  color: var(--ink);
+}
+.wedding-page .invitation-shell {
+  background: var(--ivory);
+}
+.theme-luxury {
+  --ivory: #241d19;
+  --cream: #302720;
+  --ink: #f1e0c4;
+  --sage: #cfac74;
+  --gold: #d7b477;
+}
+.theme-luxury .hero-image-wrap {
+  border-radius: 0;
+  border: 1px solid var(--gold);
+  padding: 12px;
+  width: 85%;
+}
+.theme-luxury .hero-image-wrap img {
+  border-radius: 0;
+}
+.theme-luxury .hero-title h1 {
+  font-size: clamp(3rem, 11vw, 5.8rem);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+.theme-luxury .section {
+  border-bottom: 1px solid #d7b47744;
+}
+.theme-luxury .section-heading:before {
+  content: '◆';
+  display: block;
+  color: var(--gold);
+  margin-bottom: 15px;
+}
+.theme-luxury .flower-motion,
+.theme-luxury .hero-floral {
+  display: none;
+}
+.theme-luxury .event-card {
+  border: 1px solid var(--gold);
+  border-radius: 0;
+  background: transparent;
+}
+.theme-luxury .desktop-ambience {
+  background: radial-gradient(ellipse, #655035, #16110e);
+}
+.theme-minimal {
+  --ivory: #fff;
+  --cream: #f5f3ee;
+  --ink: #3e3d3b;
+  --sage: #79756c;
+  --gold: #b6a991;
+}
+.theme-minimal .flower-motion,
+.theme-minimal .botanical-ornament,
+.theme-minimal .hero-floral,
+.theme-minimal .hero-top {
+  display: none;
+}
+.theme-minimal .hero-image-wrap {
+  border-radius: 0;
+  width: calc(100% - 48px);
+  aspect-ratio: 4/5;
+}
+.theme-minimal .hero-image-wrap img {
+  border-radius: 0;
+}
+.theme-minimal .hero-title h1 {
+  font-size: clamp(3rem, 12vw, 5rem);
+  font-weight: 300;
+}
+.theme-minimal .section {
+  padding-block: 85px;
+}
+.theme-minimal .event-card,
+.theme-minimal .bank-card {
+  border-radius: 0;
+  border: 0;
+  border-top: 1px solid #ddd;
+  background: transparent;
+}
+.theme-minimal .section-heading .eyebrow {
+  letter-spacing: 4px;
+}
+.theme-minimal .desktop-ambience {
+  background: #f2f1ed;
+}
+.theme-heritage {
+  --ivory: #f8ecda;
+  --cream: #ead7b9;
+  --ink: #5b272b;
+  --sage: #792e36;
+  --gold: #b38a48;
+}
+.theme-heritage .flower-motion {
+  display: none;
+}
+.theme-heritage .section:before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 0;
+  height: 9px;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent 0 8px,
+    #b38a4870 8px 10px,
+    transparent 10px 18px
+  );
+}
+.theme-heritage .hero-image-wrap {
+  border-radius: 140px 140px 4px 4px;
+  border: 6px double var(--gold);
+  padding: 8px;
+}
+.theme-heritage .hero-title h1 {
+  color: #792e36;
+}
+.theme-heritage .event-card {
+  border: 4px double var(--gold);
+  border-radius: 0;
+  background: #f8ecda;
+}
+.theme-heritage .desktop-ambience {
+  background: repeating-linear-gradient(45deg, #5b272b, #5b272b 30px, #662d32 30px, #662d32 32px);
+}
+.theme-garden {
+  --ivory: #f1f5eb;
+  --cream: #e3ead9;
+  --ink: #34482f;
+  --sage: #526c4b;
+  --gold: #a1aa7d;
+}
+.theme-garden .hero-image-wrap {
+  border-radius: 50% 50% 5px 5px;
+  border: 9px double #a1aa7d;
+  padding: 7px;
+}
+.theme-garden .section {
+  background-image: radial-gradient(ellipse at 0 100%, #c5d9b540, transparent 50%);
+}
+.theme-garden .couple-grid {
+  gap: 45px;
+}
+.theme-garden .bride-portrait,
+.theme-garden .groom-portrait {
+  border-radius: 50%;
+}
+.theme-garden .event-card {
+  background: #fff9;
+  border-radius: 120px 120px 12px 12px;
+  padding-top: 50px;
+}
+.theme-garden .desktop-ambience {
+  background: radial-gradient(ellipse, #e3ead9, #b3c5a3);
+}
+.theme-vintage {
+  --ivory: #efe2cd;
+  --cream: #e3d0b3;
+  --ink: #604938;
+  --sage: #715542;
+  --gold: #ad8b60;
+}
+.theme-vintage .section {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.06' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.theme-vintage .hero-image-wrap {
+  border-radius: 0;
+  border: 10px solid #fff7e6;
+  box-shadow: 0 5px 20px #60493830;
+  transform: rotate(-3deg);
+  width: 76%;
+}
+.theme-vintage .hero-image-wrap img {
+  border-radius: 0;
+  filter: sepia(0.45);
+}
+.theme-vintage .flower-motion {
+  display: none;
+}
+.theme-vintage .event-card {
+  border: 3px double var(--gold);
+  border-radius: 0;
+  background: transparent;
+}
+.theme-vintage .gallery-grid img {
+  filter: sepia(0.35);
+}
+.theme-vintage .section-heading h2 {
+  font-style: italic;
+}
+.theme-vintage .desktop-ambience {
+  background: #cbb797;
+}
+.theme-midnight {
+  --ivory: #18191e;
+  --cream: #25232b;
+  --ink: #f5e5df;
+  --sage: #d6a093;
+  --gold: #bf8b76;
+}
+.theme-midnight .hero-image-wrap {
+  width: calc(100% - 24px);
+  border-radius: 160px 8px 160px 8px;
+  aspect-ratio: 3/4;
+}
+.theme-midnight .hero-image-wrap img {
+  border-radius: 160px 8px 160px 8px;
+  filter: contrast(1.15);
+}
+.theme-midnight .flower-motion,
+.theme-midnight .hero-floral {
+  display: none;
+}
+.theme-midnight .hero-title h1 {
+  font-family: var(--serif);
+  font-size: clamp(3.2rem, 14vw, 6rem);
+}
+.theme-midnight .section {
+  background-image: radial-gradient(ellipse at top, #482a3540, transparent 65%);
+}
+.theme-midnight .event-card,
+.theme-midnight .bank-card {
+  background: #25232b;
+  border: 1px solid #bf8b7660;
+}
+.theme-midnight .desktop-ambience {
+  background: radial-gradient(ellipse, #482a35, #121317);
+}
+.theme-sakinah {
+  --ivory: #faf6e9;
+  --cream: #eae9d7;
+  --ink: #43513a;
+  --sage: #647659;
+  --gold: #baa269;
+}
+.theme-sakinah .flower-motion {
+  display: none;
+}
+.theme-sakinah .hero-image-wrap {
+  border-radius: 50% 50% 0 0;
+  border: 5px double var(--gold);
+  padding: 7px;
+}
+.theme-sakinah .section-heading:before {
+  content: '✧';
+  font-size: 35px;
+  color: var(--gold);
+}
+.theme-sakinah .section {
+  background-image: radial-gradient(circle at 10px 10px, #baa26920 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.theme-sakinah .event-card {
+  border-radius: 100px 100px 8px 8px;
+  border: 1px solid var(--gold);
+  padding-top: 48px;
+  background: #faf6e9;
+}
+.theme-sakinah .desktop-ambience {
+  background: #d8dec9;
+}
+.theme-cinematic {
+  --ivory: #151718;
+  --cream: #222628;
+  --ink: #f1e9dd;
+  --sage: #ddcbb1;
+  --gold: #b79b78;
+}
+.theme-cinematic .hero-section {
+  padding: 0;
+  position: relative;
+  isolation: isolate;
+  justify-content: center;
+}
+.theme-cinematic .hero-image-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  aspect-ratio: auto;
+}
+.theme-cinematic .hero-image-wrap img {
+  height: 100%;
+  width: 100%;
+  border-radius: 0;
+  object-fit: cover;
+}
+.theme-cinematic .hero-section:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#0005, #0002, #000b);
+  z-index: -1;
+  pointer-events: none;
+}
+.theme-cinematic .hero-title,
+.theme-cinematic .hero-top,
+.theme-cinematic .hero-bottom {
+  color: white;
+  z-index: 1;
+}
+.theme-cinematic .hero-title {
+  margin: auto 0 10px;
+}
+.theme-cinematic .hero-bottom {
+  margin-top: auto;
+}
+.theme-cinematic .hero-floral,
+.theme-cinematic .flower-motion {
+  display: none;
+}
+.theme-cinematic .invitation-content {
+  display: flex;
+  flex-direction: column;
+}
+.theme-cinematic .hero-section {
+  order: -3;
+}
+.theme-cinematic .story-section {
+  order: -2;
+}
+.theme-cinematic .quote-section {
+  order: -1;
+}
+.theme-cinematic .timeline-item {
+  padding-block: 25px;
+}
+.theme-cinematic .section-heading h2 {
+  font-size: clamp(2.8rem, 10vw, 4.7rem);
+}
+.theme-cinematic .event-card,
+.theme-cinematic .bank-card {
+  background: #222628;
+  border-color: #b79b78;
+}
+.theme-cinematic .desktop-ambience {
+  background: #16191b;
+}
+.theme-blush {
+  --ivory: #fff1f4;
+  --cream: #f4e2ef;
+  --ink: #684d65;
+  --sage: #94607c;
+  --gold: #bd8aa1;
+}
+.theme-blush .section {
+  background-image: radial-gradient(ellipse at 90% 10%, #ded0ed80, transparent 60%);
+}
+.theme-blush .hero-image-wrap {
+  width: 80%;
+  border-radius: 38% 62% 48% 52% / 50% 45% 55% 50%;
+  border: 8px solid #ffffff80;
+}
+.theme-blush .hero-image-wrap img {
+  border-radius: inherit;
+}
+.theme-blush .hero-title h1 {
+  font-size: clamp(3.5rem, 15vw, 6rem);
+}
+.theme-blush .flower-motion {
+  opacity: 0.65;
+}
+.theme-blush .event-card,
+.theme-blush .bank-card {
+  border: 0;
+  background: #fff9;
+  border-radius: 28px;
+  box-shadow: 0 10px 25px #94607c0d;
+}
+.theme-blush .desktop-ambience {
+  background: linear-gradient(135deg, #f6d8df, #ded4ef, #dceaf0);
+}
+.wedding-page .bank-number {
+  color: var(--ink);
+}
+.wedding-page .bank-owner,
+.wedding-page .section-subtitle,
+.wedding-page .event-detail,
+.wedding-page .event-venue,
+.wedding-page .story-section p {
+  color: var(--ink);
+}
+.wedding-page .hero-image-wrap {
+  max-width: 100%;
+}
+.wedding-page .section,
+.wedding-page .hero-title {
+  overflow-wrap: anywhere;
+}
+.wedding-page .bank-card {
+  min-width: 0;
+}
+.wedding-page .gift-section .button {
+  max-width: 100%;
+}
+@media (max-width: 359px) {
+  .wedding-page .floating-nav button {
+    font-size: 8px;
+    padding-inline: 1px;
+  }
+  .radina-gift-tabs button {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+  .theme-luxury .hero-title h1 {
+    letter-spacing: 1px;
+  }
+  .wedding-page .section {
+    padding-inline: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wedding-page * {
+    animation: none !important;
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+
+.wedding-page {
+  color: var(--ink);
+}
+.wedding-page:not(.theme-floral) .hero-section {
+  background: var(--ivory);
+}
+.wedding-page:not(.theme-floral) .arch-outline {
+  border-color: var(--gold);
+  border-radius: inherit;
+}
+.wedding-page:not(.theme-floral) .person strong,
+.wedding-page:not(.theme-floral) .person > p,
+.wedding-page:not(.theme-floral) .social-link,
+.wedding-page:not(.theme-floral) .hero-bottom,
+.wedding-page:not(.theme-floral) .location-info > p,
+.wedding-page:not(.theme-floral) .timeline p,
+.wedding-page:not(.theme-floral) .quote-source,
+.wedding-page:not(.theme-floral) .arabic {
+  color: var(--ink);
+}
+.wedding-page:not(.theme-floral) .countdown > div {
+  background: var(--cream);
+  border-color: var(--gold);
+}
+.wedding-page:not(.theme-floral) .countdown span,
+.wedding-page:not(.theme-floral) .countdown p {
+  color: var(--ink);
+}
+.wedding-page:not(.theme-floral) .wish-card {
+  background: var(--cream);
+  color: var(--ink);
+}
+.wedding-page .floating-nav {
+  background: var(--ivory);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+.wedding-page .music-button {
+  background: var(--ivory);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+.wedding-page:not(.theme-floral) .button {
+  background: var(--ink);
+  color: var(--ivory);
+  border-color: var(--gold);
+}
+.wedding-page:not(.theme-floral) .button-outline {
+  background: transparent;
+  color: var(--ink);
+}
+.wedding-page:not(.theme-floral) .cover-invite .button {
+  background: var(--ivory);
+  color: var(--ink);
+}
+.theme-cinematic .hero-section {
+  background: transparent !important;
+}
+.theme-cinematic .hero-bottom {
+  color: white !important;
+}
+.theme-minimal .arch-outline,
+.theme-vintage .arch-outline {
+  display: none;
+}
+.theme-garden .portrait-wrap > img {
+  border-radius: 50%;
+}
+.theme-minimal .portrait-wrap > img,
+.theme-vintage .portrait-wrap > img {
+  border-radius: 0;
+}
+.theme-luxury .couple-names {
+  font-size: clamp(3.6rem, 17vw, 6rem);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+.theme-vintage .cover-photo {
+  filter: sepia(0.6);
+}
+.theme-heritage .cover-frame {
+  border: 4px double #b38a48;
+}
+.theme-blush .cover-frame {
+  border-radius: 150px 150px 30px 30px;
+}
+.theme-midnight .cover-shade {
+  background: linear-gradient(#19101bcc, #341d3266, #110d19dd);
+}
+.theme-sakinah .cover-frame {
+  border-radius: 220px 220px 0 0;
+}
+.theme-minimal .cover-frame {
+  border: 0;
+}
+.theme-minimal .cover-floral {
+  display: none;
+}
+.theme-minimal .couple-names {
+  font-weight: 300;
+}
+.theme-cinematic .cover-frame {
+  inset: 16px;
+  border: 0;
+  border-top: 1px solid #ffffff70;
+  border-bottom: 1px solid #ffffff70;
+}
+.theme-cinematic .cover-content {
+  text-align: left;
+  padding-left: 20px;
+}
+.theme-cinematic .couple-names {
+  letter-spacing: -3px;
+}
+.theme-luxury .hero-title,
+.theme-midnight .hero-title {
+  max-width: 100%;
+}
+
+.wedding-page .scroll-indicator {
+  background: transparent;
+  border: 0;
+  flex-shrink: 0;
+}

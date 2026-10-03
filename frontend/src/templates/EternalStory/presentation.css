@@ -1,0 +1,179 @@
+.design-cinema .flower-motion {
+  display: none;
+}
+.cover-cinema {
+  text-align: left;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-bottom: 45px;
+}
+.cover-cinema .cover-title {
+  margin-top: auto;
+}
+.cover-cinema h1 {
+  font-size: clamp(3.8rem, 18vw, 7rem);
+}
+.cover-cinema .cover-invitation {
+  align-items: start;
+  justify-items: start;
+  margin-top: 24px;
+}
+.hero-cinema {
+  min-height: 100svh;
+  justify-content: flex-end;
+  padding-bottom: 120px;
+  text-align: left;
+  align-items: start;
+}
+.hero-cinema h1 {
+  font-size: clamp(3.8rem, 17vw, 7rem);
+}
+.couple-cinema {
+  padding: 0 !important;
+}
+.couple-cinema .section-heading {
+  padding: 60px 25px;
+}
+.couple-cinema figure {
+  height: 100svh;
+}
+.couple-cinema .person-copy {
+  padding: 25px 35px;
+}
+.story-cinema {
+  padding: 0 !important;
+}
+.story-cinema > .section-heading {
+  padding: 60px 28px;
+}
+.story-cinema .story-composition {
+  gap: 0;
+}
+.story-cinema .story-chapter {
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  color: white;
+  text-align: left;
+  isolation: isolate;
+}
+.story-cinema .story-chapter > img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -2;
+}
+.story-cinema .story-chapter:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, #101018da);
+  z-index: -1;
+}
+.story-cinema .chapter-copy {
+  padding: 50px 30px 90px;
+}
+.story-cinema .chapter-number {
+  font:
+    clamp(3.5rem, 16vw, 6rem) 'Cormorant Garamond',
+    serif;
+}
+.story-cinema h3 {
+  font-size: clamp(2rem, 9vw, 3.5rem);
+}
+.design-cinema .event-section {
+  min-height: 100svh;
+  background: #101018;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.design-cinema .event-card {
+  background: none;
+  border: 0;
+  border-top: 1px solid #ffffff35;
+  border-radius: 0;
+  box-shadow: none;
+}
+.design-cinema .gallery-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+  gap: 12px;
+}
+.design-cinema .gallery-item {
+  flex: 0 0 82%;
+  scroll-snap-align: center;
+  aspect-ratio: 3/4;
+}
+.design-cinema .gallery-item {
+  aspect-ratio: 16/9;
+  flex-basis: 92%;
+  border-radius: 0;
+}
+.design-cinema .bank-card {
+  border-radius: 0;
+  background: #ffffff08;
+  border: 0;
+  border-bottom: 1px solid #fff4;
+}
+.closing-cinema h2 {
+  font-size: clamp(4rem, 19vw, 7rem);
+  text-transform: uppercase;
+}
+.design-cinema .floating-nav {
+  border-radius: 0;
+  background: #141414ed;
+}
+.design-cinema .floating-nav button span {
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+.design-cinema .floating-nav button {
+  border-bottom: 1px solid #fff3;
+}
+@media (min-width: 768px) {
+  .design-cinema .invitation-shell {
+    max-width: 1000px;
+  }
+  .design-cinema .desktop-ambience {
+    display: none;
+  }
+  .design-cinema .story-cinema .chapter-copy {
+    padding: 80px;
+  }
+  .design-cinema .hero-copy {
+    max-width: 650px;
+  }
+  .design-cinema .floating-nav {
+    left: auto;
+    right: 20px;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+    width: 65px;
+    flex-direction: column;
+  }
+  .design-cinema .music-player {
+    right: 100px;
+  }
+  .design-cinema .gallery-item {
+    flex-basis: 85%;
+  }
+}
+.design-cinema .design-cover h1,
+.design-cinema .design-hero h1 {
+  font-size: clamp(2.5rem, var(--name-scale, 15vw), 6.4rem);
+  letter-spacing: -0.025em;
+}
+
+.hero-cinema .hero-full-photo {
+  animation: cinema-slow-zoom 28s linear infinite alternate;
+}
+@keyframes cinema-slow-zoom {
+  to {
+    transform: scale(1.08);
+  }
+}

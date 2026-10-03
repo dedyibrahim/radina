@@ -1,0 +1,119 @@
+/* Decorative motion stays at the edges and never intercepts interaction. */
+.flower-motion {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  border-radius: inherit;
+  z-index: 1;
+  contain: layout paint;
+}
+.flower-corner {
+  position: absolute;
+  width: clamp(48px, 12vw, 76px);
+  opacity: 0.68;
+}
+.flower-corner-left {
+  top: 10px;
+  left: -27px;
+  transform: rotate(23deg);
+}
+.flower-corner-right {
+  bottom: 12px;
+  right: -29px;
+  transform: rotate(202deg);
+}
+.swaying-flower {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform-origin: 30% 95%;
+  animation: flower-sway 7s ease-in-out infinite alternate;
+}
+.flower-corner-right .swaying-flower {
+  animation-delay: -3s;
+  animation-duration: 9s;
+}
+.flower-bloom {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bloom-breathe 6s ease-in-out infinite alternate;
+}
+.drifting-petal {
+  position: absolute;
+  top: -18px;
+  width: 7px;
+  height: 11px;
+  border-radius: 80% 15% 80% 15%;
+  background: linear-gradient(135deg, #f1d9cd, #cda59b);
+  opacity: 0;
+  animation: flower-petal-drift calc(13s + var(--petal-index) * 2s) linear infinite;
+  animation-delay: calc(var(--petal-index) * -3.7s);
+}
+.petal-edge-left {
+  left: calc(3px + var(--petal-index) * 2px);
+}
+.petal-edge-right {
+  right: calc(2px + var(--petal-index) * 2px);
+}
+.flower-motion:not(.flowers-visible) * {
+  animation-play-state: paused;
+}
+.wedding-cover .flower-corner,
+.closing-section .flower-corner {
+  opacity: 0.8;
+}
+@keyframes flower-sway {
+  from {
+    transform: rotate(-5deg);
+  }
+  to {
+    transform: rotate(6deg) translateY(-3px);
+  }
+}
+@keyframes bloom-breathe {
+  from {
+    scale: 0.97;
+  }
+  to {
+    scale: 1.04;
+  }
+}
+@keyframes flower-petal-drift {
+  0% {
+    top: -18px;
+    opacity: 0;
+    transform: translateX(0) rotate(0);
+  }
+  12% {
+    opacity: 0.5;
+  }
+  48% {
+    transform: translateX(5px) rotate(110deg);
+  }
+  86% {
+    opacity: 0.4;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+    transform: translateX(-4px) rotate(250deg);
+  }
+}
+@media (min-width: 480px) {
+  .flower-corner-left {
+    left: -34px;
+  }
+  .flower-corner-right {
+    right: -36px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flower-motion * {
+    animation: none !important;
+  }
+  .drifting-petal {
+    display: none;
+  }
+}

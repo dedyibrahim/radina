@@ -1,0 +1,73 @@
+.cover-nusantara {
+  color: #fae7b7;
+  background: #531d24;
+}
+.hero-nusantara {
+  min-height: auto;
+  background: #fbf1df;
+  padding-bottom: 90px;
+}
+.hero-nusantara h1 {
+  font-size: clamp(2.7rem, 12vw, 4.8rem);
+}
+.couple-nusantara figure {
+  aspect-ratio: 3/4;
+  border: 7px double #b79961;
+  padding: 8px;
+}
+.story-nusantara .story-composition {
+  border: 6px double #b39158;
+  background: #fcf1d9;
+  padding: 25px;
+}
+.story-nusantara .story-chapter {
+  border-bottom: 1px solid #ccb382;
+}
+.design-nusantara .event-card {
+  border: 6px double #b79157;
+  border-radius: 0;
+  background: #fbefd4;
+}
+.design-nusantara .gallery-item {
+  padding: 7px;
+  border: 3px double #b79157;
+  border-radius: 0;
+}
+.design-nusantara .bank-card {
+  border: 5px double #b39158;
+  border-radius: 0;
+}
+.closing-nusantara {
+  background: #57252d;
+  color: #edce94;
+}
+.design-nusantara .floating-nav {
+  border: 3px double #b99c66;
+  border-radius: 12px;
+}
+.design-nusantara .design-cover h1,
+.design-nusantara .design-hero h1 {
+  font-size: clamp(2.5rem, var(--name-scale, 15vw), 6.4rem);
+  letter-spacing: -0.025em;
+}
+
+.cover-nusantara .gate {
+  width: 50%;
+  background: repeating-linear-gradient(45deg, #642831 0 14px, #9d7a421f 14px 15px);
+}
+.cover-nusantara .cover-title {
+  position: relative;
+  z-index: 4;
+}
+.cover-nusantara .gate-left {
+  border-right: 2px solid #c6a66c;
+}
+.cover-nusantara .gate-right {
+  border-left: 2px solid #c6a66c;
+}
+.cover-leave-active .gate-left {
+  transform: translateX(-110%);
+}
+.cover-leave-active .gate-right {
+  transform: translateX(110%);
+}

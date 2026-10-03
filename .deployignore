@@ -6,6 +6,8 @@
 node_modules/
 release/
 tests/
+scripts/
+test-results/
 .env
 .env.*
 .phpunit.cache
@@ -14,8 +16,13 @@ auth.json
 Homestead.json
 Homestead.yaml
 license-server.zip
+storage/app/
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/testing/
+storage/framework/views/
+storage/logs/
 npm-debug.log
 yarn-error.log
 README.md
 README_LICENSE_SETUP.md
-

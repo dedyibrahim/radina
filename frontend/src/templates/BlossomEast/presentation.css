@@ -1,0 +1,129 @@
+.design-blossom-east {
+  --ivory: #faf2e7;
+  --cream: #faf2e7;
+  --ink: #352d29;
+  --gold: #a4544d;
+  --rose: #a4544d;
+  --muted: #352d29;
+  --theme-bg: #faf2e7;
+  --theme-ink: #352d29;
+}
+
+/* 18: negative space, ink-like branches, a vertical invitation. */
+.cover-blossom-east {
+  text-align: center;
+  justify-content: flex-start;
+}
+.ink-branch {
+  font-size: 55px;
+  color: var(--gold);
+  align-self: flex-start;
+  pointer-events: none;
+}
+.ink-branch span {
+  font-size: 75px;
+  color: #352d29;
+}
+.ink-title {
+  padding: 20px 0;
+}
+.ink-photo {
+  width: 60%;
+  height: 180px;
+  margin: 0 auto;
+}
+.art-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+  position: relative;
+}
+.art-hero figure {
+  margin: 0 0 0 30%;
+  height: 45svh;
+}
+.art-hero > span {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  font-size: 90px;
+  color: var(--gold);
+  pointer-events: none;
+}
+.blossom-portraits article {
+  margin-bottom: 70px;
+}
+.blossom-portraits figure {
+  width: 75%;
+  position: relative;
+}
+.blossom-portraits figure span {
+  position: absolute;
+  right: -30px;
+  bottom: -25px;
+  font-size: 75px;
+  color: var(--gold);
+  pointer-events: none;
+}
+.blossom-portraits article:nth-child(2) figure {
+  margin-left: auto;
+}
+.ink-biography {
+  padding-top: 35px;
+}
+.brush-scroll article {
+  display: grid;
+  grid-template-columns: 25px minmax(0, 1fr);
+  gap: 20px;
+  padding-bottom: 45px;
+  border-left: 3px solid #352d2920;
+  padding-left: 20px;
+}
+.brush-scroll time {
+  writing-mode: vertical-rl;
+}
+.ink-dot {
+  position: absolute;
+  left: -8px;
+  top: 0;
+  color: var(--gold);
+}
+.brush-scroll figure {
+  grid-column: 2;
+}
+.vertical-invitations article {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 22px;
+  border-top: 1px solid var(--gold);
+  padding: 40px 0;
+}
+.vertical-date {
+  writing-mode: vertical-rl;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+.red-seal {
+  grid-column: 2;
+  background: var(--gold);
+  color: #fff;
+  width: 36px;
+  padding: 8px;
+  text-align: center;
+  border: 3px double #fff8;
+}
+.design-blossom-east .gallery-item {
+  border: 1px solid #a4544d60;
+  border-radius: 0;
+  padding: 8px;
+  background: #fff;
+}
+.design-blossom-east .gallery-item:nth-child(even) {
+  margin-top: 30px;
+}
+.design-blossom-east .bank-card {
+  border: 1px solid #352d2940;
+  border-radius: 0;
+  background: transparent;
+  border-bottom: 4px solid var(--gold);
+}

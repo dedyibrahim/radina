@@ -1,0 +1,163 @@
+.design-paper-petals {
+  --ivory: #f5ead9;
+  --cream: #f5ead9;
+  --ink: #604737;
+  --gold: #ad8e77;
+  --rose: #ad8e77;
+  --muted: #604737;
+  --theme-bg: #f5ead9;
+  --theme-ink: #604737;
+}
+
+/* 15: tactile paper and notes; never the vintage envelope layout. */
+.paper-stack {
+  position: relative;
+  background: #fffaf0;
+  padding: 35px 20px;
+  box-shadow:
+    9px 8px 0 #e6d6be,
+    -5px -8px 0 #f0e4d3;
+  text-align: center;
+}
+.paper-stack figure {
+  height: 180px;
+  margin: 25px 10px 0;
+  transform: rotate(-4deg);
+  padding: 10px;
+  background: white;
+}
+.ribbon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 48%;
+  width: 15px;
+  background: #ad8e7750;
+  pointer-events: none;
+  transition: transform 0.6s;
+}
+.cover-leave-active .ribbon {
+  transform: translateY(-120%);
+}
+.handmade-hero {
+  position: relative;
+  padding: 35px 0;
+}
+.paper-note {
+  padding: 20px;
+  background: #fffaf0;
+  transform: rotate(-3deg);
+}
+.handmade-hero figure {
+  padding: 12px 12px 35px;
+  background: white;
+  transform: rotate(4deg);
+  margin: 10px 20px;
+}
+.handmade-hero img {
+  aspect-ratio: 4/5;
+}
+.handmade-hero figcaption {
+  text-align: center;
+  font-size: 12px;
+  padding-top: 15px;
+}
+.pressed-petal {
+  position: absolute;
+  bottom: 40px;
+  right: 0;
+  font-size: 65px;
+  color: #ad8e77;
+  pointer-events: none;
+}
+.polaroid-pair article {
+  margin-bottom: 55px;
+}
+.polaroid-pair figure {
+  margin: 0 15px;
+  background: white;
+  padding: 14px 14px 0;
+  transform: rotate(-3deg);
+  box-shadow: 0 10px 25px #60473715;
+}
+.polaroid-pair article:nth-child(2) figure {
+  transform: rotate(3deg);
+}
+.polaroid-pair figcaption {
+  font-family: serif;
+  font-style: italic;
+  font-size: 28px;
+  text-align: center;
+}
+.paper-tape {
+  position: absolute;
+  width: 80px;
+  height: 25px;
+  top: -12px;
+  left: 35%;
+  background: #bfab8290;
+  transform: rotate(-7deg);
+  pointer-events: none;
+}
+.journal-biography {
+  padding: 25px;
+}
+.pressed-journal article {
+  display: grid;
+  grid-template-columns: 55px minmax(0, 1fr);
+  gap: 20px;
+  padding: 30px 0;
+  border-bottom: 1px dashed #ad8e77;
+}
+.journal-date span {
+  writing-mode: vertical-rl;
+  font-size: 25px;
+}
+.journal-date small {
+  display: block;
+  font-size: 8px;
+  margin-top: 10px;
+}
+.pressed-journal figure {
+  padding: 10px;
+  background: white;
+  transform: rotate(2deg);
+}
+.journal-entry {
+  grid-column: 2;
+}
+.handwritten-agenda article {
+  background: #fffaf0;
+  padding: 35px 25px;
+  margin: 40px 0;
+  box-shadow: 5px 5px 0 #e6d6be;
+  transform: rotate(-1deg);
+}
+.handwritten-agenda header {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.handwritten-agenda header b {
+  font-size: 35px;
+  font-style: italic;
+}
+.design-paper-petals .gallery-grid {
+  gap: 24px;
+}
+.design-paper-petals .gallery-item {
+  border-radius: 0;
+  background: white;
+  padding: 8px 8px 25px;
+  transform: rotate(-3deg);
+}
+.design-paper-petals .gallery-item:nth-child(even) {
+  transform: rotate(3deg);
+  margin-top: 20px;
+}
+.design-paper-petals .bank-card {
+  background: #fffaf0;
+  border-radius: 0 25px 5px 0;
+  border: 1px dashed var(--gold);
+  box-shadow: 5px 5px 0 #e6d6be;
+}

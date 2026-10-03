@@ -1,0 +1,110 @@
+/* Each design shares behavior and content, with its own composition and ornament language. */
+.wedding-page {
+  --theme-bg: var(--ivory);
+  --theme-ink: var(--ink);
+}
+.wedding-page .floating-nav button {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  min-height: 48px;
+  padding: 7px 3px;
+  background: transparent;
+  color: inherit;
+  font-size: 9px;
+  border-radius: 24px;
+}
+.wedding-page .floating-nav button.active {
+  background: var(--cream);
+  color: var(--ink);
+}
+.wedding-more-menu {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  background: var(--ivory);
+  color: var(--ink);
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+  padding: 12px;
+  display: flex;
+  gap: 8px;
+  box-shadow: 0 12px 30px #0002;
+}
+.wedding-more-menu button {
+  padding: 10px !important;
+  font-size: 12px !important;
+}
+.wedding-page .section {
+  background: var(--ivory);
+  color: var(--ink);
+}
+.wedding-page .invitation-shell {
+  background: var(--ivory);
+}
+.wedding-page .bank-number {
+  color: var(--ink);
+}
+.wedding-page .bank-owner,
+.wedding-page .section-subtitle,
+.wedding-page .event-detail,
+.wedding-page .event-venue,
+.wedding-page .story-section p {
+  color: var(--ink);
+}
+.wedding-page .hero-image-wrap {
+  max-width: 100%;
+}
+.wedding-page .section,
+.wedding-page .hero-title {
+  overflow-wrap: anywhere;
+}
+.wedding-page .bank-card {
+  min-width: 0;
+}
+.wedding-page .gift-section .button {
+  max-width: 100%;
+}
+@media (max-width: 359px) {
+  .wedding-page .floating-nav button {
+    font-size: 8px;
+    padding-inline: 1px;
+  }
+  .radina-gift-tabs button {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+  .wedding-page .section {
+    padding-inline: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wedding-page * {
+    animation: none !important;
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+
+.wedding-page {
+  color: var(--ink);
+}
+.wedding-page .floating-nav {
+  background: var(--ivory);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+.wedding-page .music-button {
+  background: var(--ivory);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+
+.wedding-page .scroll-indicator {
+  background: transparent;
+  border: 0;
+  flex-shrink: 0;
+}

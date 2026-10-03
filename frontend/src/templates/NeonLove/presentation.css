@@ -1,0 +1,147 @@
+.design-neon-love {
+  --ivory: #111126;
+  --cream: #111126;
+  --ink: #f4edff;
+  --gold: #d889cf;
+  --rose: #d889cf;
+  --muted: #f4edff;
+  --theme-bg: #111126;
+  --theme-ink: #f4edff;
+}
+
+/* 19: contemporary city posters, metro stations, digital passes. */
+.cover-neon-love {
+  color: white;
+}
+.city-cover {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.city-cover:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#11112680, #111126);
+}
+.neon-title {
+  margin-top: 20svh;
+  text-align: center;
+}
+.neon-title h1 {
+  font-family: Arial, sans-serif;
+  font-size: clamp(2.6rem, 11vw, 5rem);
+  text-shadow: 0 0 35px #d889cf80;
+  letter-spacing: -2px;
+}
+.neon-title h1 span {
+  display: block;
+  font-size: 0.6em;
+  margin: 12px;
+  color: var(--gold);
+}
+.urban-hero {
+  position: relative;
+  height: 85svh;
+  margin: -24px -24px 0;
+}
+.urban-hero:before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent, #111126);
+}
+.urban-hero > div {
+  position: absolute;
+  bottom: 50px;
+  left: 25px;
+  right: 25px;
+}
+.urban-hero h1 {
+  font-family: Arial, sans-serif;
+  font-weight: 600;
+  text-shadow: 0 0 30px #d889cf40;
+}
+.city-coordinate {
+  position: absolute;
+  top: 25px;
+  right: 20px;
+  writing-mode: vertical-rl;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+.city-posters article {
+  margin-bottom: 55px;
+}
+.city-posters figure {
+  border: 1px solid var(--gold);
+  padding: 12px;
+}
+.city-posters figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+.city-posters figcaption b {
+  font-size: 30px;
+}
+.poster-notes {
+  padding: 15px;
+}
+.metro-route article {
+  border-left: 3px solid #d889cf80;
+  padding: 10px 0 50px 35px;
+  margin-left: 17px;
+}
+.metro-station {
+  position: absolute;
+  left: -19px;
+  top: 10px;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  background: var(--ivory);
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  line-height: 32px;
+  font-size: 10px;
+}
+.metro-route figure {
+  margin-top: 22px;
+}
+.digital-passes article {
+  border: 1px solid #d889cf80;
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 30px;
+  background: linear-gradient(125deg, #ffffff08, #d889cf08);
+}
+.digital-passes header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed #d889cf80;
+  padding-bottom: 15px;
+  font-size: 11px;
+}
+.digital-passes footer {
+  border-top: 1px dashed #d889cf80;
+  padding-top: 20px;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pass-bars {
+  display: block;
+  height: 25px;
+  width: 120px;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 3px 5px);
+}
+.design-neon-love .bank-card {
+  background: #ffffff08;
+  border: 1px solid #d889cf80;
+  border-radius: 16px;
+}
+.design-neon-love .gallery-item {
+  border-radius: 4px;
+}

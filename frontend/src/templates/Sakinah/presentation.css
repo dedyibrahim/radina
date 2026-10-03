@@ -1,0 +1,92 @@
+.design-sakinah .flower-motion {
+  display: none;
+}
+.hero-sakinah h1 {
+  font-size: clamp(2.7rem, 12vw, 4.8rem);
+}
+.cover-sakinah {
+  background: #f4f0df;
+  color: #355548;
+  padding: 35px 26px;
+}
+.hero-sakinah {
+  min-height: auto;
+  background: #f8f5e8;
+}
+.hero-sakinah .framed-hero-photo {
+  border-radius: 200px 200px 0 0;
+  border: 2px solid #bca16a;
+  padding: 10px;
+}
+.hero-sakinah .framed-hero-photo img {
+  border-radius: 200px 200px 0 0;
+}
+.design-sakinah .quote-section {
+  padding: 90px 32px;
+  background: #294e42;
+  color: #f0e4c4;
+}
+.design-sakinah .quote-section blockquote {
+  font-size: clamp(1.4rem, 6vw, 2rem);
+}
+.couple-sakinah .couple-layout {
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.couple-sakinah figure {
+  aspect-ratio: 3/5;
+  border-radius: 100px 100px 0 0;
+  border: 2px solid #bda776;
+  padding: 5px;
+}
+.couple-sakinah figure img {
+  border-radius: 100px 100px 0 0;
+}
+.couple-sakinah h3 {
+  font-size: clamp(1.5rem, 6vw, 2.3rem);
+}
+.story-sakinah .story-chapter {
+  padding: 20px;
+  border-bottom: 1px solid #c5b789;
+}
+.design-sakinah .event-card {
+  border-radius: 160px 160px 0 0;
+  padding-top: 75px;
+  border: 1px solid #c4b17d;
+  background: #fffdf2;
+}
+.design-sakinah .gallery-item {
+  border-radius: 65px 65px 0 0;
+  border: 1px solid #b5a578;
+  padding: 4px;
+}
+.design-sakinah .bank-card {
+  border: 1px solid #bfa974;
+  border-radius: 60px 60px 0 0;
+}
+.closing-sakinah .closing-letter {
+  background: #fffdf2ed;
+  color: #355548;
+  border-radius: 150px 150px 0 0;
+  padding: 65px 25px 30px;
+}
+.design-sakinah .floating-nav {
+  border-radius: 12px;
+  border: 1px solid #c2b17d;
+}
+@media (max-width: 359px) {
+  .couple-sakinah .couple-layout {
+    gap: 12px;
+  }
+}
+.design-sakinah .design-cover h1,
+.design-sakinah .design-hero h1 {
+  font-size: clamp(2.5rem, var(--name-scale, 15vw), 6.4rem);
+  letter-spacing: -0.025em;
+}
+
+.design-sakinah .reveal-ready,
+.design-sakinah .reveal-ready.is-visible {
+  transform: none;
+  transition: opacity 0.65s ease;
+}

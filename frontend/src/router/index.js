@@ -14,6 +14,8 @@ const router = createRouter({
       component: PublicLayout,
       children: [
         { path: '', component: () => import('../pages/public/Home.vue') },
+        { path: 'buket', component: () => import('../pages/public/Bouquets.vue') },
+        { path: 'bucket', redirect: '/buket' },
         { path: 'templates', component: () => import('../pages/public/Templates.vue') },
         { path: 'templates/:slug', component: () => import('../pages/public/TemplateDetail.vue') },
         {

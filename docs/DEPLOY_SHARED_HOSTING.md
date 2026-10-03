@@ -37,3 +37,9 @@ Rollback menggunakan cadangan source/build sebelumnya dan `.env` yang sama. Tabe
 Endpoint `/api/admin/*` menggunakan middleware `web` untuk session, cookie, dan CSRF secara eksplisit. Login tidak bergantung pada apakah domain `radina.net` tercantum di `SANCTUM_STATEFUL_DOMAINS`. Kredensial administrator lama tetap digunakan.
 
 Login menampilkan tombol tampilkan/sembunyikan kata sandi serta CAPTCHA penjumlahan. Soal CAPTCHA tersimpan dalam session, berlaku 5 menit, dan hanya dapat dipakai sekali. Jawaban yang salah, kedaluwarsa, atau tanpa session ditolak sebelum pemeriksaan password. Setelah login gagal, halaman mengambil soal baru. Rate limit login tetap 5 permintaan per menit. CAPTCHA tidak membutuhkan API key eksternal.
+
+## Buket dan kontak bisnis
+
+Katalog `/buket` memakai 17 foto asli dari folder buket pemilik, dengan harga mulai Rp100.000 dan konsultasi custom melalui WhatsApp. `/bucket` diarahkan ke `/buket`. Nomor kontak bisnis wedding dan buket adalah `081289903664` (`6281289903664` untuk tautan WhatsApp), diperbarui lewat migration khusus setting tanpa mengubah akun, lisensi, atau aktivasi. Nomor selanjutnya dapat diubah lewat Pengaturan admin. Tombol WhatsApp mengambang tersedia di halaman publik dan tautan produk menyertakan foto referensi pilihan pelanggan.
+
+Deployment membandingkan SHA-256 file dengan manifest commit produksi terakhir yang berhasil. Salinan upload sementara yang identik dapat dilewati; source dan file remote tidak dihapus. Manifest baru tetap memuat semua file yang diharapkan dan hook memverifikasi seluruhnya sebelum migrasi. Jika manifest lama tidak tersedia, rusak, atau tidak sesuai marker commit, semua file tetap dikirim. Hook dan entrypoint selalu dikirim.

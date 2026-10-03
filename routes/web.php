@@ -77,5 +77,7 @@ Route::get('/news-sitemap.xml', [SiteController::class, 'retired']);
 Route::get('/rss.xml', [SiteController::class, 'retired']);
 Route::get('/brand/{file}', [SiteController::class, 'brand']);
 Route::get('/images/templates/{file}', [SiteController::class, 'thumbnail']);
+Route::get('/images/bouquets/{file}', [SiteController::class, 'bouquetImage']);
+Route::get('/bucket', fn () => redirect('/buket', 301));
 Route::get('/w/{slug}', [SiteController::class, 'wedding']);
 Route::get('/{any?}', [SiteController::class, 'index'])->where('any', '^(?!api(?:/|$)|storage(?:/|$)|sanctum(?:/|$)|assets(?:/|$)).*');

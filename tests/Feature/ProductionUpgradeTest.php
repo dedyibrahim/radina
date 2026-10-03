@@ -36,6 +36,8 @@ class ProductionUpgradeTest extends TestCase
                 $this->assertSame($rows, DB::table($table)->orderBy('id')->get()->map(fn ($row) => (array) $row)->all(), $table);
             }
             $this->assertDatabaseCount('templates', 20);
+            $this->assertDatabaseHas('system_settings', ['key' => 'whatsapp_number', 'value' => '6281289903664']);
+            $this->getJson('/api/settings')->assertOk()->assertJsonPath('data.whatsapp_number', '6281289903664');
             $this->assertTrue($admin->fresh()->admin->active);
         } finally {
             $this->artisan('migrate:fresh', ['--force' => true])->assertSuccessful();

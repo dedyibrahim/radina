@@ -12,8 +12,14 @@ class SiteController extends Controller
 {
     public function index(Request $request, PlatformSettings $settings)
     {
-        $known = preg_match('~^(?:/|/templates(?:/[^/]+(?:/preview)?)?|/order/(?:success/)?[^/]+|/check-order|/admin(?:/.*)?|/preview/wedding/[^/]+)$~', '/'.$request->path()) || $request->path() === '/';
-        return $this->html($settings->all(), null, $known ? 200 : 404);
+        $known = preg_match('~^(?:/|/buket|/templates(?:/[^/]+(?:/preview)?)?|/order/(?:success/)?[^/]+|/check-order|/admin(?:/.*)?|/preview/wedding/[^/]+)$~', '/'.$request->path()) || $request->path() === '/';
+        $metadata = $settings->all();
+        if ($request->is('buket')) {
+            $metadata['seo_title'] = 'Buket Custom Mulai Rp100.000 | Radina';
+            $metadata['seo_description'] = 'Buket untuk wisuda, ulang tahun, dan momen istimewa. Mulai Rp100.000, bisa custom. Pesan melalui WhatsApp 081289903664.';
+            $metadata['seo_image'] = '/images/bouquets/buket-05.jpg';
+        }
+        return $this->html($metadata, null, $known ? 200 : 404);
     }
 
     public function retired(PlatformSettings $settings)
@@ -23,7 +29,7 @@ class SiteController extends Controller
 
     public function sitemap()
     {
-        $urls = [url('/'), url('/templates')];
+        $urls = [url('/'), url('/templates'), url('/buket')];
         foreach (Template::where('status', 'ACTIVE')->pluck('slug') as $slug) {
             $urls[] = url('/templates/'.$slug);
         }
@@ -59,7 +65,7 @@ class SiteController extends Controller
         $html = file_get_contents($path);
         $title = $w?->title ?? $settings['seo_title'] ?? $settings['company_name'] ?? 'Wedding Invitation';
         $description = $w ? ($w->wedding_date?->format('d F Y').' — '.$w->opening_text) : ($settings['seo_description'] ?? '');
-        $image = $w?->cover_image ?? '';
+        $image = $w?->cover_image ?? ($settings['seo_image'] ?? '');
         if (str_starts_with($image, '/')) {
             $image = rtrim(config('app.url'), '/').$image;
         }
@@ -111,6 +117,14 @@ class SiteController extends Controller
         };
 
         return response()->file($path, ['Content-Type' => $type, 'Cache-Control' => 'public, max-age=31536000, immutable', 'X-Content-Type-Options' => 'nosniff']);
+    }
+
+    public function bouquetImage(string $file)
+    {
+        abort_unless(preg_match('/^buket-[0-9]{2}\.jpg$/', $file), 404);
+        $path = base_path('frontend/public/images/bouquets/'.$file);
+        abort_unless(is_file($path), 404);
+        return response()->file($path, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=86400', 'X-Content-Type-Options' => 'nosniff']);
     }
 
     public function media(string $file)

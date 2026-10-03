@@ -92,7 +92,9 @@ jobs:
         run: php artisan test
 
       - name: Verify news cleanup cannot delete license files
-        run: python3 scripts/deployment/test_news_cleanup.py
+        run: |
+          python3 scripts/deployment/test_news_cleanup.py
+          python3 scripts/deployment/test_prune_unchanged_release.py
 
   deploy:
     name: Deploy production
@@ -249,6 +251,7 @@ jobs:
           LFTP
 
           rm -f /tmp/radina-deploy-commit
+          rm -f /tmp/radina-previous-release-manifest.json
 
           lftp <<LFTP || true
           set cmd:fail-exit yes
@@ -258,6 +261,7 @@ jobs:
           open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER"
           cd "$FTP_SERVER_DIR"
           get .radina-deploy-commit -o /tmp/radina-deploy-commit
+          get .radina-release-manifest.json -o /tmp/radina-previous-release-manifest.json
           bye
           LFTP
 
@@ -396,6 +400,10 @@ jobs:
               encoding='utf-8',
           )
           PY
+
+          # Keep the complete signed manifest, but transfer only files that differ.
+          python3 scripts/deployment/prune_unchanged_release.py incremental-release \
+            /tmp/radina-previous-release-manifest.json "$BASE_SHA"
 
           file_count="$(find incremental-release -type f | wc -l | tr -d ' ')"
           echo "file_count=$file_count" >> "$GITHUB_OUTPUT"

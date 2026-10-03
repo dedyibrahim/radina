@@ -236,6 +236,18 @@ jobs:
             exit 1
           fi
 
+          # Fail before upload if authentication or the production directory is invalid.
+          lftp <<LFTP
+          set cmd:fail-exit yes
+          set net:max-retries 1
+          set net:timeout 15
+          $FTP_TLS_SETTINGS
+          open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER"
+          cd "$FTP_SERVER_DIR"
+          cls -d .
+          bye
+          LFTP
+
           rm -f /tmp/radina-deploy-commit
 
           lftp <<LFTP || true
@@ -329,7 +341,10 @@ jobs:
             rm -rf "incremental-release/$asset_dir"
             if [ -d "release/$asset_dir" ]; then cp -a "release/$asset_dir" "incremental-release/$asset_dir"; fi
           done
-          cp -a release/favicon.svg incremental-release/favicon.svg
+          # Entrypoints and the safety hook must match the application on every retry.
+          for entrypoint in index.php deploy-hook.php .htaccess favicon.svg; do
+            cp -a "release/$entrypoint" "incremental-release/$entrypoint"
+          done
           cp -a release/_app/.htaccess incremental-release/_app/.htaccess
 
           python3 scripts/deployment/prepare_news_cleanup.py "$BASE_SHA" "$GITHUB_SHA" \

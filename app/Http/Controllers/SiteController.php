@@ -52,7 +52,7 @@ class SiteController extends Controller
 
     public function robots()
     {
-        return response("User-agent: *\nDisallow: /admin\nDisallow: /api\nDisallow: /preview\nDisallow: /order\nDisallow: /check-order\nDisallow: /pelanggan\nDisallow: /tamu\nSitemap: ".url('/sitemap.xml')."\n")->header('Content-Type', 'text/plain');
+        return response("User-agent: *\nDisallow: /admin\nDisallow: /api\nDisallow: /preview\nDisallow: /order\nDisallow: /check-order\nDisallow: /pelanggan\nDisallow: /tamu\nDisallow: /i/\nSitemap: ".url('/sitemap.xml')."\n")->header('Content-Type', 'text/plain');
     }
 
     public function wedding(Request $request, string $slug, PlatformSettings $settings)
@@ -66,7 +66,23 @@ class SiteController extends Controller
             return $this->html($settings->all(), null, 410);
         }
 
+        if (is_string($request->query('guest'))) {
+            $guest = \App\Models\WeddingInvitee::where('wedding_id', $w->id)->where('token', $request->query('guest'))->first();
+            if ($guest?->short_code) {
+                return redirect($guest->invitationUrl($w))->header('Cache-Control', 'private, no-store')->header('Referrer-Policy', 'no-referrer')->header('X-Robots-Tag', 'noindex, nofollow');
+            }
+        }
+
         return $this->html($settings->all(), $w);
+    }
+
+    public function shortInvitation(string $code, PlatformSettings $settings)
+    {
+        $guest = \App\Models\WeddingInvitee::where('short_code', $code)->firstOrFail();
+        $wedding = app(\App\Services\InvitationAccess::class)->published(Wedding::findOrFail($guest->wedding_id)->slug);
+        abort_if($wedding->is_demo, 404);
+
+        return $this->html($settings->all(), $wedding)->header('Cache-Control', 'private, no-store')->header('Referrer-Policy', 'no-referrer')->header('X-Robots-Tag', 'noindex, nofollow');
     }
 
     private function html(array $settings, ?Wedding $w = null, int $status = 200)
@@ -94,7 +110,7 @@ class SiteController extends Controller
             }
         }
         $html = str_replace('</head>', '<link rel="canonical" href="'.e($w ? url('/w/'.$w->slug) : request()->url()).'" /></head>', $html);
-        if ($status >= 400 || request()->is('admin*', 'pelanggan/*', 'tamu/*', 'preview/*', 'order/*', 'check-order')) {
+        if ($status >= 400 || request()->is('admin*', 'pelanggan/*', 'tamu/*', 'i/*', 'preview/*', 'order/*', 'check-order')) {
             $html = str_replace('</head>', '<meta name="robots" content="noindex,nofollow" /></head>', $html);
         }
 

@@ -5,12 +5,12 @@ import AdminLayout from '../layouts/AdminLayout.vue'
 const router = createRouter({
   history: createWebHistory(),
   scrollBehavior(to, from, saved) {
-    if (to.path === from.path && (to.path.startsWith('/w/') || to.meta.preview))
-      return false
-    return (
-      saved ||
-      (to.hash ? { el: to.hash, top: 80, behavior: 'smooth' } : { top: 0 })
+    if (
+      to.path === from.path &&
+      (to.path.startsWith('/w/') || to.path.startsWith('/i/') || to.meta.preview)
     )
+      return false
+    return saved || (to.hash ? { el: to.hash, top: 80, behavior: 'smooth' } : { top: 0 })
   },
   routes: [
     {
@@ -59,6 +59,10 @@ const router = createRouter({
     },
     {
       path: '/w/:slug',
+      component: () => import('../pages/public/Wedding.vue'),
+    },
+    {
+      path: '/i/:code',
       component: () => import('../pages/public/Wedding.vue'),
     },
     {
@@ -150,8 +154,7 @@ router.beforeEach(async (to) => {
   if (to.meta.admin) {
     const auth = useAuthStore()
     await auth.restore()
-    if (!auth.user)
-      return { path: '/admin/login', query: { redirect: to.fullPath } }
+    if (!auth.user) return { path: '/admin/login', query: { redirect: to.fullPath } }
   }
 })
 export default router

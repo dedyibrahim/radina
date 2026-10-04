@@ -70,6 +70,8 @@ Route::prefix('api/admin')->middleware('throttle:api')->group(function () {
         Route::get('/weddings/{wedding}/invitees', [AdminInviteeController::class, 'index']);
         Route::post('/weddings/{wedding}/invitees/preview', [AdminInviteeController::class, 'preview']);
         Route::post('/weddings/{wedding}/invitees/import', [AdminInviteeController::class, 'store']);
+        Route::patch('/weddings/{wedding}/invitees/message', [AdminInviteeController::class, 'message']);
+        Route::patch('/weddings/{wedding}/invitees/{invitee}/phone', [AdminInviteeController::class, 'phone']);
         Route::delete('/weddings/{wedding}/invitees/{invitee}', [AdminInviteeController::class, 'destroy']);
         Route::get('/weddings/{wedding}/gifts', [AdminGiftController::class, 'index']);
         Route::post('/weddings/{wedding}/gifts', [AdminGiftController::class, 'store']);
@@ -92,8 +94,10 @@ Route::prefix('api/customer-portals/{token}')->middleware('throttle:api')->group
     Route::get('/invitees/template', [CustomerPortalController::class, 'inviteeTemplate']);
     Route::get('/invitees/export', [CustomerPortalController::class, 'inviteeExport']);
     Route::get('/invitees', [CustomerPortalController::class, 'invitees']);
-    Route::post('/invitees/preview', [CustomerPortalController::class, 'inviteePreview'])->middleware('throttle:20,1');
-    Route::post('/invitees/import', [CustomerPortalController::class, 'inviteeImport'])->middleware('throttle:10,1');
+    Route::post('/invitees/preview', [CustomerPortalController::class, 'inviteePreview'])->middleware('throttle:customer-guests-preview');
+    Route::post('/invitees/import', [CustomerPortalController::class, 'inviteeImport'])->middleware('throttle:customer-guests-import');
+    Route::patch('/invitees/message', [CustomerPortalController::class, 'inviteeMessage'])->middleware('throttle:customer-guests-message');
+    Route::patch('/invitees/{invitee}/phone', [CustomerPortalController::class, 'inviteePhone'])->middleware('throttle:customer-guests-phone');
     Route::get('/documents/{type}', [CustomerPortalController::class, 'document'])->whereIn('type', ['invoice', 'receipt']);
     Route::get('/analytics', [CustomerPortalController::class, 'analytics']);
     Route::get('/guest-statistics', [CustomerPortalController::class, 'guests']);
@@ -128,4 +132,5 @@ Route::get('/images/templates/{file}', [SiteController::class, 'thumbnail']);
 Route::get('/images/bouquets/{file}', [SiteController::class, 'bouquetImage']);
 Route::get('/bucket', fn () => redirect('/buket', 301));
 Route::get('/w/{slug}', [SiteController::class, 'wedding']);
+Route::get('/i/{code}', [SiteController::class, 'shortInvitation'])->where('code', '[a-f0-9]{16}');
 Route::get('/{any?}', [SiteController::class, 'index'])->where('any', '^(?!api(?:/|$)|storage(?:/|$)|sanctum(?:/|$)|assets(?:/|$)).*');

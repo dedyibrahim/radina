@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/packages', [\App\Http\Controllers\PackageController::class, 'index']);
 Route::post('/order-documents/{type}', [\App\Http\Controllers\OrderDocumentController::class, 'customer'])->whereIn('type', ['invoice', 'receipt'])->middleware('throttle:10,1');
 Route::get('/guest-passes/{token}', [\App\Http\Controllers\InvitationToolsController::class, 'pass'])->middleware('throttle:60,1');
+Route::get('/invitations/{code}', [\App\Http\Controllers\InvitationToolsController::class, 'short'])->where('code', '[a-f0-9]{16}')->middleware('throttle:60,1');
 Route::post('/weddings/{slug}/visits', [\App\Http\Controllers\InvitationToolsController::class, 'visit'])->middleware('throttle:60,1');
 Route::get('/settings', [PublicController::class, 'settings']);
 Route::get('/categories', [PublicController::class, 'categories']);

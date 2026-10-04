@@ -78,14 +78,14 @@ class CustomerPortalController extends Controller
         return $this->privateResponse($invitees->index($request, $this->resolve($token)->wedding));
     }
 
-    public function inviteeTemplate(string $token, AdminInviteeController $invitees)
+    public function inviteeTemplate(Request $request, string $token, AdminInviteeController $invitees)
     {
-        return $this->privateResponse($invitees->template($this->resolve($token)->wedding));
+        return $this->privateResponse($invitees->template($request, $this->resolve($token)->wedding));
     }
 
-    public function inviteeExport(string $token, AdminInviteeController $invitees)
+    public function inviteeExport(Request $request, string $token, AdminInviteeController $invitees)
     {
-        return $this->privateResponse($invitees->export($this->resolve($token)->wedding));
+        return $this->privateResponse($invitees->export($request, $this->resolve($token)->wedding));
     }
 
     public function inviteePreview(Request $request, string $token, AdminInviteeController $invitees)
@@ -96,6 +96,16 @@ class CustomerPortalController extends Controller
     public function inviteeImport(Request $request, string $token, AdminInviteeController $invitees)
     {
         return $this->locked($token, fn ($portal) => $this->privateResponse($invitees->store($request, $portal->wedding)));
+    }
+
+    public function inviteeMessage(Request $request, string $token, AdminInviteeController $invitees)
+    {
+        return $this->locked($token, fn ($portal) => $this->privateResponse($invitees->message($request, $portal->wedding)));
+    }
+
+    public function inviteePhone(Request $request, string $token, \App\Models\WeddingInvitee $invitee, AdminInviteeController $invitees)
+    {
+        return $this->locked($token, fn ($portal) => $this->privateResponse($invitees->phone($request, $portal->wedding, $invitee)));
     }
 
     public function document(string $token, string $type, \App\Services\OrderDocumentService $documents)

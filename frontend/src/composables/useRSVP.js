@@ -23,8 +23,7 @@ export function useRSVP(guest) {
     pending.value = true
     try {
       await api.post(`/weddings/${context.slug}/rsvp`, {
-        guest_token:
-          new URLSearchParams(window.location.search).get('guest') || undefined,
+        guest_token: context.guestToken,
         name: name.value.trim(),
         guests: guests.value,
         attendance: attendance.value,

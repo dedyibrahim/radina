@@ -1,6 +1,7 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { Download, Upload, Copy, ExternalLink, Trash2, Search } from 'lucide-vue-next'
+import { ref, computed } from 'vue'
+import CustomerGuestImport from './CustomerGuestImport.vue'
+import { Download, Upload } from 'lucide-vue-next'
 import { api, errorMessage } from '../services/api'
 import { useUiStore } from '../stores/ui'
 
@@ -13,15 +14,15 @@ const isWedding = computed(
 )
 const emit = defineEmits(['updated', 'busy'])
 const ui = useUiStore()
-const selected = ref({ content: null, invitees: null })
-const previews = ref({ content: null, invitees: null })
-const errors = ref({ content: '', invitees: '', list: '' })
-const busy = ref('')
-const guests = ref([]),
-  total = ref(0),
-  page = ref(1),
-  lastPage = ref(1),
-  search = ref('')
+const selected = ref({ content: null })
+const previews = ref({ content: null })
+const errors = ref({ content: '' })
+const busy = ref(''),
+  guestBusy = ref(false)
+function handleGuestBusy(value) {
+  guestBusy.value = value
+  emit('busy', value)
+}
 const base = () => `/admin/weddings/${props.wedding.id}`
 
 function selectFile(kind, event) {
@@ -69,7 +70,13 @@ async function download(kind, action) {
   }
 }
 async function preview(kind) {
-  if (!selected.value[kind] || busy.value || (kind === 'content' && props.blocked)) return
+  if (
+    !selected.value[kind] ||
+    busy.value ||
+    guestBusy.value ||
+    (kind === 'content' && props.blocked)
+  )
+    return
   busy.value = `preview-${kind}`
   errors.value[kind] = ''
   previews.value[kind] = null
@@ -84,7 +91,13 @@ async function preview(kind) {
   }
 }
 async function apply(kind) {
-  if (!previews.value[kind] || busy.value || (kind === 'content' && props.blocked)) return
+  if (
+    !previews.value[kind] ||
+    busy.value ||
+    guestBusy.value ||
+    (kind === 'content' && props.blocked)
+  )
+    return
   busy.value = `import-${kind}`
   errors.value[kind] = ''
   emit('busy', true)
@@ -95,14 +108,8 @@ async function apply(kind) {
       body.append('expected_updated_at', previews.value.content.expected_updated_at)
     const result = (await api.post(`${base()}/${kind}/import`, body)).data.data
     previews.value[kind] = null
-    if (kind === 'content') {
-      emit('updated', result)
-      ui.toast('Data pernikahan berhasil diimpor dan disimpan.')
-    } else {
-      ui.toast(`${result.imported} tamu ditambahkan. ${result.skipped} data duplikat dilewati.`)
-      search.value = ''
-      await loadGuests(1)
-    }
+    emit('updated', result)
+    ui.toast('Data pernikahan berhasil diimpor dan disimpan.')
   } catch (error) {
     errors.value[kind] = errorMessage(error)
     if (error.response?.status === 409) previews.value[kind] = null
@@ -111,43 +118,6 @@ async function apply(kind) {
     emit('busy', false)
   }
 }
-async function loadGuests(number = 1) {
-  errors.value.list = ''
-  try {
-    const result = (
-      await api.get(`${base()}/invitees`, {
-        params: { page: number, search: search.value || undefined },
-      })
-    ).data
-    guests.value = result.data
-    total.value = result.total
-    page.value = result.current_page
-    lastPage.value = result.last_page
-  } catch (error) {
-    errors.value.list = errorMessage(error)
-  }
-}
-async function copy(guest) {
-  try {
-    await navigator.clipboard.writeText(guest.link)
-    ui.toast(`Tautan untuk ${guest.name} disalin.`)
-  } catch {
-    ui.toast('Buka tautan dan salin alamat dari browser.')
-  }
-}
-async function remove(guest) {
-  if (busy.value || !window.confirm(`Hapus ${guest.name} dari daftar tamu?`)) return
-  busy.value = 'delete'
-  try {
-    await api.delete(`${base()}/invitees/${guest.id}`)
-    await loadGuests(guests.value.length === 1 && page.value > 1 ? page.value - 1 : page.value)
-  } catch (error) {
-    errors.value.list = errorMessage(error)
-  } finally {
-    busy.value = ''
-  }
-}
-onMounted(() => loadGuests())
 </script>
 
 <template>
@@ -171,7 +141,7 @@ onMounted(() => loadGuests())
         <button
           type="button"
           class="p-button secondary small"
-          :disabled="Boolean(busy)"
+          :disabled="Boolean(busy) || guestBusy"
           @click="download('content', 'template')"
         >
           <Download :size="16" />{{
@@ -181,7 +151,7 @@ onMounted(() => loadGuests())
         <button
           type="button"
           class="p-button secondary small"
-          :disabled="Boolean(busy)"
+          :disabled="Boolean(busy) || guestBusy"
           @click="download('content', 'export')"
         >
           <Download :size="16" />{{ isWedding ? 'Ekspor Data Pernikahan' : 'Ekspor Data Acara' }}
@@ -198,18 +168,18 @@ onMounted(() => loadGuests())
         class="import-file"
         type="file"
         accept=".csv,text/csv"
-        :disabled="Boolean(busy) || blocked"
+        :disabled="Boolean(busy) || guestBusy || blocked"
         @change="selectFile('content', $event)"
       />
       <button
         type="button"
         class="p-button small"
-        :disabled="!selected.content || Boolean(busy) || blocked"
+        :disabled="!selected.content || Boolean(busy) || guestBusy || blocked"
         @click="preview('content')"
       >
         <Upload :size="16" />{{
           busy === 'preview-content'
-            ? 'Memeriksa…'
+            ? 'Memeriksaâ€¦'
             : isWedding
               ? 'Periksa Data Pernikahan'
               : 'Periksa Data Acara'
@@ -236,7 +206,7 @@ onMounted(() => loadGuests())
             <tbody>
               <tr v-for="change in previews.content.changes" :key="change.key">
                 <td>{{ change.label }}</td>
-                <td>{{ change.before || '—' }}</td>
+                <td>{{ change.before || 'â€”' }}</td>
                 <td>{{ change.after }}</td>
               </tr>
             </tbody>
@@ -245,12 +215,12 @@ onMounted(() => loadGuests())
         <button
           type="button"
           class="p-button small"
-          :disabled="Boolean(busy) || blocked"
+          :disabled="Boolean(busy) || guestBusy || blocked"
           @click="apply('content')"
         >
           {{
             busy === 'import-content'
-              ? 'Mengimpor…'
+              ? 'Mengimporâ€¦'
               : isWedding
                 ? 'Impor & Simpan Pernikahan'
                 : 'Impor & Simpan Acara'
@@ -259,188 +229,13 @@ onMounted(() => loadGuests())
       </div>
     </section>
 
-    <section class="import-section" aria-labelledby="invitee-import-title">
-      <p class="p-eyebrow">02 / DAFTAR TAMU</p>
-      <h3 id="invitee-import-title">Nama, alamat, tautan personal.</h3>
-      <p>
-        Isi kolom <strong>nama</strong> dan <strong>alamat</strong>, satu tamu atau keluarga per
-        baris. Maksimal 1.000 baris per file. Data dengan nama dan alamat yang sama dilewati. Alamat
-        tersimpan di dashboard dan hasil ekspor; tautan publik hanya memuat nama tamu.
-      </p>
-      <div class="action-group import-actions">
-        <button
-          type="button"
-          class="p-button secondary small"
-          :disabled="Boolean(busy)"
-          @click="download('invitees', 'template')"
-        >
-          <Download :size="16" />Unduh Template Tamu
-        </button>
-        <button
-          type="button"
-          class="p-button secondary small"
-          :disabled="Boolean(busy)"
-          @click="download('invitees', 'export')"
-        >
-          <Download :size="16" />Unduh Tautan Tamu
-        </button>
-      </div>
-      <label class="import-file-label" for="wedding-invitees-csv">File daftar tamu</label>
-      <input
-        id="wedding-invitees-csv"
-        class="import-file"
-        type="file"
-        accept=".csv,text/csv"
-        :disabled="Boolean(busy)"
-        @change="selectFile('invitees', $event)"
+    <section class="import-section">
+      <CustomerGuestImport
+        :base="base()"
+        allow-delete
+        :blocked="Boolean(busy)"
+        @busy="handleGuestBusy"
       />
-      <button
-        type="button"
-        class="p-button small"
-        :disabled="!selected.invitees || Boolean(busy)"
-        @click="preview('invitees')"
-      >
-        <Upload :size="16" />{{
-          busy === 'preview-invitees' ? 'Memeriksa…' : 'Periksa Daftar Tamu'
-        }}
-      </button>
-      <p v-if="errors.invitees" class="alert error" role="alert">
-        {{ errors.invitees }}
-      </p>
-      <div v-if="previews.invitees" class="import-preview">
-        <h4>
-          {{ previews.invitees.new_count }} tamu baru ·
-          {{ previews.invitees.duplicate_count }} duplikat dilewati
-        </h4>
-        <div class="import-table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Nama</th>
-                <th>Alamat</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="guest in previews.invitees.rows.slice(0, 20)" :key="guest.row">
-                <td>{{ guest.name }}</td>
-                <td>{{ guest.address }}</td>
-                <td>
-                  {{ guest.duplicate ? 'Dilewati' : 'Tamu baru' }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p v-if="previews.invitees.rows.length > 20">
-          Menampilkan 20 baris pertama. Semua
-          {{ previews.invitees.rows.length }} baris sudah diperiksa.
-        </p>
-        <button
-          type="button"
-          class="p-button small"
-          :disabled="Boolean(busy) || !previews.invitees.new_count"
-          @click="apply('invitees')"
-        >
-          {{ busy === 'import-invitees' ? 'Mengimpor…' : 'Impor Tamu & Buat Tautan' }}
-        </button>
-      </div>
-    </section>
-
-    <section class="import-section guest-directory" aria-labelledby="invitee-directory-title">
-      <h3 id="invitee-directory-title">Daftar tamu &amp; tautan undangan</h3>
-      <p v-if="wedding.status !== 'PUBLISHED'" class="alert">
-        Tautan sudah dapat dibuat dan diunduh. Tamu bisa membukanya setelah undangan dipublish.
-      </p>
-      <form class="invitee-search" @submit.prevent="loadGuests(1)">
-        <label for="invitee-search">Cari nama tamu</label>
-        <div>
-          <input
-            id="invitee-search"
-            v-model="search"
-            type="search"
-            maxlength="120"
-            placeholder="Nama tamu"
-          /><button type="submit" class="p-button secondary small">
-            <Search :size="16" />Cari
-          </button>
-        </div>
-      </form>
-      <p v-if="errors.list" class="alert error" role="alert">
-        {{ errors.list }}
-      </p>
-      <p class="invitee-total" role="status">
-        {{ total }} tamu{{ search ? ' ditemukan' : ' tersimpan' }}
-      </p>
-      <div v-if="guests.length" class="import-table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Nama &amp; alamat</th>
-              <th>Tautan undangan</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="guest in guests" :key="guest.id">
-              <td>
-                <strong>{{ guest.name }}</strong>
-                <p>{{ guest.address }}</p>
-              </td>
-              <td>
-                <a :href="guest.link" target="_blank" rel="noopener" class="guest-link"
-                  >{{ guest.link }}<ExternalLink :size="13"
-                /></a>
-              </td>
-              <td>
-                <div class="guest-link-actions">
-                  <button
-                    type="button"
-                    class="icon-button"
-                    :aria-label="`Salin tautan ${guest.name}`"
-                    @click="copy(guest)"
-                  >
-                    <Copy :size="16" /></button
-                  ><button
-                    type="button"
-                    class="icon-button"
-                    :disabled="Boolean(busy)"
-                    :aria-label="`Hapus tamu ${guest.name}`"
-                    @click="remove(guest)"
-                  >
-                    <Trash2 :size="16" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p v-else class="empty-note">
-        {{
-          search
-            ? 'Nama tamu tidak ditemukan.'
-            : 'Belum ada tamu. Unggah daftar tamu untuk membuat tautan otomatis.'
-        }}
-      </p>
-      <div v-if="lastPage > 1" class="action-group import-actions">
-        <button
-          type="button"
-          class="p-button secondary small"
-          :disabled="page <= 1"
-          @click="loadGuests(page - 1)"
-        >
-          Sebelumnya</button
-        ><span>{{ page }} / {{ lastPage }}</span
-        ><button
-          type="button"
-          class="p-button secondary small"
-          :disabled="page >= lastPage"
-          @click="loadGuests(page + 1)"
-        >
-          Berikutnya
-        </button>
-      </div>
     </section>
   </div>
 </template>

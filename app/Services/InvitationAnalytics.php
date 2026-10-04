@@ -81,7 +81,7 @@ class InvitationAnalytics
         $checks = WeddingCheckIn::where('wedding_id', $wedding->id)->whereIn('wedding_invitee_id', $ids)->get()->keyBy('wedding_invitee_id');
 
         return $page->through(fn ($guest) => ['id' => $guest->id, 'name' => $guest->name, 'address' => $guest->address, 'pass_url' => url('/tamu/'.$guest->token),
-            'invitation_url' => url('/w/'.$wedding->slug).'?'.http_build_query(['to' => $guest->name, 'guest' => $guest->token]),
+            'invitation_url' => $guest->invitationUrl($wedding),
             'seen_at' => $seen->get($guest->id)?->seen_at, 'opened_at' => $seen->get($guest->id)?->opened_at,
             'attendance' => $rsvps->get($guest->id)?->attendance, 'rsvp_people' => $rsvps->get($guest->id)?->guests,
             'checked_in_at' => $checks->get($guest->id)?->checked_in_at, 'people_count' => $checks->get($guest->id)?->people_count]);

@@ -110,13 +110,18 @@ class CustomerPortalTest extends TestCase
         $this->postJson($path.'/import', ['file' => $csv()])->assertCreated()->assertJsonPath('data.imported', 0)->assertJsonPath('data.skipped', 3);
         $this->postJson($this->customerPath($otherToken, '/invitees/import'), ['file' => UploadedFile::fake()->createWithContent('tamu.csv', "nama;alamat\r\nOther Private Guest;Surabaya\r\n")])->assertCreated();
         $list = $this->getJson($path)->assertOk()->assertJsonPath('total', 2)->assertHeader('Referrer-Policy', 'no-referrer');
-        $this->assertStringContainsString('/w/'.$w->slug.'?to=', $list->json('data.0.link'));
-        $this->assertStringContainsString('&guest=', $list->json('data.0.link'));
+        $this->assertMatchesRegularExpression('~/i/[a-f0-9]{16}$~', $list->json('data.0.link'));
+        $this->assertStringNotContainsString('guest=', $list->json('data.0.link'));
         $this->getJson($path.'?search=Ayu')->assertOk()->assertJsonPath('total', 1)->assertJsonPath('data.0.name', 'Ibu Ayu');
         $export = $this->get($path.'/export')->assertOk()->assertHeader('X-Robots-Tag', 'noindex, nofollow')->streamedContent();
         $this->assertStringContainsString('link_undangan', $export);
         $this->assertStringContainsString('Bapak Budi', $export);
         $this->assertStringNotContainsString('Other Private Guest', $export);
+        $guestId = $list->json('data.0.id');
+        $this->patchJson($path.'/'.$guestId.'/phone', ['whatsapp' => '081234567890', 'expected_whatsapp' => null])->assertOk()->assertJsonPath('data.whatsapp', '6281234567890')->assertHeader('Cache-Control', 'no-store, private');
+        $otherGuest = WeddingInvitee::where('wedding_id', $other->id)->first();
+        $this->patchJson($path.'/'.$otherGuest->id.'/phone', ['whatsapp' => '081234567899', 'expected_whatsapp' => null])->assertNotFound();
+        $this->patchJson($path.'/message', ['message_template' => 'Yth. {nama_tamu}, silakan hadir. {link_undangan}'])->assertOk()->assertHeader('Referrer-Policy', 'no-referrer');
         $this->assertSame($fingerprint, CustomerPortalService::fingerprint($w->fresh()));
         $this->postJson($path.'/import', ['file' => UploadedFile::fake()->createWithContent('tamu.csv', "nama;alamat\r\n<script>;Jakarta\r\n")])->assertUnprocessable();
         $this->postJson($path.'/preview', ['file' => UploadedFile::fake()->createWithContent('tamu.xlsx', 'invalid')])->assertUnprocessable();
@@ -124,6 +129,8 @@ class CustomerPortalTest extends TestCase
         WeddingCustomerPortal::where('wedding_id', $w->id)->update(['revoked_at' => now()]);
         foreach (['', '/template', '/export'] as $suffix) $this->getJson($path.$suffix)->assertNotFound();
         foreach (['/preview', '/import'] as $suffix) $this->postJson($path.$suffix, ['file' => $csv()])->assertNotFound();
+        $this->patchJson($path.'/message', ['message_template' => null])->assertNotFound();
+        $this->patchJson($path.'/'.$guestId.'/phone', ['whatsapp' => null, 'expected_whatsapp' => '6281234567890'])->assertNotFound();
     }
 
     public function test_private_customer_preview_route_preserves_privacy_headers(): void

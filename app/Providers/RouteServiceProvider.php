@@ -27,6 +27,10 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('admin-login', fn (Request $request) => Limit::perMinute(5)->by($request->ip()));
         RateLimiter::for('admin-captcha', fn (Request $request) => Limit::perMinute(30)->by($request->ip()));
 
+        foreach (['preview' => 20, 'import' => 10, 'message' => 20, 'phone' => 30] as $action => $limit) {
+            RateLimiter::for('customer-guests-'.$action, fn (Request $request) => Limit::perMinute($limit)->by($request->ip().'|'.hash('sha256', (string) $request->route('token'))));
+        }
+
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(max(1, config('platform.api_rate_limit', 60)))->by($request->user()?->id ?: $request->ip());
         });

@@ -32,8 +32,20 @@ class InvitationToolsController extends Controller
         abort_if($wedding->is_demo, 404);
 
         return response()->json(['data' => ['name' => $guest->name, 'title' => $wedding->title, 'date' => $wedding->wedding_date?->toDateString(), 'wedding_slug' => $wedding->slug,
-            'pass_url' => url('/tamu/'.$guest->token), 'invitation_url' => url('/w/'.$wedding->slug).'?'.http_build_query(['to' => $guest->name, 'guest' => $guest->token])]])
+            'pass_url' => url('/tamu/'.$guest->token), 'invitation_url' => $guest->invitationUrl($wedding)]])
             ->header('Cache-Control', 'private, no-store')->header('Referrer-Policy', 'no-referrer')->header('X-Robots-Tag', 'noindex, nofollow');
+    }
+
+    public function short(string $code, InvitationAccess $access)
+    {
+        abort_unless(preg_match('/^[a-f0-9]{16}$/D', $code), 404);
+        $guest = WeddingInvitee::where('short_code', $code)->firstOrFail();
+        $wedding = $access->published(Wedding::findOrFail($guest->wedding_id)->slug);
+        abort_if($wedding->is_demo, 404);
+        $data = (new \App\Http\Resources\WeddingResource($wedding->loadContent()))->resolve(request());
+        $data['guest'] = ['name' => $guest->name, 'token' => $guest->token];
+
+        return response()->json(['data' => $data])->header('Cache-Control', 'private, no-store')->header('Referrer-Policy', 'no-referrer')->header('X-Robots-Tag', 'noindex, nofollow');
     }
 
     public function analytics(Request $request, Wedding $wedding, InvitationAnalytics $analytics)

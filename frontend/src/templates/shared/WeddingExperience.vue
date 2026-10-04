@@ -27,7 +27,7 @@ const experienceRoot = ref(null)
 const { enabled: depthEnabled } = useInvitationDepth(experienceRoot, motionOn)
 provide('weddingDesign', props.design)
 const opened = inject('invitationOpened', ref(false)),
-  guest = getGuestName(),
+  guest = props.wedding.guest?.name || getGuestName(),
   toast = ref('')
 const { error, play } = inject('weddingAudio')
 let timer

@@ -50,7 +50,7 @@ async function record(action) {
   try {
     await api.post(`/weddings/${current.slug}/visits`, {
       visitor_id: visitorId,
-      guest_token: route.query.guest || undefined,
+      guest_token: wedding.value?.guest?.token || route.query.guest || undefined,
       action,
     })
   } catch {}
@@ -66,7 +66,9 @@ async function load() {
       ? `/admin/weddings/${route.params.id}/preview`
       : route.meta.preview
         ? `/templates/${route.params.slug}/preview`
-        : `/weddings/${route.params.slug}`
+        : route.params.code
+          ? `/invitations/${route.params.code}`
+          : `/weddings/${route.params.slug}`
     wedding.value = (
       await api.get(path, {
         params:
@@ -83,10 +85,10 @@ async function load() {
     }
     if (!route.meta.preview && !wedding.value.is_demo) {
       viewReady = record('view')
-      if (route.query.guest) {
+      const guestToken = wedding.value.guest?.token || route.query.guest
+      if (guestToken) {
         try {
-          const found = (await api.get(`/guest-passes/${route.query.guest}`))
-            .data.data
+          const found = (await api.get(`/guest-passes/${guestToken}`)).data.data
           if (found.wedding_slug === wedding.value.slug) pass.value = found
         } catch {}
       }
@@ -105,6 +107,7 @@ watch(
     [
       route.params.id || '',
       route.params.slug || '',
+      route.params.code || '',
       Boolean(route.meta.preview),
       route.query.event_type || 'wedding',
       route.query.guest || '',
@@ -132,13 +135,9 @@ useSeo(() => ({
         :error="error"
         title="Undangan belum tersedia"
         @retry="load"
-      /><RouterLink v-if="error" to="/" class="p-button secondary"
-        >Ke Beranda</RouterLink
-      >
+      /><RouterLink v-if="error" to="/" class="p-button secondary">Ke Beranda</RouterLink>
     </div>
-    <button v-if="pass" class="guest-qr-bubble" @click="showQr = true">
-      QR Kehadiran
-    </button>
+    <button v-if="pass" class="guest-qr-bubble" @click="showQr = true">QR Kehadiran</button>
     <BaseModal :open="showQr" title="QR Kehadiran" @close="showQr = false"
       ><div v-if="pass" class="platform">
         <h2>{{ pass.name }}</h2>
@@ -146,7 +145,7 @@ useSeo(() => ({
     ></BaseModal>
     <WeddingRenderer
       v-if="wedding && !loading && !error"
-      :key="wedding.slug"
+      :key="`${wedding.slug}:${wedding.guest?.token || route.query.guest || ''}`"
       ref="renderer"
       :start-open="Boolean(route.params.id)"
       :wedding="wedding"

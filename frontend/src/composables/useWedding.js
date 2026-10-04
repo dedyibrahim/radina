@@ -12,6 +12,13 @@ export function useWedding(props) {
     get slug() {
       return wedding.slug
     },
+    get guestToken() {
+      return (
+        props.wedding.guest?.token ||
+        new URLSearchParams(window.location.search).get('guest') ||
+        undefined
+      )
+    },
     preview: Boolean(props.preview),
     isPreviewMode: Boolean(props.preview),
   })

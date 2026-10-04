@@ -59,6 +59,7 @@ for (const path of [
     "/pelanggan/private-token",
     "/tamu/private-token",
     "/w/private-couple",
+    "/i/0123456789abcdef",
     "/order/success/PRIVATE-ORDER",
     "/check-order",
     "/preview/wedding/1",

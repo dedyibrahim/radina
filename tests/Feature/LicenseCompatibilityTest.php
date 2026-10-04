@@ -55,7 +55,7 @@ class LicenseCompatibilityTest extends TestCase
         $this->seed();
         $this->assertSame($before, [$license->fresh()->getRawOriginal(), $license->activations()->first()->getRawOriginal(), $admin->fresh()->getRawOriginal()]);
         $this->assertDatabaseCount('licenses', 1);
-        $this->assertDatabaseCount('templates', 56);
+        $this->assertDatabaseCount('templates', 111);
         $this->assertTrue($admin->fresh()->admin->active);
     }
 

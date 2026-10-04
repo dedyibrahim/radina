@@ -11,7 +11,7 @@ try {
  const all=[]
  let lastPage=1
  for(let p=1;p<=lastPage;p++){const result=await (await page.request.get(`http://127.0.0.1:8000/api/templates?page=${p}&sort=newest`)).json();lastPage=result.meta.last_page;all.push(...result.data)}
- assert.equal(new Set(all.map(t=>t.template_key)).size,56)
+ assert.equal(new Set(all.map(t=>t.template_key)).size,111)
  for(const card of all){assert(card.music_style.length);assert(card.gallery_style);assert(/\.(webp|svg)$/.test(card.thumbnail))}
  const cat=await (await page.request.get('http://127.0.0.1:8000/api/categories')).json()
  assert.equal(cat.data.length,11)

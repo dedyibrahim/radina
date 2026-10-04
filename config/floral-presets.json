@@ -1,0 +1,5337 @@
+{
+  "rosalia-arch": {
+    "name": "Rosalia Arch",
+    "opening_text": "Dengan sepenuh hati, kami berbagi kabar bahagia ini. Semoga kasih tumbuh dalam setiap doa yang menyertai.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "arch",
+    "category": "Romantic",
+    "motion": [
+      "petals",
+      "leaves"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "peony-love-letter": {
+    "name": "Peony Love Letter",
+    "opening_text": "Melalui undangan kecil ini, kami menitipkan harapan yang besar. Semoga kasih tumbuh dalam setiap doa yang menyertai.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "letter",
+    "category": "Romantic",
+    "motion": [
+      "petals",
+      "ribbons"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "magnolia-muse": {
+    "name": "Magnolia Muse",
+    "opening_text": "Kehadiran Anda melengkapi cerita yang ingin kami kenang. Semoga kasih tumbuh dalam setiap doa yang menyertai.",
+    "order": [
+      "home",
+      "event",
+      "couple",
+      "date",
+      "quote",
+      "gallery",
+      "story",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "editorial",
+    "category": "Romantic",
+    "motion": [
+      "seeds",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "rosewood-nocturne": {
+    "name": "Rosewood Nocturne",
+    "opening_text": "Kami menantikan sebuah hari yang akan selalu tinggal di hati. Semoga kasih tumbuh dalam setiap doa yang menyertai.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "quote",
+      "event",
+      "date",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "cinema",
+    "category": "Romantic",
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "sakura-serenade": {
+    "name": "Sakura Serenade",
+    "opening_text": "Ada begitu banyak kebahagiaan yang ingin kami bagikan kepada Anda. Semoga kasih tumbuh dalam setiap doa yang menyertai.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "carousel",
+    "category": "Romantic",
+    "motion": [
+      "leaves",
+      "petals"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "orchid-royale": {
+    "name": "Orchid Royale",
+    "opening_text": "Dengan sepenuh hati, kami berbagi kabar bahagia ini. Sebuah perayaan hangat untuk orang-orang yang berarti.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "arch",
+    "category": "Luxury",
+    "motion": [
+      "petals",
+      "leaves"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "champagne-correspondence": {
+    "name": "Champagne Correspondence",
+    "opening_text": "Melalui undangan kecil ini, kami menitipkan harapan yang besar. Sebuah perayaan hangat untuk orang-orang yang berarti.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "letter",
+    "category": "Luxury",
+    "motion": [
+      "petals",
+      "ribbons"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "fleur-de-palais": {
+    "name": "Fleur de Palais",
+    "opening_text": "Kehadiran Anda melengkapi cerita yang ingin kami kenang. Sebuah perayaan hangat untuk orang-orang yang berarti.",
+    "order": [
+      "home",
+      "event",
+      "couple",
+      "date",
+      "quote",
+      "gallery",
+      "story",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "editorial",
+    "category": "Luxury",
+    "motion": [
+      "seeds",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "velours-botanique": {
+    "name": "Velours Botanique",
+    "opening_text": "Kami menantikan sebuah hari yang akan selalu tinggal di hati. Sebuah perayaan hangat untuk orang-orang yang berarti.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "quote",
+      "event",
+      "date",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "cinema",
+    "category": "Luxury",
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "pearl-blossom": {
+    "name": "Pearl Blossom",
+    "opening_text": "Ada begitu banyak kebahagiaan yang ingin kami bagikan kepada Anda. Sebuah perayaan hangat untuk orang-orang yang berarti.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "carousel",
+    "category": "Luxury",
+    "motion": [
+      "leaves",
+      "petals"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "white-cosmos": {
+    "name": "White Cosmos",
+    "opening_text": "Dengan sepenuh hati, kami berbagi kabar bahagia ini. Dalam kesederhanaan, kami menemukan kebahagiaan yang utuh.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "arch",
+    "category": "Minimalist",
+    "motion": [
+      "petals",
+      "leaves"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "linen-blossom-letter": {
+    "name": "Linen Blossom Letter",
+    "opening_text": "Melalui undangan kecil ini, kami menitipkan harapan yang besar. Dalam kesederhanaan, kami menemukan kebahagiaan yang utuh.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "letter",
+    "category": "Minimalist",
+    "motion": [
+      "petals",
+      "ribbons"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "eucalyptus-notes": {
+    "name": "Eucalyptus Notes",
+    "opening_text": "Kehadiran Anda melengkapi cerita yang ingin kami kenang. Dalam kesederhanaan, kami menemukan kebahagiaan yang utuh.",
+    "order": [
+      "home",
+      "event",
+      "couple",
+      "date",
+      "quote",
+      "gallery",
+      "story",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "editorial",
+    "category": "Minimalist",
+    "motion": [
+      "seeds",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "moonstone-magnolia": {
+    "name": "Moonstone Magnolia",
+    "opening_text": "Kami menantikan sebuah hari yang akan selalu tinggal di hati. Dalam kesederhanaan, kami menemukan kebahagiaan yang utuh.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "quote",
+      "event",
+      "date",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "cinema",
+    "category": "Minimalist",
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "petal-stillness": {
+    "name": "Petal Stillness",
+    "opening_text": "Ada begitu banyak kebahagiaan yang ingin kami bagikan kepada Anda. Dalam kesederhanaan, kami menemukan kebahagiaan yang utuh.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "carousel",
+    "category": "Minimalist",
+    "motion": [
+      "leaves",
+      "petals"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "melati-keraton": {
+    "name": "Melati Keraton",
+    "opening_text": "Dengan sepenuh hati, kami berbagi kabar bahagia ini. Restu keluarga menemani langkah dan tradisi kami.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "arch",
+    "category": "Traditional",
+    "motion": [
+      "petals",
+      "leaves"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "puspa-songket": {
+    "name": "Puspa Songket",
+    "opening_text": "Melalui undangan kecil ini, kami menitipkan harapan yang besar. Restu keluarga menemani langkah dan tradisi kami.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "letter",
+    "category": "Traditional",
+    "motion": [
+      "petals",
+      "ribbons"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "cempaka-pendopo": {
+    "name": "Cempaka Pendopo",
+    "opening_text": "Kehadiran Anda melengkapi cerita yang ingin kami kenang. Restu keluarga menemani langkah dan tradisi kami.",
+    "order": [
+      "home",
+      "event",
+      "couple",
+      "date",
+      "quote",
+      "gallery",
+      "story",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "editorial",
+    "category": "Traditional",
+    "motion": [
+      "seeds",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "anggrek-batik-malam": {
+    "name": "Anggrek Batik Malam",
+    "opening_text": "Kami menantikan sebuah hari yang akan selalu tinggal di hati. Restu keluarga menemani langkah dan tradisi kami.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "quote",
+      "event",
+      "date",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "cinema",
+    "category": "Traditional",
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "kamboja-senja": {
+    "name": "Kamboja Senja",
+    "opening_text": "Ada begitu banyak kebahagiaan yang ingin kami bagikan kepada Anda. Restu keluarga menemani langkah dan tradisi kami.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "carousel",
+    "category": "Traditional",
+    "motion": [
+      "leaves",
+      "petals"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "daisy-conservatory": {
+    "name": "Daisy Conservatory",
+    "opening_text": "Dengan sepenuh hati, kami berbagi kabar bahagia ini. Kebahagiaan bersemi ketika kita berkumpul bersama.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "arch",
+    "category": "Garden",
+    "motion": [
+      "petals",
+      "leaves"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "wildflower-letters": {
+    "name": "Wildflower Letters",
+    "opening_text": "Melalui undangan kecil ini, kami menitipkan harapan yang besar. Kebahagiaan bersemi ketika kita berkumpul bersama.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "letter",
+    "category": "Garden",
+    "motion": [
+      "petals",
+      "ribbons"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "fern-botanique": {
+    "name": "Fern Botanique",
+    "opening_text": "Kehadiran Anda melengkapi cerita yang ingin kami kenang. Kebahagiaan bersemi ketika kita berkumpul bersama.",
+    "order": [
+      "home",
+      "event",
+      "couple",
+      "date",
+      "quote",
+      "gallery",
+      "story",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "editorial",
+    "category": "Garden",
+    "motion": [
+      "seeds",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "rose-garden-twilight": {
+    "name": "Rose Garden Twilight",
+    "opening_text": "Kami menantikan sebuah hari yang akan selalu tinggal di hati. Kebahagiaan bersemi ketika kita berkumpul bersama.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "quote",
+      "event",
+      "date",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "cinema",
+    "category": "Garden",
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "meadow-butterfly": {
+    "name": "Meadow Butterfly",
+    "opening_text": "Ada begitu banyak kebahagiaan yang ingin kami bagikan kepada Anda. Kebahagiaan bersemi ketika kita berkumpul bersama.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "carousel",
+    "category": "Garden",
+    "motion": [
+      "leaves",
+      "petals"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "raudhah-bloom": {
+    "name": "Raudhah Bloom",
+    "opening_text": "Dengan sepenuh hati, kami berbagi kabar bahagia ini. Dengan memohon rida Allah, kami mengundang kehadiran Anda.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Di antara tanda kebesaran-Nya, Dia menciptakan pasangan untukmu agar kamu merasa tenteram.",
+    "quote_source": "Makna QS. Ar-Rum: 21",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "arch",
+    "category": "Islamic",
+    "motion": [
+      "petals",
+      "leaves"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "jannah-letters": {
+    "name": "Jannah Letters",
+    "opening_text": "Melalui undangan kecil ini, kami menitipkan harapan yang besar. Dengan memohon rida Allah, kami mengundang kehadiran Anda.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Di antara tanda kebesaran-Nya, Dia menciptakan pasangan untukmu agar kamu merasa tenteram.",
+    "quote_source": "Makna QS. Ar-Rum: 21",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "letter",
+    "category": "Islamic",
+    "motion": [
+      "petals",
+      "ribbons"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "maryam-garden": {
+    "name": "Maryam Garden",
+    "opening_text": "Kehadiran Anda melengkapi cerita yang ingin kami kenang. Dengan memohon rida Allah, kami mengundang kehadiran Anda.",
+    "order": [
+      "home",
+      "event",
+      "couple",
+      "date",
+      "quote",
+      "gallery",
+      "story",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Di antara tanda kebesaran-Nya, Dia menciptakan pasangan untukmu agar kamu merasa tenteram.",
+    "quote_source": "Makna QS. Ar-Rum: 21",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "editorial",
+    "category": "Islamic",
+    "motion": [
+      "seeds",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "noor-petals": {
+    "name": "Noor Petals",
+    "opening_text": "Kami menantikan sebuah hari yang akan selalu tinggal di hati. Dengan memohon rida Allah, kami mengundang kehadiran Anda.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "quote",
+      "event",
+      "date",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Di antara tanda kebesaran-Nya, Dia menciptakan pasangan untukmu agar kamu merasa tenteram.",
+    "quote_source": "Makna QS. Ar-Rum: 21",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "cinema",
+    "category": "Islamic",
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "firdaus-breeze": {
+    "name": "Firdaus Breeze",
+    "opening_text": "Ada begitu banyak kebahagiaan yang ingin kami bagikan kepada Anda. Dengan memohon rida Allah, kami mengundang kehadiran Anda.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Islamic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Di antara tanda kebesaran-Nya, Dia menciptakan pasangan untukmu agar kamu merasa tenteram.",
+    "quote_source": "Makna QS. Ar-Rum: 21",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "carousel",
+    "category": "Islamic",
+    "motion": [
+      "leaves",
+      "petals"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "moonlit-garden": {
+    "name": "Moonlit Garden",
+    "opening_text": "Dengan sepenuh hati, kami berbagi kabar bahagia ini. Setiap kenangan membawa kami menuju bab yang baru.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "arch",
+    "category": "Cinematic",
+    "motion": [
+      "petals",
+      "leaves"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "petal-nocturne": {
+    "name": "Petal Nocturne",
+    "opening_text": "Melalui undangan kecil ini, kami menitipkan harapan yang besar. Setiap kenangan membawa kami menuju bab yang baru.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "letter",
+    "category": "Cinematic",
+    "motion": [
+      "petals",
+      "ribbons"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "bloom-premiere": {
+    "name": "Bloom Premiere",
+    "opening_text": "Kehadiran Anda melengkapi cerita yang ingin kami kenang. Setiap kenangan membawa kami menuju bab yang baru.",
+    "order": [
+      "home",
+      "event",
+      "couple",
+      "date",
+      "quote",
+      "gallery",
+      "story",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "editorial",
+    "category": "Cinematic",
+    "motion": [
+      "seeds",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "velvet-dusk": {
+    "name": "Velvet Dusk",
+    "opening_text": "Kami menantikan sebuah hari yang akan selalu tinggal di hati. Setiap kenangan membawa kami menuju bab yang baru.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "quote",
+      "event",
+      "date",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "cinema",
+    "category": "Cinematic",
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "stella-flower": {
+    "name": "Stella Flower",
+    "opening_text": "Ada begitu banyak kebahagiaan yang ingin kami bagikan kepada Anda. Setiap kenangan membawa kami menuju bab yang baru.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "carousel",
+    "category": "Cinematic",
+    "motion": [
+      "leaves",
+      "petals"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "rosette-postcard": {
+    "name": "Rosette Postcard",
+    "opening_text": "Dengan sepenuh hati, kami berbagi kabar bahagia ini. Kehangatan kenangan menjadi awal cerita hari ini.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "arch",
+    "category": "Vintage",
+    "motion": [
+      "petals",
+      "leaves"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "lavender-correspondence": {
+    "name": "Lavender Correspondence",
+    "opening_text": "Melalui undangan kecil ini, kami menitipkan harapan yang besar. Kehangatan kenangan menjadi awal cerita hari ini.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "letter",
+    "category": "Vintage",
+    "motion": [
+      "petals",
+      "ribbons"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "camellia-journal": {
+    "name": "Camellia Journal",
+    "opening_text": "Kehadiran Anda melengkapi cerita yang ingin kami kenang. Kehangatan kenangan menjadi awal cerita hari ini.",
+    "order": [
+      "home",
+      "event",
+      "couple",
+      "date",
+      "quote",
+      "gallery",
+      "story",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "editorial",
+    "category": "Vintage",
+    "motion": [
+      "seeds",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "butterfly-memoir": {
+    "name": "Butterfly Memoir",
+    "opening_text": "Kami menantikan sebuah hari yang akan selalu tinggal di hati. Kehangatan kenangan menjadi awal cerita hari ini.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "quote",
+      "event",
+      "date",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "cinema",
+    "category": "Vintage",
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "sakura-keepsake": {
+    "name": "Sakura Keepsake",
+    "opening_text": "Ada begitu banyak kebahagiaan yang ingin kami bagikan kepada Anda. Kehangatan kenangan menjadi awal cerita hari ini.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "carousel",
+    "category": "Vintage",
+    "motion": [
+      "leaves",
+      "petals"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "azure-orchid": {
+    "name": "Azure Orchid",
+    "opening_text": "Dengan sepenuh hati, kami berbagi kabar bahagia ini. Dari berbagai tempat, kita bertemu untuk berbagi kebahagiaan.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "arch",
+    "category": "Destination",
+    "motion": [
+      "petals",
+      "leaves"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "riviera-blossom-letter": {
+    "name": "Riviera Blossom Letter",
+    "opening_text": "Melalui undangan kecil ini, kami menitipkan harapan yang besar. Dari berbagai tempat, kita bertemu untuk berbagi kebahagiaan.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "letter",
+    "category": "Destination",
+    "motion": [
+      "petals",
+      "ribbons"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "tropical-botanique": {
+    "name": "Tropical Botanique",
+    "opening_text": "Kehadiran Anda melengkapi cerita yang ingin kami kenang. Dari berbagai tempat, kita bertemu untuk berbagi kebahagiaan.",
+    "order": [
+      "home",
+      "event",
+      "couple",
+      "date",
+      "quote",
+      "gallery",
+      "story",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "editorial",
+    "category": "Destination",
+    "motion": [
+      "seeds",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "coral-moonrise": {
+    "name": "Coral Moonrise",
+    "opening_text": "Kami menantikan sebuah hari yang akan selalu tinggal di hati. Dari berbagai tempat, kita bertemu untuk berbagi kebahagiaan.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "quote",
+      "event",
+      "date",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "cinema",
+    "category": "Destination",
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "island-petals": {
+    "name": "Island Petals",
+    "opening_text": "Ada begitu banyak kebahagiaan yang ingin kami bagikan kepada Anda. Dari berbagai tempat, kita bertemu untuk berbagi kebahagiaan.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "carousel",
+    "category": "Destination",
+    "motion": [
+      "leaves",
+      "petals"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "pastel-carnival": {
+    "name": "Pastel Carnival",
+    "opening_text": "Dengan sepenuh hati, kami berbagi kabar bahagia ini. Mari rayakan hari istimewa dengan warna dan tawa.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "arch",
+    "category": "Creative",
+    "motion": [
+      "petals",
+      "confetti"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "flower-pop-letter": {
+    "name": "Flower Pop Letter",
+    "opening_text": "Melalui undangan kecil ini, kami menitipkan harapan yang besar. Mari rayakan hari istimewa dengan warna dan tawa.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "letter",
+    "category": "Creative",
+    "motion": [
+      "ribbons",
+      "paper"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "sakura-cloud": {
+    "name": "Sakura Cloud",
+    "opening_text": "Kehadiran Anda melengkapi cerita yang ingin kami kenang. Mari rayakan hari istimewa dengan warna dan tawa.",
+    "order": [
+      "home",
+      "event",
+      "couple",
+      "date",
+      "quote",
+      "gallery",
+      "story",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "editorial",
+    "category": "Creative",
+    "motion": [
+      "leaves",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "midnight-fiesta": {
+    "name": "Midnight Fiesta",
+    "opening_text": "Kami menantikan sebuah hari yang akan selalu tinggal di hati. Mari rayakan hari istimewa dengan warna dan tawa.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "quote",
+      "event",
+      "date",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "cinema",
+    "category": "Creative",
+    "motion": [
+      "confetti",
+      "balloons"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "butterfly-confetti": {
+    "name": "Butterfly Confetti",
+    "opening_text": "Ada begitu banyak kebahagiaan yang ingin kami bagikan kepada Anda. Mari rayakan hari istimewa dengan warna dan tawa.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "carousel",
+    "category": "Creative",
+    "motion": [
+      "leaves",
+      "confetti"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "fleur-geometry": {
+    "name": "Fleur Geometry",
+    "opening_text": "Dengan sepenuh hati, kami berbagi kabar bahagia ini. Sebuah langkah baru, sebuah waktu untuk berkumpul.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "arch",
+    "category": "Modern",
+    "motion": [
+      "petals",
+      "leaves"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "botanical-signature": {
+    "name": "Botanical Signature",
+    "opening_text": "Melalui undangan kecil ini, kami menitipkan harapan yang besar. Sebuah langkah baru, sebuah waktu untuk berkumpul.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "letter",
+    "category": "Modern",
+    "motion": [
+      "petals",
+      "ribbons"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "urban-petal-editorial": {
+    "name": "Urban Petal Editorial",
+    "opening_text": "Kehadiran Anda melengkapi cerita yang ingin kami kenang. Sebuah langkah baru, sebuah waktu untuk berkumpul.",
+    "order": [
+      "home",
+      "event",
+      "couple",
+      "date",
+      "quote",
+      "gallery",
+      "story",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "editorial",
+    "category": "Modern",
+    "motion": [
+      "seeds",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "midnight-orchid": {
+    "name": "Midnight Orchid",
+    "opening_text": "Kami menantikan sebuah hari yang akan selalu tinggal di hati. Sebuah langkah baru, sebuah waktu untuk berkumpul.",
+    "order": [
+      "home",
+      "story",
+      "couple",
+      "quote",
+      "event",
+      "date",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "cinema",
+    "category": "Modern",
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  },
+  "bloom-motion": {
+    "name": "Bloom Motion",
+    "opening_text": "Ada begitu banyak kebahagiaan yang ingin kami bagikan kepada Anda. Sebuah langkah baru, sebuah waktu untuk berkumpul.",
+    "order": [
+      "home",
+      "couple",
+      "quote",
+      "date",
+      "event",
+      "story",
+      "gallery",
+      "video",
+      "location",
+      "rsvp",
+      "wishes",
+      "gift",
+      "livestream",
+      "closing"
+    ],
+    "mood": [
+      "Romantic",
+      "Instrumental"
+    ],
+    "sections": {
+      "home": {
+        "enabled": true,
+        "heading": "Hari Istimewa Kami",
+        "subheading": "",
+        "content": ""
+      },
+      "couple": {
+        "enabled": true,
+        "heading": "Yang Berbahagia",
+        "subheading": "",
+        "content": ""
+      },
+      "quote": {
+        "enabled": true,
+        "heading": "Doa & Harapan",
+        "subheading": "",
+        "content": ""
+      },
+      "story": {
+        "enabled": true,
+        "heading": "Cerita Perjalanan",
+        "subheading": "",
+        "content": ""
+      },
+      "event": {
+        "enabled": true,
+        "heading": "Waktu & Tempat",
+        "subheading": "",
+        "content": ""
+      },
+      "gallery": {
+        "enabled": true,
+        "heading": "Bingkai Kenangan",
+        "subheading": "",
+        "content": ""
+      },
+      "gift": {
+        "enabled": true,
+        "heading": "Tanda Kasih",
+        "subheading": "",
+        "content": ""
+      },
+      "rsvp": {
+        "enabled": true,
+        "heading": "Konfirmasi Kehadiran",
+        "subheading": "",
+        "content": ""
+      },
+      "wishes": {
+        "enabled": true,
+        "heading": "Ucapan & Doa",
+        "subheading": "",
+        "content": ""
+      },
+      "closing": {
+        "enabled": true,
+        "heading": "Terima Kasih",
+        "subheading": "",
+        "content": ""
+      }
+    },
+    "quote": "Setiap pertemuan yang tulus menyimpan sebuah cerita yang layak dirayakan.",
+    "quote_source": "Harapan kami",
+    "closing_text": "Terima kasih atas kehadiran dan doa Anda. Semoga kebahagiaan ini menjadi kenangan yang hangat.",
+    "gallery_style": "carousel",
+    "category": "Modern",
+    "motion": [
+      "leaves",
+      "petals"
+    ],
+    "studio": true,
+    "collection": "floral-atelier"
+  }
+}

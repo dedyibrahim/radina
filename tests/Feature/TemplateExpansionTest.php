@@ -32,8 +32,8 @@ class TemplateExpansionTest extends TestCase
         $categories = $this->getJson('/api/categories')->assertOk()->assertJsonCount(11, 'data')->json('data');
         $effects = [];
         $templates = Template::where('status', 'ACTIVE')->get();
-        $this->assertCount(56, $templates);
-        $this->assertCount(56, TemplateCatalog::KEYS);
+        $this->assertCount(111, $templates);
+        $this->assertCount(111, TemplateCatalog::KEYS);
         foreach ($categories as $category) {
             $count = $this->getJson('/api/templates?category='.$category['slug'])->assertOk()->json('meta.total');
             $this->assertGreaterThanOrEqual(5, $count, $category['name']);
@@ -55,6 +55,31 @@ class TemplateExpansionTest extends TestCase
         }
         $this->assertCount(31, array_unique(array_column($studio, 'layout')));
         $this->assertGreaterThanOrEqual(7, count(array_unique(array_column($studio, 'family'))));
+    }
+
+    public function test_floral_collection_adds_five_distinct_designs_to_each_existing_category(): void
+    {
+        $collection = json_decode(file_get_contents(config_path('floral-collection.json')), true);
+        $presets = json_decode(file_get_contents(config_path('floral-presets.json')), true);
+        $effects = json_decode(file_get_contents(config_path('motion-effects.json')), true);
+        $this->assertCount(55, $collection);
+        $this->assertSame(array_keys($collection), array_keys($presets));
+        $this->assertCount(55, array_unique(array_column($presets, 'opening_text')));
+        $this->assertCount(11, array_unique(array_column($collection, 'category')));
+        foreach (collect($collection)->groupBy('category') as $category => $designs) {
+            $this->assertCount(5, $designs, $category);
+            $this->assertSame(['arch', 'letter', 'editorial', 'cinema', 'carousel'], $designs->pluck('family')->all());
+            $this->assertCount(5, $designs->pluck('corner_motion')->unique());
+        }
+        foreach ($collection as $key => $design) {
+            $template = Template::where('template_key', $key)->firstOrFail();
+            $this->assertSame($design['category'], $template->category->name);
+            $this->assertSame($design['motion'], TemplateContent::animations($key)['effects']);
+            $this->assertEmpty(array_diff($design['motion'], array_keys($effects)));
+            $this->assertTrue(TemplateContent::preset($key)['studio']);
+            $this->assertFileExists(base_path('frontend/public/images/templates/previews/'.$key.'.webp'));
+        }
+        $this->assertSame(56, Template::whereNotIn('template_key', array_keys($collection))->count());
     }
 
     public function test_reseeding_keeps_existing_customer_content_approval_prices_and_license_records(): void

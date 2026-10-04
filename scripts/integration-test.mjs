@@ -74,7 +74,7 @@ try {
     lastPage = result.meta.last_page
     templates.push(...result.data)
   }
-  assert.equal(templates.length, 56)
+  assert.equal(templates.length, 111)
   for (const template of templates) {
     for (const width of [390, 1440]) {
       await page.setViewportSize({ width, height: 900 })

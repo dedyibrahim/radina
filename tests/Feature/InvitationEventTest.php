@@ -56,7 +56,7 @@ class InvitationEventTest extends TestCase
 
     public function test_five_new_islamic_themes_have_real_demos_and_generic_previews_do_not_change_saved_weddings(): void
     {
-        $this->getJson('/api/templates?category=islamic')->assertOk()->assertJsonPath('meta.total', 6);
+        $this->getJson('/api/templates?category=islamic')->assertOk()->assertJsonPath('meta.total', 11);
         foreach (['nur-jannah', 'mihrab-emerald', 'sahara-gold', 'qamar-blue', 'zahra-ivory'] as $key) {
             $template = Template::where('template_key', $key)->firstOrFail();
             $this->assertFileExists(base_path('frontend/public'.$template->thumbnail));

@@ -83,10 +83,12 @@ class ExperienceUpgradeTest extends TestCase
         $this->putJson('/api/admin/weddings/'.$w->id, $data)->assertUnprocessable();
     }
 
-    public function test_fifty_six_demos_have_distinct_couples_and_content(): void
+    public function test_catalog_demos_have_distinct_couples_and_content(): void
     {
+        // The catalog exceeds the public per-minute limit; this test validates every demo.
+        config(['platform.api_rate_limit' => 1000]);
         $this->assertSame(6, MusicTrack::count());
-        $this->getJson('/api/templates?sort=popular')->assertOk()->assertJsonPath('meta.total', 56);
+        $this->getJson('/api/templates?sort=popular')->assertOk()->assertJsonPath('meta.total', 111);
         $this->getJson('/api/categories')->assertOk()->assertJsonCount(11, 'data');
         $names = [];
         $openings = [];
@@ -100,8 +102,8 @@ class ExperienceUpgradeTest extends TestCase
             $this->assertCount(6, $data['gallery']);
             $this->assertTrue($data['is_demo']);
         }
-        $this->assertCount(56, array_unique($names));
-        $this->assertCount(56, array_unique($openings));
+        $this->assertCount(111, array_unique($names));
+        $this->assertCount(111, array_unique($openings));
         $this->assertCount(6, array_unique($music));
         foreach (array_unique($music) as $url) {
             $this->assertMatchesRegularExpression('~^/storage/music-library/radina-0[1-6]\\.mp3$~', $url);

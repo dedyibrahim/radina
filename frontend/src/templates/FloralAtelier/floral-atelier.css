@@ -1,0 +1,1139 @@
+/* This collection is scoped: the original 56 designs keep their existing presentation. */
+.floral-atelier .wedding-page {
+  background: var(--ivory);
+  color: var(--ink);
+}
+.floral-atelier .floral-cover,
+.floral-atelier .floral-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--ivory);
+  color: var(--ink);
+  min-height: 100svh;
+  padding: 66px 30px 42px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
+}
+.floral-atelier
+  .floral-cover
+  > :not(
+    .floral-corners,
+    .floral-cover-frame,
+    .floral-paper-texture,
+    .floral-cinema-image
+  ),
+.floral-atelier .floral-hero > :not(.floral-corners, .floral-hero-photo) {
+  position: relative;
+  z-index: 3;
+}
+.floral-atelier h1,
+.floral-atelier h2,
+.floral-atelier h3 {
+  overflow-wrap: anywhere;
+}
+.floral-atelier .floral-cover h1,
+.floral-atelier .floral-hero h1 {
+  font:
+    400 clamp(2.45rem, 10.8vw, 4.3rem)/1.02 'Cormorant Garamond',
+    serif;
+  margin: 14px auto;
+  letter-spacing: -0.03em;
+  color: inherit;
+  max-width: 100%;
+}
+.floral-eyebrow {
+  display: block;
+  font:
+    10px/1.8 'DM Sans',
+    sans-serif;
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+}
+.floral-small-script {
+  display: block;
+  font:
+    italic 18px/1.5 'Cormorant Garamond',
+    serif;
+  letter-spacing: 0.4px;
+  margin-top: 10px;
+}
+.floral-bismillah {
+  display: block;
+  font: 22px/1.9 serif;
+  margin: 10px 0 0;
+}
+.floral-cover-header,
+.floral-cover-names,
+.floral-cover-footer {
+  width: 100%;
+  min-width: 0;
+}
+.floral-cover-names time,
+.floral-hero time {
+  font:
+    11px/1.8 'DM Sans',
+    sans-serif;
+  letter-spacing: 1.4px;
+}
+.floral-name-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  color: var(--gold);
+  font-size: 10px;
+  margin: 17px auto;
+}
+.floral-name-divider span {
+  width: 38px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+.floral-cover-photo,
+.floral-hero-photo {
+  margin: 0;
+  width: 210px;
+  height: 260px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  background: var(--floral-highlight);
+}
+.floral-cover-photo img,
+.floral-hero-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-width: 0;
+  min-height: 0;
+}
+.floral-monogram {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  font:
+    italic 64px 'Cormorant Garamond',
+    serif;
+}
+.floral-guest {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  margin: 4px 0 20px;
+}
+.floral-guest small {
+  font:
+    10px/1.6 'DM Sans',
+    sans-serif;
+  letter-spacing: 1px;
+}
+.floral-guest strong {
+  font:
+    500 14px/1.6 'Cormorant Garamond',
+    serif;
+  max-width: 260px;
+  overflow-wrap: anywhere;
+}
+.floral-atelier .floral-open {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  border: 1px solid var(--gold);
+  background: var(--ink);
+  color: var(--ivory);
+  border-radius: 32px;
+  padding: 13px 25px;
+  font:
+    11px/1.6 'DM Sans',
+    sans-serif;
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 25px #0000000c;
+}
+.floral-cover-note {
+  max-width: 260px;
+  margin: 16px auto 0;
+  font:
+    10px/1.8 'DM Sans',
+    sans-serif;
+  opacity: 0.75;
+}
+.floral-atelier .floral-cover-signature {
+  position: absolute !important;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  font:
+    8px/1.6 'DM Sans',
+    sans-serif;
+  letter-spacing: 2px;
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+.floral-paper-texture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.2;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      #8b705314 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 4px,
+      #8b705310 5px
+    );
+}
+.floral-cover-frame {
+  position: absolute;
+  inset: 26px 18px;
+  border: 1px solid var(--gold);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 1;
+}
+.floral-corners {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.atelier-corner {
+  position: absolute;
+  width: clamp(120px, 36%, 175px);
+  aspect-ratio: 250 / 270;
+  opacity: 0.85;
+}
+.corner-tl {
+  left: -26px;
+  top: -27px;
+}
+.corner-tr {
+  right: -26px;
+  top: -27px;
+  transform: scaleX(-1);
+}
+.corner-bl {
+  left: -26px;
+  bottom: -30px;
+  transform: scaleY(-1);
+}
+.corner-br {
+  right: -26px;
+  bottom: -30px;
+  transform: scale(-1);
+}
+.flower-spray {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: 0 0;
+}
+.floral-motion-sway .flower-spray {
+  animation: floral-sway 11s ease-in-out infinite alternate;
+}
+.floral-motion-bloom .flower-core {
+  animation: floral-bloom 9s ease-in-out infinite alternate;
+  animation-delay: var(--flower-delay);
+}
+.floral-motion-breeze .spray-leaf {
+  animation: floral-leaf 8s ease-in-out infinite alternate;
+  animation-delay: var(--flower-delay);
+}
+.floral-motion-drift .flower-spray {
+  animation: floral-drift 13s ease-in-out infinite alternate;
+}
+.floral-motion-flutter .flower-spray {
+  animation: floral-sway 15s ease-in-out infinite alternate;
+}
+.spray-butterfly {
+  animation: floral-butterfly 12s ease-in-out infinite alternate;
+}
+.butterfly-wings {
+  transform-origin: 0 0;
+  animation: floral-wing 1.8s ease-in-out infinite alternate;
+}
+.floral-corners svg,
+.floral-corners svg * {
+  animation-play-state: var(--floral-play, paused);
+}
+.corners-compact .atelier-corner {
+  width: 120px;
+  opacity: 0.38;
+}
+.floral-section-frame {
+  position: relative;
+  isolation: isolate;
+  background: var(--ivory);
+}
+.floral-section-frame > .floral-corners {
+  z-index: 0;
+}
+.floral-atelier .section {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  padding: 72px 30px;
+}
+.floral-atelier .section-heading {
+  margin-bottom: 34px;
+}
+.floral-atelier .section-heading h2 {
+  font:
+    400 38px/1.1 'Cormorant Garamond',
+    serif;
+  color: var(--ink);
+}
+.floral-atelier .section-heading .eyebrow {
+  color: var(--gold);
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+.floral-atelier .section-heading .tiny-divider {
+  color: var(--gold);
+}
+.floral-hero-copy {
+  max-width: 360px;
+}
+.floral-hero-copy p {
+  font:
+    12px/2 'DM Sans',
+    sans-serif;
+  margin: 24px auto;
+  max-width: 310px;
+}
+.floral-hero-copy small {
+  display: block;
+  font:
+    10px/1.8 'DM Sans',
+    sans-serif;
+  letter-spacing: 1px;
+}
+.floral-people-grid {
+  display: grid;
+  gap: 42px;
+}
+.floral-person {
+  text-align: center;
+  min-width: 0;
+}
+.floral-person figure {
+  position: relative;
+  margin: 0 auto 24px;
+  width: 196px;
+  max-width: 100%;
+  height: 240px;
+  padding: 7px;
+  border: 1px solid var(--gold);
+  background: var(--ivory);
+}
+.floral-person figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.floral-person figcaption {
+  position: absolute;
+  left: -8px;
+  right: -8px;
+  bottom: 18px;
+  padding: 7px 10px;
+  background: var(--ivory);
+  font:
+    8px/1.7 'DM Sans',
+    sans-serif;
+  letter-spacing: 2px;
+}
+.floral-person h3 {
+  font:
+    400 30px/1.1 'Cormorant Garamond',
+    serif;
+  margin: 16px 0 12px;
+}
+.floral-person p,
+.floral-person a {
+  font:
+    11px/1.9 'DM Sans',
+    sans-serif;
+  margin: 6px 0;
+}
+.floral-person a {
+  color: var(--gold);
+}
+.floral-gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.floral-gallery-grid button {
+  min-width: 0;
+  position: relative;
+  border: 1px solid var(--gold);
+  background: var(--ivory);
+  padding: 5px;
+  cursor: zoom-in;
+  color: var(--ink);
+}
+.floral-gallery-grid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+}
+.floral-gallery-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 5px 6px;
+}
+.floral-gallery-caption small {
+  font:
+    10px/1.3 'DM Sans',
+    sans-serif;
+  letter-spacing: 1px;
+}
+.floral-gallery-hint {
+  text-align: center;
+  font-size: 10px;
+  margin-top: 22px;
+  opacity: 0.7;
+}
+.floral-story-list {
+  display: grid;
+  gap: 30px;
+}
+.floral-story-list article {
+  position: relative;
+  border-left: 1px solid var(--gold);
+  padding: 8px 0 8px 26px;
+}
+.floral-story-number {
+  position: absolute;
+  left: -12px;
+  top: 0;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  background: var(--ivory);
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+}
+.floral-story-list time {
+  font:
+    italic 14px 'Cormorant Garamond',
+    serif;
+  color: var(--gold);
+}
+.floral-story-list h3 {
+  font:
+    400 27px/1.2 'Cormorant Garamond',
+    serif;
+  margin: 8px 0 12px;
+}
+.floral-story-list p {
+  font:
+    11px/2 'DM Sans',
+    sans-serif;
+  margin: 0;
+}
+.floral-story-list img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  margin-bottom: 16px;
+}
+.floral-atelier .floral-closing {
+  min-height: 68svh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.floral-closing h2 {
+  font:
+    400 44px/1.1 'Cormorant Garamond',
+    serif;
+  margin: 18px 0;
+}
+.floral-closing h3 {
+  font:
+    italic 32px/1.2 'Cormorant Garamond',
+    serif;
+  margin: 8px 0 35px;
+}
+.floral-closing p {
+  font:
+    12px/2 'DM Sans',
+    sans-serif;
+  max-width: 310px;
+}
+.floral-credit {
+  font:
+    9px/1.8 'DM Sans',
+    sans-serif;
+  letter-spacing: 1px;
+  color: var(--gold);
+}
+.floral-atelier .event-card {
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  box-shadow: none;
+  background: transparent;
+  padding: 36px 22px;
+}
+.floral-atelier .rsvp-form,
+.floral-atelier .wish-form,
+.floral-atelier .gift-card {
+  background: color-mix(in srgb, var(--ivory) 90%, var(--floral-highlight));
+  border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+}
+.floral-atelier .button-outline {
+  color: var(--ink);
+  border-color: var(--gold);
+}
+/* I. A botanical arch, with carved frames and a cascading album. */
+.floral-cover-arch .floral-cover-frame {
+  border-radius: 190px 190px 3px 3px;
+  inset: 31px 22px;
+}
+.floral-cover-arch .floral-cover-photo,
+.floral-hero-arch .floral-hero-photo {
+  border-radius: 120px 120px 3px 3px;
+  border: 1px solid var(--gold);
+  padding: 8px;
+  background: var(--ivory);
+}
+.floral-cover-arch .floral-cover-photo::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 1px solid var(--gold);
+  border-radius: inherit;
+  opacity: 0.4;
+}
+.floral-cover-arch .floral-cover-photo img,
+.floral-hero-arch .floral-hero-photo img {
+  border-radius: inherit;
+}
+.floral-family-arch .floral-person figure,
+.floral-family-arch .event-card {
+  border-radius: 110px 110px 4px 4px;
+}
+.floral-family-arch .floral-person figure img {
+  border-radius: inherit;
+}
+.floral-family-arch .floral-gallery-grid button:first-child {
+  grid-column: 1/-1;
+  border-radius: 160px 160px 0 0;
+  overflow: hidden;
+}
+.floral-family-arch .floral-gallery-grid button:first-child img {
+  aspect-ratio: 4/3;
+  border-radius: inherit;
+}
+/* II. A letter on textured stationery and loose photographic prints. */
+.floral-cover-letter {
+  background: linear-gradient(
+    145deg,
+    var(--floral-highlight),
+    var(--ivory) 55%
+  ) !important;
+}
+.floral-cover-letter .floral-cover-frame {
+  inset: 38px 25px;
+  background: var(--ivory);
+  transform: rotate(-1.4deg);
+  box-shadow:
+    10px 14px 0 color-mix(in srgb, var(--gold) 9%, transparent),
+    0 15px 38px #0000000a;
+}
+.floral-cover-letter .floral-cover-photo {
+  width: 180px;
+  height: 185px;
+  padding: 8px 8px 28px;
+  background: #fffaf2;
+  transform: rotate(-6deg);
+  border: 1px solid #d8cebd;
+  box-shadow: 0 9px 20px #0002;
+}
+.floral-cover-letter .floral-cover-photo figcaption {
+  position: absolute;
+  bottom: 7px;
+  left: 0;
+  right: 0;
+  color: #766153;
+  font:
+    italic 14px 'Cormorant Garamond',
+    serif;
+}
+.floral-cover-letter h1 {
+  font-style: italic !important;
+  max-width: 280px !important;
+}
+.floral-family-letter .floral-open {
+  border-radius: 2px;
+}
+.floral-hero-letter .floral-hero-photo {
+  width: 250px;
+  height: 240px;
+  padding: 10px 10px 30px;
+  background: #fffaf2;
+  transform: rotate(3deg);
+  box-shadow: 0 12px 30px #0002;
+}
+.floral-family-letter .floral-person figure {
+  padding: 9px 9px 32px;
+  transform: rotate(-3deg);
+  box-shadow: 4px 7px 0 var(--floral-highlight);
+  border-color: var(--floral-highlight);
+}
+.floral-family-letter .floral-person:nth-child(2) figure {
+  transform: rotate(3deg);
+}
+.floral-family-letter .floral-gallery-grid button:nth-child(odd) {
+  transform: rotate(-3deg);
+}
+.floral-family-letter .floral-gallery-grid button:nth-child(even) {
+  transform: rotate(3deg);
+}
+.floral-family-letter .floral-story-list article {
+  border: 1px dashed var(--gold);
+  padding: 30px 22px;
+  background: color-mix(in srgb, var(--floral-highlight) 28%, var(--ivory));
+}
+.floral-family-letter .floral-story-number {
+  left: 13px;
+  top: -12px;
+}
+.floral-family-letter .event-card {
+  border-style: dashed;
+  box-shadow: 5px 5px 0 var(--floral-highlight);
+}
+/* III. The photographic spread and strong typographic hierarchy. */
+.floral-atelier .floral-cover-editorial {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-content: center;
+  gap: 30px 16px;
+  text-align: left;
+  padding: 84px 24px 48px;
+}
+.floral-cover-editorial .floral-cover-header {
+  grid-column: 1/-1;
+  text-align: left;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 15px;
+}
+.floral-cover-editorial .floral-cover-frame {
+  border: none;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--floral-highlight) 50%,
+    transparent 50%
+  );
+  opacity: 0.55;
+}
+.floral-cover-editorial .floral-cover-photo {
+  width: 100%;
+  height: 315px;
+  border-radius: 100px 100px 0 0;
+}
+.floral-cover-editorial .floral-cover-photo img {
+  border-radius: inherit;
+}
+.floral-photo-caption {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  color: white;
+  font:
+    7px/1.5 'DM Sans',
+    sans-serif;
+  letter-spacing: 1.4px;
+  writing-mode: vertical-rl;
+  text-shadow: 0 1px 8px #000;
+}
+.floral-atelier .floral-cover-editorial h1 {
+  font:
+    400 clamp(2rem, 8.5vw, 3rem)/1.04 'Cormorant Garamond',
+    serif;
+}
+.floral-cover-editorial .floral-cover-names .floral-eyebrow {
+  font-size: 8px;
+  letter-spacing: 1.6px;
+}
+.floral-cover-editorial .floral-name-divider {
+  justify-content: flex-start;
+}
+.floral-cover-editorial .floral-name-divider span {
+  width: 22px;
+}
+.floral-cover-editorial .floral-cover-footer {
+  grid-column: 1/-1;
+  text-align: center;
+}
+.floral-hero-editorial {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 22px 16px !important;
+  text-align: left !important;
+  padding: 60px 24px !important;
+}
+.floral-hero-editorial .floral-hero-header {
+  grid-column: 1/-1;
+}
+.floral-hero-editorial .floral-hero-photo {
+  width: 100%;
+  height: 340px;
+}
+.floral-atelier .floral-hero-editorial h1 {
+  font-size: 34px;
+}
+.floral-hero-editorial .floral-hero-copy p {
+  font-size: 10px;
+}
+.floral-hero-editorial .floral-hero-copy .floral-small-script {
+  font-size: 15px;
+}
+.floral-family-editorial .floral-person {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 18px;
+  text-align: left;
+}
+.floral-family-editorial .floral-person figure {
+  grid-row: span 5;
+  width: 100%;
+  height: 225px;
+}
+.floral-family-editorial .floral-person h3 {
+  font-size: 25px;
+}
+.floral-family-editorial .floral-gallery-grid {
+  gap: 7px;
+}
+.floral-family-editorial .floral-gallery-grid button {
+  border: none;
+  padding: 0;
+}
+.floral-family-editorial .floral-gallery-grid button:nth-child(3n) {
+  grid-column: 1/-1;
+}
+.floral-family-editorial .floral-gallery-grid button:nth-child(3n) img {
+  aspect-ratio: 16/9;
+}
+.floral-family-editorial .event-card {
+  border: none;
+  border-top: 2px solid var(--gold);
+  text-align: left;
+}
+/* IV. A full frame photograph and a slow cinematic light sweep. */
+.floral-cinema-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.floral-cinema-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.68;
+  animation: floral-film 24s ease-in-out infinite alternate;
+}
+.floral-cinema-image::after,
+.floral-hero-cinema::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    #17151d66,
+    #17151d22 30%,
+    #17151dcf 65%,
+    var(--ivory)
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+.floral-atelier .floral-cover-cinema {
+  justify-content: space-between;
+  padding-top: 86px;
+}
+.floral-cover-cinema .floral-cover-names {
+  margin-top: auto;
+  padding-top: 120px;
+}
+.floral-cover-cinema .floral-cover-header {
+  margin-bottom: 70px;
+}
+.floral-cover-cinema h1 {
+  font-style: italic !important;
+  text-shadow: 0 2px 24px #0006;
+}
+.floral-cover-cinema .floral-cover-frame {
+  border-color: var(--ivory);
+  opacity: 0.3;
+}
+.floral-cover-cinema .atelier-corner {
+  opacity: 0.68;
+}
+.floral-hero-cinema .floral-hero-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+.floral-hero-cinema .floral-hero-photo img {
+  opacity: 0.6;
+}
+.floral-hero-cinema .floral-hero-copy {
+  margin-top: auto;
+  padding: 180px 0 50px;
+}
+.floral-family-cinema .floral-person figure {
+  width: 100%;
+  height: 285px;
+  padding: 0;
+  border: none;
+}
+.floral-family-cinema .floral-person figcaption {
+  background: var(--ivory);
+  left: 12px;
+  right: 12px;
+}
+.floral-family-cinema .floral-gallery-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 18px;
+}
+.floral-family-cinema .floral-gallery-grid button {
+  flex: 0 0 86%;
+  scroll-snap-align: center;
+  border: 1px solid var(--gold);
+  border-width: 8px 1px;
+  border-top-style: dotted;
+  border-bottom-style: dotted;
+}
+.floral-family-cinema .floral-story-list article {
+  border: none;
+  border-top: 1px solid var(--gold);
+  padding: 36px 0;
+}
+.floral-family-cinema .floral-story-number {
+  left: auto;
+  right: 0;
+  top: 12px;
+  border: none;
+  font:
+    36px 'Cormorant Garamond',
+    serif;
+  opacity: 0.35;
+}
+.floral-family-cinema .event-card {
+  border-color: color-mix(in srgb, var(--gold) 60%, transparent);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--floral-highlight) 15%, transparent),
+    transparent
+  );
+}
+/* V. Petal portrait slides, scalloped borders and a horizontal album. */
+.floral-cover-carousel .floral-cover-frame {
+  border-radius: 180px;
+  inset: 35px 20px;
+  border-style: dashed;
+}
+.floral-cover-carousel .floral-cover-photo {
+  width: 235px;
+  height: 235px;
+  border: 8px solid var(--ivory);
+  outline: 1px solid var(--gold);
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 0 12px
+    color-mix(in srgb, var(--floral-highlight) 50%, transparent);
+}
+.floral-cover-carousel .floral-cover-photo img {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  opacity: 0;
+  animation: floral-photo-slide 18s infinite;
+  animation-delay: calc(var(--slide-index) * 6s);
+}
+.floral-cover-carousel .floral-cover-photo img:first-child {
+  opacity: 1;
+}
+.floral-cover-carousel .floral-cover-photo img.single-slide {
+  animation: none;
+  opacity: 1;
+}
+.floral-hero-carousel .floral-hero-photo {
+  width: 260px;
+  height: 310px;
+  border: 1px solid var(--gold);
+  border-radius: 140px 140px 6px 6px;
+  padding: 7px;
+}
+.floral-hero-carousel .floral-hero-photo img {
+  border-radius: inherit;
+}
+.floral-slide-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  font-size: 10px;
+}
+.floral-slide-controls button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  color: var(--ink);
+  background: var(--ivory);
+}
+.floral-family-carousel .floral-person figure {
+  width: 205px;
+  height: 205px;
+  border-radius: 50%;
+}
+.floral-family-carousel .floral-person figure img {
+  border-radius: inherit;
+}
+.floral-family-carousel .floral-person figcaption {
+  bottom: -12px;
+}
+.floral-family-carousel .floral-gallery-grid {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 12px 5px 24px;
+}
+.floral-family-carousel .floral-gallery-grid button {
+  flex: 0 0 78%;
+  scroll-snap-align: center;
+  border-radius: 120px 120px 4px 4px;
+}
+.floral-family-carousel .floral-gallery-grid img {
+  border-radius: inherit;
+}
+.floral-family-carousel .floral-story-list article {
+  border-left-style: dashed;
+}
+.floral-family-carousel .event-card {
+  border-radius: 120px 120px 8px 8px;
+}
+/* Category identities: the botanical language also respects the occasion. */
+.floral-category-minimalist .atelier-corner {
+  opacity: 0.5;
+}
+.floral-category-minimalist .floral-cover-frame {
+  opacity: 0.22;
+}
+.floral-category-traditional .floral-cover-frame,
+.floral-category-islamic .floral-cover-frame {
+  border-width: 3px;
+  border-style: double;
+}
+.floral-category-traditional .floral-paper-texture {
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent 0 16px,
+      var(--gold) 17px,
+      transparent 18px 34px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0 16px,
+      var(--gold) 17px,
+      transparent 18px 34px
+    );
+  opacity: 0.07;
+}
+.floral-category-islamic .floral-paper-texture {
+  background-image: repeating-conic-gradient(
+    from 45deg at 50% 50%,
+    var(--gold) 0deg 3deg,
+    transparent 3deg 90deg
+  );
+  background-size: 56px 56px;
+  opacity: 0.055;
+}
+.floral-category-luxury .floral-cover-frame {
+  box-shadow:
+    inset 0 0 0 6px var(--ivory),
+    inset 0 0 0 7px var(--gold);
+}
+.floral-category-vintage .floral-cover-photo img {
+  filter: sepia(0.2) saturate(0.75);
+}
+.floral-category-creative .floral-cover-frame {
+  border-radius: 70px 12px 70px 12px;
+}
+.floral-category-destination .floral-paper-texture {
+  background-image: repeating-radial-gradient(
+    ellipse at 100% 70%,
+    transparent 0 16px,
+    var(--gold) 17px,
+    transparent 18px 34px
+  );
+  opacity: 0.07;
+}
+.floral-category-modern .floral-cover-header .floral-eyebrow {
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+.floral-atelier .desktop-ambience .botanical {
+  opacity: 0.2;
+}
+@keyframes floral-sway {
+  from {
+    transform: rotate(-1.3deg);
+  }
+  to {
+    transform: rotate(2.4deg);
+  }
+}
+@keyframes floral-bloom {
+  from {
+    transform: scale(0.95) rotate(-3deg);
+  }
+  to {
+    transform: scale(1.035) rotate(2deg);
+  }
+}
+@keyframes floral-leaf {
+  from {
+    transform: rotate(-4deg);
+  }
+  to {
+    transform: rotate(5deg);
+  }
+}
+@keyframes floral-drift {
+  from {
+    transform: translate(-2px, -3px) rotate(-1deg);
+  }
+  to {
+    transform: translate(4px, 6px) rotate(1.5deg);
+  }
+}
+@keyframes floral-butterfly {
+  from {
+    transform: translate(0, 0) rotate(-8deg);
+  }
+  to {
+    transform: translate(-12px, -18px) rotate(13deg);
+  }
+}
+@keyframes floral-wing {
+  from {
+    transform: scaleX(0.36);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes floral-film {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.055) translateY(-5px);
+  }
+}
+@keyframes floral-photo-slide {
+  0%,
+  27% {
+    opacity: 1;
+  }
+  34%,
+  93% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@media (max-width: 350px) {
+  .floral-atelier .floral-cover {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .floral-atelier .floral-cover-editorial {
+    padding-left: 20px;
+    padding-right: 20px;
+    gap: 24px 13px;
+  }
+  .floral-cover-editorial .floral-cover-photo {
+    height: 270px;
+  }
+  .floral-atelier .floral-cover-editorial h1 {
+    font-size: 29px;
+  }
+  .floral-cover-carousel .floral-cover-photo {
+    width: 210px;
+    height: 210px;
+  }
+  .floral-hero-carousel .floral-hero-photo {
+    width: 230px;
+  }
+  .floral-atelier .section {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .floral-family-editorial .floral-person {
+    gap: 12px;
+  }
+  .floral-family-editorial .floral-person h3 {
+    font-size: 23px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floral-cover-carousel .floral-cover-photo img {
+    animation: none;
+    opacity: 0;
+  }
+  .floral-cover-carousel .floral-cover-photo img:first-child {
+    opacity: 1;
+  }
+}
+.floral-atelier .motion-off .floral-cover-carousel .floral-cover-photo img {
+  opacity: 0;
+  animation: none;
+}
+.floral-atelier
+  .motion-off
+  .floral-cover-carousel
+  .floral-cover-photo
+  img:first-child {
+  opacity: 1;
+}

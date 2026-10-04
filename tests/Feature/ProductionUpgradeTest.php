@@ -35,7 +35,7 @@ class ProductionUpgradeTest extends TestCase
             foreach ($before as $table => $rows) {
                 $this->assertSame($rows, DB::table($table)->orderBy('id')->get()->map(fn ($row) => (array) $row)->all(), $table);
             }
-            $this->assertDatabaseCount('templates', 56);
+            $this->assertDatabaseCount('templates', 111);
             $this->assertDatabaseHas('system_settings', ['key' => 'whatsapp_number', 'value' => '6281289903664']);
             $this->getJson('/api/settings')->assertOk()->assertJsonPath('data.whatsapp_number', '6281289903664');
             $this->getJson('/api/settings')->assertOk()

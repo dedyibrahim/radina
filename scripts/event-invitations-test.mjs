@@ -65,10 +65,16 @@ try {
     (await admin.cookies()).find((cookie) => cookie.name === 'XSRF-TOKEN').value,
   )
   const headers = { 'X-XSRF-TOKEN': token, Accept: 'application/json' }
-  const islamic = await responseData(
-    await admin.request.get(`${base}/api/templates?category=islamic`),
-  )
-  assert.equal(islamic.length, 6)
+  const islamic = []
+  let lastCategoryPage = 1
+  for (let page = 1; page <= lastCategoryPage; page++) {
+    const response = await admin.request.get(`${base}/api/templates?category=islamic&page=${page}`)
+    assert.equal(response.status(), 200)
+    const result = await response.json()
+    lastCategoryPage = result.meta.last_page
+    islamic.push(...result.data)
+  }
+  assert.equal(islamic.length, 11)
   const keys = ['nur-jannah', 'mihrab-emerald', 'sahara-gold', 'qamar-blue', 'zahra-ivory']
   for (const key of keys) {
     assert(islamic.some((template) => template.template_key === key))

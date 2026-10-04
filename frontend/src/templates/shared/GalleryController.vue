@@ -2,6 +2,7 @@
 import { inject } from 'vue'
 import { useGallery } from '../../composables/useGallery'
 import BaseModal from '../../components/BaseModal.vue'
+defineProps({ title: { type: String, default: 'Galeri momen pernikahan' } })
 const { wedding, active, move, onKey, onTouchStart, onTouchEnd } = useGallery()
 const design = inject('weddingDesign', '')
 function open(index) {
@@ -12,7 +13,7 @@ function open(index) {
   <slot :photos="wedding.gallery" :open="open" />
   <BaseModal
     :open="active >= 0"
-    title="Galeri momen pernikahan"
+    :title="title"
     wide
     @keydown="onKey"
     @close="active = -1"
@@ -24,11 +25,25 @@ function open(index) {
       @touchstart="onTouchStart"
       @touchend="onTouchEnd"
     >
-      <img :src="wedding.gallery[active].src" :alt="wedding.gallery[active].alt" />
+      <img
+        :src="wedding.gallery[active].src"
+        :alt="wedding.gallery[active].alt"
+      />
       <div class="lightbox-controls">
-        <button class="icon-button" aria-label="Foto sebelumnya" @click="move(-1)">←</button
+        <button
+          class="icon-button"
+          aria-label="Foto sebelumnya"
+          @click="move(-1)"
+        >
+          ←</button
         ><span>{{ active + 1 }} / {{ wedding.gallery.length }}</span
-        ><button class="icon-button" aria-label="Foto berikutnya" @click="move(1)">→</button>
+        ><button
+          class="icon-button"
+          aria-label="Foto berikutnya"
+          @click="move(1)"
+        >
+          →
+        </button>
       </div>
       <p>{{ wedding.gallery[active].alt }}</p>
     </div>

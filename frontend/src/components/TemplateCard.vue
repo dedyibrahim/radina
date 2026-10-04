@@ -3,6 +3,7 @@ import { ArrowUpRight, Eye, Heart } from 'lucide-vue-next'
 import { formatMoney } from '../services/api'
 import { ref, computed } from 'vue'
 import { useTemplateCollection } from '../composables/useTemplateCollection'
+import floral from '../../../config/floral-collection.json'
 const { favorites, comparison, favorite, compare } = useTemplateCollection()
 const hovering = ref(false)
 const previewScale = ref(0.8)
@@ -20,13 +21,24 @@ const eventQuery = computed(() =>
 )
 </script>
 <template>
-  <article class="template-card" @mouseenter="startPreview" @mouseleave="hovering = false">
-    <RouterLink :to="`/templates/${template.slug}${eventQuery}`" class="template-image"
+  <article
+    class="template-card"
+    @mouseenter="startPreview"
+    @mouseleave="hovering = false"
+  >
+    <RouterLink
+      :to="`/templates/${template.slug}${eventQuery}`"
+      class="template-image"
       ><img
         :src="template.thumbnail || template.preview_image"
         :alt="template.name"
-        loading="lazy" /><span v-if="template.is_featured" class="featured-label"
+        loading="lazy" /><span
+        v-if="template.is_featured"
+        class="featured-label"
         ><Heart :size="11" />FAVORITE</span
+      >
+      <span v-if="floral[template.template_key]" class="new-floral-label"
+        >BARU</span
       >
       <div v-if="hovering" class="template-mini-preview" aria-hidden="true">
         <iframe
@@ -46,11 +58,17 @@ const eventQuery = computed(() =>
         >
           <Heart
             :size="17"
-            :fill="favorites.includes(template.template_key) ? 'currentColor' : 'none'"
+            :fill="
+              favorites.includes(template.template_key)
+                ? 'currentColor'
+                : 'none'
+            "
           />Favorit
         </button>
         <button
-          :aria-pressed="comparison.some((t) => t.template_key === template.template_key)"
+          :aria-pressed="
+            comparison.some((t) => t.template_key === template.template_key)
+          "
           @click="compare(template)"
         >
           {{
@@ -66,7 +84,10 @@ const eventQuery = computed(() =>
       </div>
       <p>{{ template.style || template.category?.name }} · Mobile-first</p>
       <p class="template-description">{{ template.description }}</p>
-      <p v-if="template.animations?.labels?.length" class="template-motion-label">
+      <p
+        v-if="template.animations?.labels?.length"
+        class="template-motion-label"
+      >
         {{ template.animations.labels.join(' · ') }}
       </p>
       <div class="template-card-price">
@@ -77,7 +98,9 @@ const eventQuery = computed(() =>
           :to="`/templates/${template.slug}/preview${eventQuery}`"
           class="p-button secondary"
           ><Eye :size="15" />Live Preview</RouterLink
-        ><RouterLink :to="`/order/${template.slug}${eventQuery}`" class="p-button"
+        ><RouterLink
+          :to="`/order/${template.slug}${eventQuery}`"
+          class="p-button"
           >Gunakan Template</RouterLink
         >
       </div>
@@ -85,6 +108,19 @@ const eventQuery = computed(() =>
   </article>
 </template>
 <style>
+.new-floral-label {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  z-index: 2;
+  background: #fffaf0;
+  color: #694735;
+  border: 1px solid #d9c5a0;
+  border-radius: 20px;
+  padding: 7px 12px;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
 .collection-actions {
   display: flex;
   justify-content: space-between;

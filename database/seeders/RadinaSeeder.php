@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Template;
 use App\Models\TemplateCategory;
+use App\Services\TemplateCatalog;
 use Illuminate\Database\Seeder;
 
 class RadinaSeeder extends Seeder
@@ -18,7 +19,7 @@ class RadinaSeeder extends Seeder
                 $template->update(['template_key' => $key]);
             }
         }
-        foreach (json_decode(file_get_contents(config_path('additional-template-demos.json')), true) as $entry) {
+        foreach (TemplateCatalog::demos() as $entry) {
             $category = TemplateCategory::firstOrCreate(['slug' => strtolower($entry['category'])], ['name' => $entry['category']]);
             Template::firstOrCreate(['slug' => $entry['key']], [
                 'template_key' => $entry['key'], 'component_name' => $entry['folder'].'.vue',

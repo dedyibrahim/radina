@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Template;
 use App\Models\Wedding;
 use App\Services\TemplateContent;
+use App\Services\TemplateCatalog;
 use App\Services\MusicCatalogService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -36,17 +37,18 @@ class ExperienceSeeder extends Seeder
         }
         $source->loadContent();
         $demos = [['romantic-floral', 'Alya', 'Rizky', 'A garden full of promises', 'Taman Senja'], ['elegant-luxury', 'Salsabila', 'Damar', 'Elegance in every moment', 'The Grand Atelier'], ['minimalist-white', 'Nadia', 'Raka', 'The beauty of choosing each other', 'White Pavilion'], ['nusantara-heritage', 'Sekar', 'Bagas', 'Kasih yang tumbuh dalam tradisi', 'Pendopo Kencana'], ['garden-dream', 'Amara', 'Reza', 'Like wildflowers, we grew together', 'The Greenhouse'], ['classic-vintage', 'Clara', 'Daniel', 'A letter that became a lifetime', 'Heritage House'], ['midnight-romance', 'Keisha', 'Arga', 'We found our light after dark', 'Midnight Terrace'], ['sakinah', 'Aisyah', 'Farhan', 'Dan dijadikan-Nya di antaramu rasa kasih dan sayang.', 'Bale Sakinah'], ['eternal-story', 'Nara', 'Adrian', 'Every frame led me back to you', 'The Cinema Garden'], ['blush', 'Celine', 'Evan', 'A thousand little joys, shared with you', 'Daydream Studio']];
-        foreach (json_decode(File::get(config_path('additional-template-demos.json')), true) as $entry) {
+        $definitions = TemplateCatalog::demos();
+        foreach ($definitions as $entry) {
             $demos[] = [$entry['key'], $entry['bride'], $entry['groom'], $entry['quote'], $entry['venue']];
         }
         foreach ($demos as $i => [$key,$bride,$groom,$quote,$venue]) {
-            DB::transaction(function () use ($i, $key, $bride, $groom, $quote, $venue, $source) {
+            DB::transaction(function () use ($i, $key, $bride, $groom, $quote, $venue, $source, $definitions) {
                 $template = Template::where('template_key', $key)->first();
                 if (! $template) {
                     return;
                 }
                 $preset = TemplateContent::preset($key);
-                $demoDefinition = collect(json_decode(File::get(config_path('additional-template-demos.json')), true))->firstWhere('key', $key);
+                $demoDefinition = collect($definitions)->firstWhere('key', $key);
                 $heroPhotos = [1, 16, 4, 13, 11, 10, 15, 0, 2, -1, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 1, 4, 13, 21, 22];
                 $photoNumber = $demoDefinition['hero_photo'] ?? ($heroPhotos[$i] ?? (($i % 30) + 1));
                 $heroPhoto = $photoNumber > 0 ? '/storage/templates/experiences/photo-'.$photoNumber.'.webp' : ($photoNumber === 0 ? $source->hero_image : $source->closing_image);

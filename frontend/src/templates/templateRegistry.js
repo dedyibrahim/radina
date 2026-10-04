@@ -1,6 +1,15 @@
 import { defineAsyncComponent } from 'vue'
 import studio from '../../../config/template-studio.json'
+import floral from '../../../config/floral-collection.json'
 export const templateRegistry = {
+  ...Object.fromEntries(
+    Object.keys(floral).map((key) => [
+      key,
+      defineAsyncComponent(
+        () => import('./FloralAtelier/FloralInvitation.vue'),
+      ),
+    ]),
+  ),
   ...Object.fromEntries(
     Object.keys(studio).map((key) => [
       key,
@@ -8,33 +17,58 @@ export const templateRegistry = {
     ]),
   ),
   'nur-jannah': defineAsyncComponent(() => import('./NurJannah/index.vue')),
-  'mihrab-emerald': defineAsyncComponent(() => import('./MihrabEmerald/index.vue')),
+  'mihrab-emerald': defineAsyncComponent(
+    () => import('./MihrabEmerald/index.vue'),
+  ),
   'sahara-gold': defineAsyncComponent(() => import('./SaharaGold/index.vue')),
   'qamar-blue': defineAsyncComponent(() => import('./QamarBlue/index.vue')),
   'zahra-ivory': defineAsyncComponent(() => import('./ZahraIvory/index.vue')),
 
-  'timeless-romance': defineAsyncComponent(() => import('./TimelessRomance/index.vue')),
+  'timeless-romance': defineAsyncComponent(
+    () => import('./TimelessRomance/index.vue'),
+  ),
   'neon-love': defineAsyncComponent(() => import('./NeonLove/index.vue')),
   'blossom-east': defineAsyncComponent(() => import('./BlossomEast/index.vue')),
   monochrome: defineAsyncComponent(() => import('./Monochrome/index.vue')),
   botanica: defineAsyncComponent(() => import('./Botanica/index.vue')),
   'paper-petals': defineAsyncComponent(() => import('./PaperPetals/index.vue')),
-  'royal-heritage': defineAsyncComponent(() => import('./RoyalHeritage/index.vue')),
+  'royal-heritage': defineAsyncComponent(
+    () => import('./RoyalHeritage/index.vue'),
+  ),
   'ocean-vows': defineAsyncComponent(() => import('./OceanVows/index.vue')),
   editorial: defineAsyncComponent(() => import('./Editorial/index.vue')),
   celestial: defineAsyncComponent(() => import('./Celestial/index.vue')),
-  'romantic-floral': defineAsyncComponent(() => import('./RomanticFloral/index.vue')),
-  'elegant-luxury': defineAsyncComponent(() => import('./ElegantLuxury/index.vue')),
-  'minimalist-white': defineAsyncComponent(() => import('./MinimalistWhite/index.vue')),
-  'nusantara-heritage': defineAsyncComponent(() => import('./NusantaraHeritage/index.vue')),
+  'romantic-floral': defineAsyncComponent(
+    () => import('./RomanticFloral/index.vue'),
+  ),
+  'elegant-luxury': defineAsyncComponent(
+    () => import('./ElegantLuxury/index.vue'),
+  ),
+  'minimalist-white': defineAsyncComponent(
+    () => import('./MinimalistWhite/index.vue'),
+  ),
+  'nusantara-heritage': defineAsyncComponent(
+    () => import('./NusantaraHeritage/index.vue'),
+  ),
   'garden-dream': defineAsyncComponent(() => import('./GardenDream/index.vue')),
-  'classic-vintage': defineAsyncComponent(() => import('./ClassicVintage/index.vue')),
-  'midnight-romance': defineAsyncComponent(() => import('./MidnightRomance/index.vue')),
+  'classic-vintage': defineAsyncComponent(
+    () => import('./ClassicVintage/index.vue'),
+  ),
+  'midnight-romance': defineAsyncComponent(
+    () => import('./MidnightRomance/index.vue'),
+  ),
   sakinah: defineAsyncComponent(() => import('./Sakinah/index.vue')),
-  'eternal-story': defineAsyncComponent(() => import('./EternalStory/index.vue')),
+  'eternal-story': defineAsyncComponent(
+    () => import('./EternalStory/index.vue'),
+  ),
   blush: defineAsyncComponent(() => import('./Blush/index.vue')),
 }
 export const templateOptions = [
+  ...Object.entries(floral).map(([value, entry]) => ({
+    value,
+    label: entry.name,
+    component: entry.name.replaceAll(' ', '') + '.vue',
+  })),
   ...Object.entries(studio).map(([value, entry]) => ({
     value,
     label: entry.name,

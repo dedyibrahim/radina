@@ -7,8 +7,9 @@ class TemplateContent
     public static function preset(?string $key): array
     {
         $presets = json_decode(file_get_contents(config_path('template-presets.json')), true, 512, JSON_THROW_ON_ERROR);
+        $floral = json_decode(file_get_contents(config_path('floral-presets.json')), true, 512, JSON_THROW_ON_ERROR);
 
-        return $presets[$key ?? 'romantic-floral'] ?? $presets['romantic-floral'];
+        return $floral[$key ?? ''] ?? $presets[$key ?? 'romantic-floral'] ?? $presets['romantic-floral'];
     }
 
     public static function initial(?string $key): array

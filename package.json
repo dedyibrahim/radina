@@ -19,7 +19,8 @@
     "test:integration": "node scripts/integration-test.mjs",
     "test:events": "node scripts/event-invitations-test.mjs",
     "test:templates": "node scripts/template-expansion-test.mjs",
-    "test:business": "node scripts/business-tools-test.mjs"
+    "test:business": "node scripts/business-tools-test.mjs",
+    "test:floral": "node scripts/floral-collection-test.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.51.0",

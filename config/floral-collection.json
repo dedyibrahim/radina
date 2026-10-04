@@ -1,0 +1,1212 @@
+{
+  "rosalia-arch": {
+    "name": "Rosalia Arch",
+    "category": "Romantic",
+    "family": "arch",
+    "flower": "rose",
+    "corner_motion": "sway",
+    "motif": "botanical",
+    "variant": 0,
+    "hero_photo": 1,
+    "palette": {
+      "background": "#fff3f0",
+      "ink": "#743d4c",
+      "accent": "#b47885",
+      "highlight": "#edc3cb",
+      "flower": "#ca8695",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "petals",
+      "leaves"
+    ]
+  },
+  "peony-love-letter": {
+    "name": "Peony Love Letter",
+    "category": "Romantic",
+    "family": "letter",
+    "flower": "peony",
+    "corner_motion": "bloom",
+    "motif": "pearl",
+    "variant": 1,
+    "hero_photo": 5,
+    "palette": {
+      "background": "#fff3f0",
+      "ink": "#743d4c",
+      "accent": "#b47885",
+      "highlight": "#edc3cb",
+      "flower": "#ca8695",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "petals",
+      "ribbons"
+    ]
+  },
+  "magnolia-muse": {
+    "name": "Magnolia Muse",
+    "category": "Romantic",
+    "family": "editorial",
+    "flower": "magnolia",
+    "corner_motion": "breeze",
+    "motif": "grid",
+    "variant": 2,
+    "hero_photo": 9,
+    "palette": {
+      "background": "#fff3f0",
+      "ink": "#743d4c",
+      "accent": "#b47885",
+      "highlight": "#edc3cb",
+      "flower": "#ca8695",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "seeds",
+      "sparkles"
+    ]
+  },
+  "rosewood-nocturne": {
+    "name": "Rosewood Nocturne",
+    "category": "Romantic",
+    "family": "cinema",
+    "flower": "rose",
+    "corner_motion": "drift",
+    "motif": "halo",
+    "variant": 3,
+    "hero_photo": 13,
+    "palette": {
+      "background": "#2d202a",
+      "ink": "#faf0e4",
+      "accent": "#b47885",
+      "highlight": "#edc3cb",
+      "flower": "#ca8695",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ]
+  },
+  "sakura-serenade": {
+    "name": "Sakura Serenade",
+    "category": "Romantic",
+    "family": "carousel",
+    "flower": "sakura",
+    "corner_motion": "flutter",
+    "motif": "butterfly",
+    "variant": 4,
+    "hero_photo": 17,
+    "palette": {
+      "background": "#fff3f0",
+      "ink": "#743d4c",
+      "accent": "#b47885",
+      "highlight": "#edc3cb",
+      "flower": "#ca8695",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "leaves",
+      "petals"
+    ]
+  },
+  "orchid-royale": {
+    "name": "Orchid Royale",
+    "category": "Luxury",
+    "family": "arch",
+    "flower": "orchid",
+    "corner_motion": "sway",
+    "motif": "botanical",
+    "variant": 5,
+    "hero_photo": 16,
+    "palette": {
+      "background": "#fbf5e7",
+      "ink": "#574334",
+      "accent": "#ae8753",
+      "highlight": "#ead3ae",
+      "flower": "#e5aa9c",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "petals",
+      "leaves"
+    ]
+  },
+  "champagne-correspondence": {
+    "name": "Champagne Correspondence",
+    "category": "Luxury",
+    "family": "letter",
+    "flower": "rose",
+    "corner_motion": "bloom",
+    "motif": "pearl",
+    "variant": 6,
+    "hero_photo": 21,
+    "palette": {
+      "background": "#fbf5e7",
+      "ink": "#574334",
+      "accent": "#ae8753",
+      "highlight": "#ead3ae",
+      "flower": "#e5aa9c",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "petals",
+      "ribbons"
+    ]
+  },
+  "fleur-de-palais": {
+    "name": "Fleur de Palais",
+    "category": "Luxury",
+    "family": "editorial",
+    "flower": "lily",
+    "corner_motion": "breeze",
+    "motif": "grid",
+    "variant": 7,
+    "hero_photo": 25,
+    "palette": {
+      "background": "#fbf5e7",
+      "ink": "#574334",
+      "accent": "#ae8753",
+      "highlight": "#ead3ae",
+      "flower": "#e5aa9c",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "seeds",
+      "sparkles"
+    ]
+  },
+  "velours-botanique": {
+    "name": "Velours Botanique",
+    "category": "Luxury",
+    "family": "cinema",
+    "flower": "peony",
+    "corner_motion": "drift",
+    "motif": "halo",
+    "variant": 8,
+    "hero_photo": 29,
+    "palette": {
+      "background": "#252c30",
+      "ink": "#faf0e4",
+      "accent": "#ae8753",
+      "highlight": "#ead3ae",
+      "flower": "#e5aa9c",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ]
+  },
+  "pearl-blossom": {
+    "name": "Pearl Blossom",
+    "category": "Luxury",
+    "family": "carousel",
+    "flower": "magnolia",
+    "corner_motion": "flutter",
+    "motif": "butterfly",
+    "variant": 9,
+    "hero_photo": 3,
+    "palette": {
+      "background": "#fbf5e7",
+      "ink": "#574334",
+      "accent": "#ae8753",
+      "highlight": "#ead3ae",
+      "flower": "#e5aa9c",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "leaves",
+      "petals"
+    ]
+  },
+  "white-cosmos": {
+    "name": "White Cosmos",
+    "category": "Minimalist",
+    "family": "arch",
+    "flower": "cosmos",
+    "corner_motion": "sway",
+    "motif": "botanical",
+    "variant": 10,
+    "hero_photo": 2,
+    "palette": {
+      "background": "#f7f7f0",
+      "ink": "#364842",
+      "accent": "#83978b",
+      "highlight": "#d5dfd6",
+      "flower": "#c1b4d4",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "petals",
+      "leaves"
+    ]
+  },
+  "linen-blossom-letter": {
+    "name": "Linen Blossom Letter",
+    "category": "Minimalist",
+    "family": "letter",
+    "flower": "jasmine",
+    "corner_motion": "bloom",
+    "motif": "pearl",
+    "variant": 11,
+    "hero_photo": 6,
+    "palette": {
+      "background": "#f7f7f0",
+      "ink": "#364842",
+      "accent": "#83978b",
+      "highlight": "#d5dfd6",
+      "flower": "#c1b4d4",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "petals",
+      "ribbons"
+    ]
+  },
+  "eucalyptus-notes": {
+    "name": "Eucalyptus Notes",
+    "category": "Minimalist",
+    "family": "editorial",
+    "flower": "fern",
+    "corner_motion": "breeze",
+    "motif": "grid",
+    "variant": 12,
+    "hero_photo": 10,
+    "palette": {
+      "background": "#f7f7f0",
+      "ink": "#364842",
+      "accent": "#83978b",
+      "highlight": "#d5dfd6",
+      "flower": "#c1b4d4",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "seeds",
+      "sparkles"
+    ]
+  },
+  "moonstone-magnolia": {
+    "name": "Moonstone Magnolia",
+    "category": "Minimalist",
+    "family": "cinema",
+    "flower": "magnolia",
+    "corner_motion": "drift",
+    "motif": "halo",
+    "variant": 13,
+    "hero_photo": 14,
+    "palette": {
+      "background": "#27302d",
+      "ink": "#faf0e4",
+      "accent": "#83978b",
+      "highlight": "#d5dfd6",
+      "flower": "#c1b4d4",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ]
+  },
+  "petal-stillness": {
+    "name": "Petal Stillness",
+    "category": "Minimalist",
+    "family": "carousel",
+    "flower": "cosmos",
+    "corner_motion": "flutter",
+    "motif": "butterfly",
+    "variant": 14,
+    "hero_photo": 18,
+    "palette": {
+      "background": "#f7f7f0",
+      "ink": "#364842",
+      "accent": "#83978b",
+      "highlight": "#d5dfd6",
+      "flower": "#c1b4d4",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "leaves",
+      "petals"
+    ]
+  },
+  "melati-keraton": {
+    "name": "Melati Keraton",
+    "category": "Traditional",
+    "family": "arch",
+    "flower": "jasmine",
+    "corner_motion": "sway",
+    "motif": "botanical",
+    "variant": 15,
+    "hero_photo": 17,
+    "palette": {
+      "background": "#f5ead1",
+      "ink": "#6c3931",
+      "accent": "#ae7b45",
+      "highlight": "#e3c294",
+      "flower": "#c686a4",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "petals",
+      "leaves"
+    ]
+  },
+  "puspa-songket": {
+    "name": "Puspa Songket",
+    "category": "Traditional",
+    "family": "letter",
+    "flower": "peony",
+    "corner_motion": "bloom",
+    "motif": "pearl",
+    "variant": 16,
+    "hero_photo": 22,
+    "palette": {
+      "background": "#f5ead1",
+      "ink": "#6c3931",
+      "accent": "#ae7b45",
+      "highlight": "#e3c294",
+      "flower": "#c686a4",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "petals",
+      "ribbons"
+    ]
+  },
+  "cempaka-pendopo": {
+    "name": "Cempaka Pendopo",
+    "category": "Traditional",
+    "family": "editorial",
+    "flower": "magnolia",
+    "corner_motion": "breeze",
+    "motif": "grid",
+    "variant": 17,
+    "hero_photo": 26,
+    "palette": {
+      "background": "#f5ead1",
+      "ink": "#6c3931",
+      "accent": "#ae7b45",
+      "highlight": "#e3c294",
+      "flower": "#c686a4",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "seeds",
+      "sparkles"
+    ]
+  },
+  "anggrek-batik-malam": {
+    "name": "Anggrek Batik Malam",
+    "category": "Traditional",
+    "family": "cinema",
+    "flower": "orchid",
+    "corner_motion": "drift",
+    "motif": "halo",
+    "variant": 18,
+    "hero_photo": 30,
+    "palette": {
+      "background": "#32242b",
+      "ink": "#faf0e4",
+      "accent": "#ae7b45",
+      "highlight": "#e3c294",
+      "flower": "#c686a4",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ]
+  },
+  "kamboja-senja": {
+    "name": "Kamboja Senja",
+    "category": "Traditional",
+    "family": "carousel",
+    "flower": "lily",
+    "corner_motion": "flutter",
+    "motif": "butterfly",
+    "variant": 19,
+    "hero_photo": 4,
+    "palette": {
+      "background": "#f5ead1",
+      "ink": "#6c3931",
+      "accent": "#ae7b45",
+      "highlight": "#e3c294",
+      "flower": "#c686a4",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "leaves",
+      "petals"
+    ]
+  },
+  "daisy-conservatory": {
+    "name": "Daisy Conservatory",
+    "category": "Garden",
+    "family": "arch",
+    "flower": "cosmos",
+    "corner_motion": "sway",
+    "motif": "botanical",
+    "variant": 20,
+    "hero_photo": 3,
+    "palette": {
+      "background": "#f0f4e8",
+      "ink": "#3e563f",
+      "accent": "#80936b",
+      "highlight": "#d3ddb5",
+      "flower": "#ceb775",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "petals",
+      "leaves"
+    ]
+  },
+  "wildflower-letters": {
+    "name": "Wildflower Letters",
+    "category": "Garden",
+    "family": "letter",
+    "flower": "jasmine",
+    "corner_motion": "bloom",
+    "motif": "pearl",
+    "variant": 21,
+    "hero_photo": 7,
+    "palette": {
+      "background": "#f0f4e8",
+      "ink": "#3e563f",
+      "accent": "#80936b",
+      "highlight": "#d3ddb5",
+      "flower": "#ceb775",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "petals",
+      "ribbons"
+    ]
+  },
+  "fern-botanique": {
+    "name": "Fern Botanique",
+    "category": "Garden",
+    "family": "editorial",
+    "flower": "fern",
+    "corner_motion": "breeze",
+    "motif": "grid",
+    "variant": 22,
+    "hero_photo": 11,
+    "palette": {
+      "background": "#f0f4e8",
+      "ink": "#3e563f",
+      "accent": "#80936b",
+      "highlight": "#d3ddb5",
+      "flower": "#ceb775",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "seeds",
+      "sparkles"
+    ]
+  },
+  "rose-garden-twilight": {
+    "name": "Rose Garden Twilight",
+    "category": "Garden",
+    "family": "cinema",
+    "flower": "rose",
+    "corner_motion": "drift",
+    "motif": "halo",
+    "variant": 23,
+    "hero_photo": 15,
+    "palette": {
+      "background": "#233327",
+      "ink": "#faf0e4",
+      "accent": "#80936b",
+      "highlight": "#d3ddb5",
+      "flower": "#ceb775",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ]
+  },
+  "meadow-butterfly": {
+    "name": "Meadow Butterfly",
+    "category": "Garden",
+    "family": "carousel",
+    "flower": "magnolia",
+    "corner_motion": "flutter",
+    "motif": "butterfly",
+    "variant": 24,
+    "hero_photo": 19,
+    "palette": {
+      "background": "#f0f4e8",
+      "ink": "#3e563f",
+      "accent": "#80936b",
+      "highlight": "#d3ddb5",
+      "flower": "#ceb775",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "leaves",
+      "petals"
+    ]
+  },
+  "raudhah-bloom": {
+    "name": "Raudhah Bloom",
+    "category": "Islamic",
+    "family": "arch",
+    "flower": "lily",
+    "corner_motion": "sway",
+    "motif": "botanical",
+    "variant": 25,
+    "hero_photo": 18,
+    "palette": {
+      "background": "#f5f1e4",
+      "ink": "#30554f",
+      "accent": "#a08c5d",
+      "highlight": "#dbd3b7",
+      "flower": "#ca8695",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "petals",
+      "leaves"
+    ]
+  },
+  "jannah-letters": {
+    "name": "Jannah Letters",
+    "category": "Islamic",
+    "family": "letter",
+    "flower": "jasmine",
+    "corner_motion": "bloom",
+    "motif": "pearl",
+    "variant": 26,
+    "hero_photo": 23,
+    "palette": {
+      "background": "#f5f1e4",
+      "ink": "#30554f",
+      "accent": "#a08c5d",
+      "highlight": "#dbd3b7",
+      "flower": "#ca8695",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "petals",
+      "ribbons"
+    ]
+  },
+  "maryam-garden": {
+    "name": "Maryam Garden",
+    "category": "Islamic",
+    "family": "editorial",
+    "flower": "magnolia",
+    "corner_motion": "breeze",
+    "motif": "grid",
+    "variant": 27,
+    "hero_photo": 27,
+    "palette": {
+      "background": "#f5f1e4",
+      "ink": "#30554f",
+      "accent": "#a08c5d",
+      "highlight": "#dbd3b7",
+      "flower": "#ca8695",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "seeds",
+      "sparkles"
+    ]
+  },
+  "noor-petals": {
+    "name": "Noor Petals",
+    "category": "Islamic",
+    "family": "cinema",
+    "flower": "orchid",
+    "corner_motion": "drift",
+    "motif": "halo",
+    "variant": 28,
+    "hero_photo": 1,
+    "palette": {
+      "background": "#19332f",
+      "ink": "#faf0e4",
+      "accent": "#a08c5d",
+      "highlight": "#dbd3b7",
+      "flower": "#ca8695",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ]
+  },
+  "firdaus-breeze": {
+    "name": "Firdaus Breeze",
+    "category": "Islamic",
+    "family": "carousel",
+    "flower": "rose",
+    "corner_motion": "flutter",
+    "motif": "butterfly",
+    "variant": 29,
+    "hero_photo": 5,
+    "palette": {
+      "background": "#f5f1e4",
+      "ink": "#30554f",
+      "accent": "#a08c5d",
+      "highlight": "#dbd3b7",
+      "flower": "#ca8695",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "leaves",
+      "petals"
+    ]
+  },
+  "moonlit-garden": {
+    "name": "Moonlit Garden",
+    "category": "Cinematic",
+    "family": "arch",
+    "flower": "magnolia",
+    "corner_motion": "sway",
+    "motif": "botanical",
+    "variant": 30,
+    "hero_photo": 4,
+    "palette": {
+      "background": "#efeae8",
+      "ink": "#453b4b",
+      "accent": "#ad879f",
+      "highlight": "#d9c6d9",
+      "flower": "#e5aa9c",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "petals",
+      "leaves"
+    ]
+  },
+  "petal-nocturne": {
+    "name": "Petal Nocturne",
+    "category": "Cinematic",
+    "family": "letter",
+    "flower": "rose",
+    "corner_motion": "bloom",
+    "motif": "pearl",
+    "variant": 31,
+    "hero_photo": 8,
+    "palette": {
+      "background": "#efeae8",
+      "ink": "#453b4b",
+      "accent": "#ad879f",
+      "highlight": "#d9c6d9",
+      "flower": "#e5aa9c",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "petals",
+      "ribbons"
+    ]
+  },
+  "bloom-premiere": {
+    "name": "Bloom Premiere",
+    "category": "Cinematic",
+    "family": "editorial",
+    "flower": "orchid",
+    "corner_motion": "breeze",
+    "motif": "grid",
+    "variant": 32,
+    "hero_photo": 12,
+    "palette": {
+      "background": "#efeae8",
+      "ink": "#453b4b",
+      "accent": "#ad879f",
+      "highlight": "#d9c6d9",
+      "flower": "#e5aa9c",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "seeds",
+      "sparkles"
+    ]
+  },
+  "velvet-dusk": {
+    "name": "Velvet Dusk",
+    "category": "Cinematic",
+    "family": "cinema",
+    "flower": "peony",
+    "corner_motion": "drift",
+    "motif": "halo",
+    "variant": 33,
+    "hero_photo": 16,
+    "palette": {
+      "background": "#211e2e",
+      "ink": "#faf0e4",
+      "accent": "#ad879f",
+      "highlight": "#d9c6d9",
+      "flower": "#e5aa9c",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ]
+  },
+  "stella-flower": {
+    "name": "Stella Flower",
+    "category": "Cinematic",
+    "family": "carousel",
+    "flower": "sakura",
+    "corner_motion": "flutter",
+    "motif": "butterfly",
+    "variant": 34,
+    "hero_photo": 21,
+    "palette": {
+      "background": "#efeae8",
+      "ink": "#453b4b",
+      "accent": "#ad879f",
+      "highlight": "#d9c6d9",
+      "flower": "#e5aa9c",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "leaves",
+      "petals"
+    ]
+  },
+  "rosette-postcard": {
+    "name": "Rosette Postcard",
+    "category": "Vintage",
+    "family": "arch",
+    "flower": "rose",
+    "corner_motion": "sway",
+    "motif": "botanical",
+    "variant": 35,
+    "hero_photo": 19,
+    "palette": {
+      "background": "#f5eddd",
+      "ink": "#685544",
+      "accent": "#ab8976",
+      "highlight": "#dfcab4",
+      "flower": "#c1b4d4",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "petals",
+      "leaves"
+    ]
+  },
+  "lavender-correspondence": {
+    "name": "Lavender Correspondence",
+    "category": "Vintage",
+    "family": "letter",
+    "flower": "cosmos",
+    "corner_motion": "bloom",
+    "motif": "pearl",
+    "variant": 36,
+    "hero_photo": 24,
+    "palette": {
+      "background": "#f5eddd",
+      "ink": "#685544",
+      "accent": "#ab8976",
+      "highlight": "#dfcab4",
+      "flower": "#c1b4d4",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "petals",
+      "ribbons"
+    ]
+  },
+  "camellia-journal": {
+    "name": "Camellia Journal",
+    "category": "Vintage",
+    "family": "editorial",
+    "flower": "peony",
+    "corner_motion": "breeze",
+    "motif": "grid",
+    "variant": 37,
+    "hero_photo": 28,
+    "palette": {
+      "background": "#f5eddd",
+      "ink": "#685544",
+      "accent": "#ab8976",
+      "highlight": "#dfcab4",
+      "flower": "#c1b4d4",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "seeds",
+      "sparkles"
+    ]
+  },
+  "butterfly-memoir": {
+    "name": "Butterfly Memoir",
+    "category": "Vintage",
+    "family": "cinema",
+    "flower": "magnolia",
+    "corner_motion": "drift",
+    "motif": "halo",
+    "variant": 38,
+    "hero_photo": 2,
+    "palette": {
+      "background": "#382d34",
+      "ink": "#faf0e4",
+      "accent": "#ab8976",
+      "highlight": "#dfcab4",
+      "flower": "#c1b4d4",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ]
+  },
+  "sakura-keepsake": {
+    "name": "Sakura Keepsake",
+    "category": "Vintage",
+    "family": "carousel",
+    "flower": "sakura",
+    "corner_motion": "flutter",
+    "motif": "butterfly",
+    "variant": 39,
+    "hero_photo": 6,
+    "palette": {
+      "background": "#f5eddd",
+      "ink": "#685544",
+      "accent": "#ab8976",
+      "highlight": "#dfcab4",
+      "flower": "#c1b4d4",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "leaves",
+      "petals"
+    ]
+  },
+  "azure-orchid": {
+    "name": "Azure Orchid",
+    "category": "Destination",
+    "family": "arch",
+    "flower": "orchid",
+    "corner_motion": "sway",
+    "motif": "botanical",
+    "variant": 40,
+    "hero_photo": 5,
+    "palette": {
+      "background": "#edf5f2",
+      "ink": "#315b60",
+      "accent": "#86a7a1",
+      "highlight": "#c8dfdb",
+      "flower": "#c686a4",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "petals",
+      "leaves"
+    ]
+  },
+  "riviera-blossom-letter": {
+    "name": "Riviera Blossom Letter",
+    "category": "Destination",
+    "family": "letter",
+    "flower": "magnolia",
+    "corner_motion": "bloom",
+    "motif": "pearl",
+    "variant": 41,
+    "hero_photo": 9,
+    "palette": {
+      "background": "#edf5f2",
+      "ink": "#315b60",
+      "accent": "#86a7a1",
+      "highlight": "#c8dfdb",
+      "flower": "#c686a4",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "petals",
+      "ribbons"
+    ]
+  },
+  "tropical-botanique": {
+    "name": "Tropical Botanique",
+    "category": "Destination",
+    "family": "editorial",
+    "flower": "fern",
+    "corner_motion": "breeze",
+    "motif": "grid",
+    "variant": 42,
+    "hero_photo": 13,
+    "palette": {
+      "background": "#edf5f2",
+      "ink": "#315b60",
+      "accent": "#86a7a1",
+      "highlight": "#c8dfdb",
+      "flower": "#c686a4",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "seeds",
+      "sparkles"
+    ]
+  },
+  "coral-moonrise": {
+    "name": "Coral Moonrise",
+    "category": "Destination",
+    "family": "cinema",
+    "flower": "lily",
+    "corner_motion": "drift",
+    "motif": "halo",
+    "variant": 43,
+    "hero_photo": 17,
+    "palette": {
+      "background": "#213941",
+      "ink": "#faf0e4",
+      "accent": "#86a7a1",
+      "highlight": "#c8dfdb",
+      "flower": "#c686a4",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ]
+  },
+  "island-petals": {
+    "name": "Island Petals",
+    "category": "Destination",
+    "family": "carousel",
+    "flower": "cosmos",
+    "corner_motion": "flutter",
+    "motif": "butterfly",
+    "variant": 44,
+    "hero_photo": 22,
+    "palette": {
+      "background": "#edf5f2",
+      "ink": "#315b60",
+      "accent": "#86a7a1",
+      "highlight": "#c8dfdb",
+      "flower": "#c686a4",
+      "leaf": "#6e958c"
+    },
+    "motion": [
+      "leaves",
+      "petals"
+    ]
+  },
+  "pastel-carnival": {
+    "name": "Pastel Carnival",
+    "category": "Creative",
+    "family": "arch",
+    "flower": "cosmos",
+    "corner_motion": "sway",
+    "motif": "botanical",
+    "variant": 45,
+    "hero_photo": 21,
+    "palette": {
+      "background": "#fff1e6",
+      "ink": "#835a77",
+      "accent": "#c38b94",
+      "highlight": "#f0c5b8",
+      "flower": "#ceb775",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "petals",
+      "confetti"
+    ]
+  },
+  "flower-pop-letter": {
+    "name": "Flower Pop Letter",
+    "category": "Creative",
+    "family": "letter",
+    "flower": "peony",
+    "corner_motion": "bloom",
+    "motif": "pearl",
+    "variant": 46,
+    "hero_photo": 25,
+    "palette": {
+      "background": "#fff1e6",
+      "ink": "#835a77",
+      "accent": "#c38b94",
+      "highlight": "#f0c5b8",
+      "flower": "#ceb775",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "ribbons",
+      "paper"
+    ]
+  },
+  "sakura-cloud": {
+    "name": "Sakura Cloud",
+    "category": "Creative",
+    "family": "editorial",
+    "flower": "sakura",
+    "corner_motion": "breeze",
+    "motif": "grid",
+    "variant": 47,
+    "hero_photo": 29,
+    "palette": {
+      "background": "#fff1e6",
+      "ink": "#835a77",
+      "accent": "#c38b94",
+      "highlight": "#f0c5b8",
+      "flower": "#ceb775",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "leaves",
+      "sparkles"
+    ]
+  },
+  "midnight-fiesta": {
+    "name": "Midnight Fiesta",
+    "category": "Creative",
+    "family": "cinema",
+    "flower": "orchid",
+    "corner_motion": "drift",
+    "motif": "halo",
+    "variant": 48,
+    "hero_photo": 3,
+    "palette": {
+      "background": "#32273c",
+      "ink": "#faf0e4",
+      "accent": "#c38b94",
+      "highlight": "#f0c5b8",
+      "flower": "#ceb775",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "confetti",
+      "balloons"
+    ]
+  },
+  "butterfly-confetti": {
+    "name": "Butterfly Confetti",
+    "category": "Creative",
+    "family": "carousel",
+    "flower": "magnolia",
+    "corner_motion": "flutter",
+    "motif": "butterfly",
+    "variant": 49,
+    "hero_photo": 7,
+    "palette": {
+      "background": "#fff1e6",
+      "ink": "#835a77",
+      "accent": "#c38b94",
+      "highlight": "#f0c5b8",
+      "flower": "#ceb775",
+      "leaf": "#71917a"
+    },
+    "motion": [
+      "leaves",
+      "confetti"
+    ]
+  },
+  "fleur-geometry": {
+    "name": "Fleur Geometry",
+    "category": "Modern",
+    "family": "arch",
+    "flower": "lily",
+    "corner_motion": "sway",
+    "motif": "botanical",
+    "variant": 50,
+    "hero_photo": 6,
+    "palette": {
+      "background": "#eff0f2",
+      "ink": "#383f58",
+      "accent": "#8e94ad",
+      "highlight": "#d0d8e7",
+      "flower": "#ca8695",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "petals",
+      "leaves"
+    ]
+  },
+  "botanical-signature": {
+    "name": "Botanical Signature",
+    "category": "Modern",
+    "family": "letter",
+    "flower": "jasmine",
+    "corner_motion": "bloom",
+    "motif": "pearl",
+    "variant": 51,
+    "hero_photo": 10,
+    "palette": {
+      "background": "#eff0f2",
+      "ink": "#383f58",
+      "accent": "#8e94ad",
+      "highlight": "#d0d8e7",
+      "flower": "#ca8695",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "petals",
+      "ribbons"
+    ]
+  },
+  "urban-petal-editorial": {
+    "name": "Urban Petal Editorial",
+    "category": "Modern",
+    "family": "editorial",
+    "flower": "magnolia",
+    "corner_motion": "breeze",
+    "motif": "grid",
+    "variant": 52,
+    "hero_photo": 14,
+    "palette": {
+      "background": "#eff0f2",
+      "ink": "#383f58",
+      "accent": "#8e94ad",
+      "highlight": "#d0d8e7",
+      "flower": "#ca8695",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "seeds",
+      "sparkles"
+    ]
+  },
+  "midnight-orchid": {
+    "name": "Midnight Orchid",
+    "category": "Modern",
+    "family": "cinema",
+    "flower": "orchid",
+    "corner_motion": "drift",
+    "motif": "halo",
+    "variant": 53,
+    "hero_photo": 18,
+    "palette": {
+      "background": "#242a3c",
+      "ink": "#faf0e4",
+      "accent": "#8e94ad",
+      "highlight": "#d0d8e7",
+      "flower": "#ca8695",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "fireflies",
+      "sparkles"
+    ]
+  },
+  "bloom-motion": {
+    "name": "Bloom Motion",
+    "category": "Modern",
+    "family": "carousel",
+    "flower": "rose",
+    "corner_motion": "flutter",
+    "motif": "butterfly",
+    "variant": 54,
+    "hero_photo": 23,
+    "palette": {
+      "background": "#eff0f2",
+      "ink": "#383f58",
+      "accent": "#8e94ad",
+      "highlight": "#d0d8e7",
+      "flower": "#ca8695",
+      "leaf": "#869380"
+    },
+    "motion": [
+      "leaves",
+      "petals"
+    ]
+  }
+}

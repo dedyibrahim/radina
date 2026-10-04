@@ -59,9 +59,10 @@ async function save() {
         .filter(Boolean)
       data.price =
         data.price === '' || data.price === null ? null : Number(data.price)
-      data.duration_days = data.duration_days
-        ? Number(data.duration_days)
-        : null
+      data.duration_days =
+        data.duration_days === '' || data.duration_days === null
+          ? null
+          : Number(data.duration_days)
     }
     delete data.featureText
     const path = `/admin/${type.value}${data.id ? `/${data.id}` : ''}`
@@ -176,20 +177,41 @@ async function save() {
               <option value="FIXED">Harga paket termasuk template</option>
             </select></label
           ></template
-        ><FormField
-          v-model="form.price"
-          label="Harga (Rp)"
-          type="number"
-          :required="type === 'addons' || form.is_active"
-        /><FormField
+        >
+        <div class="field">
+          <label for="package-price"
+            >Harga (Rp)
+            <span v-if="type === 'addons' || form.is_active">*</span></label
+          >
+          <input
+            id="package-price"
+            v-model.number="form.price"
+            type="number"
+            min="0"
+            :max="type === 'addons' ? 10000000 : 100000000"
+            step="1"
+            :required="type === 'addons' || form.is_active"
+          />
+        </div>
+        <FormField
           v-model="form.description"
           label="Deskripsi"
           type="textarea"
         /><template v-if="type === 'packages'"
-          ><FormField
-            v-model="form.duration_days"
-            label="Masa aktif (hari sejak publish; kosong = tanpa batas)"
-            type="number" /><FormField
+          ><div class="field">
+            <label for="package-duration"
+              >Masa aktif (hari sejak publish; kosong = tanpa batas)</label
+            >
+            <input
+              id="package-duration"
+              v-model.number="form.duration_days"
+              type="number"
+              min="1"
+              max="3650"
+              step="1"
+            />
+          </div>
+          <FormField
             v-model="form.featureText"
             label="Fitur paket (satu per baris)"
             type="textarea" /></template

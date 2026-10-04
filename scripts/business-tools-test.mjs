@@ -132,6 +132,7 @@ try {
       'License administration remains accessible; no production checkout, content update, payment, check-in or document creation was performed.',
     )
   } else {
+    const addonName = `Layanan Uji ${Date.now()}`
     await a.getByRole('button', { name: 'Atur Basic', exact: true }).click()
     await a.getByLabel('Harga (Rp)', { exact: false }).fill('25000')
     await a.getByLabel('Masa aktif', { exact: false }).fill('30')
@@ -144,12 +145,33 @@ try {
     await a.getByLabel('Tampilkan untuk pemesanan', { exact: false }).check()
     await a.getByRole('button', { name: 'Simpan', exact: true }).click()
     await expect(a.getByText('Harga disimpan.', { exact: false })).toBeVisible()
+    await a.getByRole('button', { name: 'Atur Basic', exact: true }).click()
+    const priceInput = a.getByLabel('Harga (Rp)', { exact: false })
+    await priceInput.fill('')
+    await expect(priceInput).toHaveValue('')
+    assert.equal(
+      await priceInput.evaluate((input) => input.checkValidity()),
+      false,
+      'Clearing an active price must remain empty, not become free.',
+    )
+    const durationInput = a.getByLabel('Masa aktif', { exact: false })
+    await durationInput.fill('')
+    await expect(durationInput).toHaveValue('')
+    await durationInput.fill('0')
+    assert.equal(
+      await durationInput.evaluate((input) => input.checkValidity()),
+      false,
+    )
+    await durationInput.fill('30')
+    await priceInput.fill('25000')
+    await a.getByRole('button', { name: 'Simpan', exact: true }).click()
+    await expect(a.getByText('Harga disimpan.', { exact: false })).toBeVisible()
     await a.getByRole('button', { name: 'Tambah layanan', exact: true }).click()
-    await a.getByLabel('Nama', { exact: false }).fill('Layanan Uji')
+    await a.getByLabel('Nama', { exact: false }).fill(addonName)
     await a.getByLabel('Harga (Rp)', { exact: false }).fill('15000')
     await a.getByLabel('Tampilkan untuk pemesanan', { exact: false }).check()
     await a.getByRole('button', { name: 'Simpan', exact: true }).click()
-    await expect(a.getByText('Layanan Uji', { exact: true })).toBeVisible()
+    await expect(a.getByText(addonName, { exact: true })).toBeVisible()
     await c.goto(`${base}/order/romantic-floral`, {
       waitUntil: 'networkidle',
     })
@@ -164,7 +186,7 @@ try {
     await c
       .getByLabel('Pilih paket', { exact: true })
       .selectOption(String(offers.packages[0].id))
-    await c.getByLabel('Layanan Uji', { exact: false }).check()
+    await c.getByLabel(addonName, { exact: false }).check()
     await c.getByRole('button', { name: 'Lanjutkan', exact: true }).click()
     await expect(c.locator('.summary-total')).toContainText('189.000')
     await fits(c, 'Checkout mobile')

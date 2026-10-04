@@ -198,9 +198,12 @@ class WeddingImportTest extends TestCase
     public function test_guest_phone_edit_and_message_are_scoped_and_do_not_change_approval_content(): void
     {
         $w = $this->wedding();
+        $w->couples()->where('role', 'bride')->update(['full_name' => 'Alya Putri Test, S.Kom.', 'nickname' => 'Alya']);
+        $w->couples()->where('role', 'groom')->update(['full_name' => 'Dedy Ibrahim Test', 'nickname' => 'Dedy']);
         $other = $this->wedding('other-whatsapp');
         $path = $this->path($w, 'invitees');
         $this->postJson($path.'/import', ['file' => $this->csv(['nama'], [['Bapak Budi']])])->assertCreated();
+        $this->getJson($path)->assertOk()->assertJsonPath('sharing.event_title', 'Pernikahan Alya Putri Test, S.Kom. & Dedy Ibrahim Test');
         $guest = WeddingInvitee::first();
         $fingerprint = \App\Services\CustomerPortalService::fingerprint($w->fresh());
         $this->patchJson($this->path($other, 'invitees/'.$guest->id.'/phone'), ['whatsapp' => '081234567890', 'expected_whatsapp' => null])->assertNotFound();
@@ -213,6 +216,7 @@ class WeddingImportTest extends TestCase
         $export = $this->get($path.'/export')->assertOk()->streamedContent();
         $this->assertStringContainsString('no_wa;link_undangan;pesan_undangan;link_whatsapp', $export);
         $this->assertStringContainsString('Yth. Bapak Budi', $export);
+        $this->assertStringContainsString('Pernikahan Alya Putri Test, S.Kom. & Dedy Ibrahim Test', $export);
         $this->assertStringContainsString('https://wa.me/6281234567890?text=', $export);
         $this->assertStringContainsString($guest->invitationUrl($w), $export);
         $this->assertSame($fingerprint, \App\Services\CustomerPortalService::fingerprint($w->fresh()));

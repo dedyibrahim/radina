@@ -16,7 +16,7 @@ class GuestInvitationMessage
     {
         $title = $wedding->title;
         if (($wedding->event_type ?? 'wedding') === 'wedding') {
-            $names = $wedding->couples->map(fn ($person) => $person->nickname ?: $person->full_name)->filter()->implode(' & ');
+            $names = $wedding->couples->map(fn ($person) => trim($person->full_name ?? '') ?: $person->nickname)->filter()->implode(' & ');
             if ($names !== '') {
                 $title = 'Pernikahan '.$names;
             }

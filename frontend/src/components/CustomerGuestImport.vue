@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
-import { Download, Upload, Copy, Search, MessageCircle, Eye, Trash2 } from 'lucide-vue-next'
+import { Download, Upload, Copy, Search, MessageCircle, Eye, ExternalLink, Trash2 } from 'lucide-vue-next'
 import { api, errorMessage } from '../services/api'
 import { useUiStore } from '../stores/ui'
 import BaseModal from './BaseModal.vue'
@@ -404,8 +404,16 @@ onMounted(() => find())
             <td>
               <div class="guest-link-actions">
                 <button type="button" class="text-link" @click="copy(guest)">
-                  <Copy :size="14" />Salin Link</button
-                ><a :href="guest.link" target="_blank" rel="noopener noreferrer">Lihat Undangan</a>
+                  <Copy :size="14" />Salin Link
+                </button>
+                <a
+                  class="guest-view-button"
+                  :href="guest.link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExternalLink :size="16" />Lihat Undangan
+                </a>
                 <a
                   v-if="guest.whatsapp"
                   class="guest-wa-button"
@@ -587,6 +595,7 @@ td {
 .guest-link-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 12px;
   min-width: 100px;
 }
@@ -683,17 +692,41 @@ select,
   border-radius: 8px;
   padding: 18px;
 }
+.guest-view-button,
 .guest-wa-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: #227c4f;
-  color: white;
+  min-height: 44px;
+  box-sizing: border-box;
   padding: 10px 14px;
   border-radius: 6px;
   text-decoration: none;
   font-weight: 600;
+  white-space: nowrap;
+}
+.guest-view-button {
+  border: 1px solid #d8dfcd;
+  background: #fffef9;
+  color: #526949;
+}
+.guest-view-button:hover {
+  border-color: #93ad78;
+  background: #f3f5ed;
+}
+.guest-view-button:focus-visible,
+.guest-wa-button:focus-visible {
+  outline: 2px solid #227c4f;
+  outline-offset: 3px;
+}
+.guest-view-button svg,
+.guest-wa-button svg {
+  flex-shrink: 0;
+}
+.guest-wa-button {
+  background: #227c4f;
+  color: white;
 }
 .guest-wa-button:hover {
   background: #185e3a;

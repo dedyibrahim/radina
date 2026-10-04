@@ -59,7 +59,43 @@ class CustomerPortalController extends Controller
 
     private function response(array $data)
     {
-        return response()->json(['data' => $data])->header('Cache-Control', 'private, no-store')->header('Referrer-Policy', 'no-referrer')->header('X-Robots-Tag', 'noindex, nofollow');
+        return $this->privateResponse(response()->json(['data' => $data]));
+    }
+
+    private function privateResponse($response)
+    {
+        $response->headers->set('Cache-Control', 'private, no-store');
+        $response->headers->set('Referrer-Policy', 'no-referrer');
+        $response->headers->set('X-Robots-Tag', 'noindex, nofollow');
+
+        return $response;
+    }
+
+    // Reuse the CSV validation, duplicate detection and guest-link generation used by admin.
+    // The wedding always comes from the checked portal, never from customer input.
+    public function invitees(Request $request, string $token, AdminInviteeController $invitees)
+    {
+        return $this->privateResponse($invitees->index($request, $this->resolve($token)->wedding));
+    }
+
+    public function inviteeTemplate(string $token, AdminInviteeController $invitees)
+    {
+        return $this->privateResponse($invitees->template($this->resolve($token)->wedding));
+    }
+
+    public function inviteeExport(string $token, AdminInviteeController $invitees)
+    {
+        return $this->privateResponse($invitees->export($this->resolve($token)->wedding));
+    }
+
+    public function inviteePreview(Request $request, string $token, AdminInviteeController $invitees)
+    {
+        return $this->privateResponse($invitees->preview($request, $this->resolve($token)->wedding));
+    }
+
+    public function inviteeImport(Request $request, string $token, AdminInviteeController $invitees)
+    {
+        return $this->locked($token, fn ($portal) => $this->privateResponse($invitees->store($request, $portal->wedding)));
     }
 
     public function document(string $token, string $type, \App\Services\OrderDocumentService $documents)

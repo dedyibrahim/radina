@@ -89,6 +89,11 @@ Route::prefix('api/admin')->middleware('throttle:api')->group(function () {
 });
 
 Route::prefix('api/customer-portals/{token}')->middleware('throttle:api')->group(function () {
+    Route::get('/invitees/template', [CustomerPortalController::class, 'inviteeTemplate']);
+    Route::get('/invitees/export', [CustomerPortalController::class, 'inviteeExport']);
+    Route::get('/invitees', [CustomerPortalController::class, 'invitees']);
+    Route::post('/invitees/preview', [CustomerPortalController::class, 'inviteePreview'])->middleware('throttle:20,1');
+    Route::post('/invitees/import', [CustomerPortalController::class, 'inviteeImport'])->middleware('throttle:10,1');
     Route::get('/documents/{type}', [CustomerPortalController::class, 'document'])->whereIn('type', ['invoice', 'receipt']);
     Route::get('/analytics', [CustomerPortalController::class, 'analytics']);
     Route::get('/guest-statistics', [CustomerPortalController::class, 'guests']);

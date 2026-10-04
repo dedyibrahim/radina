@@ -7,6 +7,7 @@ import PackagePicker from '../../components/PackagePicker.vue'
 import FormField from '../../components/FormField.vue'
 import PageState from '../../components/PageState.vue'
 import { eventOptions, eventProfile } from '../../services/invitationEvents'
+import { trackEvent } from '../../services/analytics'
 const route = useRoute(),
   router = useRouter(),
   template = ref(null),
@@ -50,6 +51,7 @@ const orderTotal = computed(
 )
 const isWedding = computed(() => form.event_type === 'wedding')
 const profile = computed(() => eventProfile(form.event_type))
+let checkoutTracked = false
 watch(
   () => [form.bride_name, form.groom_name, form.event_title, form.event_type],
   () => {
@@ -76,6 +78,14 @@ async function load() {
     ])
     template.value = design.data.data
     offers.value = pricing.data.data
+    if (!checkoutTracked) {
+      trackEvent('begin_checkout', {
+        template_key: template.value.template_key,
+        event_type: form.event_type,
+        value: orderTotal.value,
+      })
+      checkoutTracked = true
+    }
   } catch (e) {
     error.value = errorMessage(e)
   } finally {
@@ -106,6 +116,11 @@ async function submit() {
         expected_total: orderTotal.value,
       })
     ).data.data
+    trackEvent('generate_lead', {
+      template_key: template.value.template_key,
+      event_type: form.event_type,
+      value: Number(order.total),
+    })
     sessionStorage.setItem(`order:${order.order_number}`, order.whatsapp)
     router.push(`/order/success/${order.order_number}`)
   } catch (e) {

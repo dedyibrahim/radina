@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRoute, onBeforeRouteLeave } from 'vue-router'
 import {
   Save,
@@ -21,7 +21,7 @@ import { eventProfile, agendaOptions } from '../../services/invitationEvents'
 import WeddingAnalytics from '../../components/WeddingAnalytics.vue'
 import ReminderList from '../../components/ReminderList.vue'
 import OrderDocuments from '../../components/OrderDocuments.vue'
-import WeddingRenderer from '../../components/WeddingRenderer.vue'
+import CustomerGuestImport from '../../components/CustomerGuestImport.vue'
 
 const route = useRoute(),
   ui = useUiStore()
@@ -34,7 +34,15 @@ const portal = ref(null),
   error = ref(''),
   tab = ref('data'),
   preview = ref(null),
+  previewFrame = ref(null),
+  previewPanel = ref(null),
+  previewReady = ref(false),
+  previewRevision = ref(0),
+  previewError = ref(''),
   notes = ref('')
+const previewUrl = computed(
+  () => `/pelanggan/${route.params.token}/preview?v=${previewRevision.value}`,
+)
 const base = () => `/customer-portals/${route.params.token}`
 const mediaPath = computed(() => `${base()}/media`)
 const dirty = computed(
@@ -51,6 +59,7 @@ const labels = {
 const canRespond = computed(
   () =>
     preview.value &&
+    previewReady.value &&
     ['IN_REVIEW', 'CHANGES_REQUESTED', 'APPROVED'].includes(
       preview.value.status,
     ) &&
@@ -138,13 +147,37 @@ async function openPreview() {
   busy.value = true
   error.value = ''
   preview.value = null
+  previewReady.value = false
+  previewError.value = ''
+  previewRevision.value++
   try {
     preview.value = (await api.get(`${base()}/preview`)).data.data
     portal.value.status = preview.value.status
+    await nextTick()
+    previewPanel.value?.scrollIntoView({ block: 'start', behavior: 'instant' })
   } catch (e) {
     error.value = errorMessage(e)
   } finally {
     busy.value = false
+  }
+}
+function previewMessage(event) {
+  if (
+    event.origin !== window.location.origin ||
+    event.source !== previewFrame.value?.contentWindow ||
+    event.data?.type !== 'radina:customer-preview'
+  )
+    return
+  if (event.data.error) {
+    previewReady.value = false
+    previewError.value = String(event.data.error)
+  } else if (event.data.fingerprint === preview.value?.fingerprint) {
+    previewReady.value = true
+    previewError.value = ''
+  } else {
+    previewReady.value = false
+    previewError.value =
+      'Preview berubah saat dimuat. Pilih Muat Preview Terbaru sebelum menyetujui.'
   }
 }
 async function respond(decision) {
@@ -237,11 +270,15 @@ function beforeUnload(event) {
   }
 }
 onMounted(() => {
+  window.addEventListener('message', previewMessage)
   document.title = 'Data & Persetujuan Undangan | Radina'
   window.addEventListener('beforeunload', beforeUnload)
   load()
 })
-onUnmounted(() => window.removeEventListener('beforeunload', beforeUnload))
+onUnmounted(() => {
+  window.removeEventListener('beforeunload', beforeUnload)
+  window.removeEventListener('message', previewMessage)
+})
 onBeforeRouteLeave(
   () =>
     (!dirty.value && !locked.value) ||
@@ -276,6 +313,14 @@ onBeforeRouteLeave(
           }}</span>
         </div>
         <nav class="customer-tabs" aria-label="Halaman pelanggan">
+          <button
+            type="button"
+            :disabled="locked"
+            :class="{ selected: tab === 'guests' }"
+            @click="tab = 'guests'"
+          >
+            Daftar Tamu / Impor &amp; Ekspor
+          </button>
           <button
             type="button"
             :disabled="locked"
@@ -318,7 +363,13 @@ onBeforeRouteLeave(
         <p v-if="dirty" class="customer-unsaved" role="status">
           Ada perubahan belum disimpan.
         </p>
-        <section v-if="tab === 'analytics'" class="surface customer-section">
+        <section v-if="tab === 'guests'" class="surface customer-section">
+          <CustomerGuestImport :base="base()" @busy="busy = $event" />
+        </section>
+        <section
+          v-else-if="tab === 'analytics'"
+          class="surface customer-section"
+        >
           <WeddingAnalytics :base="base()" />
         </section>
         <section v-else-if="tab === 'tools'" class="surface customer-section">
@@ -704,7 +755,10 @@ onBeforeRouteLeave(
           </form>
         </template>
         <template v-else>
-          <section class="surface customer-section">
+          <section
+            ref="previewPanel"
+            class="surface customer-section customer-approval"
+          >
             <div class="panel-title">
               <h2>Periksa undangan Anda</h2>
               <button
@@ -725,7 +779,16 @@ onBeforeRouteLeave(
               Simpan atau kirim perubahan data Anda sebelum memberikan
               persetujuan.
             </p>
-            <p v-if="preview && !canRespond && !dirty" class="alert">
+            <p v-if="previewError" class="alert error" role="alert">
+              {{ previewError }}
+            </p>
+            <p v-else-if="preview && !previewReady" class="alert" role="status">
+              Memuat preview undangan…
+            </p>
+            <p
+              v-if="preview && previewReady && !canRespond && !dirty"
+              class="alert"
+            >
               Admin sedang menyiapkan undangan. Persetujuan tersedia setelah
               undangan dikirim untuk ditinjau.
             </p>
@@ -762,10 +825,12 @@ onBeforeRouteLeave(
             >
           </section>
           <div v-if="preview" class="customer-preview">
-            <WeddingRenderer
+            <iframe
+              ref="previewFrame"
               :key="preview.fingerprint"
-              :wedding="preview.wedding"
-              preview
+              :src="previewUrl"
+              title="Preview undangan pelanggan"
+              referrerpolicy="no-referrer"
             />
           </div>
         </template>
@@ -899,6 +964,16 @@ onBeforeRouteLeave(
   border: 1px solid #dce3d3;
   border-radius: 10px;
   overflow: hidden;
+}
+.customer-preview iframe {
+  display: block;
+  width: 100%;
+  height: min(780px, 85svh);
+  min-height: 480px;
+  border: 0;
+}
+.customer-approval {
+  scroll-margin-top: 20px;
 }
 @media (max-width: 700px) {
   .customer-photo-grid,

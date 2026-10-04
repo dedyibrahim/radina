@@ -20,7 +20,11 @@
     "test:events": "node scripts/event-invitations-test.mjs",
     "test:templates": "node scripts/template-expansion-test.mjs",
     "test:business": "node scripts/business-tools-test.mjs",
-    "test:floral": "node scripts/floral-collection-test.mjs"
+    "test:floral": "node scripts/floral-collection-test.mjs",
+    "test:analytics": "node scripts/analytics-unit-test.mjs",
+    "test:analytics-browser": "node scripts/analytics-browser-test.mjs",
+    "test:customer-tools": "node scripts/customer-tools-test.mjs",
+    "test:depth": "node scripts/invitation-depth-test.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.51.0",

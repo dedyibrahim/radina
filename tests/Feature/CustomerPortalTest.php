@@ -7,6 +7,7 @@ use App\Models\Template;
 use App\Models\User;
 use App\Models\Wedding;
 use App\Models\WeddingCustomerPortal;
+use App\Models\WeddingInvitee;
 use App\Services\CustomerPortalService;
 use App\Services\DeploymentLicenseGuard;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -87,6 +88,48 @@ class CustomerPortalTest extends TestCase
         $this->postJson($this->adminPath($w))->assertForbidden();
         $this->postJson($this->adminPath($w, '/apply'))->assertForbidden();
         $this->getJson('/api/admin/licenses')->assertForbidden();
+    }
+
+    public function test_customer_guest_csv_is_scoped_idempotent_private_and_does_not_invalidate_preview(): void
+    {
+        $w = $this->wedding('customer-guests');
+        $other = $this->wedding('other-guests');
+        $token = $this->token($w);
+        $otherToken = $this->token($other);
+        $path = $this->customerPath($token, '/invitees');
+        $fingerprint = CustomerPortalService::fingerprint($w->fresh());
+        Sanctum::actingAs(User::factory()->create());
+        $this->postJson('/api/admin/weddings/'.$w->id.'/invitees/import')->assertForbidden();
+        $this->get($path.'/template')->assertOk()->assertHeader('Cache-Control', 'no-store, private');
+        $csv = fn () => UploadedFile::fake()->createWithContent('tamu.csv', "nama;alamat\r\nBapak Budi;Jakarta\r\nIbu Ayu;Bandung\r\nBapak Budi;Jakarta\r\n");
+        $this->postJson($path.'/preview', ['file' => $csv()])->assertOk()->assertJsonPath('data.new_count', 2)->assertJsonPath('data.duplicate_count', 1);
+        $this->assertSame(0, WeddingInvitee::where('wedding_id', $w->id)->count());
+        $this->postJson($path.'/import', ['file' => $csv(), 'wedding_id' => $other->id])->assertCreated()->assertJsonPath('data.imported', 2)->assertJsonPath('data.skipped', 1)->assertHeader('Cache-Control', 'no-store, private');
+        $this->assertSame(2, WeddingInvitee::where('wedding_id', $w->id)->count());
+        $this->assertSame(0, WeddingInvitee::where('wedding_id', $other->id)->count());
+        $this->postJson($path.'/import', ['file' => $csv()])->assertCreated()->assertJsonPath('data.imported', 0)->assertJsonPath('data.skipped', 3);
+        $this->postJson($this->customerPath($otherToken, '/invitees/import'), ['file' => UploadedFile::fake()->createWithContent('tamu.csv', "nama;alamat\r\nOther Private Guest;Surabaya\r\n")])->assertCreated();
+        $list = $this->getJson($path)->assertOk()->assertJsonPath('total', 2)->assertHeader('Referrer-Policy', 'no-referrer');
+        $this->assertStringContainsString('/w/'.$w->slug.'?to=', $list->json('data.0.link'));
+        $this->assertStringContainsString('&guest=', $list->json('data.0.link'));
+        $this->getJson($path.'?search=Ayu')->assertOk()->assertJsonPath('total', 1)->assertJsonPath('data.0.name', 'Ibu Ayu');
+        $export = $this->get($path.'/export')->assertOk()->assertHeader('X-Robots-Tag', 'noindex, nofollow')->streamedContent();
+        $this->assertStringContainsString('link_undangan', $export);
+        $this->assertStringContainsString('Bapak Budi', $export);
+        $this->assertStringNotContainsString('Other Private Guest', $export);
+        $this->assertSame($fingerprint, CustomerPortalService::fingerprint($w->fresh()));
+        $this->postJson($path.'/import', ['file' => UploadedFile::fake()->createWithContent('tamu.csv', "nama;alamat\r\n<script>;Jakarta\r\n")])->assertUnprocessable();
+        $this->postJson($path.'/preview', ['file' => UploadedFile::fake()->createWithContent('tamu.xlsx', 'invalid')])->assertUnprocessable();
+        $this->assertSame(2, WeddingInvitee::where('wedding_id', $w->id)->count());
+        WeddingCustomerPortal::where('wedding_id', $w->id)->update(['revoked_at' => now()]);
+        foreach (['', '/template', '/export'] as $suffix) $this->getJson($path.$suffix)->assertNotFound();
+        foreach (['/preview', '/import'] as $suffix) $this->postJson($path.$suffix, ['file' => $csv()])->assertNotFound();
+    }
+
+    public function test_private_customer_preview_route_preserves_privacy_headers(): void
+    {
+        $url = '/pelanggan/'.str_repeat('a', 64).'/preview';
+        $this->get($url)->assertOk()->assertHeader('Cache-Control', 'no-store, private')->assertHeader('Referrer-Policy', 'no-referrer')->assertHeader('X-Robots-Tag', 'noindex, nofollow');
     }
 
     public function test_customer_drafts_are_private_and_submit_requires_complete_valid_content(): void

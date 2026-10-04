@@ -1,11 +1,18 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { Eye, ArrowUpRight, Check, Smartphone, ArrowLeft } from 'lucide-vue-next'
+import {
+  Eye,
+  ArrowUpRight,
+  Check,
+  Smartphone,
+  ArrowLeft,
+} from 'lucide-vue-next'
 import { api, errorMessage, formatMoney } from '../../services/api'
 import PageState from '../../components/PageState.vue'
 import { useSeo } from '../../composables/useSeo'
 import { eventOptions } from '../../services/invitationEvents'
+import { trackEvent } from '../../services/analytics'
 const route = useRoute(),
   template = ref(null),
   loading = ref(true),
@@ -22,7 +29,13 @@ async function load() {
   loading.value = true
   error.value = ''
   try {
-    template.value = (await api.get(`/templates/${route.params.slug}`)).data.data
+    template.value = (
+      await api.get(`/templates/${route.params.slug}`)
+    ).data.data
+    trackEvent('view_template', {
+      template_key: template.value.template_key,
+      event_type: eventType.value,
+    })
   } catch (e) {
     error.value = errorMessage(e)
   } finally {
@@ -40,12 +53,18 @@ useSeo(() => ({
   <main class="p-container detail-page">
     <RouterLink to="/templates" class="text-link"
       ><ArrowLeft :size="16" />Kembali ke koleksi</RouterLink
-    ><PageState v-if="loading || error" :loading="loading" :error="error" @retry="load" />
+    ><PageState
+      v-if="loading || error"
+      :loading="loading"
+      :error="error"
+      @retry="load"
+    />
     <div v-else class="template-detail-grid">
       <div class="detail-photo">
-        <img :src="template.preview_image || template.thumbnail" :alt="template.name" /><span
-          >Dirancang untuk momen istimewa Anda.</span
-        >
+        <img
+          :src="template.preview_image || template.thumbnail"
+          :alt="template.name"
+        /><span>Dirancang untuk momen istimewa Anda.</span>
       </div>
       <div class="detail-copy">
         <p class="p-eyebrow">{{ template.category?.name }} COLLECTION</p>
@@ -53,14 +72,22 @@ useSeo(() => ({
         <p>{{ template.description }}</p>
         <label class="form-field"
           >Jenis acara<select v-model="eventType" aria-label="Jenis acara">
-            <option v-for="option in eventOptions" :key="option.value" :value="option.value">
+            <option
+              v-for="option in eventOptions"
+              :key="option.value"
+              :value="option.value"
+            >
               {{ option.label }}
             </option>
           </select></label
         >
-        <div class="detail-price">{{ formatMoney(template.price) }}<small>per undangan</small></div>
+        <div class="detail-price">
+          {{ formatMoney(template.price) }}<small>per undangan</small>
+        </div>
         <div class="detail-features">
-          <span v-for="animation in template.animations?.labels || []" :key="animation"
+          <span
+            v-for="animation in template.animations?.labels || []"
+            :key="animation"
             ><Check :size="16" />{{ animation }}</span
           >
           <span v-for="feature in template.features" :key="feature"
@@ -74,7 +101,9 @@ useSeo(() => ({
           :to="`/templates/${template.slug}/preview${eventQuery}`"
           class="p-button secondary"
           ><Eye :size="17" />Preview Undangan</RouterLink
-        ><RouterLink :to="`/order/${template.slug}${eventQuery}`" class="p-button"
+        ><RouterLink
+          :to="`/order/${template.slug}${eventQuery}`"
+          class="p-button"
           >Gunakan Template Ini<ArrowUpRight :size="17"
         /></RouterLink>
       </div>

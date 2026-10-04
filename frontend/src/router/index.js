@@ -62,6 +62,11 @@ const router = createRouter({
       component: () => import('../pages/public/Wedding.vue'),
     },
     {
+      path: '/pelanggan/:token/preview',
+      component: () => import('../pages/public/CustomerInvitationPreview.vue'),
+      meta: { preview: true },
+    },
+    {
       path: '/pelanggan/:token',
       component: () => import('../pages/public/CustomerPortal.vue'),
     },

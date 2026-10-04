@@ -11,6 +11,7 @@ import PageState from '../../components/PageState.vue'
 import WeddingPreviewToolbar from '../../components/WeddingPreviewToolbar.vue'
 import { nextTick } from 'vue'
 import { scrollToSection } from '../../composables/useSectionNavigation'
+import { trackEvent } from '../../services/analytics'
 const renderer = ref(null)
 async function previewSection(key) {
   if (key === 'cover') {
@@ -74,6 +75,12 @@ async function load() {
             : {},
       })
     ).data.data
+    if (route.meta.preview && !route.params.id) {
+      trackEvent('preview_template', {
+        template_key: wedding.value.template.template_key,
+        event_type: wedding.value.event_type,
+      })
+    }
     if (!route.meta.preview && !wedding.value.is_demo) {
       viewReady = record('view')
       if (route.query.guest) {

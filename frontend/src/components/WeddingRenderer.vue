@@ -12,7 +12,7 @@ const props = defineProps({
 const invitationOpened = ref(
   props.startOpen || props.wedding.section_content?.opening?.enabled === false,
 )
-const emit = defineEmits(['opened'])
+const emit = defineEmits(['opened', 'ready'])
 watch(
   invitationOpened,
   (opened) => {
@@ -57,6 +57,7 @@ defineExpose({
     :is="selectedTemplate"
     :wedding="wedding"
     :preview="preview"
+    @vue:mounted="emit('ready')"
   />
   <div v-else class="page-state">
     Template belum tersedia. Hubungi administrator.

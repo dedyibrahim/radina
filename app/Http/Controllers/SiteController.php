@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Template;
 use App\Models\Wedding;
 use App\Services\PlatformSettings;
+use App\Services\TemplateCatalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,7 +13,7 @@ class SiteController extends Controller
 {
     public function index(Request $request, PlatformSettings $settings)
     {
-        $known = preg_match('~^(?:/|/buket|/pelanggan/[a-f0-9]{64}|/tamu/[a-f0-9-]{36}|/templates(?:/[^/]+(?:/preview)?)?|/order/(?:success/)?[^/]+|/check-order|/admin(?:/.*)?|/preview/wedding/[^/]+)$~', '/'.$request->path()) || $request->path() === '/';
+        $known = preg_match('~^(?:/|/buket|/pelanggan/[a-f0-9]{64}(?:/preview)?|/tamu/[a-f0-9-]{36}|/templates(?:/[^/]+(?:/preview)?)?|/order/(?:success/)?[^/]+|/check-order|/admin(?:/.*)?|/preview/wedding/[^/]+)$~', '/'.$request->path()) || $request->path() === '/';
         $metadata = $settings->all();
         if ($request->is('buket')) {
             $metadata['seo_title'] = 'Buket Custom Mulai Rp100.000 | Radina';
@@ -95,6 +96,13 @@ class SiteController extends Controller
         $html = str_replace('</head>', '<link rel="canonical" href="'.e($w ? url('/w/'.$w->slug) : request()->url()).'" /></head>', $html);
         if ($status >= 400 || request()->is('admin*', 'pelanggan/*', 'tamu/*', 'preview/*', 'order/*', 'check-order')) {
             $html = str_replace('</head>', '<meta name="robots" content="noindex,nofollow" /></head>', $html);
+        }
+
+        $analyticsId = config('services.google_analytics.measurement_id');
+        if ($status === 200 && config('services.google_analytics.enabled') && is_string($analyticsId) && preg_match('/^G-[A-Z0-9]+$/D', $analyticsId)) {
+            // The Vue router loads the tag only on public marketing pages.
+            $analytics = json_encode(['id' => $analyticsId, 'templates' => TemplateCatalog::KEYS], JSON_THROW_ON_ERROR);
+            $html = str_replace('</head>', '<meta name="radina-google-analytics" content="'.e($analytics).'" /></head>', $html);
         }
 
         return response($html, $status)->header('Content-Type', 'text/html; charset=UTF-8')->header('X-Content-Type-Options', 'nosniff');

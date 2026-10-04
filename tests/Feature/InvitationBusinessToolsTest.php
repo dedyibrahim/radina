@@ -138,6 +138,26 @@ class InvitationBusinessToolsTest extends TestCase
         $this->assertSame(123456, $snapshot['items'][0]['amount']);
     }
 
+    public function test_demo_orders_explain_unavailable_documents_without_issuing_them(): void
+    {
+        $demo = Order::where('is_demo', true)->firstOrFail();
+        $this->postJson('/api/order-documents/invoice', ['order_number' => $demo->order_number, 'whatsapp' => $demo->whatsapp])->assertNotFound();
+        $this->admin();
+        $this->getJson('/api/admin/orders/'.$demo->id)->assertOk()->assertJsonPath('data.is_demo', true);
+        foreach (['invoice', 'receipt'] as $type) {
+            $this->getJson('/api/admin/orders/'.$demo->id.'/documents/'.$type)->assertUnprocessable()
+                ->assertJsonPath('message', 'Pesanan demo tidak memiliki invoice atau kwitansi. Dokumen tersedia untuk pesanan pelanggan.');
+        }
+        $this->assertDatabaseMissing('order_documents', ['order_id' => $demo->id]);
+
+        $real = $this->postJson('/api/orders', $this->input())->assertCreated()->assertJsonPath('data.is_demo', false)->json('data.id');
+        $this->getJson('/api/admin/orders/'.$real.'/documents/invoice')->assertOk()->assertHeader('Content-Type', 'application/pdf');
+        $this->getJson('/api/admin/orders/'.$real.'/documents/receipt')->assertUnprocessable();
+        $this->patchJson('/api/admin/orders/'.$real.'/payment')->assertOk();
+        $receipt = $this->getJson('/api/admin/orders/'.$real.'/documents/receipt')->assertOk()->assertHeader('Content-Type', 'application/pdf');
+        $this->assertStringStartsWith('%PDF-', $receipt->getContent());
+    }
+
     public function test_guest_pass_keeps_private_data_scoped_and_check_in_is_idempotent(): void
     {
         $wedding = $this->realWedding();

@@ -6,6 +6,7 @@ const props = defineProps({ order: Object, base: String, paid: Boolean })
 const busy = ref(''),
   error = ref('')
 async function download(type) {
+  if (busy.value || props.order?.is_demo) return
   busy.value = type
   error.value = ''
   try {
@@ -43,7 +44,11 @@ async function download(type) {
 </script>
 <template>
   <div class="order-documents">
-    <div class="action-group">
+    <p v-if="order?.is_demo" class="alert" role="status">
+      Pesanan ini adalah demo template. Invoice dan kwitansi tersedia untuk
+      pesanan pelanggan.
+    </p>
+    <div v-else class="action-group">
       <button
         type="button"
         class="p-button secondary"
@@ -66,7 +71,9 @@ async function download(type) {
         }}
       </button>
     </div>
-    <p v-if="error" class="alert error" role="alert">{{ error }}</p>
+    <p v-if="error && !order?.is_demo" class="alert error" role="alert">
+      {{ error }}
+    </p>
   </div>
 </template>
 <style scoped>

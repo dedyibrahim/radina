@@ -17,7 +17,7 @@ class OrderDocumentService
 
         return DB::transaction(function () use ($order, $type) {
             $order = Order::lockForUpdate()->findOrFail($order->id);
-            abort_if($order->is_demo, 404);
+            abort_if($order->is_demo, 422, 'Pesanan demo tidak memiliki invoice atau kwitansi. Dokumen tersedia untuk pesanan pelanggan.');
             abort_if($type === 'receipt' && $order->payment?->status !== 'PAID', 422, 'Kwitansi tersedia setelah pembayaran dikonfirmasi.');
             $existing = OrderDocument::where('order_id', $order->id)->where('type', $type)->first();
             if ($existing) {

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Wedding;
 use App\Models\Template;
+use App\Models\Wedding;
 use App\Services\PlatformSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +12,7 @@ class SiteController extends Controller
 {
     public function index(Request $request, PlatformSettings $settings)
     {
-        $known = preg_match('~^(?:/|/buket|/pelanggan/[a-f0-9]{64}|/templates(?:/[^/]+(?:/preview)?)?|/order/(?:success/)?[^/]+|/check-order|/admin(?:/.*)?|/preview/wedding/[^/]+)$~', '/'.$request->path()) || $request->path() === '/';
+        $known = preg_match('~^(?:/|/buket|/pelanggan/[a-f0-9]{64}|/tamu/[a-f0-9-]{36}|/templates(?:/[^/]+(?:/preview)?)?|/order/(?:success/)?[^/]+|/check-order|/admin(?:/.*)?|/preview/wedding/[^/]+)$~', '/'.$request->path()) || $request->path() === '/';
         $metadata = $settings->all();
         if ($request->is('buket')) {
             $metadata['seo_title'] = 'Buket Custom Mulai Rp100.000 | Radina';
@@ -20,9 +20,10 @@ class SiteController extends Controller
             $metadata['seo_image'] = '/images/bouquets/buket-05.jpg';
         }
         $response = $this->html($metadata, null, $known ? 200 : 404);
-        if ($request->is('pelanggan/*')) {
+        if ($request->is('pelanggan/*', 'tamu/*')) {
             $response->header('Cache-Control', 'private, no-store')->header('Referrer-Policy', 'no-referrer')->header('X-Robots-Tag', 'noindex, nofollow');
         }
+
         return $response;
     }
 
@@ -37,17 +38,20 @@ class SiteController extends Controller
         foreach (Template::where('status', 'ACTIVE')->pluck('slug') as $slug) {
             $urls[] = url('/templates/'.$slug);
         }
-        foreach (Wedding::where('is_demo', false)->where('status', 'PUBLISHED')->whereHas('order', fn ($q) => $q->where('status', 'PUBLISHED')->whereHas('payment', fn ($p) => $p->where('status', 'PAID')))->pluck('slug') as $slug) {
+        foreach (Wedding::where('is_demo', false)->where(fn ($q) => $q->whereNull('expires_at')->orWhere('expires_at', '>', now()))->where('status', 'PUBLISHED')->whereHas('order', fn ($q) => $q->where('status', 'PUBLISHED')->whereHas('payment', fn ($p) => $p->where('status', 'PAID')))->pluck('slug') as $slug) {
             $urls[] = url('/w/'.$slug);
         }
         $xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-        foreach ($urls as $url) { $xml .= '<url><loc>'.htmlspecialchars($url, ENT_XML1 | ENT_QUOTES, 'UTF-8').'</loc></url>'; }
+        foreach ($urls as $url) {
+            $xml .= '<url><loc>'.htmlspecialchars($url, ENT_XML1 | ENT_QUOTES, 'UTF-8').'</loc></url>';
+        }
+
         return response($xml.'</urlset>')->header('Content-Type', 'application/xml');
     }
 
     public function robots()
     {
-        return response("User-agent: *\nDisallow: /admin\nDisallow: /api\nDisallow: /preview\nDisallow: /order\nDisallow: /check-order\nSitemap: ".url('/sitemap.xml')."\n")->header('Content-Type', 'text/plain');
+        return response("User-agent: *\nDisallow: /admin\nDisallow: /api\nDisallow: /preview\nDisallow: /order\nDisallow: /check-order\nDisallow: /pelanggan\nDisallow: /tamu\nSitemap: ".url('/sitemap.xml')."\n")->header('Content-Type', 'text/plain');
     }
 
     public function wedding(Request $request, string $slug, PlatformSettings $settings)
@@ -55,6 +59,10 @@ class SiteController extends Controller
         $w = Wedding::where('slug', $slug)->where('status', 'PUBLISHED')->whereHas('order', fn ($q) => $q->where('status', 'PUBLISHED')->whereHas('payment', fn ($p) => $p->where('status', 'PAID')))->first();
         if (! $w) {
             return $this->html($settings->all(), null, 404);
+        }
+
+        if ($w->expires_at?->isPast()) {
+            return $this->html($settings->all(), null, 410);
         }
 
         return $this->html($settings->all(), $w);
@@ -85,7 +93,7 @@ class SiteController extends Controller
             }
         }
         $html = str_replace('</head>', '<link rel="canonical" href="'.e($w ? url('/w/'.$w->slug) : request()->url()).'" /></head>', $html);
-        if ($status >= 400 || request()->is('admin*', 'pelanggan/*', 'preview/*', 'order/*', 'check-order')) {
+        if ($status >= 400 || request()->is('admin*', 'pelanggan/*', 'tamu/*', 'preview/*', 'order/*', 'check-order')) {
             $html = str_replace('</head>', '<meta name="robots" content="noindex,nofollow" /></head>', $html);
         }
 
@@ -128,6 +136,7 @@ class SiteController extends Controller
         abort_unless(preg_match('/^buket-[0-9]{2}\.jpg$/', $file), 404);
         $path = base_path('frontend/public/images/bouquets/'.$file);
         abort_unless(is_file($path), 404);
+
         return response()->file($path, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=86400', 'X-Content-Type-Options' => 'nosniff']);
     }
 
@@ -138,6 +147,7 @@ class SiteController extends Controller
         $root = realpath(Storage::disk('public')->path(''));
         $path = realpath(Storage::disk('public')->path($file));
         abort_unless($root && $path && str_starts_with($path, $root.DIRECTORY_SEPARATOR) && is_file($path), 404);
+
         return response()->file($path, ['Cache-Control' => 'public, max-age=3600', 'X-Content-Type-Options' => 'nosniff']);
     }
 }

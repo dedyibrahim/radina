@@ -11,9 +11,9 @@ use App\Models\Order;
 use App\Models\Template;
 use App\Models\TemplateCategory;
 use App\Models\Wedding;
+use App\Services\InvitationEvent;
 use App\Services\OrderWorkflow;
 use App\Services\PlatformSettings;
-use App\Services\InvitationEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -78,7 +78,9 @@ class PublicController extends Controller
                 'birthday' => 'Ulang Tahun Naila', 'aqiqah' => 'Syukuran Aqiqah Amina', default => 'Silaturahmi Keluarga Radina',
             };
             $wedding->event_details = InvitationEvent::details(['host_name' => $type === 'office' ? 'PT Radina Nusantara' : 'Keluarga Ibrahim',
-                'honoree_name' => match ($type) { 'khitanan' => 'Ahmad Ibrahim', 'birthday' => 'Naila Ibrahim', 'aqiqah' => 'Amina Ibrahim', default => '' },
+                'honoree_name' => match ($type) {
+                    'khitanan' => 'Ahmad Ibrahim', 'birthday' => 'Naila Ibrahim', 'aqiqah' => 'Amina Ibrahim', default => ''
+                },
                 'father_name' => $profile['honoree'] ? 'Bapak Ibrahim' : '', 'mother_name' => $profile['honoree'] ? 'Ibu Siti' : '',
                 'description' => 'Pratinjau contoh. Seluruh nama, jadwal, dan lokasi dapat disesuaikan dengan acara Anda.']);
             $wedding->fill(InvitationEvent::initial($type));
@@ -117,8 +119,12 @@ class PublicController extends Controller
             }
             $template = Template::lockForUpdate()->findOrFail($data['template_id']);
             abort_unless($template->status === 'ACTIVE', 422, 'Template sudah tidak aktif.');
+            $pricing = app(\App\Services\OrderPricingService::class)->calculate($template, $data['package_id'] ?? null, $data['addon_ids'] ?? []);
+            abort_if(isset($data['expected_total']) && (int) $data['expected_total'] !== $pricing['total'], 409, 'Harga berubah. Periksa kembali ringkasan pesanan.');
+            $packageId = $data['package_id'] ?? null;
+            unset($data['package_id'], $data['addon_ids'], $data['expected_total']);
             // Auto-increment identity provides uniqueness even for simultaneous requests.
-            $order = Order::create($data + ['order_number' => 'TEMP-'.Str::uuid(), 'total' => $template->price, 'status' => 'WAITING_PAYMENT']);
+            $order = Order::create($data + ['order_number' => 'TEMP-'.Str::uuid(), 'total' => $pricing['total'], 'pricing_snapshot' => $pricing, 'invitation_package_id' => $packageId, 'status' => 'WAITING_PAYMENT']);
             $order->update(['order_number' => 'WD-'.now()->format('Ymd').'-'.str_pad((string) $order->id, 4, '0', STR_PAD_LEFT)]);
             $order->payment()->create(['amount' => $order->total, 'payment_method' => 'MANUAL_TRANSFER', 'status' => 'PENDING']);
             $order->histories()->create(['old_status' => null, 'new_status' => 'WAITING_PAYMENT']);
@@ -157,7 +163,7 @@ class PublicController extends Controller
 
     private function published(string $slug): Wedding
     {
-        return Wedding::where('slug', $slug)->where('status', 'PUBLISHED')->whereHas('order', fn ($q) => $q->where('status', 'PUBLISHED')->whereHas('payment', fn ($p) => $p->where('status', 'PAID')))->firstOrFail();
+        return app(\App\Services\InvitationAccess::class)->published($slug);
     }
 
     public function wedding(string $slug)
@@ -178,7 +184,15 @@ class PublicController extends Controller
         $w = $this->published($slug);
         abort_if($w->is_demo, 403, 'Demo tidak menerima RSVP.');
         abort_unless($w->settings?->enable_rsvp, 403);
-        $w->rsvps()->create($request->validated());
+        $data = $request->validated();
+        $guestToken = $data['guest_token'] ?? null;
+        unset($data['guest_token']);
+        if ($guestToken) {
+            $guest = \App\Models\WeddingInvitee::where('wedding_id', $w->id)->where('token', $guestToken)->firstOrFail();
+            $data['wedding_invitee_id'] = $guest->id;
+            $data['name'] = $guest->name;
+        }
+        $w->rsvps()->create($data);
 
         return response()->json(['message' => 'Terkirim! Terima kasih atas konfirmasinya.'], 201);
     }

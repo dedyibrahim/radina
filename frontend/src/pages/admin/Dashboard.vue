@@ -2,6 +2,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { ShoppingBag, Wallet, Clock, ArrowUpRight } from 'lucide-vue-next'
 import { api, errorMessage, formatMoney } from '../../services/api'
+import ReminderList from '../../components/ReminderList.vue'
 import PageState from '../../components/PageState.vue'
 import StatusBadge from '../../components/StatusBadge.vue'
 const data = ref(null),
@@ -20,9 +21,21 @@ onMounted(load)
 const stats = computed(() =>
   data.value
     ? [
-        { label: 'Total pesanan', value: data.value.total_orders, icon: ShoppingBag },
-        { label: 'Pesanan hari ini', value: data.value.today_orders, icon: Clock },
-        { label: 'Pendapatan terkonfirmasi', value: formatMoney(data.value.revenue), icon: Wallet },
+        {
+          label: 'Total pesanan',
+          value: data.value.total_orders,
+          icon: ShoppingBag,
+        },
+        {
+          label: 'Pesanan hari ini',
+          value: data.value.today_orders,
+          icon: Clock,
+        },
+        {
+          label: 'Pendapatan terkonfirmasi',
+          value: formatMoney(data.value.revenue),
+          icon: Wallet,
+        },
       ]
     : [],
 )
@@ -39,8 +52,12 @@ const stats = computed(() =>
         >Lihat Pesanan<ArrowUpRight :size="16"
       /></RouterLink>
     </div>
-    <PageState v-if="loading || error" :loading="loading" :error="error" @retry="load" /><template
-      v-else
+    <PageState
+      v-if="loading || error"
+      :loading="loading"
+      :error="error"
+      @retry="load"
+    /><template v-else
       ><div class="stats-grid">
         <article v-for="stat in stats" :key="stat.label" class="surface">
           <component :is="stat.icon" :size="21" />
@@ -48,6 +65,9 @@ const stats = computed(() =>
           <strong>{{ stat.value }}</strong>
         </article>
       </div>
+      <section class="surface dashboard-orders">
+        <ReminderList admin compact />
+      </section>
       <div class="status-stats">
         <article
           v-for="[key, label] in [
@@ -66,7 +86,9 @@ const stats = computed(() =>
       <section class="surface dashboard-orders">
         <div class="panel-title">
           <h2>Pesanan terbaru</h2>
-          <RouterLink to="/admin/orders" class="text-link">Lihat semua →</RouterLink>
+          <RouterLink to="/admin/orders" class="text-link"
+            >Lihat semua →</RouterLink
+          >
         </div>
         <div class="admin-order-list">
           <RouterLink
@@ -75,7 +97,10 @@ const stats = computed(() =>
             :to="`/admin/orders/${order.id}`"
             ><div>
               <strong>{{ order.customer_name }}</strong>
-              <p>{{ order.order_number }} · {{ order.template.name }}</p>
+              <p>
+                {{ order.order_number }} ·
+                {{ order.template.name }}
+              </p>
             </div>
             <StatusBadge :status="order.status"
           /></RouterLink>

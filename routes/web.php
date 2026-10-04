@@ -1,20 +1,20 @@
 <?php
 
+use App\Http\Controllers\AdminCustomerPortalController;
 use App\Http\Controllers\AdminGiftController;
+use App\Http\Controllers\AdminInviteeController;
 use App\Http\Controllers\AdminMusicController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminTemplateController;
 use App\Http\Controllers\AdminWeddingController;
 use App\Http\Controllers\AdminWeddingImportController;
-use App\Http\Controllers\AdminCustomerPortalController;
-use App\Http\Controllers\CustomerPortalController;
-use App\Http\Controllers\AdminInviteeController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MediaController;
-use App\Http\Controllers\LicenseAdminController;
-use App\Http\Controllers\SiteController;
+use App\Http\Controllers\CustomerPortalController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LicenseAdminController;
+use App\Http\Controllers\MediaController;
+use App\Http\Controllers\SiteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +23,18 @@ Route::prefix('api/admin')->middleware('throttle:api')->group(function () {
     Route::get('/captcha', [AuthController::class, 'captcha'])->middleware('throttle:admin-captcha');
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:admin-login');
     Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+        Route::get('/packages', [\App\Http\Controllers\PackageController::class, 'index']);
+        Route::post('/packages', [\App\Http\Controllers\PackageController::class, 'savePackage']);
+        Route::put('/packages/{package}', [\App\Http\Controllers\PackageController::class, 'savePackage']);
+        Route::post('/addons', [\App\Http\Controllers\PackageController::class, 'saveAddon']);
+        Route::put('/addons/{addon}', [\App\Http\Controllers\PackageController::class, 'saveAddon']);
+        Route::get('/reminders', [\App\Http\Controllers\ReminderController::class, 'index']);
+        Route::patch('/reminders/{reminder}', [\App\Http\Controllers\ReminderController::class, 'update']);
+        Route::get('/orders/{order}/documents/{type}', [\App\Http\Controllers\OrderDocumentController::class, 'admin'])->whereIn('type', ['invoice', 'receipt']);
+        Route::get('/weddings/{wedding}/analytics', [\App\Http\Controllers\InvitationToolsController::class, 'analytics']);
+        Route::get('/weddings/{wedding}/guest-statistics', [\App\Http\Controllers\InvitationToolsController::class, 'guests']);
+        Route::post('/weddings/{wedding}/check-in/lookup', [\App\Http\Controllers\InvitationToolsController::class, 'lookup']);
+        Route::post('/weddings/{wedding}/check-in', [\App\Http\Controllers\InvitationToolsController::class, 'checkIn']);
         Route::get('/licenses', [LicenseAdminController::class, 'index']);
         Route::post('/licenses', [LicenseAdminController::class, 'store']);
         Route::patch('/licenses/{license}', [LicenseAdminController::class, 'update']);
@@ -77,6 +89,10 @@ Route::prefix('api/admin')->middleware('throttle:api')->group(function () {
 });
 
 Route::prefix('api/customer-portals/{token}')->middleware('throttle:api')->group(function () {
+    Route::get('/documents/{type}', [CustomerPortalController::class, 'document'])->whereIn('type', ['invoice', 'receipt']);
+    Route::get('/analytics', [CustomerPortalController::class, 'analytics']);
+    Route::get('/guest-statistics', [CustomerPortalController::class, 'guests']);
+    Route::get('/reminders', [CustomerPortalController::class, 'reminders']);
     Route::get('/', [CustomerPortalController::class, 'show']);
     Route::put('/', [CustomerPortalController::class, 'save']);
     Route::get('/preview', [CustomerPortalController::class, 'preview']);

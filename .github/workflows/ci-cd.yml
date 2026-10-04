@@ -332,6 +332,9 @@ jobs:
             rm -rf "incremental-release/_app/$runtime_dir"
             cp -a "release/_app/$runtime_dir" "incremental-release/_app/$runtime_dir"
           done
+          if [ "$composer_changed" = true ]; then
+            cp -a release/_app/vendor incremental-release/_app/vendor
+          fi
           mkdir -p incremental-release/_app/frontend
           for frontend_dir in dist public; do
             rm -rf "incremental-release/_app/frontend/$frontend_dir"
@@ -407,7 +410,7 @@ jobs:
           find incremental-release -type f -print
 
           if [ "$composer_changed" = true ]; then
-            echo "::warning::composer.lock berubah. Upload dan extract artifact ZIP terbaru agar folder vendor ikut diperbarui."
+            echo "Dependensi Composer ikut dikirim dan diverifikasi dalam release ini."
           fi
 
       - name: Upload changed files using FTP
@@ -470,6 +473,8 @@ jobs:
           result = json.load(open(sys.argv[1]))
           if result.get('licenses_preserved') is not True or result.get('license_backup_created') is not True:
               raise SystemExit('Production did not confirm the license backup and preservation checks.')
+          if result.get('pdf_available') is not True:
+              raise SystemExit('Production did not confirm PDF dependency availability.')
           PY
 
       - name: Mark successful production commit

@@ -1,11 +1,16 @@
 <script setup>
 import EventDetailsForm from '../../components/EventDetailsForm.vue'
-import { eventOptions, eventProfile, agendaOptions } from '../../services/invitationEvents'
+import {
+  eventOptions,
+  eventProfile,
+  agendaOptions,
+} from '../../services/invitationEvents'
 import MusicSelector from '../../components/MusicSelector.vue'
 import SectionManager from '../../components/SectionManager.vue'
 import WeddingGiftManager from '../../components/WeddingGiftManager.vue'
 import WeddingRenderer from '../../components/WeddingRenderer.vue'
 import WeddingImportExport from '../../components/WeddingImportExport.vue'
+import WeddingAnalytics from '../../components/WeddingAnalytics.vue'
 import CustomerPortalManager from '../../components/CustomerPortalManager.vue'
 import { nextTick } from 'vue'
 import { scrollToSection } from '../../composables/useSectionNavigation'
@@ -56,6 +61,7 @@ const baseTabs = [
   ['music', 'Music'],
   ['gift', 'Wedding Gift'],
   ['livestream', 'Live Streaming'],
+  ['analytics', 'Statistik & Tamu'],
   ['rsvp', 'RSVP'],
   ['wishes', 'Wishes'],
   ['settings', 'Pengaturan'],
@@ -91,13 +97,16 @@ const featureLabels = {
   gift: 'Wedding Gift',
   livestream: 'Livestream',
 }
-const isWedding = computed(() => !form.value?.event_type || form.value.event_type === 'wedding')
+const isWedding = computed(
+  () => !form.value?.event_type || form.value.event_type === 'wedding',
+)
 const profile = computed(() => eventProfile(form.value?.event_type))
 const tabs = computed(() =>
   baseTabs.map(([key, label]) => [
     key,
     !isWedding.value
-      ? { couple: 'Data Acara', story: 'Tentang Acara', gift: 'Hadiah' }[key] || label
+      ? { couple: 'Data Acara', story: 'Tentang Acara', gift: 'Hadiah' }[key] ||
+        label
       : label,
   ]),
 )
@@ -114,7 +123,9 @@ const basicFields = computed(() =>
     type,
   ]),
 )
-const dirty = computed(() => form.value && JSON.stringify(form.value) !== baseline.value)
+const dirty = computed(
+  () => form.value && JSON.stringify(form.value) !== baseline.value,
+)
 const checklist = computed(() =>
   form.value
     ? [
@@ -124,18 +135,23 @@ const checklist = computed(() =>
             ? Boolean(form.value.bride.full_name && form.value.groom.full_name)
             : Boolean(
                 form.value.event_details.host_name &&
-                (!profile.value.honoree || form.value.event_details.honoree_name),
+                (!profile.value.honoree ||
+                  form.value.event_details.honoree_name),
               ),
         },
         { label: 'Tanggal', done: Boolean(form.value.wedding_date) },
         { label: 'Acara', done: form.value.events.length > 0 },
         {
           label: 'Gallery',
-          done: !form.value.settings.enable_gallery || form.value.gallery.length > 0,
+          done:
+            !form.value.settings.enable_gallery ||
+            form.value.gallery.length > 0,
         },
         {
           label: 'Music',
-          done: !form.value.settings.enable_music || Boolean(form.value.music.music_url),
+          done:
+            !form.value.settings.enable_music ||
+            Boolean(form.value.music.music_url),
         },
         {
           label: 'Gift',
@@ -151,7 +167,9 @@ const checklist = computed(() =>
 )
 const progress = computed(() =>
   Math.round(
-    (checklist.value.filter((x) => x.done).length / Math.max(1, checklist.value.length)) * 100,
+    (checklist.value.filter((x) => x.done).length /
+      Math.max(1, checklist.value.length)) *
+      100,
   ),
 )
 function normalize(data) {
@@ -263,7 +281,9 @@ function addGift() {
   })
 }
 function addGallery(media) {
-  form.value.gallery.push(...media.map((item) => ({ image: item.url, caption: '' })))
+  form.value.gallery.push(
+    ...media.map((item) => ({ image: item.url, caption: '' })),
+  )
 }
 async function openPreview() {
   tab.value = 'preview'
@@ -274,7 +294,9 @@ async function publish() {
   pending.value = true
   error.value = ''
   try {
-    form.value = normalize((await api.post(`/admin/weddings/${route.params.id}/publish`)).data.data)
+    form.value = normalize(
+      (await api.post(`/admin/weddings/${route.params.id}/publish`)).data.data,
+    )
     baseline.value = JSON.stringify(form.value)
     confirmPublish.value = false
     ui.toast('Undangan dipublish dan siap dibagikan.')
@@ -288,7 +310,9 @@ async function loadGuests(append = false) {
   try {
     const path = `/admin/weddings/${route.params.id}/${tab.value === 'rsvp' ? 'rsvps' : 'wishes'}`
     const data = (await api.get(append ? guestNext.value : path)).data
-    guestRecords.value = append ? [...guestRecords.value, ...data.data] : data.data
+    guestRecords.value = append
+      ? [...guestRecords.value, ...data.data]
+      : data.data
     guestNext.value = data.next_page_url
       ? new URL(data.next_page_url).pathname.replace(/^\/api/, '') +
         new URL(data.next_page_url).search
@@ -327,7 +351,9 @@ function beforeUnload(event) {
 window.addEventListener('beforeunload', beforeUnload)
 onUnmounted(() => window.removeEventListener('beforeunload', beforeUnload))
 onBeforeRouteLeave(
-  () => !dirty.value || window.confirm('Ada perubahan belum disimpan. Tetap tinggalkan halaman?'),
+  () =>
+    !dirty.value ||
+    window.confirm('Ada perubahan belum disimpan. Tetap tinggalkan halaman?'),
 )
 
 const templatePicker = ref(false),
@@ -336,7 +362,8 @@ const templatePicker = ref(false),
 const previewWedding = computed(() => ({
   ...form.value,
   template:
-    templates.value.find((t) => t.id === Number(form.value?.template_id)) || form.value?.template,
+    templates.value.find((t) => t.id === Number(form.value?.template_id)) ||
+    form.value?.template,
 }))
 function giftsUpdated(result) {
   form.value.gift_methods = result.methods
@@ -377,8 +404,12 @@ watch(tab, (value) => {
 </script>
 <template>
   <div>
-    <PageState v-if="loading || !form" :loading="loading" :error="error" @retry="load" /><template
-      v-else
+    <PageState
+      v-if="loading || !form"
+      :loading="loading"
+      :error="error"
+      @retry="load"
+    /><template v-else
       ><div class="admin-title editor-title">
         <div>
           <p class="p-eyebrow">
@@ -393,13 +424,21 @@ watch(tab, (value) => {
             }}
           </h1>
           <div class="editor-state">
-            <StatusBadge :status="form.status" /><span :class="{ unsaved: dirty }" role="status">{{
-              pending ? 'Menyimpan…' : dirty ? 'Belum disimpan' : 'Tersimpan'
-            }}</span>
+            <StatusBadge :status="form.status" /><span
+              :class="{ unsaved: dirty }"
+              role="status"
+              >{{
+                pending ? 'Menyimpan…' : dirty ? 'Belum disimpan' : 'Tersimpan'
+              }}</span
+            >
           </div>
         </div>
         <div class="action-group">
-          <button class="p-button secondary" :disabled="pending" @click="openPreview">
+          <button
+            class="p-button secondary"
+            :disabled="pending"
+            @click="openPreview"
+          >
             <Eye :size="16" />Preview</button
           ><button class="p-button" :disabled="pending || !dirty" @click="save">
             <Save :size="16" />Simpan
@@ -412,8 +451,13 @@ watch(tab, (value) => {
         </div>
         <progress :value="progress" max="100"></progress>
         <ul>
-          <li v-for="item in checklist" :key="item.label" :class="{ complete: item.done }">
-            <Check v-if="item.done" :size="12" /><span v-else>○</span>{{ item.label }}
+          <li
+            v-for="item in checklist"
+            :key="item.label"
+            :class="{ complete: item.done }"
+          >
+            <Check v-if="item.done" :size="12" /><span v-else>○</span
+            >{{ item.label }}
           </li>
         </ul>
       </div>
@@ -432,11 +476,20 @@ watch(tab, (value) => {
       <section class="surface editor-panel">
         <template v-if="tab === 'basic'"
           ><h2>Informasi dasar</h2>
-          <p class="panel-subtitle">Cerita Anda, dimulai dari detail yang personal.</p>
+          <p class="panel-subtitle">
+            Cerita Anda, dimulai dari detail yang personal.
+          </p>
           <div class="form-grid">
             <label class="form-field"
-              >Jenis acara<select v-model="form.event_type" aria-label="Jenis acara">
-                <option v-for="option in eventOptions" :key="option.value" :value="option.value">
+              >Jenis acara<select
+                v-model="form.event_type"
+                aria-label="Jenis acara"
+              >
+                <option
+                  v-for="option in eventOptions"
+                  :key="option.value"
+                  :value="option.value"
+                >
                   {{ option.label }}
                 </option>
               </select></label
@@ -448,7 +501,11 @@ watch(tab, (value) => {
               :label="field[1]"
               :type="field[2]"
               :required="field[0] === 'title'"
-            /><FormField v-model="form.slug" label="Slug undangan" required /><button
+            /><FormField
+              v-model="form.slug"
+              label="Slug undangan"
+              required
+            /><button
               class="p-button secondary small"
               @click="tab = 'template'"
             >
@@ -485,6 +542,12 @@ watch(tab, (value) => {
             collection="video"
             label="Upload video MP4"
         /></template>
+        <WeddingAnalytics
+          v-else-if="tab === 'analytics'"
+          :base="`/admin/weddings/${form.id}`"
+          :wedding-id="form.id"
+          admin
+        />
         <WeddingImportExport
           v-else-if="tab === 'import-export'"
           :wedding="form"
@@ -541,7 +604,11 @@ watch(tab, (value) => {
               <Plus :size="16" />Tambah Acara
             </button>
           </div>
-          <article v-for="(event, i) in form.events" :key="i" class="repeater-card">
+          <article
+            v-for="(event, i) in form.events"
+            :key="i"
+            class="repeater-card"
+          >
             <div class="repeater-header">
               <h3>Acara {{ i + 1 }}</h3>
               <div>
@@ -569,7 +636,11 @@ watch(tab, (value) => {
               </div>
             </div>
             <div class="form-grid">
-              <FormField v-model="event.title" label="Nama Acara" required /><FormField
+              <FormField
+                v-model="event.title"
+                label="Nama Acara"
+                required
+              /><FormField
                 v-model="event.type"
                 label="Jenis Acara"
                 type="select"
@@ -579,7 +650,12 @@ watch(tab, (value) => {
                     label,
                   }))
                 "
-              /><FormField v-model="event.date" label="Tanggal" type="date" required /><FormField
+              /><FormField
+                v-model="event.date"
+                label="Tanggal"
+                type="date"
+                required
+              /><FormField
                 v-model="event.start_time"
                 label="Waktu Mulai"
                 type="time"
@@ -598,11 +674,19 @@ watch(tab, (value) => {
                   { value: 'Asia/Makassar', label: 'WITA' },
                   { value: 'Asia/Jayapura', label: 'WIT' },
                 ]"
-              /><FormField v-model="event.venue" label="Venue" required /><FormField
+              /><FormField
+                v-model="event.venue"
+                label="Venue"
+                required
+              /><FormField
                 v-model="event.address"
                 label="Alamat"
                 type="textarea"
-              /><FormField v-model="event.google_maps_url" label="URL Google Maps" type="url" />
+              /><FormField
+                v-model="event.google_maps_url"
+                label="URL Google Maps"
+                type="url"
+              />
             </div>
           </article>
           <p v-if="!form.events.length" class="empty-note">
@@ -618,7 +702,11 @@ watch(tab, (value) => {
               <Plus :size="16" />Tambah Cerita
             </button>
           </div>
-          <article v-for="(story, i) in form.stories" :key="i" class="repeater-card">
+          <article
+            v-for="(story, i) in form.stories"
+            :key="i"
+            class="repeater-card"
+          >
             <div class="repeater-header">
               <h3>Bab {{ i + 1 }}</h3>
               <div>
@@ -645,7 +733,11 @@ watch(tab, (value) => {
                 </button>
               </div>
             </div>
-            <FormField v-model="story.date_label" label="Tanggal / tahun" required /><FormField
+            <FormField
+              v-model="story.date_label"
+              label="Tanggal / tahun"
+              required
+            /><FormField
               v-model="story.title"
               label="Judul"
               required
@@ -668,7 +760,8 @@ watch(tab, (value) => {
         <template v-else-if="tab === 'gallery'"
           ><h2>Galeri kenangan</h2>
           <p class="panel-subtitle">
-            Pilih beberapa foto sekaligus. Gunakan tombol panah untuk mengatur urutan.
+            Pilih beberapa foto sekaligus. Gunakan tombol panah untuk mengatur
+            urutan.
           </p>
           <MediaUploader
             :wedding-id="form.id"
@@ -709,7 +802,9 @@ watch(tab, (value) => {
             </article></div
         ></template>
         <template v-else-if="tab === 'sections'"
-          ><SectionManager v-model="form" :template-key="previewWedding.template?.template_key"
+          ><SectionManager
+            v-model="form"
+            :template-key="previewWedding.template?.template_key"
         /></template>
         <template v-else-if="tab === 'music'"
           ><h2>Soundtrack cerita Anda</h2>
@@ -717,7 +812,10 @@ watch(tab, (value) => {
             v-model="form.music"
             :wedding-id="form.id"
             :template-key="previewWedding.template?.template_key" />
-          <FormField v-model="form.music.music_url" label="URL audio" type="url" /><MediaUploader
+          <FormField
+            v-model="form.music.music_url"
+            label="URL audio"
+            type="url" /><MediaUploader
             v-model="form.music.music_url"
             :wedding-id="form.id"
             collection="music"
@@ -726,7 +824,9 @@ watch(tab, (value) => {
             label="Volume (0–100%)"
             type="number" /><label class="toggle-row"
             ><span>Putar setelah Buka Undangan</span
-            ><input v-model="form.music.autoplay_after_open" type="checkbox" /></label
+            ><input
+              v-model="form.music.autoplay_after_open"
+              type="checkbox" /></label
           ><audio
             v-if="form.music.music_url"
             :src="form.music.music_url"
@@ -739,7 +839,9 @@ watch(tab, (value) => {
         <template v-else-if="tab === 'gift'"
           ><label class="toggle-row"
             ><span>Enable Wedding Gift</span
-            ><input v-model="form.settings.enable_gift" type="checkbox" /></label
+            ><input
+              v-model="form.settings.enable_gift"
+              type="checkbox" /></label
           ><WeddingGiftManager
             :wedding-id="form.id"
             :methods="form.gift_methods"
@@ -759,12 +861,20 @@ watch(tab, (value) => {
           ><h2>
             {{ tab === 'rsvp' ? 'Konfirmasi kehadiran' : 'Ucapan & doa' }}
           </h2>
-          <article v-for="record in guestRecords" :key="record.id" class="guest-record">
+          <article
+            v-for="record in guestRecords"
+            :key="record.id"
+            class="guest-record"
+          >
             <div>
               <strong>{{ record.name }}</strong>
-              <p v-if="tab === 'rsvp'">{{ record.attendance }} · {{ record.guests }} tamu</p>
+              <p v-if="tab === 'rsvp'">
+                {{ record.attendance }} · {{ record.guests }} tamu
+              </p>
               <p>{{ record.message }}</p>
-              <small>{{ new Date(record.created_at).toLocaleString('id-ID') }}</small>
+              <small>{{
+                new Date(record.created_at).toLocaleString('id-ID')
+              }}</small>
             </div>
             <button
               v-if="tab === 'wishes'"
@@ -778,7 +888,11 @@ watch(tab, (value) => {
             Belum ada
             {{ tab === 'rsvp' ? 'konfirmasi kehadiran' : 'ucapan' }}.
           </p>
-          <button v-if="guestNext" class="p-button secondary" @click="loadGuests(true)">
+          <button
+            v-if="guestNext"
+            class="p-button secondary"
+            @click="loadGuests(true)"
+          >
             Muat lainnya
           </button></template
         >
@@ -787,20 +901,32 @@ watch(tab, (value) => {
           <p class="panel-subtitle">
             Section yang dinonaktifkan otomatis disembunyikan dari undangan.
           </p>
-          <label v-for="(label, key) in featureLabels" :key="key" class="toggle-row"
+          <label
+            v-for="(label, key) in featureLabels"
+            :key="key"
+            class="toggle-row"
             ><span>{{ label }}</span
-            ><input v-model="form.settings[`enable_${key}`]" type="checkbox" /></label
+            ><input
+              v-model="form.settings[`enable_${key}`]"
+              type="checkbox" /></label
         ></template>
         <template v-else-if="tab === 'template'"
           ><div class="panel-title">
             <h2>Template Radina</h2>
-            <button class="p-button small" @click="templatePicker = true">Ganti Template</button>
+            <button class="p-button small" @click="templatePicker = true">
+              Ganti Template
+            </button>
           </div>
           <p>
             Current Template:
-            <strong>{{ templates.find((t) => t.id === Number(form.template_id))?.name }}</strong>
+            <strong>{{
+              templates.find((t) => t.id === Number(form.template_id))?.name
+            }}</strong>
           </p>
-          <p>Seluruh konten, hadiah, RSVP dan ucapan tetap tersimpan saat tampilan diganti.</p>
+          <p>
+            Seluruh konten, hadiah, RSVP dan ucapan tetap tersimpan saat
+            tampilan diganti.
+          </p>
           <div class="template-choice-grid">
             <article
               v-for="t in templates.filter((x) => x.status === 'ACTIVE')"
@@ -835,8 +961,8 @@ watch(tab, (value) => {
             >
           </div>
           <p class="panel-subtitle">
-            Preview memakai konten editor, termasuk perubahan yang belum disimpan. Gunakan Simpan
-            untuk memperbarui undangan publik.
+            Preview memakai konten editor, termasuk perubahan yang belum
+            disimpan. Gunakan Simpan untuk memperbarui undangan publik.
           </p>
           <div class="preview-controls">
             <button
@@ -855,7 +981,12 @@ watch(tab, (value) => {
             </button>
           </div>
           <div class="live-wedding-preview">
-            <WeddingRenderer ref="liveRenderer" :wedding="previewWedding" preview start-open /></div
+            <WeddingRenderer
+              ref="liveRenderer"
+              :wedding="previewWedding"
+              preview
+              start-open
+            /></div
         ></template>
         <template v-else-if="tab === 'publish'"
           ><div class="publish-panel">
@@ -868,8 +999,13 @@ watch(tab, (value) => {
                   : 'Siap membagikan cerita ini?'
               }}
             </h2>
-            <p>Pastikan data undangan, tanggal, agenda, template, dan slug sudah benar.</p>
-            <div class="slug-preview">{{ window?.location?.origin || '' }}/w/{{ form.slug }}</div>
+            <p>
+              Pastikan data undangan, tanggal, agenda, template, dan slug sudah
+              benar.
+            </p>
+            <div class="slug-preview">
+              {{ window?.location?.origin || '' }}/w/{{ form.slug }}
+            </div>
             <button
               v-if="form.status !== 'PUBLISHED'"
               class="p-button"
@@ -877,20 +1013,31 @@ watch(tab, (value) => {
               @click="confirmPublish = true"
             >
               <Send :size="17" />Publish Website</button
-            ><RouterLink v-else :to="`/w/${form.slug}`" target="_blank" class="p-button"
+            ><RouterLink
+              v-else
+              :to="`/w/${form.slug}`"
+              target="_blank"
+              class="p-button"
               >Lihat Undangan<ExternalLink :size="17"
             /></RouterLink></div
         ></template>
       </section>
-      <BaseModal :open="confirmPublish" title="Publish undangan" @close="confirmPublish = false"
+      <BaseModal
+        :open="confirmPublish"
+        title="Publish undangan"
+        @close="confirmPublish = false"
         ><div class="platform">
           <h2>Publish undangan?</h2>
           <p class="modal-description">
-            Undangan akan dapat diakses publik di /w/{{ form.slug }}. Perubahan yang belum disimpan
-            akan disimpan terlebih dahulu.
+            Undangan akan dapat diakses publik di /w/{{ form.slug }}. Perubahan
+            yang belum disimpan akan disimpan terlebih dahulu.
           </p>
           <p v-if="error" class="alert error">{{ error }}</p>
-          <button class="p-button full-width" :disabled="pending" @click="publish">
+          <button
+            class="p-button full-width"
+            :disabled="pending"
+            @click="publish"
+          >
             {{ pending ? 'Memproses…' : 'Ya, Publish Website' }}
           </button>
         </div></BaseModal
@@ -916,7 +1063,9 @@ watch(tab, (value) => {
               target="_blank"
               class="p-button secondary small"
               >Preview</RouterLink
-            ><button class="p-button small" @click="requestTemplate(t)">Gunakan Template</button>
+            ><button class="p-button small" @click="requestTemplate(t)">
+              Gunakan Template
+            </button>
           </article>
         </div>
       </div></BaseModal
@@ -927,8 +1076,13 @@ watch(tab, (value) => {
       @close="selectedTemplate = null"
       ><div class="platform">
         <h2>Ganti template ke {{ selectedTemplate?.name }}?</h2>
-        <p>Seluruh data undangan akan tetap tersimpan. Hanya tampilan website yang akan berubah.</p>
-        <button class="p-button" @click="chooseTemplate">Ya, Gunakan Template</button>
+        <p>
+          Seluruh data undangan akan tetap tersimpan. Hanya tampilan website
+          yang akan berubah.
+        </p>
+        <button class="p-button" @click="chooseTemplate">
+          Ya, Gunakan Template
+        </button>
       </div></BaseModal
     >
   </div>

@@ -16,6 +16,7 @@ class GuestSubmissionRequest extends FormRequest
     {
         $rules = ['name' => 'required|string|min:2|max:120', 'message' => 'nullable|string|max:1000'];
         if (str_ends_with($this->path(), '/rsvp')) {
+            $rules['guest_token'] = 'nullable|uuid';
             $rules['guests'] = 'required|integer|min:1|max:10';
             $rules['attendance'] = ['required', Rule::in(['Hadir', 'Tidak Hadir', 'Masih Ragu'])];
         } else {

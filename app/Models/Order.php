@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['order_number', 'template_id', 'customer_name', 'whatsapp', 'email', 'bride_name', 'groom_name', 'slug', 'total', 'status', 'is_demo', 'event_type', 'event_title', 'host_name', 'honoree_name'];
+    protected $fillable = ['order_number', 'template_id', 'customer_name', 'whatsapp', 'email', 'bride_name', 'groom_name', 'slug', 'total', 'status', 'is_demo', 'event_type', 'event_title', 'host_name', 'honoree_name', 'invitation_package_id', 'pricing_snapshot'];
 
-    protected $casts = ['is_demo' => 'boolean'];
+    protected $casts = ['is_demo' => 'boolean', 'pricing_snapshot' => 'array'];
 
     public function template()
     {

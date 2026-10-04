@@ -77,9 +77,14 @@ class AdminInviteeController extends Controller
 
     public function destroy(Wedding $wedding, WeddingInvitee $invitee)
     {
-        $this->service->ensurePaid($wedding->order);
-        abort_unless($invitee->wedding_id === $wedding->id, 404);
-        $invitee->delete();
+        DB::transaction(function () use ($wedding, $invitee) {
+            $order = \App\Models\Order::lockForUpdate()->findOrFail($wedding->order_id);
+            $this->service->ensurePaid($order);
+            Wedding::lockForUpdate()->findOrFail($wedding->id);
+            $guest = WeddingInvitee::where('wedding_id', $wedding->id)->lockForUpdate()->findOrFail($invitee->id);
+            abort_if(\App\Models\WeddingCheckIn::where('wedding_invitee_id', $guest->id)->exists(), 422, 'Tamu yang sudah check-in tidak dapat dihapus agar data kehadiran tetap tersimpan.');
+            $guest->delete();
+        });
 
         return response()->noContent();
     }

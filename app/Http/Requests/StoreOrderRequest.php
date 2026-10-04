@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Services\InvitationEvent;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Services\InvitationEvent;
 
 class StoreOrderRequest extends FormRequest
 {
@@ -25,8 +25,10 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         $wedding = $this->input('event_type', 'wedding') === 'wedding';
+
         return [
             'template_id' => ['required', 'integer', Rule::exists('templates', 'id')->where('status', 'ACTIVE')],
+            'package_id' => 'nullable|integer|exists:invitation_packages,id', 'addon_ids' => 'sometimes|array|max:20', 'addon_ids.*' => 'integer|distinct|exists:invitation_addons,id', 'expected_total' => 'sometimes|integer|min:0',
             'customer_name' => 'required|string|min:2|max:120', 'whatsapp' => 'required|regex:/^[1-9][0-9]{8,14}$/', 'email' => 'nullable|email|max:255',
             'event_type' => ['required', Rule::in(array_keys(InvitationEvent::types()))],
             'bride_name' => ($wedding ? 'required' : 'nullable').'|string|min:2|max:120', 'groom_name' => ($wedding ? 'required' : 'nullable').'|string|min:2|max:120',

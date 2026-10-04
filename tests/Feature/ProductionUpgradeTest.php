@@ -15,7 +15,7 @@ class ProductionUpgradeTest extends TestCase
     public function test_upgrade_from_existing_license_schema_keeps_data_and_admin_password(): void
     {
         // The base TestCase checks the isolated database before these commands run.
-        $baseline = array_values(array_filter(glob(database_path('migrations/*.php')), fn ($p) => ! str_contains(basename($p), '2026_10_03_')));
+        $baseline = array_values(array_filter(glob(database_path('migrations/*.php')), fn ($p) => strcmp(basename($p), '2026_10_03_') < 0));
         $this->artisan('migrate:fresh', ['--path' => $baseline, '--realpath' => true, '--force' => true])->assertSuccessful();
         try {
             Storage::fake('public');

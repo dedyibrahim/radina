@@ -9,17 +9,19 @@
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
-    "vue": "^3.5.22",
+    "@zxing/browser": "^0.1.5",
+    "axios": "^1.8.0",
     "lucide-vue-next": "^0.468.0",
-    "vue-router": "^4.5.0",
     "pinia": "^3.0.0",
-    "axios": "^1.8.0"
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.22",
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.1",
-    "vite": "^6.0.5",
-    "tailwindcss": "^4.0.0",
+    "@playwright/test": "^1.51.0",
     "@tailwindcss/vite": "^4.0.0",
-    "@playwright/test": "^1.51.0"
+    "@vitejs/plugin-vue": "^5.2.1",
+    "tailwindcss": "^4.0.0",
+    "vite": "^6.0.5"
   }
 }

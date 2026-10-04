@@ -2,11 +2,18 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ArrowLeft, CheckCircle2, PenLine, ExternalLink } from 'lucide-vue-next'
-import { api, errorMessage, formatMoney, statusLabels } from '../../services/api'
+import {
+  api,
+  errorMessage,
+  formatMoney,
+  statusLabels,
+} from '../../services/api'
 import { useUiStore } from '../../stores/ui'
 import PageState from '../../components/PageState.vue'
 import StatusBadge from '../../components/StatusBadge.vue'
 import BaseModal from '../../components/BaseModal.vue'
+import OrderPricing from '../../components/OrderPricing.vue'
+import OrderDocuments from '../../components/OrderDocuments.vue'
 import FormField from '../../components/FormField.vue'
 const route = useRoute(),
   router = useRouter(),
@@ -56,7 +63,8 @@ async function confirm() {
 async function manage() {
   pending.value = true
   try {
-    const wedding = (await api.post(`/admin/orders/${order.value.id}/wedding`)).data.data
+    const wedding = (await api.post(`/admin/orders/${order.value.id}/wedding`))
+      .data.data
     router.push(`/admin/weddings/${wedding.id}`)
   } catch (e) {
     error.value = errorMessage(e)
@@ -108,13 +116,17 @@ function handleStatusChange(event) {
         </div>
         <div class="action-group">
           <button
-            v-if="order.payment.status !== 'PAID' && order.status !== 'CANCELLED'"
+            v-if="
+              order.payment.status !== 'PAID' && order.status !== 'CANCELLED'
+            "
             class="p-button"
             @click="dialog = 'payment'"
           >
             <CheckCircle2 :size="17" />Konfirmasi Pembayaran</button
           ><button
-            v-if="order.payment.status === 'PAID' && order.status !== 'CANCELLED'"
+            v-if="
+              order.payment.status === 'PAID' && order.status !== 'CANCELLED'
+            "
             class="p-button"
             :disabled="pending"
             @click="manage"
@@ -124,6 +136,8 @@ function handleStatusChange(event) {
         </div>
       </div>
       <p v-if="error" class="alert error" role="alert">{{ error }}</p>
+      <OrderPricing :order="order" />
+      <OrderDocuments :order="order" :base="`/admin/orders/${order.id}`" />
       <div class="detail-panels">
         <section class="surface">
           <h2>Informasi pesanan</h2>
@@ -163,7 +177,11 @@ function handleStatusChange(event) {
                 {{ order.event_type === 'wedding' ? 'Wanita' : 'Judul acara' }}
               </dt>
               <dd>
-                {{ order.event_type === 'wedding' ? order.bride_name : order.event_title }}
+                {{
+                  order.event_type === 'wedding'
+                    ? order.bride_name
+                    : order.event_title
+                }}
               </dd>
             </div>
             <div>
@@ -171,7 +189,11 @@ function handleStatusChange(event) {
                 {{ order.event_type === 'wedding' ? 'Pria' : 'Penyelenggara' }}
               </dt>
               <dd>
-                {{ order.event_type === 'wedding' ? order.groom_name : order.host_name }}
+                {{
+                  order.event_type === 'wedding'
+                    ? order.groom_name
+                    : order.host_name
+                }}
               </dd>
             </div>
             <div>
@@ -211,7 +233,9 @@ function handleStatusChange(event) {
             <div v-if="order.payment.confirmed_at">
               <dt>Dikonfirmasi</dt>
               <dd>
-                {{ new Date(order.payment.confirmed_at).toLocaleString('id-ID') }}
+                {{
+                  new Date(order.payment.confirmed_at).toLocaleString('id-ID')
+                }}
               </dd>
             </div>
             <div v-if="order.payment.confirmed_by">
@@ -221,7 +245,11 @@ function handleStatusChange(event) {
           </dl>
           <div v-if="allowed.length" class="field">
             <label for="status-update">Ubah status</label
-            ><select id="status-update" :disabled="pending" @change="handleStatusChange">
+            ><select
+              id="status-update"
+              :disabled="pending"
+              @change="handleStatusChange"
+            >
               <option value="">Pilih tindakan…</option>
               <option v-for="status in allowed" :key="status" :value="status">
                 {{ statusLabels[status] }}
@@ -238,15 +266,24 @@ function handleStatusChange(event) {
               new Date(history.created_at).toLocaleString('id-ID')
             }}</span
             ><small>{{
-              history.changed_by ? `Admin #${history.changed_by}` : 'Customer / sistem'
+              history.changed_by
+                ? `Admin #${history.changed_by}`
+                : 'Customer / sistem'
             }}</small>
           </li>
         </ol>
       </section>
-      <BaseModal :open="Boolean(dialog)" title="Konfirmasi tindakan" @close="dialog = ''"
+      <BaseModal
+        :open="Boolean(dialog)"
+        title="Konfirmasi tindakan"
+        @close="dialog = ''"
         ><div class="platform">
           <h2>
-            {{ dialog === 'payment' ? 'Konfirmasi pembayaran?' : 'Batalkan pesanan?' }}
+            {{
+              dialog === 'payment'
+                ? 'Konfirmasi pembayaran?'
+                : 'Batalkan pesanan?'
+            }}
           </h2>
           <p class="modal-description">
             {{
@@ -264,7 +301,9 @@ function handleStatusChange(event) {
           <button
             class="p-button full-width"
             :disabled="pending"
-            @click="dialog === 'payment' ? confirm() : changeStatus('CANCELLED')"
+            @click="
+              dialog === 'payment' ? confirm() : changeStatus('CANCELLED')
+            "
           >
             {{
               pending

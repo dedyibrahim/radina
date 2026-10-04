@@ -8,9 +8,9 @@ class Wedding extends Model
 {
     protected $dateFormat = 'Y-m-d H:i:s.u';
 
-    protected $fillable = ['order_id', 'template_id', 'slug', 'status', 'title', 'wedding_date', 'quote', 'quote_source', 'opening_text', 'closing_text', 'hashtag', 'cover_image', 'hero_image', 'closing_image', 'video_url', 'music_url', 'volume', 'autoplay_after_open', 'livestream_platform', 'livestream_url', 'shipping_gift', 'published_at', 'publish_at', 'is_demo', 'section_content', 'section_order', 'music_playlist', 'music_shuffle', 'music_repeat', 'event_type', 'event_details'];
+    protected $fillable = ['order_id', 'template_id', 'slug', 'status', 'title', 'wedding_date', 'quote', 'quote_source', 'opening_text', 'closing_text', 'hashtag', 'cover_image', 'hero_image', 'closing_image', 'video_url', 'music_url', 'volume', 'autoplay_after_open', 'livestream_platform', 'livestream_url', 'shipping_gift', 'published_at', 'publish_at', 'is_demo', 'section_content', 'section_order', 'music_playlist', 'music_shuffle', 'music_repeat', 'event_type', 'event_details', 'expires_at'];
 
-    protected $casts = ['event_details' => 'array', 'section_content' => 'array', 'section_order' => 'array', 'music_playlist' => 'array', 'music_shuffle' => 'boolean', 'music_repeat' => 'boolean', 'wedding_date' => 'date:Y-m-d', 'shipping_gift' => 'array', 'autoplay_after_open' => 'boolean', 'is_demo' => 'boolean', 'published_at' => 'datetime', 'publish_at' => 'datetime'];
+    protected $casts = ['event_details' => 'array', 'section_content' => 'array', 'section_order' => 'array', 'music_playlist' => 'array', 'music_shuffle' => 'boolean', 'music_repeat' => 'boolean', 'wedding_date' => 'date:Y-m-d', 'shipping_gift' => 'array', 'autoplay_after_open' => 'boolean', 'is_demo' => 'boolean', 'expires_at' => 'datetime', 'published_at' => 'datetime', 'publish_at' => 'datetime'];
 
     public function template()
     {

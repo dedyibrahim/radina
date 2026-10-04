@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, provide } from 'vue'
+import { computed, ref, provide, watch } from 'vue'
 import { useAudio } from '../composables/useAudio'
 import { templateRegistry } from '../templates/templateRegistry'
 import CelebrationInvitation from '../templates/shared/CelebrationInvitation.vue'
@@ -11,6 +11,14 @@ const props = defineProps({
 })
 const invitationOpened = ref(
   props.startOpen || props.wedding.section_content?.opening?.enabled === false,
+)
+const emit = defineEmits(['opened'])
+watch(
+  invitationOpened,
+  (opened) => {
+    if (opened) emit('opened')
+  },
+  { immediate: true },
 )
 const audio = useAudio(
   () =>
@@ -30,7 +38,9 @@ const selectedTemplate = computed(() =>
   props.wedding.event_type !== 'wedding' &&
   !presetFor(props.wedding.template?.template_key).studio
     ? CelebrationInvitation
-    : templateRegistry[props.wedding.template?.template_key || 'romantic-floral'],
+    : templateRegistry[
+        props.wedding.template?.template_key || 'romantic-floral'
+      ],
 )
 defineExpose({
   showCover: () => {
@@ -42,6 +52,13 @@ defineExpose({
 })
 </script>
 <template>
-  <component v-if="selectedTemplate" :is="selectedTemplate" :wedding="wedding" :preview="preview" />
-  <div v-else class="page-state">Template belum tersedia. Hubungi administrator.</div>
+  <component
+    v-if="selectedTemplate"
+    :is="selectedTemplate"
+    :wedding="wedding"
+    :preview="preview"
+  />
+  <div v-else class="page-state">
+    Template belum tersedia. Hubungi administrator.
+  </div>
 </template>

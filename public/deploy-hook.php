@@ -226,6 +226,11 @@ try {
     $kernel = $app->make(Kernel::class);
     $kernel->bootstrap();
 
+    $phase = 'pdf-dependency';
+    if (! class_exists(\Dompdf\Dompdf::class) || ! extension_loaded('dom') || ! extension_loaded('mbstring')) {
+        throw new RuntimeException('PDF dependencies are incomplete. No database migration was started.');
+    }
+
     $phase = 'license-backup';
     $licenseGuard = $app->make(DeploymentLicenseGuard::class);
     $protectedSnapshot = $licenseGuard->backup($commit);
@@ -272,6 +277,7 @@ try {
         'commit' => $commit,
         'licenses_preserved' => true,
         'license_backup_created' => true,
+        'pdf_available' => true,
     ]);
 } catch (Throwable $exception) {
     error_log(sprintf(

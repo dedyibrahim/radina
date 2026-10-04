@@ -87,7 +87,9 @@ class WeddingService
             $wedding->update($base);
             $order->update(['slug' => $data['slug'], 'event_type' => $wedding->event_type, 'event_title' => $wedding->title, 'host_name' => $wedding->event_details['host_name'] ?? null, 'honoree_name' => $wedding->event_details['honoree_name'] ?? null]);
             foreach (['bride', 'groom'] as $role) {
-                if ($wedding->event_type !== 'wedding') continue;
+                if ($wedding->event_type !== 'wedding') {
+                    continue;
+                }
                 $wedding->couples()->updateOrCreate(['role' => $role], collect($data[$role])->only(['full_name', 'nickname', 'father_name', 'mother_name', 'photo', 'instagram', 'family_order'])->all());
             }
             $fields = ['events' => ['type', 'title', 'date', 'start_time', 'end_time', 'timezone', 'venue', 'address', 'google_maps_url'], 'stories' => ['date_label', 'title', 'description', 'image'], 'gallery' => ['image', 'caption'], 'gifts' => ['bank', 'account_number', 'account_name', 'logo']];
@@ -149,7 +151,13 @@ class WeddingService
                 $this->workflow->transition($order, 'READY', $adminId);
             }
             $this->workflow->transition($order, 'PUBLISHED', $adminId);
-            $wedding->update(['status' => 'PUBLISHED', 'published_at' => $wedding->published_at ?? now()]);
+            $publishedAt = $wedding->published_at ?? now();
+            $duration = $order->pricing_snapshot['package']['duration_days'] ?? null;
+            $expiresAt = $wedding->expires_at;
+            if (! $wedding->published_at && $duration) {
+                $expiresAt = $publishedAt->copy()->addDays($duration);
+            }
+            $wedding->update(['status' => 'PUBLISHED', 'published_at' => $publishedAt, 'expires_at' => $expiresAt]);
 
             return $wedding->fresh()->loadContent();
         });
@@ -161,13 +169,21 @@ class WeddingService
         $errors = [];
         if (($wedding->event_type ?? 'wedding') === 'wedding') {
             foreach (['bride', 'groom'] as $role) {
-                if (! $wedding->couples->firstWhere('role', $role)?->full_name) $errors[$role] = 'Nama pengantin wajib diisi.';
+                if (! $wedding->couples->firstWhere('role', $role)?->full_name) {
+                    $errors[$role] = 'Nama pengantin wajib diisi.';
+                }
             }
         } else {
             $details = $wedding->event_details ?? [];
-            if (! ($details['host_name'] ?? '')) $errors['event_details.host_name'] = 'Nama penyelenggara wajib diisi.';
-            if (InvitationEvent::profile($wedding->event_type)['honoree'] && ! ($details['honoree_name'] ?? '')) $errors['event_details.honoree_name'] = 'Nama yang diundang untuk dirayakan wajib diisi.';
-            if (! $wedding->title) $errors['title'] = 'Judul acara wajib diisi.';
+            if (! ($details['host_name'] ?? '')) {
+                $errors['event_details.host_name'] = 'Nama penyelenggara wajib diisi.';
+            }
+            if (InvitationEvent::profile($wedding->event_type)['honoree'] && ! ($details['honoree_name'] ?? '')) {
+                $errors['event_details.honoree_name'] = 'Nama yang diundang untuk dirayakan wajib diisi.';
+            }
+            if (! $wedding->title) {
+                $errors['title'] = 'Judul acara wajib diisi.';
+            }
         }
         if (! $wedding->wedding_date) {
             $errors['wedding_date'] = 'Tanggal acara wajib diisi.';

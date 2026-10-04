@@ -1,7 +1,15 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, onBeforeRouteLeave } from 'vue-router'
-import { Save, Send, Plus, Trash2, Eye, Check, RefreshCw } from 'lucide-vue-next'
+import {
+  Save,
+  Send,
+  Plus,
+  Trash2,
+  Eye,
+  Check,
+  RefreshCw,
+} from 'lucide-vue-next'
 import { api, errorMessage } from '../../services/api'
 import { useUiStore } from '../../stores/ui'
 import RadinaLogo from '../../components/RadinaLogo.vue'
@@ -10,6 +18,9 @@ import MediaUploader from '../../components/MediaUploader.vue'
 import PageState from '../../components/PageState.vue'
 import EventDetailsForm from '../../components/EventDetailsForm.vue'
 import { eventProfile, agendaOptions } from '../../services/invitationEvents'
+import WeddingAnalytics from '../../components/WeddingAnalytics.vue'
+import ReminderList from '../../components/ReminderList.vue'
+import OrderDocuments from '../../components/OrderDocuments.vue'
 import WeddingRenderer from '../../components/WeddingRenderer.vue'
 
 const route = useRoute(),
@@ -26,7 +37,9 @@ const portal = ref(null),
   notes = ref('')
 const base = () => `/customer-portals/${route.params.token}`
 const mediaPath = computed(() => `${base()}/media`)
-const dirty = computed(() => form.value && JSON.stringify(form.value) !== baseline.value)
+const dirty = computed(
+  () => form.value && JSON.stringify(form.value) !== baseline.value,
+)
 const locked = computed(() => busy.value || uploads.value > 0)
 const labels = {
   DRAFT: 'Draf data Anda',
@@ -38,7 +51,9 @@ const labels = {
 const canRespond = computed(
   () =>
     preview.value &&
-    ['IN_REVIEW', 'CHANGES_REQUESTED', 'APPROVED'].includes(preview.value.status) &&
+    ['IN_REVIEW', 'CHANGES_REQUESTED', 'APPROVED'].includes(
+      preview.value.status,
+    ) &&
     !dirty.value,
 )
 const baseBasicFields = [
@@ -50,7 +65,9 @@ const baseBasicFields = [
   ['quote_source', 'Sumber kutipan', 'text'],
   ['closing_text', 'Kalimat penutup', 'textarea'],
 ]
-const isWedding = computed(() => !portal.value?.event_type || portal.value.event_type === 'wedding')
+const isWedding = computed(
+  () => !portal.value?.event_type || portal.value.event_type === 'wedding',
+)
 const profile = computed(() => eventProfile(portal.value?.event_type))
 const basicFields = computed(() =>
   baseBasicFields.map(([key, label, type]) => [
@@ -71,7 +88,8 @@ function accept(data) {
   portal.value = data
   form.value = JSON.parse(JSON.stringify(data.form))
   form.value.event_details ||= {}
-  for (const key of ['events', 'stories', 'gallery', 'gift_methods']) form.value[key] ||= []
+  for (const key of ['events', 'stories', 'gallery', 'gift_methods'])
+    form.value[key] ||= []
   for (const role of ['bride', 'groom']) form.value[role] ||= {}
   baseline.value = JSON.stringify(form.value)
 }
@@ -104,7 +122,9 @@ async function save(submit) {
     if (JSON.stringify(form.value) === snapshot) accept(data)
     preview.value = null
     ui.toast(
-      submit ? 'Data terkirim. Admin akan menyiapkan preview untuk Anda.' : 'Draf Anda tersimpan.',
+      submit
+        ? 'Data terkirim. Admin akan menyiapkan preview untuk Anda.'
+        : 'Draf Anda tersimpan.',
     )
   } catch (e) {
     error.value = errorMessage(e)
@@ -201,7 +221,9 @@ function addGift() {
 function galleryUploaded(files) {
   const available = 50 - form.value.gallery.length
   form.value.gallery.push(
-    ...files.slice(0, available).map((file) => ({ image: file.url, caption: '' })),
+    ...files
+      .slice(0, available)
+      .map((file) => ({ image: file.url, caption: '' })),
   )
   if (files.length > available) ui.toast('Galeri maksimal 50 foto.')
 }
@@ -229,7 +251,9 @@ onBeforeRouteLeave(
 
 <template>
   <main class="platform customer-portal">
-    <header class="customer-header p-container"><RadinaLogo /><span>RUANG PELANGGAN</span></header>
+    <header class="customer-header p-container">
+      <RadinaLogo /><span>RUANG PELANGGAN</span>
+    </header>
     <div class="p-container customer-container">
       <PageState
         v-if="loading || !portal"
@@ -243,10 +267,13 @@ onBeforeRouteLeave(
           <p class="p-eyebrow">CERITA ANDA, DIMULAI DI SINI</p>
           <h1>Data &amp; persetujuan undangan</h1>
           <p>
-            Isi detail {{ isWedding ? 'pernikahan' : 'acara' }}, simpan draf, lalu kirim ke admin.
-            Setelah dirapikan, periksa preview dan berikan persetujuan atau catatan revisi.
+            Isi detail {{ isWedding ? 'pernikahan' : 'acara' }}, simpan draf,
+            lalu kirim ke admin. Setelah dirapikan, periksa preview dan berikan
+            persetujuan atau catatan revisi.
           </p>
-          <span class="customer-status" role="status">{{ labels[portal.status] }}</span>
+          <span class="customer-status" role="status">{{
+            labels[portal.status]
+          }}</span>
         </div>
         <nav class="customer-tabs" aria-label="Halaman pelanggan">
           <button
@@ -264,13 +291,41 @@ onBeforeRouteLeave(
           >
             <Eye :size="16" />Preview &amp; Persetujuan
           </button>
+          <button
+            type="button"
+            :disabled="locked"
+            :class="{ selected: tab === 'analytics' }"
+            @click="tab = 'analytics'"
+          >
+            Statistik & Tamu
+          </button>
+          <button
+            type="button"
+            :disabled="locked"
+            :class="{ selected: tab === 'tools' }"
+            @click="tab = 'tools'"
+          >
+            Dokumen & Pengingat
+          </button>
         </nav>
         <p v-if="error" class="alert error" role="alert">{{ error }}</p>
-        <p v-if="portal.status === 'CHANGES_REQUESTED' && portal.revision_notes" class="alert">
+        <p
+          v-if="portal.status === 'CHANGES_REQUESTED' && portal.revision_notes"
+          class="alert"
+        >
           Catatan revisi Anda: {{ portal.revision_notes }}
         </p>
-        <p v-if="dirty" class="customer-unsaved" role="status">Ada perubahan belum disimpan.</p>
-        <template v-if="tab === 'data'">
+        <p v-if="dirty" class="customer-unsaved" role="status">
+          Ada perubahan belum disimpan.
+        </p>
+        <section v-if="tab === 'analytics'" class="surface customer-section">
+          <WeddingAnalytics :base="base()" />
+        </section>
+        <section v-else-if="tab === 'tools'" class="surface customer-section">
+          <h2>Dokumen pesanan</h2>
+          <OrderDocuments :base="base()" paid /><ReminderList :base="base()" />
+        </section>
+        <template v-else-if="tab === 'data'">
           <form novalidate @submit.prevent="save(true)">
             <fieldset :disabled="busy" class="customer-fields">
               <section class="surface customer-section">
@@ -326,7 +381,11 @@ onBeforeRouteLeave(
                     :key="role"
                   >
                     <h3>
-                      {{ label === 'pengantin wanita' ? 'Pengantin wanita' : 'Pengantin pria' }}
+                      {{
+                        label === 'pengantin wanita'
+                          ? 'Pengantin wanita'
+                          : 'Pengantin pria'
+                      }}
                     </h3>
                     <MediaUploader
                       v-model="form[role].photo"
@@ -358,7 +417,11 @@ onBeforeRouteLeave(
                     <Plus :size="16" />Tambah Acara
                   </button>
                 </div>
-                <article v-for="(event, i) in form.events" :key="i" class="repeater-card">
+                <article
+                  v-for="(event, i) in form.events"
+                  :key="i"
+                  class="repeater-card"
+                >
                   <div class="repeater-header">
                     <h3>Acara {{ i + 1 }}</h3>
                     <button
@@ -371,7 +434,10 @@ onBeforeRouteLeave(
                     </button>
                   </div>
                   <div class="form-grid">
-                    <FormField v-model="event.title" :label="`Nama acara ${i + 1}`" /><FormField
+                    <FormField
+                      v-model="event.title"
+                      :label="`Nama acara ${i + 1}`"
+                    /><FormField
                       v-model="event.type"
                       :label="`Jenis acara ${i + 1}`"
                       type="select"
@@ -411,7 +477,10 @@ onBeforeRouteLeave(
                           label: 'WIT',
                         },
                       ]"
-                    /><FormField v-model="event.venue" :label="`Lokasi acara ${i + 1}`" /><FormField
+                    /><FormField
+                      v-model="event.venue"
+                      :label="`Lokasi acara ${i + 1}`"
+                    /><FormField
                       v-model="event.address"
                       :label="`Alamat acara ${i + 1}`"
                       type="textarea"
@@ -435,7 +504,11 @@ onBeforeRouteLeave(
                     <Plus :size="16" />Tambah Cerita
                   </button>
                 </div>
-                <article v-for="(story, i) in form.stories" :key="i" class="repeater-card">
+                <article
+                  v-for="(story, i) in form.stories"
+                  :key="i"
+                  class="repeater-card"
+                >
                   <div class="repeater-header">
                     <h3>Cerita {{ i + 1 }}</h3>
                     <button
@@ -451,7 +524,10 @@ onBeforeRouteLeave(
                     <FormField
                       v-model="story.date_label"
                       :label="`Tanggal atau tahun cerita ${i + 1}`"
-                    /><FormField v-model="story.title" :label="`Judul cerita ${i + 1}`" /><FormField
+                    /><FormField
+                      v-model="story.title"
+                      :label="`Judul cerita ${i + 1}`"
+                    /><FormField
                       v-model="story.description"
                       :label="`Isi cerita ${i + 1}`"
                       type="textarea"
@@ -470,8 +546,8 @@ onBeforeRouteLeave(
               <section class="surface customer-section">
                 <h2>Galeri foto</h2>
                 <p>
-                  Maksimal 50 foto, unggah hingga 10 foto sekaligus. JPG, PNG, WebP, atau AVIF,
-                  maksimal 12 MB per foto.
+                  Maksimal 50 foto, unggah hingga 10 foto sekaligus. JPG, PNG,
+                  WebP, atau AVIF, maksimal 12 MB per foto.
                 </p>
                 <MediaUploader
                   v-if="form.gallery.length < 50"
@@ -485,10 +561,17 @@ onBeforeRouteLeave(
                 />
                 <div class="customer-gallery">
                   <article v-for="(photo, i) in form.gallery" :key="i">
-                    <img :src="photo.image" :alt="`Foto galeri ${i + 1}`" /><FormField
+                    <img
+                      :src="photo.image"
+                      :alt="`Foto galeri ${i + 1}`"
+                    /><FormField
                       v-model="photo.caption"
                       :label="`Keterangan foto ${i + 1}`"
-                    /><button type="button" class="text-link" @click="form.gallery.splice(i, 1)">
+                    /><button
+                      type="button"
+                      class="text-link"
+                      @click="form.gallery.splice(i, 1)"
+                    >
                       <Trash2 :size="14" />Hapus foto
                       {{ i + 1 }}
                     </button>
@@ -507,8 +590,15 @@ onBeforeRouteLeave(
                     <Plus :size="16" />Tambah Metode Hadiah
                   </button>
                 </div>
-                <p>Isi rekening atau alamat penerima hadiah untuk ditampilkan kepada tamu.</p>
-                <article v-for="(gift, i) in form.gift_methods" :key="i" class="repeater-card">
+                <p>
+                  Isi rekening atau alamat penerima hadiah untuk ditampilkan
+                  kepada tamu.
+                </p>
+                <article
+                  v-for="(gift, i) in form.gift_methods"
+                  :key="i"
+                  class="repeater-card"
+                >
                   <div class="repeater-header">
                     <h3>Hadiah {{ i + 1 }}</h3>
                     <button
@@ -584,7 +674,10 @@ onBeforeRouteLeave(
               </section>
             </fieldset>
             <div class="surface customer-save">
-              <p>Data dan foto yang dikirim akan diperiksa admin sebelum diterapkan ke undangan.</p>
+              <p>
+                Data dan foto yang dikirim akan diperiksa admin sebelum
+                diterapkan ke undangan.
+              </p>
               <div class="action-group">
                 <button
                   type="button"
@@ -597,10 +690,14 @@ onBeforeRouteLeave(
                   type="submit"
                   class="p-button"
                   :disabled="
-                    locked || (!dirty && ['SUBMITTED', 'APPROVED'].includes(portal.status))
+                    locked ||
+                    (!dirty &&
+                      ['SUBMITTED', 'APPROVED'].includes(portal.status))
                   "
                 >
-                  <Send :size="16" />{{ busy ? 'Menyimpan…' : 'Kirim Data ke Admin' }}
+                  <Send :size="16" />{{
+                    busy ? 'Menyimpan…' : 'Kirim Data ke Admin'
+                  }}
                 </button>
               </div>
             </div>
@@ -620,18 +717,24 @@ onBeforeRouteLeave(
               </button>
             </div>
             <p>
-              Preview menampilkan versi yang telah disiapkan admin. Periksa nama, tanggal, lokasi,
-              foto, dan rekening hadiah sebelum menyetujui.
+              Preview menampilkan versi yang telah disiapkan admin. Periksa
+              nama, tanggal, lokasi, foto, dan rekening hadiah sebelum
+              menyetujui.
             </p>
             <p v-if="dirty" class="alert">
-              Simpan atau kirim perubahan data Anda sebelum memberikan persetujuan.
+              Simpan atau kirim perubahan data Anda sebelum memberikan
+              persetujuan.
             </p>
             <p v-if="preview && !canRespond && !dirty" class="alert">
-              Admin sedang menyiapkan undangan. Persetujuan tersedia setelah undangan dikirim untuk
-              ditinjau.
+              Admin sedang menyiapkan undangan. Persetujuan tersedia setelah
+              undangan dikirim untuk ditinjau.
             </p>
             <template v-if="canRespond"
-              ><p v-if="preview.status === 'APPROVED'" class="alert" role="status">
+              ><p
+                v-if="preview.status === 'APPROVED'"
+                class="alert"
+                role="status"
+              >
                 Preview ini sudah Anda setujui.
               </p>
               <div v-else class="customer-decisions">
@@ -659,7 +762,11 @@ onBeforeRouteLeave(
             >
           </section>
           <div v-if="preview" class="customer-preview">
-            <WeddingRenderer :key="preview.fingerprint" :wedding="preview.wedding" preview />
+            <WeddingRenderer
+              :key="preview.fingerprint"
+              :wedding="preview.wedding"
+              preview
+            />
           </div>
         </template>
       </template>

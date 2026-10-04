@@ -8,5 +8,5 @@ class WeddingRsvp extends Model
 {
     protected $table = 'wedding_rsvps';
 
-    protected $fillable = ['wedding_id', 'name', 'guests', 'attendance', 'message'];
+    protected $fillable = ['wedding_id', 'wedding_invitee_id', 'name', 'guests', 'attendance', 'message'];
 }

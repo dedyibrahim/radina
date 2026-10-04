@@ -62,6 +62,33 @@ class CustomerPortalController extends Controller
         return response()->json(['data' => $data])->header('Cache-Control', 'private, no-store')->header('Referrer-Policy', 'no-referrer')->header('X-Robots-Tag', 'noindex, nofollow');
     }
 
+    public function document(string $token, string $type, \App\Services\OrderDocumentService $documents)
+    {
+        return $documents->download($this->resolve($token)->wedding->order, $type);
+    }
+
+    public function analytics(Request $request, string $token, \App\Services\InvitationAnalytics $analytics)
+    {
+        $data = $request->validate(['days' => ['sometimes', Rule::in([7, 30, 90])]]);
+
+        return $this->response($analytics->summary($this->resolve($token)->wedding, (int) ($data['days'] ?? 30)));
+    }
+
+    public function guests(Request $request, string $token, \App\Services\InvitationAnalytics $analytics)
+    {
+        $data = $request->validate(['search' => 'sometimes|nullable|string|max:120']);
+
+        return $this->response($analytics->guests($this->resolve($token)->wedding, $data['search'] ?? '')->toArray());
+    }
+
+    public function reminders(string $token, \App\Services\OrderReminderService $reminders)
+    {
+        $order = $this->resolve($token)->wedding->order;
+        $reminders->refresh($order->id);
+
+        return $this->response($reminders->active($order->id)->orderBy('due_at')->limit(20)->get()->map(fn ($r) => collect($r)->only(['id', 'kind', 'title', 'message', 'due_at', 'snoozed_until'])->all())->all());
+    }
+
     public function show(string $token)
     {
         return $this->response($this->payload($this->resolve($token)));

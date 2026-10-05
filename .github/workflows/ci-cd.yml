@@ -94,6 +94,9 @@ jobs:
       - name: Verify event visibility and selected locations
         run: npm run test:event-visibility
 
+      - name: Verify quote line breaks and safe Arabic text rendering
+        run: npm run test:quote-line-breaks
+
       - name: Run migrations
         run: php artisan migrate --force
 

@@ -472,6 +472,7 @@ watch(tab, (value) => {
               v-model="form[field[0]]"
               :label="field[1]"
               :type="field[2]"
+              :help="field[0] === 'quote' ? 'Gunakan Enter atau /n untuk memisahkan teks Arab dan artinya ke baris baru.' : undefined"
               :required="field[0] === 'title'"
             /><FormField
               v-model="form.slug"

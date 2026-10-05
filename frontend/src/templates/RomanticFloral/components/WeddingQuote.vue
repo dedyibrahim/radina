@@ -1,5 +1,6 @@
 <script setup>
 import FlowerMotion from './FlowerMotion.vue'
+import TextWithLineBreaks from '../../../components/TextWithLineBreaks.vue'
 import { inject } from 'vue'
 const wedding = inject('wedding')
 const design = inject('weddingDesign', 'amore')
@@ -19,9 +20,11 @@ import BotanicalOrnament from './BotanicalOrnament.vue'
         بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
       </p>
       <p class="eyebrow">{{ content?.heading || 'A PROMISE TO KEEP' }}</p>
-      <p v-if="content?.subheading" class="section-subtitle">{{ content.subheading }}</p>
-      <blockquote>“{{ wedding.quote }}”</blockquote>
-      <p class="quote-source">{{ wedding.quoteSource }}</p>
+      <p v-if="content?.subheading" class="section-subtitle">
+        <TextWithLineBreaks :text="content.subheading" />
+      </p>
+      <blockquote>“<TextWithLineBreaks :text="wedding.quote" />”</blockquote>
+      <p class="quote-source"><TextWithLineBreaks :text="wedding.quoteSource" /></p>
     </div>
   </section>
 </template>

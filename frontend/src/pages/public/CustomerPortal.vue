@@ -407,6 +407,7 @@ onBeforeRouteLeave(
                     v-model="form[key]"
                     :label="label"
                     :type="type"
+                    :help="key === 'quote' ? 'Gunakan Enter atau /n untuk memisahkan teks Arab dan artinya ke baris baru.' : undefined"
                   />
                 </div>
                 <div class="customer-photo-grid">

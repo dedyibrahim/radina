@@ -28,6 +28,10 @@ class CustomerPortalService
         $data = collect($data)->except(['id', 'order_id', 'status', 'published_at', 'publish_at', 'updated_at', 'is_demo'])->all();
         // Preserve unchanged wedding approvals when invisible metadata is added.
         if (($data['event_type'] ?? 'wedding') === 'wedding') unset($data['event_type'], $data['event_details']);
+        // Default visibility keeps existing approvals valid; hiding a field changes the preview.
+        foreach (['enable_parents', 'enable_social'] as $key) {
+            if (($data['settings'][$key] ?? true) === true) unset($data['settings'][$key]);
+        }
         $data['template'] = ['template_key' => $data['template']['template_key'], 'name' => $data['template']['name']];
         $clean = function ($value) use (&$clean) {
             if (! is_array($value)) {

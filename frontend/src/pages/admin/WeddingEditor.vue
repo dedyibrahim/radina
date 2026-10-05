@@ -181,6 +181,8 @@ function normalize(data) {
   }))
   result.event_type ||= 'wedding'
   result.event_details ||= {}
+  result.settings.enable_parents ??= true
+  result.settings.enable_social ??= true
   result.section_content ||= {}
   result.music.playlist ||= []
   result.gift_methods ||= []
@@ -572,6 +574,31 @@ watch(tab, (value) => {
             :event-type="form.event_type"
             :wedding-id="form.id"
             :disabled="pending" />
+          <div v-if="isWedding" class="couple-visibility repeater-card">
+            <h3>Tampilan pada undangan</h3>
+            <p class="panel-subtitle">
+              Berlaku untuk kedua pengantin. Data tetap tersimpan ketika disembunyikan.
+              Klik Simpan untuk menerapkan perubahan.
+            </p>
+            <label class="toggle-row">
+              <span>Tampilkan orang tua dan keterangan keluarga</span>
+              <input
+                v-model="form.settings.enable_parents"
+                type="checkbox"
+                role="switch"
+                :disabled="pending"
+              />
+            </label>
+            <label class="toggle-row">
+              <span>Tampilkan media sosial pengantin</span>
+              <input
+                v-model="form.settings.enable_social"
+                type="checkbox"
+                role="switch"
+                :disabled="pending"
+              />
+            </label>
+          </div>
           <div v-if="isWedding" class="couple-editor-grid">
             <section
               v-for="[role, label] in [

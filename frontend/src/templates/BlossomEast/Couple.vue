@@ -17,8 +17,8 @@ const wedding = inject('wedding')
         <div class="ink-biography">
           <small>{{ i === 0 ? 'THE BRIDE' : 'THE GROOM' }}</small>
           <h3>{{ person.name }}</h3>
-          <p>{{ person.order }}</p>
-          <p>
+          <p v-if="person.order">{{ person.order }}</p>
+          <p v-if="person.father || person.mother">
             {{ person.father }} <span v-if="person.father && person.mother">&</span>
             {{ person.mother }}
           </p>

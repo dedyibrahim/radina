@@ -32,7 +32,7 @@ class WeddingContentCsv
         $add('music.', 'Musik', ['music_url' => 'URL audio', 'volume' => 'Volume 0-100', 'autoplay_after_open' => 'Putar otomatis: ya/tidak', 'shuffle' => 'Acak lagu: ya/tidak', 'repeat' => 'Ulangi lagu: ya/tidak']);
         $add('livestream.', 'Live streaming', ['platform' => 'Platform', 'url' => 'URL siaran']);
         $add('shipping_gift.', 'Alamat hadiah', ['recipient' => 'Penerima', 'address' => 'Alamat', 'phone' => 'Nomor telepon: format kolom sebagai Teks']);
-        foreach (['music', 'gallery', 'story', 'rsvp', 'wishes', 'gift', 'livestream', 'countdown', 'video', 'maps'] as $key) {
+        foreach (['music', 'gallery', 'story', 'rsvp', 'wishes', 'gift', 'livestream', 'countdown', 'video', 'maps', 'parents', 'social'] as $key) {
             $fields['settings.enable_'.$key] = ['Fitur', 'Aktifkan '.$key.': ya/tidak'];
         }
 

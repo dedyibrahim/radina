@@ -78,11 +78,11 @@ try {
   )
   assert.equal(offers.packages.length, 3)
   if (production) {
-    assert(offers.packages.every((p) => !p.is_active && p.price === null))
+    assert(offers.packages.every((p) => p.is_active && p.price !== null))
     assert.equal(
       (await data(await customer.request.get(`${base}/api/packages`))).packages
         .length,
-      0,
+      3,
     )
     await a.goto(`${base}/admin/reminders`, { waitUntil: 'networkidle' })
     await expect(
@@ -127,13 +127,16 @@ try {
     )
     console.log('Browser checkpoint passed.')
     checks.push(
-      'Production packages remain inactive with no assigned prices; existing template prices remain in use.',
+      'Production packages have active prices; template-only pricing remains available.',
       'Admin package, reminder, statistics and check-in pages render on mobile and desktop.',
       'License administration remains accessible; no production checkout, content update, payment, check-in or document creation was performed.',
     )
   } else {
     const addonName = `Layanan Uji ${Date.now()}`
+    const template = await data(await customer.request.get(`${base}/api/templates/romantic-floral`))
+    const expectedTotal = Number(template.price) + 40000
     await a.getByRole('button', { name: 'Atur Basic', exact: true }).click()
+    await a.getByLabel('Perhitungan harga', { exact: false }).selectOption('TEMPLATE_PLUS')
     await a.getByLabel('Harga (Rp)', { exact: false }).fill('25000')
     await a.getByLabel('Masa aktif', { exact: false }).fill('30')
     await a
@@ -188,7 +191,7 @@ try {
       .selectOption(String(offers.packages[0].id))
     await c.getByLabel(addonName, { exact: false }).check()
     await c.getByRole('button', { name: 'Lanjutkan', exact: true }).click()
-    await expect(c.locator('.summary-total')).toContainText('189.000')
+    await expect(c.locator('.summary-total')).toContainText(expectedTotal.toLocaleString('id-ID'))
     await fits(c, 'Checkout mobile')
     await c.getByRole('button', { name: 'Buat Pesanan', exact: true }).click()
     await c.waitForURL(/\/order\/success\//)
@@ -198,7 +201,7 @@ try {
         data: { order_number: number, whatsapp: '081234567890' },
       }),
     )
-    assert.equal(Number(order.total), 189000)
+    assert.equal(Number(order.total), expectedTotal)
     assert.equal(order.pricing.package.duration_days, 30)
     const invoice = await download(c, 'Download Invoice', `${dir}/invoice.pdf`)
     assert(invoice.subarray(0, 5).toString() === '%PDF-')

@@ -37,11 +37,11 @@ export function weddingView(data) {
     return {
       name: source.full_name || '',
       shortName: source.nickname || source.full_name || '',
-      father: source.father_name || '',
-      mother: source.mother_name || '',
+      father: data.settings?.enable_parents === false ? '' : source.father_name || '',
+      mother: data.settings?.enable_parents === false ? '' : source.mother_name || '',
       photo: source.photo,
-      instagram: source.instagram,
-      order: source.family_order || '',
+      instagram: data.settings?.enable_social === false ? '' : source.instagram,
+      order: data.settings?.enable_parents === false ? '' : source.family_order || '',
     }
   }
   return {
@@ -51,7 +51,10 @@ export function weddingView(data) {
     eventType,
     isWedding,
     occasionLabel: profile.label,
-    eventDetails: data.event_details || {},
+    eventDetails: {
+      ...data.event_details,
+      ...(data.settings?.enable_parents === false ? { father_name: '', mother_name: '' } : {}),
+    },
     displayName: isWedding
       ? [
           data.bride?.nickname || data.bride?.full_name,

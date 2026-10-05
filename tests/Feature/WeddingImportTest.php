@@ -317,4 +317,42 @@ class WeddingImportTest extends TestCase
         $this->assertMatchesRegularExpression('/^[a-f0-9]{16}$/', $guest->fresh()->short_code);
         $guard->assertPreserved($backup);
     }
+
+    public function test_couple_visibility_preserves_input_and_default_settings_keep_approval_fingerprints(): void
+    {
+        $w = $this->wedding('couple-visibility');
+        $w->couples()->update(['father_name' => 'Bapak Tersimpan', 'mother_name' => 'Ibu Tersimpan', 'family_order' => 'Putri pertama dari', 'instagram' => 'akun_tersimpan']);
+        $path = '/api/admin/weddings/'.$w->id;
+        // Normalize nullable form values once before comparing visibility-only edits.
+        $data = $this->getJson($path)->assertOk()->json('data');
+        $data['expected_updated_at'] = $data['updated_at'];
+        $this->putJson($path, $data)->assertOk();
+        $migration = require database_path('migrations/2026_10_05_000015_add_couple_visibility_settings.php');
+        $migration->down();
+        $before = \App\Services\CustomerPortalService::fingerprint($w->fresh());
+        $migration->up();
+        $this->assertSame($before, \App\Services\CustomerPortalService::fingerprint($w->fresh()));
+        foreach ([false, true] as $visible) {
+            $data = $this->getJson($path)->assertOk()->json('data');
+            $data['expected_updated_at'] = $data['updated_at'];
+            $data['settings']['enable_parents'] = $visible;
+            $data['settings']['enable_social'] = $visible;
+            $this->putJson($path, $data)->assertOk()
+                ->assertJsonPath('data.settings.enable_parents', $visible)
+                ->assertJsonPath('data.settings.enable_social', $visible)
+                ->assertJsonPath('data.bride.father_name', 'Bapak Tersimpan')
+                ->assertJsonPath('data.bride.instagram', 'akun_tersimpan');
+            $this->assertSame($visible, $w->fresh()->settings->enable_parents);
+            $this->assertSame($visible, $w->fresh()->settings->enable_social);
+            $this->assertSame(2, $w->couples()->where('father_name', 'Bapak Tersimpan')->where('mother_name', 'Ibu Tersimpan')->where('family_order', 'Putri pertama dari')->where('instagram', 'akun_tersimpan')->count());
+            $this->assertSame(! $visible, $before !== \App\Services\CustomerPortalService::fingerprint($w->fresh()));
+        }
+        // Older clients and imports that omit the new flags must not turn them off.
+        $data = $this->getJson($path)->assertOk()->json('data');
+        $data['expected_updated_at'] = $data['updated_at'];
+        unset($data['settings']['enable_parents'], $data['settings']['enable_social']);
+        $this->putJson($path, $data)->assertOk()->assertJsonPath('data.settings.enable_parents', true)->assertJsonPath('data.settings.enable_social', true);
+        $data['settings']['enable_parents'] = 'invalid';
+        $this->putJson($path, $data)->assertUnprocessable()->assertJsonValidationErrors('settings.enable_parents');
+    }
 }

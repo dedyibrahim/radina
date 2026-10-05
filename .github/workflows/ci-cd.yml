@@ -88,6 +88,9 @@ jobs:
       - name: Verify Analytics route privacy and SPA tracking
         run: npm run test:analytics
 
+      - name: Verify couple visibility across invitation templates
+        run: npm run test:couple-visibility
+
       - name: Run migrations
         run: php artisan migrate --force
 

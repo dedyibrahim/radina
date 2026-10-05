@@ -72,26 +72,68 @@ class InvitationBusinessToolsTest extends TestCase
         return WeddingInvitee::create(['wedding_id' => $wedding->id, 'name' => $name, 'address' => 'Alamat pribadi tamu', 'token' => (string) Str::uuid(), 'fingerprint' => hash('sha256', $name)]);
     }
 
-    public function test_packages_begin_inactive_and_existing_prices_remain_default(): void
+    public function test_packages_are_ready_and_template_only_orders_use_varied_catalog_prices(): void
     {
         $this->assertSame(3, InvitationPackage::count());
-        $this->getJson('/api/packages')->assertOk()->assertJsonPath('data.packages', []);
-        $this->postJson('/api/orders', $this->input(['total' => 1]))->assertCreated()->assertJsonPath('data.total', 149000)->assertJsonPath('data.pricing.package', null);
-        $this->postJson('/api/orders', $this->input(['package_id' => InvitationPackage::first()->id]))->assertUnprocessable();
+        $this->getJson('/api/packages')->assertOk()->assertJsonCount(3, 'data.packages');
+        $this->assertGreaterThan(1, Template::distinct()->count('price'));
+        $this->postJson('/api/orders', $this->input(['total' => 1]))->assertCreated()->assertJsonPath('data.total', (int) Template::first()->price)->assertJsonPath('data.pricing.package', null);
+        foreach (['basic' => 50000, 'premium' => 90000, 'vip' => 150000] as $slug => $price) {
+            $package = InvitationPackage::where('slug', $slug)->firstOrFail();
+            $this->assertTrue($package->is_active);
+            $this->assertSame('FIXED', $package->pricing_mode);
+            $this->postJson('/api/orders', $this->input(['package_id' => $package->id]))->assertCreated()->assertJsonPath('data.total', $price);
+        }
+        $package->update(['is_active' => false]);
+        $this->postJson('/api/orders', $this->input(['package_id' => $package->id]))->assertUnprocessable();
         $this->getJson('/api/admin/packages')->assertUnauthorized();
+    }
+
+    public function test_catalog_price_migration_preserves_existing_orders_manual_prices_and_licenses(): void
+    {
+        $response = $this->postJson('/api/orders', $this->input())->assertCreated();
+        $order = Order::findOrFail($response->json('data.id'));
+        $before = $order->getRawOriginal();
+        $guard = app(\App\Services\DeploymentLicenseGuard::class);
+        $backup = $guard->backup(str_repeat('d', 40));
+        $template = Template::where('template_key', 'minimalist-white')->firstOrFail();
+        $template->update(['price' => 149000]);
+        $custom = Template::where('template_key', 'elegant-luxury')->firstOrFail();
+        $custom->update(['price' => 175000]);
+        $basic = InvitationPackage::where('slug', 'basic')->firstOrFail();
+        $basic->update(['price' => null, 'is_active' => false, 'pricing_mode' => 'TEMPLATE_PLUS']);
+        $vip = InvitationPackage::where('slug', 'vip')->firstOrFail();
+        $vip->update(['price' => 180000, 'is_active' => false]);
+        $migration = require database_path('migrations/2026_10_05_000016_set_invitation_catalog_prices.php');
+        $migration->up();
+        $this->assertSame(50000, (int) $template->fresh()->price);
+        $this->assertSame(175000, (int) $custom->fresh()->price);
+        $this->assertSame(50000, (int) $basic->fresh()->price);
+        $this->assertTrue($basic->fresh()->is_active);
+        $this->assertSame('FIXED', $basic->fresh()->pricing_mode);
+        $this->assertSame(180000, (int) $vip->fresh()->price);
+        $this->assertFalse($vip->fresh()->is_active);
+        $template->update(['price' => 55000]);
+        $migration->up();
+        $this->seed(\Database\Seeders\RadinaSeeder::class);
+        $this->assertSame(55000, (int) $template->fresh()->price);
+        $this->assertSame($before, $order->fresh()->getRawOriginal());
+        $guard->assertPreserved($backup);
+        $this->assertEqualsCanonicalizing(\App\Services\TemplateCatalog::KEYS, array_keys(config('invitation-pricing.templates')));
     }
 
     public function test_package_addons_price_snapshots_and_conflicts_are_enforced(): void
     {
         $package = InvitationPackage::first();
-        $package->update(['price' => 50000, 'is_active' => true, 'duration_days' => 90]);
+        $package->update(['pricing_mode' => 'TEMPLATE_PLUS', 'price' => 50000, 'is_active' => true, 'duration_days' => 90]);
         $addon = InvitationAddon::create(['name' => 'Tambahan', 'price' => 20000, 'is_active' => true]);
         $this->postJson('/api/orders', $this->input(['package_id' => $package->id, 'addon_ids' => [$addon->id], 'expected_total' => 1]))->assertStatus(409);
-        $result = $this->postJson('/api/orders', $this->input(['package_id' => $package->id, 'addon_ids' => [$addon->id], 'expected_total' => 219000, 'total' => 1]))->assertCreated()->assertJsonPath('data.total', 219000);
+        $total = (int) Template::first()->price + 70000;
+        $result = $this->postJson('/api/orders', $this->input(['package_id' => $package->id, 'addon_ids' => [$addon->id], 'expected_total' => $total, 'total' => 1]))->assertCreated()->assertJsonPath('data.total', $total);
         $order = Order::findOrFail($result->json('data.id'));
         $package->update(['price' => 999000]);
         $addon->update(['price' => 999000]);
-        $this->assertSame(219000, (int) $order->fresh()->total);
+        $this->assertSame($total, (int) $order->fresh()->total);
         $this->assertSame(50000, $order->fresh()->pricing_snapshot['package']['price']);
         $package->update(['pricing_mode' => 'FIXED', 'price' => 300000]);
         $this->postJson('/api/orders', $this->input(['package_id' => $package->id]))->assertCreated()->assertJsonPath('data.total', 300000);
@@ -105,6 +147,7 @@ class InvitationBusinessToolsTest extends TestCase
         $package = InvitationPackage::first();
         $input = $package->toArray();
         $input['is_active'] = true;
+        $input['price'] = null;
         $input['features'] = [];
         $this->putJson('/api/admin/packages/'.$package->id, $input)->assertUnprocessable()->assertJsonValidationErrors('price');
         $input['price'] = 0;
@@ -122,7 +165,7 @@ class InvitationBusinessToolsTest extends TestCase
         $this->postJson('/api/order-documents/invoice', array_replace($auth, ['whatsapp' => '089999999999']))->assertNotFound();
         $this->getJson('/api/admin/orders/'.$order->id.'/documents/invoice')->assertUnauthorized();
         $document = app(OrderDocumentService::class)->document($order, 'invoice');
-        $this->assertSame(149000, $document->snapshot['total']);
+        $this->assertSame((int) $order->total, $document->snapshot['total']);
         $this->assertCount(2, $document->snapshot['banks']);
         $order->template->update(['price' => 999999]);
         $order->update(['customer_name' => 'Nama diubah']);

@@ -73,7 +73,7 @@ class InvitationEventTest extends TestCase
     {
         foreach (['khitanan', 'office', 'birthday', 'aqiqah', 'other'] as $type) {
             $data = $this->booking($type, 'booking-'.$type);
-            $this->postJson('/api/orders', $data + ['total' => 1])->assertCreated()->assertJsonPath('data.event_type', $type)->assertJsonPath('data.bride_name', '')->assertJsonPath('data.groom_name', '')->assertJsonPath('data.total', 149000);
+            $this->postJson('/api/orders', $data + ['total' => 1])->assertCreated()->assertJsonPath('data.event_type', $type)->assertJsonPath('data.bride_name', '')->assertJsonPath('data.groom_name', '')->assertJsonPath('data.total', (int) Template::findOrFail($data['template_id'])->price);
         }
         $data = $this->booking('khitanan', 'missing-child');
         unset($data['honoree_name']);

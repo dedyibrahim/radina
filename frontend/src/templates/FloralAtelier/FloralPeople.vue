@@ -28,8 +28,8 @@ const wedding = inject('wedding')
           </figcaption>
         </figure>
         <h3>{{ person.name }}</h3>
-        <p>{{ person.order }}</p>
-        <p>{{ [person.father, person.mother].filter(Boolean).join(' & ') }}</p>
+        <p v-if="person.order">{{ person.order }}</p>
+        <p v-if="person.father || person.mother">{{ [person.father, person.mother].filter(Boolean).join(' & ') }}</p>
         <a
           v-if="person.instagram"
           :href="`https://www.instagram.com/${person.instagram}/`"

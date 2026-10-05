@@ -32,7 +32,7 @@ import BotanicalOrnament from './BotanicalOrnament.vue'
         </div>
         <p class="eyebrow person-label">{{ i === 0 ? 'THE BRIDE' : 'THE GROOM' }}</p>
         <h3>{{ person.name }}</h3>
-        <p>
+        <p v-if="person.order || person.father || person.mother">
           {{ person.order }}<br /><strong>{{ person.father }}</strong
           ><br />& <strong>{{ person.mother }}</strong>
         </p>

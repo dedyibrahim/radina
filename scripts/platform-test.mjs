@@ -75,7 +75,7 @@ try {
   const order = (await (await created).json()).data
   console.log('PASS customer order created')
   assert.equal(order.status, 'WAITING_PAYMENT')
-  assert.equal(order.total, 149000)
+  assert.equal(order.total, Number((await request(page, 'GET', '/templates/romantic-floral')).data.data.price))
   assert.equal(order.whatsapp, '6281234567890')
   await page.getByRole('link', { name: 'Konfirmasi Pembayaran via WhatsApp' }).waitFor()
   const wa = await page

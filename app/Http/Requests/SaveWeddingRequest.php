@@ -63,6 +63,9 @@ class SaveWeddingRequest extends FormRequest
         foreach (['music', 'gallery', 'story', 'rsvp', 'wishes', 'gift', 'livestream', 'countdown', 'video', 'maps'] as $feature) {
             $rules['settings.enable_'.$feature] = 'required|boolean';
         }
+        foreach (['parents', 'social'] as $feature) {
+            $rules['settings.enable_'.$feature] = 'sometimes|boolean';
+        }
         if ($wedding?->status === 'PUBLISHED') {
             $rules['wedding_date'] = 'required|date_format:Y-m-d';
             $rules['events'] = 'required|array|min:1|max:20';

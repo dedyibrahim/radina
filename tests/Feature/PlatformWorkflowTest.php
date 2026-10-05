@@ -34,7 +34,7 @@ class PlatformWorkflowTest extends TestCase
     {
         $template = Template::first();
         $response = $this->postJson('/api/orders', ['template_id' => $template->id, 'customer_name' => 'Test Customer', 'whatsapp' => '081234567890', 'bride_name' => 'Nadia Test', 'groom_name' => 'Fajar Test', 'slug' => 'new-wedding', 'total' => 1]);
-        $response->assertCreated()->assertJsonPath('data.total', 149000)->assertJsonPath('data.status', 'WAITING_PAYMENT');
+        $response->assertCreated()->assertJsonPath('data.total', (int) $template->price)->assertJsonPath('data.status', 'WAITING_PAYMENT');
 
         return Order::find($response->json('data.id'));
     }

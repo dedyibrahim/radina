@@ -1,5 +1,6 @@
 <script setup>
 import EventDetailsForm from '../../components/EventDetailsForm.vue'
+import EventCountdownSelector from '../../components/EventCountdownSelector.vue'
 import {
   eventOptions,
   eventProfile,
@@ -176,6 +177,7 @@ function normalize(data) {
     ...event,
     is_visible: event.is_visible ?? true,
     show_on_map: event.show_on_map ?? index === 0,
+    use_for_countdown: event.use_for_countdown ?? false,
     start_time: event.start_time.slice(0, 5),
     end_time: event.end_time.slice(0, 5),
   }))
@@ -258,6 +260,7 @@ function addEvent() {
   form.value.events.push({
     is_visible: true,
     show_on_map: form.value.events.length === 0,
+    use_for_countdown: false,
     type: isWedding.value ? 'reception' : 'other',
     title: '',
     date: form.value.wedding_date || '',
@@ -611,6 +614,7 @@ watch(tab, (value) => {
               <Plus :size="16" />Tambah Acara
             </button>
           </div>
+          <EventCountdownSelector v-model="form.events" :disabled="pending" />
           <article
             v-for="(event, i) in form.events"
             :key="i"

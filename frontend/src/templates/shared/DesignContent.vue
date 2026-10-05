@@ -45,7 +45,7 @@ const available = computed(() => ({
   couple: true,
   closing: true,
   quote: Boolean(wedding.quote),
-  date: wedding.settings.enable_countdown && wedding.date.day,
+  date: wedding.settings.enable_countdown && wedding.countdownDate.day,
   story: wedding.settings.enable_story && wedding.loveStory.length,
   event: wedding.events.length,
   gallery: wedding.settings.enable_gallery && wedding.gallery.length,

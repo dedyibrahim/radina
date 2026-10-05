@@ -97,6 +97,9 @@ jobs:
       - name: Verify quote line breaks and safe Arabic text rendering
         run: npm run test:quote-line-breaks
 
+      - name: Verify countdown event selection and calendar dates
+        run: npm run test:countdown-event
+
       - name: Run migrations
         run: php artisan migrate --force
 

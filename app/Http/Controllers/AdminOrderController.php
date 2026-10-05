@@ -19,13 +19,13 @@ class AdminOrderController extends Controller
         $counts = Order::where('is_demo', false)->selectRaw('status, COUNT(*) AS count')->groupBy('status')->pluck('count', 'status');
 
         return response()->json(['data' => ['total_orders' => Order::where('is_demo', false)->count(), 'today_orders' => Order::where('is_demo', false)->whereDate('created_at', today())->count(), 'statuses' => $counts,
-            'revenue' => DB::table('payments')->where('status', 'PAID')->sum('amount'), 'recent_orders' => OrderResource::collection(Order::with(['template.category', 'payment', 'wedding'])->latest()->limit(6)->get()),
-            'attention_orders' => OrderResource::collection(Order::with(['template.category', 'payment', 'wedding'])->whereIn('status', ['PAYMENT_REVIEW', 'PAID', 'CONTENT_PROCESS'])->oldest()->limit(6)->get())]]);
+            'revenue' => DB::table('payments')->join('orders', 'orders.id', '=', 'payments.order_id')->where('orders.is_demo', false)->where('payments.status', 'PAID')->sum('payments.amount'), 'recent_orders' => OrderResource::collection(Order::with(['template.category', 'payment', 'wedding'])->where('is_demo', false)->latest()->limit(6)->get()),
+            'attention_orders' => OrderResource::collection(Order::with(['template.category', 'payment', 'wedding'])->where('is_demo', false)->whereIn('status', ['PAYMENT_REVIEW', 'PAID', 'CONTENT_PROCESS'])->oldest()->limit(6)->get())]]);
     }
 
     public function index(Request $request)
     {
-        $q = Order::with(['template.category', 'payment', 'wedding'])->latest();
+        $q = Order::with(['template.category', 'payment', 'wedding'])->where('is_demo', false)->latest();
         if ($request->filled('status')) {
             $q->where('status', $request->string('status'));
         }

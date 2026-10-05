@@ -17,6 +17,7 @@ import FormField from '../../components/FormField.vue'
 import MediaUploader from '../../components/MediaUploader.vue'
 import PageState from '../../components/PageState.vue'
 import EventDetailsForm from '../../components/EventDetailsForm.vue'
+import EventCountdownSelector from '../../components/EventCountdownSelector.vue'
 import { eventProfile, agendaOptions } from '../../services/invitationEvents'
 import WeddingAnalytics from '../../components/WeddingAnalytics.vue'
 import ReminderList from '../../components/ReminderList.vue'
@@ -104,6 +105,7 @@ function accept(data) {
     ...event,
     is_visible: event.is_visible ?? true,
     show_on_map: event.show_on_map ?? index === 0,
+    use_for_countdown: event.use_for_countdown ?? false,
   }))
   for (const role of ['bride', 'groom']) form.value[role] ||= {}
   baseline.value = JSON.stringify(form.value)
@@ -225,6 +227,7 @@ function addEvent() {
   form.value.events.push({
     is_visible: true,
     show_on_map: form.value.events.length === 0,
+    use_for_countdown: false,
     type: isWedding.value ? 'reception' : 'other',
     title: '',
     date: form.value.wedding_date || '',
@@ -488,6 +491,7 @@ onBeforeRouteLeave(
                     <Plus :size="16" />Tambah Acara
                   </button>
                 </div>
+                <EventCountdownSelector v-model="form.events" :disabled="busy" />
                 <article
                   v-for="(event, i) in form.events"
                   :key="i"

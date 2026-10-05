@@ -27,7 +27,8 @@
     "test:depth": "node scripts/invitation-depth-test.mjs",
     "test:couple-visibility": "node scripts/couple-visibility-test.mjs",
     "test:event-visibility": "node scripts/event-visibility-test.mjs",
-    "test:quote-line-breaks": "node scripts/quote-line-break-test.mjs"
+    "test:quote-line-breaks": "node scripts/quote-line-break-test.mjs",
+    "test:countdown-event": "node scripts/countdown-event-test.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.51.0",

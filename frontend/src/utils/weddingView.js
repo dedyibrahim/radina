@@ -20,16 +20,16 @@ export function weddingView(data) {
       },
     ]),
   )
-  const events = (data.events || [])
-    .map((event, index) => ({
-      ...event,
-      is_visible: event.is_visible ?? true,
-      show_on_map: event.show_on_map ?? index === 0,
-      locationKey: `${event.id ?? index}:${event.venue || ''}:${event.address || ''}`,
-      time: `${event.start_time?.slice(0, 5).replace(':', '.')} – ${event.end_time?.slice(0, 5).replace(':', '.')}`,
-      maps: event.google_maps_url,
-    }))
-    .filter((event) => event.is_visible)
+  const allEvents = (data.events || []).map((event, index) => ({
+    ...event,
+    is_visible: event.is_visible ?? true,
+    show_on_map: event.show_on_map ?? index === 0,
+    use_for_countdown: event.use_for_countdown ?? false,
+    locationKey: `${event.id ?? index}:${event.venue || ''}:${event.address || ''}`,
+    time: `${event.start_time?.slice(0, 5).replace(':', '.')} – ${event.end_time?.slice(0, 5).replace(':', '.')}`,
+    maps: event.google_maps_url,
+  }))
+  const events = allEvents.filter((event) => event.is_visible)
   const locations = events
     .filter((event) => event.show_on_map && event.venue)
     .map((event) => ({
@@ -50,6 +50,35 @@ export function weddingView(data) {
     'Asia/Jayapura': '+09:00',
   }
   const date = data.wedding_date ? new Date(`${data.wedding_date}T12:00:00+07:00`) : null
+  const chosen = allEvents.find((event) => event.use_for_countdown)
+  const countdownEvent = chosen ? (chosen.is_visible ? chosen : null) : events[0] || null
+  const countdownDay = chosen && !chosen.is_visible ? '' : countdownEvent?.date || data.wedding_date
+  const countdownCalendar = countdownDay ? new Date(`${countdownDay}T12:00:00Z`) : null
+  const countdownDate = {
+    iso: countdownDay
+      ? `${countdownDay}T${countdownEvent?.start_time || '00:00:00'}${timezones[countdownEvent?.timezone] || '+07:00'}`
+      : '',
+    day: countdownCalendar ? String(countdownCalendar.getUTCDate()).padStart(2, '0') : '',
+    month: countdownCalendar
+      ? countdownCalendar
+          .toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' })
+          .toUpperCase()
+      : '',
+    year: countdownCalendar?.getUTCFullYear() || '',
+    display: countdownCalendar
+      ? countdownCalendar.toLocaleDateString('id-ID', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+          timeZone: 'UTC',
+        })
+      : '',
+    time: countdownEvent?.start_time?.slice(0, 5) || '00:00',
+    timezone:
+      { 'Asia/Jakarta': 'WIB', 'Asia/Makassar': 'WITA', 'Asia/Jayapura': 'WIT' }[
+        countdownEvent?.timezone
+      ] || 'WIB',
+  }
   function person(source = {}) {
     source ||= {}
     return {
@@ -115,6 +144,8 @@ export function weddingView(data) {
         }[first.timezone] || 'WIB',
     },
     events,
+    countdownEvent,
+    countdownDate,
     akad: events[0],
     reception: events[1],
     locations,

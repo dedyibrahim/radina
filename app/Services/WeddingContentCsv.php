@@ -42,7 +42,7 @@ class WeddingContentCsv
     private function groups(): array
     {
         return [
-            'events' => ['Acara', 20, ['type' => 'Jenis agenda: other, ceremony, syukuran, meeting, seminar, gathering, celebration, akad, reception, ngunduh, afterparty', 'title' => 'Nama acara', 'date' => 'Tanggal: YYYY-MM-DD', 'start_time' => 'Jam mulai: HH:MM', 'end_time' => 'Jam selesai: HH:MM', 'timezone' => 'Asia/Jakarta, Asia/Makassar, atau Asia/Jayapura', 'venue' => 'Nama lokasi', 'address' => 'Alamat lokasi', 'google_maps_url' => 'URL Google Maps', 'is_visible' => 'Tampilkan acara di undangan: ya/tidak', 'show_on_map' => 'Tampilkan lokasi di Meet us here: ya/tidak']],
+            'events' => ['Acara', 20, ['type' => 'Jenis agenda: other, ceremony, syukuran, meeting, seminar, gathering, celebration, akad, reception, ngunduh, afterparty', 'title' => 'Nama acara', 'date' => 'Tanggal: YYYY-MM-DD', 'start_time' => 'Jam mulai: HH:MM', 'end_time' => 'Jam selesai: HH:MM', 'timezone' => 'Asia/Jakarta, Asia/Makassar, atau Asia/Jayapura', 'venue' => 'Nama lokasi', 'address' => 'Alamat lokasi', 'google_maps_url' => 'URL Google Maps', 'is_visible' => 'Tampilkan acara di undangan: ya/tidak', 'show_on_map' => 'Tampilkan lokasi di Meet us here: ya/tidak', 'use_for_countdown' => 'Jadikan sumber countdown: ya/tidak; pilih hanya satu acara']],
             'stories' => ['Cerita / informasi acara', 30, ['date_label' => 'Tanggal/tahun cerita', 'title' => 'Judul cerita', 'description' => 'Isi cerita', 'image' => 'URL foto cerita']],
             'gallery' => ['Galeri', 50, ['image' => 'URL foto', 'caption' => 'Keterangan foto']],
             'music.playlist' => ['Playlist', 10, ['title' => 'Judul lagu', 'artist' => 'Artis', 'url' => 'URL audio', 'cover' => 'URL cover', 'duration' => 'Durasi dalam detik']],
@@ -117,7 +117,7 @@ class WeddingContentCsv
                             ImportCsv::fail('Baris '.$row['_row'].': nomor '.$section.' harus berurutan mulai 1.');
                         }
                         Arr::set($data, $group.'.'.$index, match ($group) {
-                            'events' => ['type' => $wedding->event_type === 'wedding' ? 'reception' : 'other', 'timezone' => 'Asia/Jakarta', 'address' => '', 'google_maps_url' => '', 'is_visible' => true, 'show_on_map' => $index === 0],
+                            'events' => ['type' => $wedding->event_type === 'wedding' ? 'reception' : 'other', 'timezone' => 'Asia/Jakarta', 'address' => '', 'google_maps_url' => '', 'is_visible' => true, 'show_on_map' => $index === 0, 'use_for_countdown' => false],
                             'gift_methods' => ['type' => 'BANK', 'is_active' => true],
                             default => [],
                         });
@@ -133,7 +133,7 @@ class WeddingContentCsv
             }
             // Reverse the formula protection added when exporting CSV text.
             $value = ImportCsv::text($value);
-            if (str_starts_with($path, 'settings.') || preg_match('/\.(autoplay_after_open|shuffle|repeat|is_active|is_visible|show_on_map)$/', $path)) {
+            if (str_starts_with($path, 'settings.') || preg_match('/\.(autoplay_after_open|shuffle|repeat|is_active|is_visible|show_on_map|use_for_countdown)$/', $path)) {
                 $value = match (mb_strtolower($value)) {
                     'ya', 'true', '1' => true, 'tidak', 'false', '0' => false, default => null
                 };

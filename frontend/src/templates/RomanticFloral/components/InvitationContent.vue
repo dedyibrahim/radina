@@ -23,7 +23,7 @@ useScrollAnimation()
 <template>
   <div class="invitation-content">
     <HeroSection /><WeddingQuote v-if="wedding.quote" /><CoupleSection />
-    <CountdownSection v-if="wedding.settings.enable_countdown && wedding.date.day" />
+    <CountdownSection v-if="wedding.settings.enable_countdown && wedding.countdownDate.day" />
     <LoveStory v-if="wedding.settings.enable_story && wedding.loveStory.length" />
     <EventSection v-if="wedding.events.length" />
     <GallerySection v-if="wedding.settings.enable_gallery && wedding.gallery.length" />

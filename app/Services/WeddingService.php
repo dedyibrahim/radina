@@ -127,7 +127,7 @@ class WeddingService
                 if ($same) {
                     if ($relation === 'events') {
                         foreach ($data[$relation] as $index => $entry) {
-                            $existing[$index]->fill(collect($entry)->only(['is_visible', 'show_on_map'])->all());
+                            $existing[$index]->fill(collect($entry)->only(['is_visible', 'show_on_map', 'use_for_countdown'])->all());
                             if ($existing[$index]->isDirty()) $existing[$index]->save();
                         }
                     }
@@ -135,7 +135,7 @@ class WeddingService
                 }
                 $wedding->{$relation}()->delete();
                 foreach ($data[$relation] as $index => $entry) {
-                    $createFields = $relation === 'events' ? [...$allowed, 'is_visible', 'show_on_map'] : $allowed;
+                    $createFields = $relation === 'events' ? [...$allowed, 'is_visible', 'show_on_map', 'use_for_countdown'] : $allowed;
                     $wedding->{$relation}()->create(collect($entry)->only($createFields)->all() + ['sort_order' => $index]);
                 }
             }
@@ -201,6 +201,7 @@ class WeddingService
         if (! $wedding->events->contains(fn ($event) => $event->is_visible !== false)) {
             $errors['events'] = 'Aktifkan minimal satu acara untuk ditampilkan di undangan.';
         }
+        $errors += EventCountdown::errors(\App\Models\WeddingEvent::withVisibility($wedding->events->toArray()));
         if (! $wedding->template || ! $wedding->slug) {
             $errors['template'] = 'Template dan slug wajib diisi.';
         }

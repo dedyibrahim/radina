@@ -4,7 +4,7 @@ const escape = (value) =>
     .replace(/\n/g, '\\n')
     .replace(/,/g, '\\,')
     .replace(/;/g, '\\;')
-export function downloadCalendar(wedding) {
+export function downloadCalendar(wedding, events = wedding.events) {
   const stamp = (date) =>
     date
       .toISOString()
@@ -17,15 +17,15 @@ export function downloadCalendar(wedding) {
     'PRODID:-//Radina//Wedding//ID',
     'CALSCALE:GREGORIAN',
   ]
-  wedding.events.forEach((event, index) => {
+  events.forEach((event) => {
     const offset = offsets[event.timezone] || '+07:00'
     lines.push(
       'BEGIN:VEVENT',
-      `UID:${wedding.slug}-${index}@radina.local`,
+      `UID:${wedding.slug}-${event.id ?? wedding.events.indexOf(event)}@radina.local`,
       `DTSTAMP:${stamp(new Date())}`,
       `DTSTART:${stamp(new Date(`${event.date}T${event.start_time}${offset}`))}`,
       `DTEND:${stamp(new Date(`${event.date}T${event.end_time}${offset}`))}`,
-      `SUMMARY:${escape(`${event.title} — ${wedding.bride.shortName} & ${wedding.groom.shortName}`)}`,
+      `SUMMARY:${escape(`${event.title} — ${wedding.displayName || [wedding.bride?.shortName, wedding.groom?.shortName].filter(Boolean).join(' & ')}`)}`,
       `LOCATION:${escape(`${event.venue}, ${event.address || ''}`)}`,
       `DESCRIPTION:${escape(wedding.openingText)}`,
       'END:VEVENT',

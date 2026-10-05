@@ -20,11 +20,29 @@ export function weddingView(data) {
       },
     ]),
   )
-  const events = (data.events || []).map((event) => ({
-    ...event,
-    time: `${event.start_time?.slice(0, 5).replace(':', '.')} – ${event.end_time?.slice(0, 5).replace(':', '.')}`,
-    maps: event.google_maps_url,
-  }))
+  const events = (data.events || [])
+    .map((event, index) => ({
+      ...event,
+      is_visible: event.is_visible ?? true,
+      show_on_map: event.show_on_map ?? index === 0,
+      locationKey: `${event.id ?? index}:${event.venue || ''}:${event.address || ''}`,
+      time: `${event.start_time?.slice(0, 5).replace(':', '.')} – ${event.end_time?.slice(0, 5).replace(':', '.')}`,
+      maps: event.google_maps_url,
+    }))
+    .filter((event) => event.is_visible)
+  const locations = events
+    .filter((event) => event.show_on_map && event.venue)
+    .map((event) => ({
+      key: event.locationKey,
+      title: event.title || '',
+      name: event.venue,
+      city: '',
+      address: event.address || '',
+      maps:
+        event.maps ||
+        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${event.venue} ${event.address || ''}`)}`,
+      embed: `https://maps.google.com/maps?q=${encodeURIComponent(`${event.venue} ${event.address || ''}`)}&t=&z=15&ie=UTF8&iwloc=&output=embed`,
+    }))
   const first = events[0] || {}
   const timezones = {
     'Asia/Jakarta': '+07:00',
@@ -41,7 +59,10 @@ export function weddingView(data) {
       mother: data.settings?.enable_parents === false ? '' : source.mother_name || '',
       photo: source.photo,
       instagram: data.settings?.enable_social === false ? '' : source.instagram,
-      order: data.settings?.enable_parents === false ? '' : source.family_order || '',
+      order:
+        (data.settings?.enable_family ?? data.settings?.enable_parents ?? true)
+          ? source.family_order || ''
+          : '',
     }
   }
   return {
@@ -96,15 +117,8 @@ export function weddingView(data) {
     events,
     akad: events[0],
     reception: events[1],
-    location: {
-      name: first.venue || '',
-      city: '',
-      address: first.address || '',
-      maps: first.maps || '',
-      embed: first.venue
-        ? `https://maps.google.com/maps?q=${encodeURIComponent(`${first.venue} ${first.address || ''}`)}&t=&z=15&ie=UTF8&iwloc=&output=embed`
-        : '',
-    },
+    locations,
+    location: locations[0] || { name: '', city: '', address: '', maps: '', embed: '' },
     quote: data.section_content?.quote?.content || data.quote,
     quoteSource: data.quote_source,
     openingText: data.opening_text ?? preset.opening_text,

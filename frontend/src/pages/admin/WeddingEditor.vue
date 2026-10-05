@@ -172,14 +172,17 @@ const progress = computed(() =>
 )
 function normalize(data) {
   const result = JSON.parse(JSON.stringify(data))
-  result.events = result.events.map((event) => ({
+  result.events = result.events.map((event, index) => ({
     ...event,
+    is_visible: event.is_visible ?? true,
+    show_on_map: event.show_on_map ?? index === 0,
     start_time: event.start_time.slice(0, 5),
     end_time: event.end_time.slice(0, 5),
   }))
   result.event_type ||= 'wedding'
   result.event_details ||= {}
   result.settings.enable_parents ??= true
+  result.settings.enable_family ??= result.settings.enable_parents
   result.settings.enable_social ??= true
   result.section_content ||= {}
   result.music.playlist ||= []
@@ -253,6 +256,8 @@ function reorder(list, index, direction) {
 }
 function addEvent() {
   form.value.events.push({
+    is_visible: true,
+    show_on_map: form.value.events.length === 0,
     type: isWedding.value ? 'reception' : 'other',
     title: '',
     date: form.value.wedding_date || '',
@@ -546,9 +551,18 @@ watch(tab, (value) => {
               Klik Simpan untuk menerapkan perubahan.
             </p>
             <label class="toggle-row">
-              <span>Tampilkan orang tua dan keterangan keluarga</span>
+              <span>Tampilkan orang tua</span>
               <input
                 v-model="form.settings.enable_parents"
+                type="checkbox"
+                role="switch"
+                :disabled="pending"
+              />
+            </label>
+            <label class="toggle-row">
+              <span>Tampilkan keterangan keluarga</span>
+              <input
+                v-model="form.settings.enable_family"
                 type="checkbox"
                 role="switch"
                 :disabled="pending"
@@ -627,6 +641,18 @@ watch(tab, (value) => {
                 </button>
               </div>
             </div>
+            <label class="toggle-row">
+              <span>Tampilkan acara di undangan</span>
+              <input v-model="event.is_visible" type="checkbox" role="switch" :disabled="pending" />
+            </label>
+            <label class="toggle-row">
+              <span>Tampilkan lokasi di Meet us here</span>
+              <input v-model="event.show_on_map" type="checkbox" role="switch" :disabled="pending || !event.is_visible" />
+            </label>
+            <p class="panel-subtitle">
+              Data tetap tersimpan saat acara disembunyikan. Aktifkan lokasi yang ingin tampil
+              di bagian Lokasi (Meet us here), lalu klik Simpan.
+            </p>
             <div class="form-grid">
               <FormField
                 v-model="event.title"

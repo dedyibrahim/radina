@@ -14,6 +14,7 @@ class WeddingResource extends JsonResource
         $methods = $isAdmin ? $this->giftMethods : $this->giftMethods->where('is_active', true)->values();
         $physical = $methods->firstWhere('type', 'PHYSICAL');
         $legacyBanks = $methods->where('type', 'BANK')->map(fn ($gift) => ['id' => $gift->id, 'bank' => $gift->provider, 'account_number' => $gift->account_number, 'account_name' => $gift->account_name, 'logo' => $gift->logo, 'sort_order' => $gift->sort_order])->values();
+        $events = \App\Models\WeddingEvent::withVisibility($this->events->toArray());
 
         return [
             'id' => $this->id, 'order_id' => $this->order_id, 'template_id' => $this->template_id, 'slug' => $this->slug, 'status' => $this->status,
@@ -27,7 +28,7 @@ class WeddingResource extends JsonResource
             'section_content' => $this->section_content, 'section_order' => $this->section_order,
             'music' => ['playlist' => $this->music_playlist ?? [], 'shuffle' => $this->music_shuffle, 'repeat' => $this->music_repeat, 'music_url' => $this->music_url, 'volume' => $this->volume, 'autoplay_after_open' => $this->autoplay_after_open],
             'livestream' => ['platform' => $this->livestream_platform, 'url' => $this->livestream_url],
-            'shipping_gift' => $isAdmin ? $this->shipping_gift : ($physical ? ['recipient' => $physical->recipient_name, 'address' => $physical->address, 'phone' => $physical->phone] : null), 'events' => $this->events, 'stories' => $this->stories, 'gallery' => $this->gallery, 'gifts' => $isAdmin ? $this->gifts : $legacyBanks, 'settings' => $this->settings,
+            'shipping_gift' => $isAdmin ? $this->shipping_gift : ($physical ? ['recipient' => $physical->recipient_name, 'address' => $physical->address, 'phone' => $physical->phone] : null), 'events' => $events, 'stories' => $this->stories, 'gallery' => $this->gallery, 'gifts' => $isAdmin ? $this->gifts : $legacyBanks, 'settings' => $this->settings,
             'gift_methods' => $methods,
             'template' => new TemplateResource($this->template),
         ];

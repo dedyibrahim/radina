@@ -100,6 +100,11 @@ function accept(data) {
   form.value.event_details ||= {}
   for (const key of ['events', 'stories', 'gallery', 'gift_methods'])
     form.value[key] ||= []
+  form.value.events = form.value.events.map((event, index) => ({
+    ...event,
+    is_visible: event.is_visible ?? true,
+    show_on_map: event.show_on_map ?? index === 0,
+  }))
   for (const role of ['bride', 'groom']) form.value[role] ||= {}
   baseline.value = JSON.stringify(form.value)
 }
@@ -218,6 +223,8 @@ async function respond(decision) {
 }
 function addEvent() {
   form.value.events.push({
+    is_visible: true,
+    show_on_map: form.value.events.length === 0,
     type: isWedding.value ? 'reception' : 'other',
     title: '',
     date: form.value.wedding_date || '',
@@ -496,6 +503,18 @@ onBeforeRouteLeave(
                       <Trash2 :size="16" />
                     </button>
                   </div>
+                  <label class="toggle-row">
+                    <span>Tampilkan acara di undangan</span>
+                    <input v-model="event.is_visible" type="checkbox" role="switch" :disabled="busy" />
+                  </label>
+                  <label class="toggle-row">
+                    <span>Tampilkan lokasi di Meet us here</span>
+                    <input v-model="event.show_on_map" type="checkbox" role="switch" :disabled="busy || !event.is_visible" />
+                  </label>
+                  <p class="panel-subtitle">
+                    Data tetap tersimpan saat acara disembunyikan. Pilih lokasi yang ingin
+                    tampil di bagian Lokasi (Meet us here).
+                  </p>
                   <div class="form-grid">
                     <FormField
                       v-model="event.title"

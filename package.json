@@ -25,7 +25,8 @@
     "test:analytics-browser": "node scripts/analytics-browser-test.mjs",
     "test:customer-tools": "node scripts/customer-tools-test.mjs",
     "test:depth": "node scripts/invitation-depth-test.mjs",
-    "test:couple-visibility": "node scripts/couple-visibility-test.mjs"
+    "test:couple-visibility": "node scripts/couple-visibility-test.mjs",
+    "test:event-visibility": "node scripts/event-visibility-test.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.51.0",

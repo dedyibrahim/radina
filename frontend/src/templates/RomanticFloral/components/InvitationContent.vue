@@ -28,7 +28,7 @@ useScrollAnimation()
     <EventSection v-if="wedding.events.length" />
     <GallerySection v-if="wedding.settings.enable_gallery && wedding.gallery.length" />
     <VideoSection v-if="wedding.settings.enable_video && wedding.video.enabled" />
-    <LocationSection v-if="wedding.settings.enable_maps && wedding.location.name" />
+    <LocationSection v-if="wedding.settings.enable_maps && wedding.locations.length" />
     <RSVPSection v-if="wedding.settings.enable_rsvp" :guest="guest" />
     <WishesSection v-if="wedding.settings.enable_wishes" :guest="guest" />
     <WeddingGift

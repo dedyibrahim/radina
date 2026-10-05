@@ -31,6 +31,7 @@ class SaveWeddingRequest extends FormRequest
             'livestream' => 'required|array', 'livestream.platform' => 'nullable|string|max:60', 'livestream.url' => ['nullable', 'url:http,https', 'max:2048'],
             'shipping_gift' => 'nullable|array', 'shipping_gift.recipient' => 'nullable|string|max:120', 'shipping_gift.address' => 'nullable|string|max:1000', 'shipping_gift.phone' => 'nullable|string|max:30',
             'events' => 'present|array|max:20', 'events.*.type' => 'required|string|max:60', 'events.*.title' => 'required|string|max:120',
+            'events.*.is_visible' => 'sometimes|boolean', 'events.*.show_on_map' => 'sometimes|boolean',
             'events.*.date' => 'required|date_format:Y-m-d', 'events.*.start_time' => 'required|date_format:H:i', 'events.*.end_time' => 'required|date_format:H:i',
             'events.*.timezone' => ['required', Rule::in(['Asia/Jakarta', 'Asia/Makassar', 'Asia/Jayapura'])],
             'events.*.venue' => 'required|string|max:255', 'events.*.address' => 'nullable|string|max:1000', 'events.*.google_maps_url' => ['nullable', 'url:http,https', 'max:2048'],
@@ -63,7 +64,7 @@ class SaveWeddingRequest extends FormRequest
         foreach (['music', 'gallery', 'story', 'rsvp', 'wishes', 'gift', 'livestream', 'countdown', 'video', 'maps'] as $feature) {
             $rules['settings.enable_'.$feature] = 'required|boolean';
         }
-        foreach (['parents', 'social'] as $feature) {
+        foreach (['parents', 'social', 'family'] as $feature) {
             $rules['settings.enable_'.$feature] = 'sometimes|boolean';
         }
         if ($wedding?->status === 'PUBLISHED') {
@@ -77,7 +78,17 @@ class SaveWeddingRequest extends FormRequest
     public function after(): array
     {
         return [function ($validator) {
-            foreach ($this->input('events', []) as $index => $event) {
+            $events = $this->input('events', []);
+            $events = is_array($events) ? $events : [];
+            $wedding = $this->route('wedding');
+            if ($wedding?->status === 'PUBLISHED') {
+                $events = \App\Models\WeddingEvent::withVisibility($events, $wedding->events()->get());
+                if (! collect($events)->contains(fn ($event) => is_array($event) && in_array($event['is_visible'] ?? true, [true, 1, '1'], true))) {
+                    $validator->errors()->add('events', 'Aktifkan minimal satu acara untuk ditampilkan di undangan.');
+                }
+            }
+            foreach ($events as $index => $event) {
+                if (! is_array($event)) continue;
                 if (($event['end_time'] ?? '') <= ($event['start_time'] ?? '')) {
                     $validator->errors()->add("events.$index.end_time", 'Waktu selesai harus setelah waktu mulai.');
                 }

@@ -32,6 +32,19 @@ class CustomerPortalService
         foreach (['enable_parents', 'enable_social'] as $key) {
             if (($data['settings'][$key] ?? true) === true) unset($data['settings'][$key]);
         }
+        // The former parents switch also controlled family text. Preserve that legacy fingerprint.
+        if (($data['settings']['enable_family'] ?? $data['settings']['enable_parents'] ?? true) === ($data['settings']['enable_parents'] ?? true)) {
+            unset($data['settings']['enable_family']);
+        }
+        $legacyMap = true;
+        foreach ($data['events'] as $index => $event) {
+            if ($event['show_on_map'] !== ($index === 0)) $legacyMap = false;
+        }
+        foreach ($data['events'] as &$event) {
+            if ($event['is_visible'] === true) unset($event['is_visible']);
+            if ($legacyMap) unset($event['show_on_map']);
+        }
+        unset($event);
         $data['template'] = ['template_key' => $data['template']['template_key'], 'name' => $data['template']['name']];
         $clean = function ($value) use (&$clean) {
             if (! is_array($value)) {
@@ -71,7 +84,7 @@ class CustomerPortalService
         foreach (['bride', 'groom'] as $role) {
             $form[$role] = collect($form[$role] ?? [])->only(['full_name', 'nickname', 'father_name', 'mother_name', 'family_order', 'instagram', 'photo'])->all();
         }
-        foreach (['events' => ['type', 'title', 'date', 'start_time', 'end_time', 'timezone', 'venue', 'address', 'google_maps_url'], 'stories' => ['date_label', 'title', 'description', 'image'], 'gallery' => ['image', 'caption'], 'gift_methods' => ['type', 'provider', 'account_number', 'account_name', 'logo', 'qr_image', 'recipient_name', 'phone', 'address', 'description', 'is_active']] as $group => $fields) {
+        foreach (['events' => ['type', 'title', 'date', 'start_time', 'end_time', 'timezone', 'venue', 'address', 'google_maps_url', 'is_visible', 'show_on_map'], 'stories' => ['date_label', 'title', 'description', 'image'], 'gallery' => ['image', 'caption'], 'gift_methods' => ['type', 'provider', 'account_number', 'account_name', 'logo', 'qr_image', 'recipient_name', 'phone', 'address', 'description', 'is_active']] as $group => $fields) {
             $form[$group] = array_map(fn ($entry) => collect($entry)->only($fields)->all(), $data[$group] ?? []);
         }
         foreach ($form['events'] as &$event) {
@@ -90,7 +103,8 @@ class CustomerPortalService
             'data' => 'required|array:'.implode(',', self::FIELDS), 'data.title' => 'nullable|string|max:255', 'data.wedding_date' => $required.'|date_format:Y-m-d',
             'data.hashtag' => 'nullable|string|max:120', 'data.quote_source' => 'nullable|string|max:255',
             'data.events' => ($submit ? 'required|array|min:1|max:20' : 'present|array|max:20'), 'data.stories' => 'present|array|max:30', 'data.gallery' => 'present|array|max:50', 'data.gift_methods' => 'present|array|max:30',
-            'data.events.*' => 'array:type,title,date,start_time,end_time,timezone,venue,address,google_maps_url',
+            'data.events.*' => 'array:type,title,date,start_time,end_time,timezone,venue,address,google_maps_url,is_visible,show_on_map',
+            'data.events.*.is_visible' => 'sometimes|boolean', 'data.events.*.show_on_map' => 'sometimes|boolean',
             'data.events.*.type' => ['required', Rule::in(InvitationEvent::agendaTypes())],
             'data.events.*.title' => $required.'|string|max:120', 'data.events.*.date' => $required.'|date_format:Y-m-d',
             'data.events.*.start_time' => $required.'|date_format:H:i', 'data.events.*.end_time' => $required.'|date_format:H:i',
@@ -117,8 +131,14 @@ class CustomerPortalService
         $rules += InvitationEvent::rules('data.event_details', $wedding->event_type ?? 'wedding', $submit);
         if ($submit && $wedding->event_type !== 'wedding') $rules['data.title'] = 'required|string|min:2|max:255';
         $validator = Validator::make(['data' => $data], $rules);
-        $validator->after(function ($validator) use ($data, $wedding) {
+        $validator->after(function ($validator) use ($data, $wedding, $submit) {
+            $events = is_array($data['events'] ?? null) ? $data['events'] : [];
+            $events = \App\Models\WeddingEvent::withVisibility($events, $wedding->events()->get());
+            if ($submit && ! collect($events)->contains(fn ($event) => is_array($event) && in_array($event['is_visible'] ?? true, [true, 1, '1'], true))) {
+                $validator->errors()->add('data.events', 'Aktifkan minimal satu acara untuk ditampilkan di undangan.');
+            }
             foreach (is_array($data['events'] ?? null) ? $data['events'] : [] as $index => $event) {
+                if (! is_array($event)) continue;
                 if (! empty($event['start_time']) && ! empty($event['end_time']) && $event['end_time'] <= $event['start_time']) {
                     $validator->errors()->add("data.events.$index.end_time", 'Waktu selesai harus setelah waktu mulai.');
                 }
@@ -135,6 +155,7 @@ class CustomerPortalService
             $check($data);
         });
         $validated = $validator->validate()['data'];
+        $validated['events'] = \App\Models\WeddingEvent::withVisibility($validated['events'], $wedding->events()->get());
         $gifts = [];
         foreach ($validated['gift_methods'] as $index => $gift) {
             $form = SaveGiftRequest::create('/', 'POST', $gift);

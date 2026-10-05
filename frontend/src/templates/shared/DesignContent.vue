@@ -50,7 +50,7 @@ const available = computed(() => ({
   event: wedding.events.length,
   gallery: wedding.settings.enable_gallery && wedding.gallery.length,
   video: wedding.settings.enable_video && wedding.video.enabled,
-  location: wedding.settings.enable_maps && wedding.location.name,
+  location: wedding.settings.enable_maps && wedding.locations.length,
   rsvp: wedding.settings.enable_rsvp,
   wishes: wedding.settings.enable_wishes,
   gift: wedding.settings.enable_gift && wedding.giftMethods.length,

@@ -95,6 +95,9 @@ class WeddingService
             $fields = ['events' => ['type', 'title', 'date', 'start_time', 'end_time', 'timezone', 'venue', 'address', 'google_maps_url'], 'stories' => ['date_label', 'title', 'description', 'image'], 'gallery' => ['image', 'caption'], 'gifts' => ['bank', 'account_number', 'account_name', 'logo']];
             foreach ($fields as $relation => $allowed) {
                 $existing = $wedding->{$relation}()->get();
+                if ($relation === 'events') {
+                    $data[$relation] = \App\Models\WeddingEvent::withVisibility($data[$relation], $existing);
+                }
                 $same = $existing->count() === count($data[$relation]);
                 foreach ($data[$relation] as $index => $entry) {
                     if (! $same) {
@@ -122,11 +125,18 @@ class WeddingService
                     }
                 }
                 if ($same) {
+                    if ($relation === 'events') {
+                        foreach ($data[$relation] as $index => $entry) {
+                            $existing[$index]->fill(collect($entry)->only(['is_visible', 'show_on_map'])->all());
+                            if ($existing[$index]->isDirty()) $existing[$index]->save();
+                        }
+                    }
                     continue;
                 }
                 $wedding->{$relation}()->delete();
                 foreach ($data[$relation] as $index => $entry) {
-                    $wedding->{$relation}()->create(collect($entry)->only($allowed)->all() + ['sort_order' => $index]);
+                    $createFields = $relation === 'events' ? [...$allowed, 'is_visible', 'show_on_map'] : $allowed;
+                    $wedding->{$relation}()->create(collect($entry)->only($createFields)->all() + ['sort_order' => $index]);
                 }
             }
             $settings = collect($data['settings'])->filter(fn ($v, $key) => str_starts_with($key, 'enable_'))->all();
@@ -188,8 +198,8 @@ class WeddingService
         if (! $wedding->wedding_date) {
             $errors['wedding_date'] = 'Tanggal acara wajib diisi.';
         }
-        if ($wedding->events->isEmpty()) {
-            $errors['events'] = 'Tambahkan minimal satu acara.';
+        if (! $wedding->events->contains(fn ($event) => $event->is_visible !== false)) {
+            $errors['events'] = 'Aktifkan minimal satu acara untuk ditampilkan di undangan.';
         }
         if (! $wedding->template || ! $wedding->slug) {
             $errors['template'] = 'Template dan slug wajib diisi.';

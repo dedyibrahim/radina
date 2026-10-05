@@ -29,7 +29,7 @@ class Wedding extends Model
 
     public function events()
     {
-        return $this->hasMany(WeddingEvent::class)->orderBy('sort_order');
+        return $this->hasMany(WeddingEvent::class)->orderBy('sort_order')->orderBy('id');
     }
 
     public function stories()

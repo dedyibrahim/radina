@@ -91,6 +91,9 @@ jobs:
       - name: Verify couple visibility across invitation templates
         run: npm run test:couple-visibility
 
+      - name: Verify event visibility and selected locations
+        run: npm run test:event-visibility
+
       - name: Run migrations
         run: php artisan migrate --force
 

@@ -78,6 +78,16 @@ class CustomerPortalController extends Controller
         return $this->privateResponse($invitees->index($request, $this->resolve($token)->wedding));
     }
 
+    public function rsvps(Request $request, string $token, AdminWeddingController $responses)
+    {
+        return $this->privateResponse($responses->rsvps($request, $this->resolve($token)->wedding));
+    }
+
+    public function wishes(Request $request, string $token, AdminWeddingController $responses)
+    {
+        return $this->privateResponse($responses->wishes($request, $this->resolve($token)->wedding));
+    }
+
     public function inviteeTemplate(Request $request, string $token, AdminInviteeController $invitees)
     {
         return $this->privateResponse($invitees->template($request, $this->resolve($token)->wedding));

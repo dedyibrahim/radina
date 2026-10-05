@@ -22,6 +22,7 @@ import WeddingAnalytics from '../../components/WeddingAnalytics.vue'
 import ReminderList from '../../components/ReminderList.vue'
 import OrderDocuments from '../../components/OrderDocuments.vue'
 import CustomerGuestImport from '../../components/CustomerGuestImport.vue'
+import GuestResponses from '../../components/GuestResponses.vue'
 
 const route = useRoute(),
   ui = useUiStore()
@@ -316,6 +317,14 @@ onBeforeRouteLeave(
           <button
             type="button"
             :disabled="locked"
+            :class="{ selected: tab === 'responses' }"
+            @click="tab = 'responses'"
+          >
+            RSVP &amp; Ucapan
+          </button>
+          <button
+            type="button"
+            :disabled="locked"
             :class="{ selected: tab === 'guests' }"
             @click="tab = 'guests'"
           >
@@ -365,6 +374,9 @@ onBeforeRouteLeave(
         </p>
         <section v-if="tab === 'guests'" class="surface customer-section">
           <CustomerGuestImport :base="base()" @busy="busy = $event" />
+        </section>
+        <section v-else-if="tab === 'responses'" class="surface customer-section">
+          <GuestResponses :base="base()" />
         </section>
         <section
           v-else-if="tab === 'analytics'"

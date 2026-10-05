@@ -259,4 +259,71 @@ class CustomerPortalTest extends TestCase
         $this->assertNull($w->fresh()->wedding_date);
         $this->assertSame('SUBMITTED', WeddingCustomerPortal::first()->status);
     }
+
+    public function test_customer_can_read_scoped_paginated_rsvp_and_wishes_without_changing_approval(): void
+    {
+        $w = $this->wedding('guest-responses');
+        $other = $this->wedding('other-responses');
+        $token = $this->token($w);
+        $other->rsvps()->create(['name' => 'Other Private Guest', 'guests' => 8, 'attendance' => 'Hadir', 'message' => 'Private RSVP']);
+        $otherWish = $other->wishes()->create(['name' => 'Other Private Guest', 'message' => 'Private wish', 'visible' => false]);
+        for ($i = 1; $i <= 35; $i++) {
+            $w->rsvps()->create(['name' => 'Tamu '.$i, 'guests' => 2, 'attendance' => 'Hadir', 'message' => 'Insya Allah hadir.']);
+            $w->wishes()->create(['name' => 'Tamu '.$i, 'message' => 'Semoga selalu bahagia.', 'visible' => $i !== 35]);
+        }
+        $fingerprint = CustomerPortalService::fingerprint($w->fresh());
+        $portal = WeddingCustomerPortal::where('wedding_id', $w->id)->firstOrFail();
+        $portal->update(['status' => 'APPROVED', 'approved_fingerprint' => $fingerprint, 'approved_at' => now()]);
+        $before = $portal->fresh()->getRawOriginal();
+        Sanctum::actingAs(User::factory()->create());
+        foreach (['rsvps', 'wishes'] as $kind) {
+            $path = $this->customerPath($token, '/'.$kind);
+            $response = $this->getJson($path)->assertOk()->assertJsonPath('total', 35)->assertJsonPath('last_page', 2)->assertJsonCount(30, 'data')
+                ->assertJsonPath('data.0.name', 'Tamu 35')->assertHeader('Cache-Control', 'no-store, private')
+                ->assertHeader('Referrer-Policy', 'no-referrer')->assertHeader('X-Robots-Tag', 'noindex, nofollow');
+            $this->assertStringNotContainsString('Other Private Guest', $response->getContent());
+            $this->assertArrayNotHasKey('wedding_id', $response->json('data.0'));
+            $this->assertArrayNotHasKey('wedding_invitee_id', $response->json('data.0'));
+            $this->getJson($path.'?page=2')->assertOk()->assertJsonCount(5, 'data')->assertJsonPath('data.0.name', 'Tamu 5');
+            $this->getJson($path.'?search=Tamu%2035')->assertOk()->assertJsonPath('total', 1);
+            $this->getJson($path.'?page=0')->assertUnprocessable();
+            $this->getJson($path.'?search='.str_repeat('a', 121))->assertUnprocessable();
+            $this->getJson('/api/admin/weddings/'.$w->id.'/'.$kind)->assertForbidden();
+        }
+        $this->getJson($this->customerPath($token, '/wishes'))->assertOk()->assertJsonPath('data.0.visible', false)->assertJsonPath('data.0.message', 'Semoga selalu bahagia.');
+        $w->rsvps()->create(['name' => 'Bapak %_ Uji', 'guests' => 1, 'attendance' => 'Masih Ragu']);
+        $w->rsvps()->create(['name' => 'Bapak XY Uji', 'guests' => 1, 'attendance' => 'Hadir']);
+        $this->getJson($this->customerPath($token, '/rsvps').'?search='.rawurlencode('%_'))->assertOk()->assertJsonPath('total', 1)->assertJsonPath('data.0.name', 'Bapak %_ Uji');
+        $this->patchJson('/api/admin/weddings/'.$w->id.'/wishes/'.$otherWish->id, ['visible' => true])->assertForbidden();
+        $this->admin();
+        $this->patchJson('/api/admin/weddings/'.$w->id.'/wishes/'.$otherWish->id, ['visible' => true])->assertNotFound();
+        $wish = $w->wishes()->orderByDesc('id')->firstOrFail();
+        $this->patchJson('/api/admin/weddings/'.$w->id.'/wishes/'.$wish->id, ['visible' => true])->assertOk()->assertJsonPath('data.visible', true);
+        $this->getJson($this->customerPath($token, '/wishes'))->assertOk()->assertJsonPath('data.0.visible', true);
+        $this->assertSame($before, $portal->fresh()->getRawOriginal());
+        $this->assertSame($fingerprint, CustomerPortalService::fingerprint($w->fresh()));
+    }
+
+    public function test_customer_rsvp_and_wishes_respect_token_and_payment_access_checks(): void
+    {
+        $w = $this->wedding('response-access');
+        $token = $this->token($w);
+        $portal = WeddingCustomerPortal::where('wedding_id', $w->id)->firstOrFail();
+        $assertUnavailable = function (string $value) {
+            foreach (['rsvps', 'wishes'] as $kind) {
+                $this->getJson($this->customerPath($value, '/'.$kind))->assertNotFound();
+            }
+        };
+        $assertUnavailable(str_repeat('0', 64));
+        $portal->update(['expires_at' => now()->subMinute()]);
+        $assertUnavailable($token);
+        $portal->update(['expires_at' => now()->addDay(), 'revoked_at' => now()]);
+        $assertUnavailable($token);
+        $portal->update(['revoked_at' => null]);
+        $w->order->update(['status' => 'CANCELLED']);
+        $assertUnavailable($token);
+        $w->order->update(['status' => 'PAID']);
+        $w->order->payment->update(['status' => 'PENDING']);
+        $assertUnavailable($token);
+    }
 }

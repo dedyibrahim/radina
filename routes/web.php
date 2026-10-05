@@ -91,6 +91,8 @@ Route::prefix('api/admin')->middleware('throttle:api')->group(function () {
 });
 
 Route::prefix('api/customer-portals/{token}')->middleware('throttle:api')->group(function () {
+    Route::get('/rsvps', [CustomerPortalController::class, 'rsvps']);
+    Route::get('/wishes', [CustomerPortalController::class, 'wishes']);
     Route::get('/invitees/template', [CustomerPortalController::class, 'inviteeTemplate']);
     Route::get('/invitees/export', [CustomerPortalController::class, 'inviteeExport']);
     Route::get('/invitees', [CustomerPortalController::class, 'invitees']);

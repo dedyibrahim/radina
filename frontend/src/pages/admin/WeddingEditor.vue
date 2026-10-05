@@ -11,6 +11,7 @@ import WeddingGiftManager from '../../components/WeddingGiftManager.vue'
 import WeddingRenderer from '../../components/WeddingRenderer.vue'
 import WeddingImportExport from '../../components/WeddingImportExport.vue'
 import WeddingAnalytics from '../../components/WeddingAnalytics.vue'
+import GuestResponses from '../../components/GuestResponses.vue'
 import CustomerPortalManager from '../../components/CustomerPortalManager.vue'
 import { nextTick } from 'vue'
 import { scrollToSection } from '../../composables/useSectionNavigation'
@@ -44,9 +45,7 @@ const route = useRoute(),
   tab = ref(route.meta.section || 'basic'),
   baseline = ref(''),
   confirmPublish = ref(false),
-  previewed = ref(false),
-  guestRecords = ref([]),
-  guestNext = ref(null)
+  previewed = ref(false)
 const window = globalThis.window
 const baseTabs = [
   ['basic', 'Informasi Dasar'],
@@ -62,8 +61,7 @@ const baseTabs = [
   ['gift', 'Wedding Gift'],
   ['livestream', 'Live Streaming'],
   ['analytics', 'Statistik & Tamu'],
-  ['rsvp', 'RSVP'],
-  ['wishes', 'Wishes'],
+  ['responses', 'RSVP & Ucapan'],
   ['settings', 'Pengaturan'],
   ['preview', 'Preview'],
   ['publish', 'Publish'],
@@ -308,42 +306,9 @@ async function publish() {
     pending.value = false
   }
 }
-async function loadGuests(append = false) {
-  try {
-    const path = `/admin/weddings/${route.params.id}/${tab.value === 'rsvp' ? 'rsvps' : 'wishes'}`
-    const data = (await api.get(append ? guestNext.value : path)).data
-    guestRecords.value = append
-      ? [...guestRecords.value, ...data.data]
-      : data.data
-    guestNext.value = data.next_page_url
-      ? new URL(data.next_page_url).pathname.replace(/^\/api/, '') +
-        new URL(data.next_page_url).search
-      : null
-  } catch (e) {
-    error.value = errorMessage(e)
-  }
-}
-watch(tab, (value) => {
+watch(tab, () => {
   error.value = ''
-  if (['rsvp', 'wishes'].includes(value)) {
-    guestRecords.value = []
-    guestNext.value = null
-    loadGuests()
-  }
 })
-async function moderate(wish) {
-  try {
-    const updated = (
-      await api.patch(`/admin/weddings/${route.params.id}/wishes/${wish.id}`, {
-        visible: !wish.visible,
-      })
-    ).data.data
-    Object.assign(wish, updated)
-    ui.toast('Visibilitas ucapan diperbarui.')
-  } catch (e) {
-    error.value = errorMessage(e)
-  }
-}
 function beforeUnload(event) {
   if (dirty.value) {
     event.preventDefault()
@@ -884,45 +849,9 @@ watch(tab, (value) => {
             label="URL Live Streaming"
             type="url"
         /></template>
-        <template v-else-if="['rsvp', 'wishes'].includes(tab)"
-          ><h2>
-            {{ tab === 'rsvp' ? 'Konfirmasi kehadiran' : 'Ucapan & doa' }}
-          </h2>
-          <article
-            v-for="record in guestRecords"
-            :key="record.id"
-            class="guest-record"
-          >
-            <div>
-              <strong>{{ record.name }}</strong>
-              <p v-if="tab === 'rsvp'">
-                {{ record.attendance }} · {{ record.guests }} tamu
-              </p>
-              <p>{{ record.message }}</p>
-              <small>{{
-                new Date(record.created_at).toLocaleString('id-ID')
-              }}</small>
-            </div>
-            <button
-              v-if="tab === 'wishes'"
-              class="p-button secondary small"
-              @click="moderate(record)"
-            >
-              {{ record.visible ? 'Sembunyikan' : 'Tampilkan' }}
-            </button>
-          </article>
-          <p v-if="!guestRecords.length" class="empty-note">
-            Belum ada
-            {{ tab === 'rsvp' ? 'konfirmasi kehadiran' : 'ucapan' }}.
-          </p>
-          <button
-            v-if="guestNext"
-            class="p-button secondary"
-            @click="loadGuests(true)"
-          >
-            Muat lainnya
-          </button></template
-        >
+        <template v-else-if="tab === 'responses'">
+          <GuestResponses :base="`/admin/weddings/${form.id}`" admin />
+        </template>
         <template v-else-if="tab === 'settings'"
           ><h2>Fitur undangan</h2>
           <p class="panel-subtitle">

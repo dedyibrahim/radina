@@ -28,14 +28,26 @@ class AdminWeddingController extends Controller
         return new WeddingResource($service->publish($wedding, $request->user()->id));
     }
 
-    public function rsvps(Wedding $wedding)
+    public function rsvps(Request $request, Wedding $wedding)
     {
-        return response()->json($wedding->rsvps()->paginate(30));
+        return $this->guestResponses($request, $wedding, 'rsvps', ['id', 'name', 'guests', 'attendance', 'message', 'created_at']);
     }
 
-    public function wishes(Wedding $wedding)
+    public function wishes(Request $request, Wedding $wedding)
     {
-        return response()->json($wedding->wishes()->paginate(30));
+        return $this->guestResponses($request, $wedding, 'wishes', ['id', 'name', 'message', 'visible', 'created_at']);
+    }
+
+    private function guestResponses(Request $request, Wedding $wedding, string $relation, array $fields)
+    {
+        $data = $request->validate(['search' => 'sometimes|nullable|string|max:120', 'page' => 'sometimes|integer|min:1']);
+        $query = $wedding->{$relation}()->select($fields)->orderByDesc('id');
+        $search = trim($data['search'] ?? '');
+        if ($search !== '') {
+            $query->where('name', 'like', '%'.addcslashes($search, '%_\\').'%');
+        }
+
+        return response()->json($query->paginate(30));
     }
 
     public function moderate(Request $request, Wedding $wedding, WeddingWish $wish)

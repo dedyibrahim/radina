@@ -1,4 +1,5 @@
 <script setup>
+import DecorativeFrame from '../../components/wedding/effects/DecorativeFrame.vue'
 import FlowerMotion from '../RomanticFloral/components/FlowerMotion.vue'
 import { inject } from 'vue'
 import SectionHeading from '../RomanticFloral/components/SectionHeading.vue'
@@ -6,9 +7,17 @@ defineProps({ design: String })
 const wedding = inject('wedding')
 </script>
 <template>
-  <section id="couple" class="section design-couple" :class="`couple-${design}`">
+  <section
+    id="couple"
+    class="section design-couple"
+    :class="`couple-${design}`"
+  >
     <FlowerMotion v-if="['amore', 'garden', 'daydream'].includes(design)" />
-    <SectionHeading section="couple" eyebrow="THE BRIDE & GROOM" title="The people in our story" />
+    <SectionHeading
+      section="couple"
+      eyebrow="THE BRIDE & GROOM"
+      title="The people in our story"
+    />
     <div class="couple-layout">
       <article
         v-for="(person, i) in [wedding.bride, wedding.groom]"
@@ -17,6 +26,7 @@ const wedding = inject('wedding')
         data-reveal
       >
         <figure>
+          <DecorativeFrame />
           <img
             v-if="person.photo"
             :src="person.photo"
@@ -27,16 +37,20 @@ const wedding = inject('wedding')
           <figcaption v-if="['noir', 'dark', 'cinema'].includes(design)">
             {{ person.shortName }}
           </figcaption>
-          <span v-if="design === 'letters'" class="photo-tape" aria-hidden="true"></span>
+          <span
+            v-if="design === 'letters'"
+            class="photo-tape"
+            aria-hidden="true"
+          ></span>
         </figure>
         <div class="person-copy">
           <small>{{ i === 0 ? 'THE BRIDE' : 'THE GROOM' }}</small>
           <h3>{{ person.name }}</h3>
           <p v-if="person.order">{{ person.order }}</p>
           <p v-if="person.father || person.mother">
-            {{ person.father }}<br /><span v-if="person.father && person.mother">&</span><br />{{
-              person.mother
-            }}
+            {{ person.father }}<br /><span v-if="person.father && person.mother"
+              >&</span
+            ><br />{{ person.mother }}
           </p>
           <a
             v-if="person.instagram"

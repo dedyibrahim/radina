@@ -11,11 +11,13 @@ export function useAudio(src, volume = 0.4, options = () => ({})) {
         ? [{ url: value, title: 'Wedding soundtrack' }]
         : []
   })
-  const currentTrack = computed(() => tracks.value[index.value] || tracks.value[0])
+  const currentTrack = computed(
+    () => tracks.value[index.value] || tracks.value[0],
+  )
   let audio
   let history = [],
     generation = 0
-  async function play() {
+  function ensureAudio() {
     if (!audio) {
       audio = new Audio(currentTrack.value?.url)
       audio.loop = false
@@ -23,8 +25,27 @@ export function useAudio(src, volume = 0.4, options = () => ({})) {
       audio.volume = Math.min(1, Math.max(0, toValue(volume)))
       audio.preload = 'metadata'
     }
+  }
+  // Unlock the same audio element during the click gesture, silently. Playback
+  // becomes audible after the cover transition, including on mobile browsers.
+  async function preparePlayback() {
+    if (playing.value || !currentTrack.value) return
+    ensureAudio()
+    const request = ++generation
+    audio.muted = true
+    try {
+      await audio.play()
+      if (request !== generation) return
+      audio.pause()
+      audio.currentTime = 0
+    } catch {}
+  }
+  async function play() {
+    ensureAudio()
     if (!currentTrack.value) return
-    if (audio.getAttribute('src') !== currentTrack.value.url) audio.src = currentTrack.value.url
+    audio.muted = false
+    if (audio.getAttribute('src') !== currentTrack.value.url)
+      audio.src = currentTrack.value.url
     const request = ++generation
     try {
       await audio.play()
@@ -34,7 +55,8 @@ export function useAudio(src, volume = 0.4, options = () => ({})) {
     } catch (e) {
       if (request !== generation || e.name === 'AbortError') return
       playing.value = false
-      error.value = 'Musik belum dapat diputar. Tekan tombol musik untuk mencoba kembali.'
+      error.value =
+        'Musik belum dapat diputar. Tekan tombol musik untuk mencoba kembali.'
     }
   }
   function pause() {
@@ -58,10 +80,13 @@ export function useAudio(src, volume = 0.4, options = () => ({})) {
       pause()
       return
     }
-    let candidate = (index.value + direction + tracks.value.length) % tracks.value.length
+    let candidate =
+      (index.value + direction + tracks.value.length) % tracks.value.length
     if (config.shuffle && tracks.value.length > 1) history.push(index.value)
     if (config.shuffle && direction > 0 && tracks.value.length > 1) {
-      let choices = tracks.value.map((_, i) => i).filter((i) => !history.includes(i))
+      let choices = tracks.value
+        .map((_, i) => i)
+        .filter((i) => !history.includes(i))
       if (!choices.length) {
         if (auto && !config.repeat) {
           pause()
@@ -96,7 +121,9 @@ export function useAudio(src, volume = 0.4, options = () => ({})) {
   watch(
     () => tracks.value.map((track) => track.url).join('|'),
     () => {
-      const position = tracks.value.findIndex((track) => track.url === audio?.getAttribute('src'))
+      const position = tracks.value.findIndex(
+        (track) => track.url === audio?.getAttribute('src'),
+      )
       if (position >= 0) index.value = position
       else if (audio) {
         pause()
@@ -115,6 +142,7 @@ export function useAudio(src, volume = 0.4, options = () => ({})) {
     playing,
     error,
     play,
+    preparePlayback,
     pause,
     toggle,
     tracks,

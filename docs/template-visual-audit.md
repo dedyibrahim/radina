@@ -1,0 +1,121 @@
+# Template visual audit
+
+Audit: 5 October 2026. Registry entries and Vue entry points are discovered from the current project; no fixed template count is used.
+
+Found 111 registry entries. Read-only local database snapshot: {"ACTIVE":111}. Production status was not queried or changed. Inactive templates use the same visual system and retain their availability setting.
+
+Catalog sources: template-presets.json, floral-presets.json, template-studio.json, floral-collection.json, RadinaSeeder, WeddingPlatformSeeder and ExperienceSeeder. Studio/Atelier entries intentionally share a configurable renderer; their component_name labels are not separate Vue files.
+
+| Template | Vue entry | Personality / existing layout | Ornament / depth | Reveal / opening | Existing gallery | Photo / divider / music | Local status |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Rosalia Arch (rosalia-arch) | ./FloralAtelier/FloralInvitation.vue | floral / arch | floral/rose / 0.7 | rise, soft, bloom / arch | arch | arch / vine / flower | ACTIVE |
+| Peony Love Letter (peony-love-letter) | ./FloralAtelier/FloralInvitation.vue | floral / letter | floral/peony / 0.7 | rise, soft, bloom / letter | letter | paper / vine / flower | ACTIVE |
+| Magnolia Muse (magnolia-muse) | ./FloralAtelier/FloralInvitation.vue | floral / editorial | floral/magnolia / 0.7 | rise, soft, bloom / editorial | editorial | editorial / vine / flower | ACTIVE |
+| Rosewood Nocturne (rosewood-nocturne) | ./FloralAtelier/FloralInvitation.vue | floral / cinema | floral/rose / 0.7 | rise, soft, bloom / light | cinema | film / vine / flower | ACTIVE |
+| Sakura Serenade (sakura-serenade) | ./FloralAtelier/FloralInvitation.vue | floral / carousel | floral/sakura / 0.7 | rise, soft, bloom / bloom | carousel | floating / vine / flower | ACTIVE |
+| Orchid Royale (orchid-royale) | ./FloralAtelier/FloralInvitation.vue | luxury / arch | floral/orchid / 0.6 | soft, depth, rise / arch | arch | arch / gold / gold | ACTIVE |
+| Champagne Correspondence (champagne-correspondence) | ./FloralAtelier/FloralInvitation.vue | luxury / letter | floral/rose / 0.6 | soft, depth, rise / letter | letter | paper / gold / gold | ACTIVE |
+| Fleur de Palais (fleur-de-palais) | ./FloralAtelier/FloralInvitation.vue | luxury / editorial | floral/lily / 0.6 | soft, depth, rise / editorial | editorial | editorial / gold / gold | ACTIVE |
+| Velours Botanique (velours-botanique) | ./FloralAtelier/FloralInvitation.vue | luxury / cinema | floral/peony / 0.6 | soft, depth, rise / light | cinema | film / gold / gold | ACTIVE |
+| Pearl Blossom (pearl-blossom) | ./FloralAtelier/FloralInvitation.vue | luxury / carousel | floral/magnolia / 0.6 | soft, depth, rise / bloom | carousel | floating / gold / gold | ACTIVE |
+| White Cosmos (white-cosmos) | ./FloralAtelier/FloralInvitation.vue | minimalist / arch | modern/geometry / 0.25 | soft, line, rise / arch | arch | arch / line / minimal | ACTIVE |
+| Linen Blossom Letter (linen-blossom-letter) | ./FloralAtelier/FloralInvitation.vue | minimalist / letter | modern/geometry / 0.25 | soft, line, rise / letter | letter | paper / line / minimal | ACTIVE |
+| Eucalyptus Notes (eucalyptus-notes) | ./FloralAtelier/FloralInvitation.vue | minimalist / editorial | modern/geometry / 0.25 | soft, line, rise / editorial | editorial | editorial / line / minimal | ACTIVE |
+| Moonstone Magnolia (moonstone-magnolia) | ./FloralAtelier/FloralInvitation.vue | minimalist / cinema | modern/geometry / 0.25 | soft, line, rise / light | cinema | film / line / minimal | ACTIVE |
+| Petal Stillness (petal-stillness) | ./FloralAtelier/FloralInvitation.vue | minimalist / carousel | modern/geometry / 0.25 | soft, line, rise / bloom | carousel | floating / line / minimal | ACTIVE |
+| Melati Keraton (melati-keraton) | ./FloralAtelier/FloralInvitation.vue | nusantara / arch | nusantara/kawung / 0.45 | soft, rise, line / arch | arch | arch / pattern / gold | ACTIVE |
+| Puspa Songket (puspa-songket) | ./FloralAtelier/FloralInvitation.vue | nusantara / letter | nusantara/kawung / 0.45 | soft, rise, line / letter | letter | paper / pattern / gold | ACTIVE |
+| Cempaka Pendopo (cempaka-pendopo) | ./FloralAtelier/FloralInvitation.vue | nusantara / editorial | nusantara/kawung / 0.45 | soft, rise, line / editorial | editorial | editorial / pattern / gold | ACTIVE |
+| Anggrek Batik Malam (anggrek-batik-malam) | ./FloralAtelier/FloralInvitation.vue | nusantara / cinema | nusantara/kawung / 0.45 | soft, rise, line / light | cinema | film / pattern / gold | ACTIVE |
+| Kamboja Senja (kamboja-senja) | ./FloralAtelier/FloralInvitation.vue | nusantara / carousel | nusantara/kawung / 0.45 | soft, rise, line / bloom | carousel | floating / pattern / gold | ACTIVE |
+| Daisy Conservatory (daisy-conservatory) | ./FloralAtelier/FloralInvitation.vue | garden / arch | floral/cosmos / 0.6 | soft, rise, drift / arch | arch | arch / vine / leaf | ACTIVE |
+| Wildflower Letters (wildflower-letters) | ./FloralAtelier/FloralInvitation.vue | garden / letter | floral/jasmine / 0.6 | soft, rise, drift / letter | letter | paper / vine / leaf | ACTIVE |
+| Fern Botanique (fern-botanique) | ./FloralAtelier/FloralInvitation.vue | garden / editorial | botanical/fern / 0.6 | soft, rise, drift / editorial | editorial | editorial / vine / leaf | ACTIVE |
+| Rose Garden Twilight (rose-garden-twilight) | ./FloralAtelier/FloralInvitation.vue | garden / cinema | floral/rose / 0.6 | soft, rise, drift / light | cinema | film / vine / leaf | ACTIVE |
+| Meadow Butterfly (meadow-butterfly) | ./FloralAtelier/FloralInvitation.vue | garden / carousel | floral/magnolia / 0.6 | soft, rise, drift / bloom | carousel | floating / vine / leaf | ACTIVE |
+| Raudhah Bloom (raudhah-bloom) | ./FloralAtelier/FloralInvitation.vue | islamic / arch | islamic/arabesque / 0.4 | rise, soft, depth / arch | arch | arch / geometric / gold | ACTIVE |
+| Jannah Letters (jannah-letters) | ./FloralAtelier/FloralInvitation.vue | islamic / letter | islamic/arabesque / 0.4 | rise, soft, depth / letter | letter | paper / geometric / gold | ACTIVE |
+| Maryam Garden (maryam-garden) | ./FloralAtelier/FloralInvitation.vue | islamic / editorial | islamic/arabesque / 0.4 | rise, soft, depth / editorial | editorial | editorial / geometric / gold | ACTIVE |
+| Noor Petals (noor-petals) | ./FloralAtelier/FloralInvitation.vue | islamic / cinema | islamic/arabesque / 0.4 | rise, soft, depth / light | cinema | film / geometric / gold | ACTIVE |
+| Firdaus Breeze (firdaus-breeze) | ./FloralAtelier/FloralInvitation.vue | islamic / carousel | islamic/arabesque / 0.4 | rise, soft, depth / bloom | carousel | floating / geometric / gold | ACTIVE |
+| Moonlit Garden (moonlit-garden) | ./FloralAtelier/FloralInvitation.vue | cinematic / arch | celestial/light-ray / 0.5 | depth, soft, drift / arch | arch | arch / light / soundtrack | ACTIVE |
+| Petal Nocturne (petal-nocturne) | ./FloralAtelier/FloralInvitation.vue | cinematic / letter | celestial/light-ray / 0.5 | depth, soft, drift / letter | letter | paper / light / soundtrack | ACTIVE |
+| Bloom Premiere (bloom-premiere) | ./FloralAtelier/FloralInvitation.vue | cinematic / editorial | celestial/light-ray / 0.5 | depth, soft, drift / editorial | editorial | editorial / light / soundtrack | ACTIVE |
+| Velvet Dusk (velvet-dusk) | ./FloralAtelier/FloralInvitation.vue | cinematic / cinema | celestial/light-ray / 0.5 | depth, soft, drift / light | cinema | film / light / soundtrack | ACTIVE |
+| Stella Flower (stella-flower) | ./FloralAtelier/FloralInvitation.vue | cinematic / carousel | celestial/light-ray / 0.5 | depth, soft, drift / bloom | carousel | floating / light / soundtrack | ACTIVE |
+| Rosette Postcard (rosette-postcard) | ./FloralAtelier/FloralInvitation.vue | vintage / arch | floral/rose / 0.4 | drift, soft, rise / arch | arch | arch / tear / vinyl | ACTIVE |
+| Lavender Correspondence (lavender-correspondence) | ./FloralAtelier/FloralInvitation.vue | vintage / letter | floral/cosmos / 0.4 | drift, soft, rise / letter | letter | paper / tear / vinyl | ACTIVE |
+| Camellia Journal (camellia-journal) | ./FloralAtelier/FloralInvitation.vue | vintage / editorial | floral/peony / 0.4 | drift, soft, rise / editorial | editorial | editorial / tear / vinyl | ACTIVE |
+| Butterfly Memoir (butterfly-memoir) | ./FloralAtelier/FloralInvitation.vue | vintage / cinema | floral/magnolia / 0.4 | drift, soft, rise / light | cinema | film / tear / vinyl | ACTIVE |
+| Sakura Keepsake (sakura-keepsake) | ./FloralAtelier/FloralInvitation.vue | vintage / carousel | floral/sakura / 0.4 | drift, soft, rise / bloom | carousel | floating / tear / vinyl | ACTIVE |
+| Azure Orchid (azure-orchid) | ./FloralAtelier/FloralInvitation.vue | coastal / arch | floral/orchid / 0.5 | drift, soft, rise / arch | arch | arch / wave / glass | ACTIVE |
+| Riviera Blossom Letter (riviera-blossom-letter) | ./FloralAtelier/FloralInvitation.vue | coastal / letter | floral/magnolia / 0.5 | drift, soft, rise / letter | letter | paper / wave / glass | ACTIVE |
+| Tropical Botanique (tropical-botanique) | ./FloralAtelier/FloralInvitation.vue | coastal / editorial | botanical/fern / 0.5 | drift, soft, rise / editorial | editorial | editorial / wave / glass | ACTIVE |
+| Coral Moonrise (coral-moonrise) | ./FloralAtelier/FloralInvitation.vue | coastal / cinema | floral/lily / 0.5 | drift, soft, rise / light | cinema | film / wave / glass | ACTIVE |
+| Island Petals (island-petals) | ./FloralAtelier/FloralInvitation.vue | coastal / carousel | floral/cosmos / 0.5 | drift, soft, rise / bloom | carousel | floating / wave / glass | ACTIVE |
+| Pastel Carnival (pastel-carnival) | ./FloralAtelier/FloralInvitation.vue | playful / arch | floral/cosmos / 0.5 | bloom, drift, rise / arch | arch | arch / ribbon / flower | ACTIVE |
+| Flower Pop Letter (flower-pop-letter) | ./FloralAtelier/FloralInvitation.vue | playful / letter | floral/peony / 0.5 | bloom, drift, rise / letter | letter | paper / ribbon / flower | ACTIVE |
+| Sakura Cloud (sakura-cloud) | ./FloralAtelier/FloralInvitation.vue | playful / editorial | floral/sakura / 0.5 | bloom, drift, rise / editorial | editorial | editorial / ribbon / flower | ACTIVE |
+| Midnight Fiesta (midnight-fiesta) | ./FloralAtelier/FloralInvitation.vue | playful / cinema | floral/orchid / 0.5 | bloom, drift, rise / light | cinema | film / ribbon / flower | ACTIVE |
+| Butterfly Confetti (butterfly-confetti) | ./FloralAtelier/FloralInvitation.vue | playful / carousel | floral/magnolia / 0.5 | bloom, drift, rise / bloom | carousel | floating / ribbon / flower | ACTIVE |
+| Fleur Geometry (fleur-geometry) | ./FloralAtelier/FloralInvitation.vue | modern / arch | modern/mesh / 0.45 | depth, line, soft / arch | arch | arch / line / glass | ACTIVE |
+| Botanical Signature (botanical-signature) | ./FloralAtelier/FloralInvitation.vue | modern / letter | modern/mesh / 0.45 | depth, line, soft / letter | letter | paper / line / glass | ACTIVE |
+| Urban Petal Editorial (urban-petal-editorial) | ./FloralAtelier/FloralInvitation.vue | modern / editorial | modern/mesh / 0.45 | depth, line, soft / editorial | editorial | editorial / line / glass | ACTIVE |
+| Midnight Orchid (midnight-orchid) | ./FloralAtelier/FloralInvitation.vue | modern / cinema | modern/mesh / 0.45 | depth, line, soft / light | cinema | film / line / glass | ACTIVE |
+| Bloom Motion (bloom-motion) | ./FloralAtelier/FloralInvitation.vue | modern / carousel | modern/mesh / 0.45 | depth, line, soft / bloom | carousel | floating / line / glass | ACTIVE |
+| Rose Ribbon (rose-ribbon) | ./shared/StudioInvitation.vue | floral / ribbon | floral/rose / 0.7 | rise, soft, bloom / bloom | Galeri kenangan Rose Ribbon | layered / vine / flower | ACTIVE |
+| Linen Atelier (linen-atelier) | ./shared/StudioInvitation.vue | minimalist / columns | modern/geometry / 0.25 | soft, line, rise / editorial | Galeri kenangan Linen Atelier | editorial / line / minimal | ACTIVE |
+| Quiet Form (quiet-form) | ./shared/StudioInvitation.vue | minimalist / sculpture | modern/geometry / 0.25 | soft, line, rise / arch | Galeri kenangan Quiet Form | arch / line / minimal | ACTIVE |
+| Ivory Grid (ivory-grid) | ./shared/StudioInvitation.vue | minimalist / grid | modern/geometry / 0.25 | soft, line, rise / paper | Galeri kenangan Ivory Grid | polaroid / line / minimal | ACTIVE |
+| Wayang Senja (wayang-senja) | ./shared/StudioInvitation.vue | nusantara / gate | nusantara/carved / 0.45 | soft, rise, line / arch | Galeri kenangan Wayang Senja | arch / pattern / gold | ACTIVE |
+| Batik Kencana (batik-kencana) | ./shared/StudioInvitation.vue | nusantara / medallion | nusantara/kawung / 0.45 | soft, rise, line / arch | Galeri kenangan Batik Kencana | arch / pattern / gold | ACTIVE |
+| Songket Raya (songket-raya) | ./shared/StudioInvitation.vue | nusantara / woven | nusantara/songket / 0.45 | soft, rise, line / gate | Galeri kenangan Songket Raya | layered / pattern / gold | ACTIVE |
+| Aurora Glass (aurora-glass) | ./shared/StudioInvitation.vue | modern / glass | modern/mesh / 0.45 | depth, line, soft / glass | Galeri kenangan Aurora Glass | layered / line / glass | ACTIVE |
+| Urban Signature (urban-signature) | ./shared/StudioInvitation.vue | modern / split | modern/geometry / 0.45 | depth, line, soft / editorial | Galeri kenangan Urban Signature | editorial / line / glass | ACTIVE |
+| Riviera Postcard (riviera-postcard) | ./shared/StudioInvitation.vue | coastal / postcard | nature/wave / 0.5 | drift, soft, rise / letter | Galeri kenangan Riviera Postcard | paper / wave / glass | ACTIVE |
+| Santorini Sky (santorini-sky) | ./shared/StudioInvitation.vue | coastal / terrace | nature/wave / 0.5 | drift, soft, rise / arch | Galeri kenangan Santorini Sky | arch / wave / glass | ACTIVE |
+| Desert Horizon (desert-horizon) | ./shared/StudioInvitation.vue | coastal / horizon | nature/mountain / 0.5 | drift, soft, rise / light | Galeri kenangan Desert Horizon | postcard / line / glass | ACTIVE |
+| Golden Atelier (golden-atelier) | ./shared/StudioInvitation.vue | luxury / crest | luxury/pearl / 0.6 | soft, depth, rise / arch | Galeri kenangan Golden Atelier | arch / gold / gold | ACTIVE |
+| Velvet Gala (velvet-gala) | ./shared/StudioInvitation.vue | luxury / curtain | luxury/silk / 0.6 | soft, depth, rise / curtain | Galeri kenangan Velvet Gala | floating / gold / gold | ACTIVE |
+| Pearl Palace (pearl-palace) | ./shared/StudioInvitation.vue | luxury / pearl | luxury/pearl / 0.6 | soft, depth, rise / arch | Galeri kenangan Pearl Palace | arch / gold / gold | ACTIVE |
+| Olive Grove (olive-grove) | ./shared/StudioInvitation.vue | garden / window | botanical/olive / 0.6 | soft, rise, drift / editorial | Galeri kenangan Olive Grove | editorial / vine / leaf | ACTIVE |
+| Wildflower Meadow (wildflower-meadow) | ./shared/StudioInvitation.vue | garden / meadow | botanical/wildflower / 0.6 | soft, rise, drift / garden | Galeri kenangan Wildflower Meadow | layered / vine / leaf | ACTIVE |
+| Fern Serenade (fern-serenade) | ./shared/StudioInvitation.vue | garden / fern | botanical/olive / 0.6 | soft, rise, drift / arch | Galeri kenangan Fern Serenade | arch / vine / leaf | ACTIVE |
+| Glasshouse Morning (glasshouse-morning) | ./shared/StudioInvitation.vue | garden / greenhouse | botanical/fern / 0.6 | soft, rise, drift / paper | Galeri kenangan Glasshouse Morning | polaroid / vine / leaf | ACTIVE |
+| Golden Hour (golden-hour) | ./shared/StudioInvitation.vue | cinematic / film | celestial/light-ray / 0.5 | depth, soft, drift / light | Galeri kenangan Golden Hour | film / light / soundtrack | ACTIVE |
+| Starlight Premiere (starlight-premiere) | ./shared/StudioInvitation.vue | cinematic / marquee | celestial/light-ray / 0.5 | depth, soft, drift / light | Galeri kenangan Starlight Premiere | layered / light / soundtrack | ACTIVE |
+| Silver Screen (silver-screen) | ./shared/StudioInvitation.vue | cinematic / clapper | celestial/light-ray / 0.5 | depth, soft, drift / paper | Galeri kenangan Silver Screen | polaroid / light / soundtrack | ACTIVE |
+| Motion Picture (motion-picture) | ./shared/StudioInvitation.vue | cinematic / reel | celestial/light-ray / 0.5 | depth, soft, drift / arch | Galeri kenangan Motion Picture | arch / light / soundtrack | ACTIVE |
+| Sepia Memories (sepia-memories) | ./shared/StudioInvitation.vue | vintage / journal | vintage/postmark / 0.4 | drift, soft, rise / letter | Galeri kenangan Sepia Memories | paper / tear / vinyl | ACTIVE |
+| Postal Romance (postal-romance) | ./shared/StudioInvitation.vue | vintage / envelope | vintage/postmark / 0.4 | drift, soft, rise / letter | Galeri kenangan Postal Romance | paper / tear / vinyl | ACTIVE |
+| Vinyl Vows (vinyl-vows) | ./shared/StudioInvitation.vue | vintage / record | vintage/postmark / 0.4 | drift, soft, rise / arch | Galeri kenangan Vinyl Vows | arch / tear / vinyl | ACTIVE |
+| Art Deco Letter (art-deco-letter) | ./shared/StudioInvitation.vue | vintage / deco | vintage/postmark / 0.4 | drift, soft, rise / letter | Galeri kenangan Art Deco Letter | layered / tear / vinyl | ACTIVE |
+| Confetti Club (confetti-club) | ./shared/StudioInvitation.vue | playful / party | romantic/ribbon / 0.5 | bloom, drift, rise / paper | Galeri kenangan Confetti Club | polaroid / ribbon / flower | ACTIVE |
+| Balloon Fiesta (balloon-fiesta) | ./shared/StudioInvitation.vue | playful / balloons | romantic/ribbon / 0.5 | bloom, drift, rise / paper | Galeri kenangan Balloon Fiesta | polaroid / ribbon / flower | ACTIVE |
+| Origami Dream (origami-dream) | ./shared/StudioInvitation.vue | playful / origami | romantic/ribbon / 0.5 | bloom, drift, rise / paper | Galeri kenangan Origami Dream | polaroid / ribbon / flower | ACTIVE |
+| Retro Festival (retro-festival) | ./shared/StudioInvitation.vue | playful / festival | romantic/ribbon / 0.5 | bloom, drift, rise / paper | Galeri kenangan Retro Festival | polaroid / ribbon / flower | ACTIVE |
+| Nur Jannah (nur-jannah) | ./NurJannah/index.vue | islamic / original | islamic/arabesque / 0.4 | rise, soft, depth / arch | Galeri kenangan penuh syukur | arch / geometric / gold | ACTIVE |
+| Mihrab Emerald (mihrab-emerald) | ./MihrabEmerald/index.vue | islamic / original | islamic/arabesque / 0.4 | rise, soft, depth / arch | Galeri kenangan penuh syukur | arch / geometric / gold | ACTIVE |
+| Sahara Gold (sahara-gold) | ./SaharaGold/index.vue | islamic / original | islamic/arabesque / 0.4 | rise, soft, depth / arch | Galeri kenangan penuh syukur | arch / geometric / gold | ACTIVE |
+| Qamar Blue (qamar-blue) | ./QamarBlue/index.vue | islamic / original | islamic/arabesque / 0.4 | rise, soft, depth / arch | Galeri kenangan penuh syukur | arch / geometric / gold | ACTIVE |
+| Zahra Ivory (zahra-ivory) | ./ZahraIvory/index.vue | islamic / original | islamic/arabesque / 0.4 | rise, soft, depth / arch | Galeri kenangan penuh syukur | arch / geometric / gold | ACTIVE |
+| Timeless Romance (timeless-romance) | ./TimelessRomance/index.vue | classical / timeless-romance | classical/column / 0.4 | soft, rise, line / gate | Museum gallery | floating / gold / gold | ACTIVE |
+| Neon Love (neon-love) | ./NeonLove/index.vue | modern / neon-love | modern/mesh / 0.45 | depth, line, soft / glass | Urban snap reel | glass / line / glass | ACTIVE |
+| Blossom East (blossom-east) | ./BlossomEast/index.vue | oriental / blossom-east | botanical/bamboo / 0.4 | line, soft, drift / paper | Art gallery | editorial / line / minimal | ACTIVE |
+| Monochrome (monochrome) | ./Monochrome/index.vue | minimalist / monochrome | modern/geometry / 0.25 | soft, line, rise / editorial | Exhibition wall | editorial / line / minimal | ACTIVE |
+| Botanica (botanica) | ./Botanica/index.vue | garden / botanica | botanical/tropical / 0.6 | soft, rise, drift / garden | Travel journal | organic / vine / leaf | ACTIVE |
+| Paper & Petals (paper-petals) | ./PaperPetals/index.vue | floral / paper-petals | floral/rose / 0.7 | rise, soft, bloom / bloom | Scattered polaroids | layered / vine / flower | ACTIVE |
+| Royal Heritage (royal-heritage) | ./RoyalHeritage/index.vue | luxury / royal-heritage | luxury/pearl / 0.6 | soft, depth, rise / curtain | Palace wall | floating / gold / gold | ACTIVE |
+| Ocean Vows (ocean-vows) | ./OceanVows/index.vue | coastal / ocean-vows | nature/wave / 0.5 | drift, soft, rise / ocean | Coastal reel | postcard / wave / glass | ACTIVE |
+| Editorial (editorial) | ./Editorial/index.vue | minimalist / editorial | modern/geometry / 0.25 | soft, line, rise / editorial | Editorial spread | editorial / line / minimal | ACTIVE |
+| Celestial (celestial) | ./Celestial/index.vue | celestial / celestial | celestial/constellation / 0.45 | soft, depth, rise / constellation | Star-map grid | halo / stars / glass | ACTIVE |
+| Amore Bloom (romantic-floral) | ./RomanticFloral/index.vue | floral / amore | floral/rose / 0.7 | rise, soft, bloom / bloom | Floral masonry | layered / vine / flower | ACTIVE |
+| Noir Élégance (elegant-luxury) | ./ElegantLuxury/index.vue | luxury / noir | luxury/pearl / 0.6 | soft, depth, rise / curtain | Asymmetric editorial grid | floating / gold / gold | ACTIVE |
+| Pure (minimalist-white) | ./MinimalistWhite/index.vue | minimalist / pure | modern/geometry / 0.25 | soft, line, rise / editorial | Clean grid | editorial / line / minimal | ACTIVE |
+| Nusantara (nusantara-heritage) | ./NusantaraHeritage/index.vue | nusantara / nusantara | nusantara/kawung / 0.45 | soft, rise, line / gate | Framed heritage gallery | carved / pattern / gold | ACTIVE |
+| Verdant Vows (garden-dream) | ./GardenDream/index.vue | garden / garden | botanical/eucalyptus / 0.6 | soft, rise, drift / garden | Garden photo board | organic / vine / leaf | ACTIVE |
+| Heritage Letters (classic-vintage) | ./ClassicVintage/index.vue | vintage / letters | vintage/postmark / 0.4 | drift, soft, rise / letter | Vintage album | paper / tear / vinyl | ACTIVE |
+| After Dark (midnight-romance) | ./MidnightRomance/index.vue | celestial / dark | celestial/constellation / 0.45 | soft, depth, rise / constellation | Night snap reel | halo / stars / glass | ACTIVE |
+| Sakinah (sakinah) | ./Sakinah/index.vue | islamic / sakinah | islamic/arabesque / 0.4 | rise, soft, depth / arch | Geometric gallery | arch / geometric / gold | ACTIVE |
+| Frame by Frame (eternal-story) | ./EternalStory/index.vue | cinematic / cinema | celestial/light-ray / 0.5 | depth, soft, drift / light | Cinematic reel | film / light / soundtrack | ACTIVE |
+| Daydream (blush) | ./Blush/index.vue | playful / daydream | romantic/ribbon / 0.5 | bloom, drift, rise / paper | Creative collage | polaroid / ribbon / flower | ACTIVE |

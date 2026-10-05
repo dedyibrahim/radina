@@ -100,6 +100,9 @@ jobs:
       - name: Verify countdown event selection and calendar dates
         run: npm run test:countdown-event
 
+      - name: Verify template visual coverage and quality profiles
+        run: npm run test:visual-system
+
       - name: Run migrations
         run: php artisan migrate --force
 

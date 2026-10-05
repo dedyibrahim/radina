@@ -1,5 +1,13 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, inject, computed, onMounted, onUnmounted } from 'vue'
+const visual = inject('weddingVisual', null)
+const floral = computed(
+  () =>
+    !visual ||
+    ['floral', 'botanical', 'romantic'].includes(
+      visual.config.value.ornamentFamily,
+    ),
+)
 
 const layer = ref(null)
 const visible = ref(false)
@@ -22,7 +30,13 @@ onUnmounted(() => observer?.disconnect())
 </script>
 
 <template>
-  <div ref="layer" class="flower-motion" :class="{ 'flowers-visible': visible }" aria-hidden="true">
+  <div
+    v-if="floral"
+    ref="layer"
+    class="flower-motion"
+    :class="{ 'flowers-visible': visible }"
+    aria-hidden="true"
+  >
     <div
       v-for="side in ['left', 'right']"
       :key="side"

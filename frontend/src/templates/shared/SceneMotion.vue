@@ -2,7 +2,10 @@
 import { ref, watch, onMounted, onUnmounted, inject } from 'vue'
 import { Sparkles, Pause } from 'lucide-vue-next'
 
-const props = defineProps({ effects: Array })
+const props = defineProps({
+  effects: Array,
+  quality: { type: String, default: 'standard' },
+})
 const emit = defineEmits(['change'])
 const opened = inject('invitationOpened', ref(false))
 const canvas = ref(null),
@@ -21,7 +24,11 @@ let ctx,
   burst = [],
   visible = true
 const colors = ['#d99b70', '#8eafac', '#b990bd', '#edc66e', '#c58586']
-const random = (min, max) => min + Math.random() * (max - min)
+let seed = 1729
+const random = (min, max) => {
+  seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0
+  return min + (seed / 4294967296) * (max - min)
+}
 function particle(effect, celebratory = false) {
   return {
     effect,
@@ -40,14 +47,18 @@ function particle(effect, celebratory = false) {
 }
 function fill() {
   const effects = props.effects?.length ? props.effects : ['sparkles']
-  particles = Array.from({ length: width < 500 ? 28 : 40 }, (_, i) =>
+  seed = 1729
+  const count =
+    props.quality === 'lite' ? 0 : props.quality === 'high' ? 24 : 12
+  particles = Array.from({ length: count }, (_, i) =>
     particle(effects[i % effects.length]),
   )
 }
 function position() {
   if (!canvas.value) return
   const shell =
-    canvas.value.closest('.live-wedding-preview') || canvas.value.closest('.invitation-shell')
+    canvas.value.closest('.live-wedding-preview') ||
+    canvas.value.closest('.invitation-shell')
   const rect = shell?.getBoundingClientRect()
   if (!rect) return
   const nextVisible = rect.bottom > 0 && rect.top < window.innerHeight
@@ -62,7 +73,10 @@ function position() {
   if (nextWidth === width && nextHeight === height) return
   width = nextWidth
   height = nextHeight
-  const ratio = Math.min(window.devicePixelRatio || 1, 1.5)
+  const ratio = Math.min(
+    window.devicePixelRatio || 1,
+    props.quality === 'high' ? 1.5 : 1,
+  )
   canvas.value.width = Math.round(width * ratio)
   canvas.value.height = Math.round(height * ratio)
   canvas.value.style.width = `${width}px`
@@ -166,7 +180,12 @@ function shape(p, time, celebratory = false) {
       ctx.beginPath()
       ctx.moveTo(-s * 1.5, Math.sin(time * 3 + p.phase) * s)
       ctx.quadraticCurveTo(-s * 0.7, -s, 0, 0)
-      ctx.quadraticCurveTo(s * 0.7, -s, s * 1.5, Math.sin(time * 3 + p.phase) * s)
+      ctx.quadraticCurveTo(
+        s * 0.7,
+        -s,
+        s * 1.5,
+        Math.sin(time * 3 + p.phase) * s,
+      )
       ctx.stroke()
       break
     case 'lanterns':
@@ -209,7 +228,8 @@ function shape(p, time, celebratory = false) {
       break
     case 'waves':
       ctx.beginPath()
-      for (let i = -s * 4; i < s * 4; i++) ctx.lineTo(i, Math.sin(i / s + time) * s * 0.3)
+      for (let i = -s * 4; i < s * 4; i++)
+        ctx.lineTo(i, Math.sin(i / s + time) * s * 0.3)
       ctx.stroke()
       break
   }
@@ -221,7 +241,14 @@ function stop() {
   last = 0
 }
 function draw(timestamp) {
-  if (!enabled.value || document.hidden || !visible || !ctx || !width) {
+  if (
+    !enabled.value ||
+    props.quality === 'lite' ||
+    document.hidden ||
+    !visible ||
+    !ctx ||
+    !width
+  ) {
     stop()
     return
   }
@@ -233,7 +260,9 @@ function draw(timestamp) {
   frames.value++
   ctx.clearRect(0, 0, width, height)
   for (const p of particles) {
-    const upward = ['balloons', 'bubbles', 'orbs', 'fireflies'].includes(p.effect)
+    const upward = ['balloons', 'bubbles', 'orbs', 'fireflies'].includes(
+      p.effect,
+    )
     p.y += delta * p.speed * (upward ? -1 : 1)
     p.x += delta * p.drift
     if (p.y > 1.1) p.y = -0.1
@@ -254,7 +283,8 @@ function draw(timestamp) {
 function start() {
   stop()
   emit('change', enabled.value && !document.hidden && visible)
-  if (enabled.value && !document.hidden && visible) frame = requestAnimationFrame(draw)
+  if (enabled.value && props.quality !== 'lite' && !document.hidden && visible)
+    frame = requestAnimationFrame(draw)
 }
 function toggle() {
   enabled.value = !enabled.value
@@ -270,14 +300,24 @@ watch(enabled, () => {
   start()
 })
 watch(() => props.effects, fill)
+watch(
+  () => props.quality,
+  () => {
+    fill()
+    position()
+    start()
+  },
+)
 watch(opened, (value, previous) => {
-  if (value && !previous && enabled.value) {
+  if (value && !previous && enabled.value && props.quality !== 'lite') {
     const effect = props.effects?.includes('confetti')
       ? 'confetti'
       : props.effects?.includes('paper')
         ? 'paper'
         : 'sparkles'
-    burst = Array.from({ length: width < 500 ? 44 : 64 }, () => particle(effect, true))
+    burst = Array.from({ length: props.quality === 'high' ? 28 : 14 }, () =>
+      particle(effect, true),
+    )
   }
 })
 onMounted(() => {
@@ -296,7 +336,10 @@ onMounted(() => {
   observer = new ResizeObserver(position)
   observer.observe(canvas.value.closest('.invitation-shell'))
   window.addEventListener('resize', position)
-  window.addEventListener('scroll', position, { passive: true, capture: true })
+  window.addEventListener('scroll', position, {
+    passive: true,
+    capture: true,
+  })
   document.addEventListener('visibilitychange', start)
   query.addEventListener('change', preference)
 })

@@ -28,7 +28,9 @@
     "test:couple-visibility": "node scripts/couple-visibility-test.mjs",
     "test:event-visibility": "node scripts/event-visibility-test.mjs",
     "test:quote-line-breaks": "node scripts/quote-line-break-test.mjs",
-    "test:countdown-event": "node scripts/countdown-event-test.mjs"
+    "test:countdown-event": "node scripts/countdown-event-test.mjs",
+    "test:visual-system": "node scripts/template-visual-test.mjs",
+    "test:visual-browser": "npm run test:visual-system && node scripts/template-visual-browser-test.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.51.0",

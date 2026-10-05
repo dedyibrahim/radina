@@ -1,0 +1,806 @@
+/* All visual rules are scoped to the invitation. No transforms on ancestors
+   of fixed navigation/music controls; no content, colors or layouts replaced. */
+.wedding-page .opening-stage,
+.wedding-page .section-frame {
+  position: relative;
+  isolation: isolate;
+}
+.wedding-page .opening-stage {
+  overflow: clip;
+}
+.wedding-page .visual-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: clip;
+  contain: paint;
+}
+.wedding-page .visual-background,
+.wedding-page .visual-midground,
+.wedding-page .visual-foreground {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.wedding-page .visual-texture {
+  position: absolute;
+  inset: 0;
+  background: url('../../assets/wedding/textures/paper.svg') repeat;
+  background-size: 160px;
+  opacity: 0.055;
+  mix-blend-mode: multiply;
+}
+.wedding-page .texture-film .visual-texture,
+.wedding-page .texture-grain .visual-texture {
+  opacity: 0.045;
+  mix-blend-mode: soft-light;
+}
+.wedding-page .texture-linen .visual-texture,
+.wedding-page .texture-woven .visual-texture {
+  background-image:
+    repeating-linear-gradient(0deg, currentColor 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 5px);
+  color: var(--gold);
+  opacity: 0.025;
+}
+.wedding-page .texture-silk .visual-texture {
+  background-image: repeating-linear-gradient(
+    115deg,
+    var(--gold) 0,
+    transparent 8%,
+    var(--gold) 20%
+  );
+  opacity: 0.035;
+}
+.wedding-page .texture-sand .visual-texture {
+  opacity: 0.075;
+}
+.wedding-page .visual-light {
+  position: absolute;
+  width: 75%;
+  aspect-ratio: 1;
+  top: -8%;
+  right: -38%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, var(--gold) 0, transparent 68%);
+  opacity: 0.13;
+  translate: var(--pointer-x, 0px)
+    calc(var(--parallax-y, 0px) + var(--pointer-y, 0px));
+}
+.wedding-page .light-rose .visual-light {
+  background: radial-gradient(ellipse, var(--dusty-rose) 0, transparent 68%);
+}
+.wedding-page .light-moonlight .visual-light {
+  background: radial-gradient(ellipse, #dce6ee 0, transparent 68%);
+  opacity: 0.085;
+}
+.wedding-page .light-spotlight .visual-light {
+  background: conic-gradient(
+    from 130deg at 50% 0%,
+    transparent,
+    #e7d3ac55 10deg,
+    transparent 28deg
+  );
+  width: 110%;
+  top: -15%;
+  opacity: 0.15;
+}
+.wedding-page .light-sunset .visual-light {
+  background: radial-gradient(ellipse, #e7b184, transparent 68%);
+}
+.wedding-page .visual-ornament {
+  position: absolute;
+  width: clamp(85px, 28%, 230px);
+  aspect-ratio: 1;
+  color: var(--gold);
+  translate: var(--pointer-x, 0px)
+    calc(var(--parallax-y, 0px) + var(--pointer-y, 0px));
+  transition: translate 350ms ease-out;
+  pointer-events: none;
+}
+.wedding-page .visual-ornament > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    140deg,
+    var(--sage),
+    var(--gold) 48%,
+    var(--dusty-rose)
+  );
+  mask-image: var(--ornament-mask);
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+  transform: rotate(var(--ornament-turn, 8deg));
+  transform-origin: 20% 85%;
+  animation: visual-sway 14s ease-in-out infinite;
+  animation-delay: var(--ornament-phase, 0s);
+  animation-play-state: paused;
+}
+.wedding-page .ornament-background {
+  width: 40%;
+  top: 5%;
+  right: -20%;
+  opacity: 0.065;
+  filter: blur(1px);
+}
+.wedding-page .ornament-middle {
+  top: 16%;
+  left: -18%;
+  opacity: 0.19;
+}
+.wedding-page .ornament-foreground {
+  bottom: 4%;
+  right: -20%;
+  width: 41%;
+  opacity: 0.25;
+  filter: blur(0.6px);
+}
+.wedding-page [data-running='true'] .visual-ornament > span {
+  animation-play-state: running;
+}
+.wedding-page .atmosphere-opening .ornament-middle {
+  top: 2%;
+  left: -16%;
+  width: 38%;
+  opacity: 0.27;
+}
+.wedding-page .atmosphere-opening .ornament-foreground {
+  width: 52%;
+  right: -25%;
+  bottom: 0;
+  opacity: 0.32;
+}
+.wedding-page .atmosphere-opening .ornament-background {
+  width: 60%;
+  opacity: 0.09;
+}
+.wedding-page[data-visual-personality='minimalist'] .visual-ornament {
+  opacity: 0.06;
+}
+.wedding-page[data-visual-personality='cinematic'] .visual-ornament {
+  opacity: 0.1;
+}
+.wedding-page[data-visual-personality='islamic'] .visual-ornament > span,
+.wedding-page[data-visual-personality='nusantara'] .visual-ornament > span {
+  background: var(--gold);
+}
+.wedding-page:not([data-visual-personality='floral']):not(
+    [data-visual-personality='garden']
+  ):not([data-visual-personality='playful'])
+  :is(.date-floral, .quote-section > .botanical) {
+  display: none;
+}
+.wedding-page .desktop-ambience > .visual-ornament {
+  width: min(27vw, 420px);
+  opacity: 0.2;
+}
+.wedding-page .desktop-ambience .ambient-left {
+  top: 12%;
+  left: -4%;
+}
+.wedding-page .desktop-ambience .ambient-right {
+  top: auto;
+  bottom: 5%;
+  right: -4%;
+  rotate: 180deg;
+}
+.wedding-page .desktop-ambience .visual-ornament > span {
+  animation: none;
+}
+.wedding-page .visual-monogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.18em;
+  color: var(--gold);
+  font-family: inherit;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.wedding-page .visual-monogram em {
+  font-size: 0.45em;
+  font-weight: 400;
+}
+.wedding-page .visual-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  min-height: 40px;
+  padding: 3px 0;
+  color: var(--gold);
+  max-width: 210px;
+  margin: -22px auto 18px;
+  position: relative;
+  z-index: 4;
+  pointer-events: none;
+}
+.wedding-page .visual-divider .visual-ornament {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  opacity: 0.65;
+  inset: auto;
+  filter: none;
+  translate: none;
+}
+.wedding-page .visual-divider .visual-ornament > span {
+  animation: none;
+  transform: none;
+}
+.wedding-page .divider-rule {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, currentColor);
+  opacity: 0.4;
+}
+.wedding-page .divider-rule:last-child {
+  rotate: 180deg;
+}
+.wedding-page .monogram-compact {
+  font-size: 22px;
+}
+.wedding-page .divider-line .visual-ornament {
+  width: 20px;
+  height: 20px;
+}
+.wedding-page .divider-tear .divider-rule {
+  height: 4px;
+  background: currentColor;
+  clip-path: polygon(
+    0 40%,
+    10% 0,
+    20% 90%,
+    30% 30%,
+    50% 80%,
+    60% 0,
+    80% 90%,
+    100% 20%,
+    100% 80%,
+    0 90%
+  );
+}
+.wedding-page .divider-wave .divider-rule {
+  height: 6px;
+  background: none;
+  border-top: 1px solid currentColor;
+  border-radius: 50%;
+}
+.wedding-page .divider-pattern .divider-rule,
+.wedding-page .divider-geometric .divider-rule {
+  background: repeating-linear-gradient(
+    90deg,
+    currentColor 0 4px,
+    transparent 4px 8px
+  );
+}
+.wedding-page .opening-stage.cover-leave-active {
+  transition:
+    opacity 900ms ease,
+    clip-path 900ms cubic-bezier(0.65, 0, 0.2, 1),
+    filter 900ms ease,
+    transform 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.wedding-page .opening-stage.cover-leave-to {
+  opacity: 0;
+  transform: scale(1.015);
+}
+.wedding-page
+  .opening-stage.cover-leave-active
+  :is(
+    .cover-invitation,
+    .studio-guest,
+    .studio-open,
+    .floral-cover-guest,
+    .floral-open,
+    .cover-title,
+    .studio-names,
+    .floral-cover-names
+  ) {
+  transition:
+    opacity 350ms ease,
+    translate 650ms ease;
+  opacity: 0;
+  translate: 0 -8px;
+}
+.wedding-page .opening-stage.cover-leave-active .ornament-middle {
+  transition: translate 850ms ease;
+  translate: -55px -20px;
+}
+.wedding-page .opening-stage.cover-leave-active .ornament-foreground {
+  transition: translate 850ms ease;
+  translate: 55px 40px;
+}
+.wedding-page[data-opening='arch'] .opening-stage.cover-leave-to,
+.wedding-page[data-opening='gate'] .opening-stage.cover-leave-to {
+  clip-path: inset(0 50% 0 50%);
+  transform: none;
+}
+.wedding-page[data-opening='curtain'] .opening-stage.cover-leave-to {
+  clip-path: inset(0 0 100% 0);
+  transform: none;
+}
+.wedding-page[data-opening='letter'] .opening-stage.cover-leave-to {
+  transform: perspective(1000px) rotateX(-9deg) translateY(-40px);
+  transform-origin: top;
+}
+.wedding-page[data-opening='paper'] .opening-stage.cover-leave-to {
+  transform: perspective(1000px) rotateY(-8deg) scale(0.98);
+}
+.wedding-page[data-opening='light'] .opening-stage.cover-leave-to,
+.wedding-page[data-opening='constellation'] .opening-stage.cover-leave-to {
+  filter: brightness(1.5);
+  transform: scale(1.03);
+}
+.wedding-page[data-opening='glass'] .opening-stage.cover-leave-to {
+  filter: blur(3px);
+}
+.wedding-page[data-opening='ocean'] .opening-stage.cover-leave-to {
+  clip-path: ellipse(85% 0% at 50% 0);
+  transform: none;
+}
+.wedding-page[data-opening='garden'] .opening-stage.cover-leave-to {
+  clip-path: inset(0 0 0 100%);
+}
+.wedding-page[data-opening='editorial'] .opening-stage.cover-leave-to {
+  clip-path: inset(0 0 0 100%);
+  transform: none;
+}
+.wedding-page .design-content.cover-enter-active {
+  transition: opacity 350ms ease;
+}
+.wedding-page .design-content.cover-enter-from {
+  opacity: 0;
+}
+.wedding-page .reveal-ready[data-reveal-style] {
+  transition:
+    opacity 800ms ease,
+    transform 800ms cubic-bezier(0.2, 0.65, 0.3, 1),
+    clip-path 800ms ease;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.wedding-page .reveal-ready:not(.is-visible)[data-reveal-style='soft'] {
+  transform: none;
+  opacity: 0;
+}
+.wedding-page .reveal-ready:not(.is-visible)[data-reveal-style='rise'] {
+  transform: translateY(18px);
+  opacity: 0;
+}
+.wedding-page .reveal-ready:not(.is-visible)[data-reveal-style='drift'] {
+  transform: translateX(-10px);
+  opacity: 0;
+}
+.wedding-page .reveal-ready:not(.is-visible)[data-reveal-style='depth'] {
+  transform: perspective(1000px) translateZ(-20px);
+  opacity: 0;
+}
+.wedding-page .reveal-ready:not(.is-visible)[data-reveal-style='bloom'] {
+  transform: scale(0.975);
+  opacity: 0;
+}
+.wedding-page .reveal-ready:not(.is-visible)[data-reveal-style='line'] {
+  transform: none;
+  clip-path: inset(0 0 8% 0);
+  opacity: 0;
+}
+.wedding-page .reveal-ready.is-visible[data-reveal-style] {
+  transform: none;
+  clip-path: none;
+  opacity: 1;
+}
+/* Frame treatments add material details without replacing a template's crop. */
+.wedding-page
+  :is(
+    .person-composition figure,
+    .floral-person figure,
+    .celebration-person > img,
+    .floral-person-photo,
+    .hero-image-wrap,
+    .floral-hero-photo,
+    .studio-cover-photo,
+    .floral-cover-photo
+  ) {
+  position: relative;
+}
+.wedding-page[data-photo-frame='layered']
+  :is(
+    .person-composition figure,
+    .floral-person figure,
+    .celebration-person > img,
+    .floral-person-photo
+  ) {
+  box-shadow:
+    5px 8px 0 color-mix(in srgb, var(--gold) 12%, transparent),
+    0 14px 26px #00000012;
+}
+.wedding-page[data-photo-frame='floating']
+  :is(
+    .person-composition figure,
+    .floral-person figure,
+    .celebration-person > img,
+    .floral-person-photo
+  ) {
+  outline: 1px solid color-mix(in srgb, var(--gold) 48%, transparent);
+  outline-offset: 7px;
+  box-shadow: 0 13px 24px #00000015;
+}
+.wedding-page[data-photo-frame='paper']
+  :is(
+    .person-composition figure,
+    .floral-person figure,
+    .celebration-person > img,
+    .floral-person-photo
+  ) {
+  border: 8px solid var(--ivory);
+  border-bottom-width: 20px;
+  box-shadow: 3px 6px 11px #00000015;
+}
+.wedding-page[data-photo-frame='polaroid']
+  :is(
+    .person-composition figure,
+    .floral-person figure,
+    .celebration-person > img,
+    .floral-person-photo
+  ) {
+  border: 7px solid var(--ivory);
+  border-bottom-width: 26px;
+  box-shadow: 0 12px 22px #0000001a;
+}
+.wedding-page[data-photo-frame='film']
+  :is(
+    .person-composition figure,
+    .floral-person figure,
+    .celebration-person > img,
+    .floral-person-photo
+  ) {
+  border-block: 7px solid var(--ink);
+  outline: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+}
+.wedding-page[data-photo-frame='arch']
+  :is(
+    .person-composition figure,
+    .floral-person figure,
+    .celebration-person > img,
+    .floral-person-photo
+  ) {
+  outline: 1px solid var(--gold);
+  outline-offset: 5px;
+}
+.wedding-page[data-photo-frame='carved']
+  :is(
+    .person-composition figure,
+    .floral-person figure,
+    .celebration-person > img,
+    .floral-person-photo
+  ) {
+  border: 3px double var(--gold);
+}
+.wedding-page[data-photo-frame='halo']
+  :is(
+    .person-composition figure,
+    .floral-person figure,
+    .celebration-person > img,
+    .floral-person-photo
+  ) {
+  box-shadow: 0 0 24px color-mix(in srgb, var(--gold) 18%, transparent);
+}
+.wedding-page[data-photo-frame='glass']
+  :is(
+    .person-composition figure,
+    .floral-person figure,
+    .celebration-person > img,
+    .floral-person-photo
+  ) {
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+  box-shadow:
+    inset 0 1px 0 #ffffff40,
+    0 9px 20px #00000010;
+}
+.wedding-page[data-photo-frame='editorial']
+  :is(
+    .person-composition figure,
+    .floral-person figure,
+    .celebration-person > img,
+    .floral-person-photo
+  ) {
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 10px;
+}
+.wedding-page[data-event-surface='glass'] .event-card,
+.wedding-page[data-gift-surface='glass'] .bank-card {
+  background: color-mix(in srgb, var(--ivory) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--gold) 32%, transparent);
+  box-shadow: inset 0 1px 0 #ffffff22;
+}
+.wedding-page[data-event-surface='stationery'] .event-card,
+.wedding-page[data-event-surface='letter'] .event-card {
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+  box-shadow: 3px 4px 0 color-mix(in srgb, var(--gold) 8%, transparent);
+}
+.wedding-page[data-event-surface='traditional'] .event-card {
+  border: 3px double color-mix(in srgb, var(--gold) 58%, transparent);
+}
+.wedding-page[data-event-surface='garden'] .event-card {
+  border-color: color-mix(in srgb, var(--sage) 35%, transparent);
+  background: color-mix(in srgb, var(--sage) 7%, var(--ivory));
+}
+.wedding-page[data-event-surface='type'] .event-card {
+  background: transparent;
+  box-shadow: none;
+  border-inline: 0;
+  border-block: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
+}
+.wedding-page[data-event-surface='cinematic'] .event-card {
+  background: transparent;
+  border-inline: 0;
+  border-top: 1px solid var(--gold);
+  box-shadow: none;
+}
+.wedding-page[data-gift-surface='envelope'] .bank-card {
+  border-top: 3px double var(--gold);
+  background: color-mix(in srgb, var(--gold) 5%, var(--ivory));
+}
+.wedding-page[data-gift-surface='note'] .bank-card {
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+  background: color-mix(in srgb, var(--gold) 5%, var(--ivory));
+}
+.wedding-page[data-gift-surface='type'] .bank-card {
+  background: transparent;
+  border-inline: 0;
+  box-shadow: none;
+}
+.wedding-page[data-music-skin='vinyl'] .sound-disc {
+  background: repeating-radial-gradient(circle, #2c2725 0 3px, #514844 3px 4px);
+  color: #f4e7cf;
+  border: 5px solid #272321;
+}
+.wedding-page[data-music-skin='glass'] .sound-disc,
+.wedding-page[data-music-skin='glass'] .playlist-details {
+  background: color-mix(in srgb, var(--ivory) 88%, transparent);
+  color: var(--ink);
+  border-color: color-mix(in srgb, var(--gold) 35%, transparent);
+}
+.wedding-page[data-visual-quality='high'][data-music-skin='glass']
+  .playlist-details {
+  backdrop-filter: blur(8px);
+}
+.wedding-page[data-music-skin='gold'] .sound-disc {
+  background: var(--ivory);
+  border: 3px double var(--gold);
+  color: var(--gold);
+}
+.wedding-page[data-music-skin='leaf'] .sound-disc {
+  border-radius: 50% 8% 50% 8%;
+  background: var(--ivory);
+  color: var(--sage);
+}
+.wedding-page[data-music-skin='flower'] .sound-disc {
+  border-radius: 42% 58% 40% 60%;
+  background: color-mix(in srgb, var(--dusty-rose) 14%, var(--ivory));
+  color: var(--ink);
+}
+.wedding-page[data-music-skin='minimal'] .sound-disc {
+  background: var(--ivory);
+  color: var(--ink);
+  box-shadow: none;
+  border: 1px solid currentColor;
+}
+.wedding-page[data-music-skin='soundtrack'] .sound-disc {
+  border-radius: 7px;
+  background: var(--ivory);
+  color: var(--ink);
+}
+.wedding-page[data-music-skin='soundtrack'] .sound-disc.spinning {
+  animation: none;
+}
+.wedding-page[data-visual-quality='standard'] .visual-ornament {
+  filter: none;
+}
+.wedding-page[data-visual-quality='lite'] .visual-ornament {
+  filter: none;
+  translate: none;
+}
+.wedding-page[data-visual-quality='lite'] .visual-ornament > span,
+.wedding-page[data-visual-quality='lite'] .sound-disc {
+  animation: none;
+}
+.wedding-page[data-visual-quality='lite'] .visual-light {
+  opacity: 0.06;
+  translate: none;
+}
+.wedding-page[data-visual-quality='lite'] .ornament-background {
+  display: none;
+}
+.wedding-page[data-visual-quality='lite'] .opening-stage.cover-leave-active {
+  transition: opacity 150ms ease;
+}
+.wedding-page[data-visual-quality='lite'] .opening-stage.cover-leave-to {
+  transform: none;
+  filter: none;
+  clip-path: none;
+}
+.wedding-page.motion-off .reveal-ready {
+  opacity: 1;
+  transform: none;
+  clip-path: none;
+  transition: none;
+}
+@keyframes visual-sway {
+  0%,
+  100% {
+    transform: rotate(var(--ornament-turn, 8deg)) translateY(0);
+  }
+  50% {
+    transform: rotate(calc(var(--ornament-turn, 8deg) + 3deg)) translateY(-4px);
+  }
+}
+@media (max-width: 600px) {
+  .wedding-page .ornament-foreground {
+    width: 36%;
+    right: -19%;
+    opacity: 0.2;
+  }
+  .wedding-page .visual-divider {
+    max-width: 170px;
+  }
+  .wedding-page .visual-ornament {
+    transition: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wedding-page .visual-ornament,
+  .wedding-page .visual-light {
+    translate: none !important;
+  }
+  .wedding-page .reveal-ready {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
+
+.wedding-page[data-visual-quality='lite'] *,
+.wedding-page[data-visual-quality='lite'] *::before,
+.wedding-page[data-visual-quality='lite'] *::after {
+  animation: none !important;
+  backdrop-filter: none !important;
+}
+
+/* The Atelier's existing corner art now occupies distinct planes. */
+.wedding-page .atelier-corner[data-floral-plane='background'] {
+  scale: 0.76;
+  opacity: 0.45;
+  filter: blur(0.3px);
+}
+.wedding-page .atelier-corner[data-floral-plane='foreground'] {
+  scale: 1.15;
+  opacity: 0.85;
+  filter: blur(0.45px);
+}
+.wedding-page[data-visual-quality='lite'] .atelier-corner,
+.wedding-page[data-visual-quality='standard'] .atelier-corner {
+  filter: none;
+}
+.wedding-page .section-monogram {
+  position: absolute;
+  left: 6%;
+  top: 6%;
+  z-index: 1;
+  font-size: clamp(120px, 30vw, 240px);
+  opacity: 0.055;
+  pointer-events: none;
+}
+.wedding-page .visual-photo-frame {
+  position: absolute;
+  inset: 8px;
+  z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.wedding-page .visual-photo-frame > i {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: var(--gold);
+  opacity: 0.6;
+}
+.wedding-page .visual-photo-frame > i:first-child {
+  left: 0;
+  top: 0;
+  border-left: 1px solid;
+  border-top: 1px solid;
+}
+.wedding-page .visual-photo-frame > i:last-child {
+  right: 0;
+  bottom: 0;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+.wedding-page .photo-material-arch {
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+}
+.wedding-page .photo-material-paper,
+.wedding-page .photo-material-polaroid {
+  inset: auto 9px 5px;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--gold) 0 2px,
+    transparent 2px 4px
+  );
+  opacity: 0.5;
+}
+.wedding-page .photo-material-editorial > i,
+.wedding-page .photo-material-organic > i {
+  width: 12px;
+  height: 12px;
+  opacity: 0.2;
+}
+.wedding-page .photo-material-film {
+  inset: 0;
+  border-inline: 5px dotted var(--ivory);
+  opacity: 0.5;
+}
+.wedding-page .photo-material-halo {
+  border: 1px solid color-mix(in srgb, var(--gold) 22%, transparent);
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--gold) 6%, transparent);
+}
+.wedding-page .photo-material-glass {
+  border-top: 1px solid #ffffff66;
+  border-right: 1px solid #ffffff44;
+}
+.wedding-page .visual-ornament {
+  --ornament-shift: calc(var(--visual-variant, 0) * 3px);
+}
+.wedding-page .ornament-background {
+  margin-top: var(--ornament-shift);
+}
+.wedding-page .ornament-middle {
+  margin-top: calc(var(--ornament-shift) * 2);
+}
+.wedding-page .ornament-foreground {
+  margin-bottom: var(--ornament-shift);
+}
+.wedding-page .visual-photo-frame.photo-material-film > i {
+  display: none;
+}
+
+.wedding-page.motion-off .opening-stage.cover-leave-active {
+  transition: opacity 150ms ease;
+}
+.wedding-page.motion-off .opening-stage.cover-leave-to {
+  transform: none;
+  filter: none;
+  clip-path: none;
+}
+.wedding-page[data-visual-personality='vintage']
+  :is(.story-chapter img, .floral-story-list img) {
+  border: 5px solid var(--ivory);
+  border-bottom-width: 14px;
+  box-shadow: 2px 4px 8px #00000014;
+}
+.wedding-page[data-visual-personality='cinematic']
+  :is(.story-chapter img, .floral-story-list img) {
+  border-block: 4px solid var(--ink);
+}
+.wedding-page[data-visual-personality='celestial']
+  :is(.story-chapter img, .floral-story-list img) {
+  outline: 1px solid color-mix(in srgb, var(--gold) 28%, transparent);
+  outline-offset: 3px;
+}
+
+/* The hit target stays stationary; only its decorative disc icon rotates. */
+.wedding-page .sound-disc.spinning {
+  animation: none;
+}
+.wedding-page .sound-disc.spinning > svg {
+  animation: disc-spin 12s linear infinite;
+}
+.wedding-page[data-music-skin='soundtrack'] .sound-disc.spinning > svg {
+  animation: none;
+}

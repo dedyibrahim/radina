@@ -1,4 +1,5 @@
 <script setup>
+import DecorativeFrame from '../../components/wedding/effects/DecorativeFrame.vue'
 import { inject } from 'vue'
 import SectionHeading from '../RomanticFloral/components/SectionHeading.vue'
 const wedding = inject('wedding')
@@ -17,6 +18,7 @@ const wedding = inject('wedding')
         data-reveal
       >
         <figure>
+          <DecorativeFrame />
           <img
             v-if="person.photo"
             :src="person.photo"
@@ -29,7 +31,9 @@ const wedding = inject('wedding')
         </figure>
         <h3>{{ person.name }}</h3>
         <p v-if="person.order">{{ person.order }}</p>
-        <p v-if="person.father || person.mother">{{ [person.father, person.mother].filter(Boolean).join(' & ') }}</p>
+        <p v-if="person.father || person.mother">
+          {{ [person.father, person.mother].filter(Boolean).join(' & ') }}
+        </p>
         <a
           v-if="person.instagram"
           :href="`https://www.instagram.com/${person.instagram}/`"
@@ -41,6 +45,7 @@ const wedding = inject('wedding')
     </div>
     <article v-else class="floral-person floral-host" data-reveal>
       <figure v-if="wedding.eventDetails.photo">
+        <DecorativeFrame />
         <img
           :src="wedding.eventDetails.photo"
           :alt="

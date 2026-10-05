@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { ArrowLeft, ArrowUpRight } from 'lucide-vue-next'
 import { api, errorMessage } from '../../services/api'
@@ -13,7 +13,37 @@ import { nextTick } from 'vue'
 import { scrollToSection } from '../../composables/useSectionNavigation'
 import { trackEvent } from '../../services/analytics'
 const renderer = ref(null)
+const previewDevice = ref('desktop')
+const previewFrame = ref(null)
+const embeddedPreview = computed(
+  () => Boolean(route.params.id) && route.query.preview_embed === '1',
+)
+const previewFrameUrl = computed(() => `${route.path}?preview_embed=1`)
+function previewMessage(event) {
+  if (
+    !embeddedPreview.value ||
+    event.source !== window.parent ||
+    event.origin !== window.location.origin ||
+    event.data?.type !== 'radina-admin-preview'
+  )
+    return
+  if (
+    ['cover', 'couple', 'event', 'gallery', 'gift', 'closing'].includes(
+      event.data.section,
+    )
+  )
+    previewSection(event.data.section)
+}
+onMounted(() => window.addEventListener('message', previewMessage))
+onUnmounted(() => window.removeEventListener('message', previewMessage))
 async function previewSection(key) {
+  if (route.params.id && !embeddedPreview.value) {
+    previewFrame.value?.contentWindow?.postMessage(
+      { type: 'radina-admin-preview', section: key },
+      window.location.origin,
+    )
+    return
+  }
   if (key === 'cover') {
     renderer.value?.showCover()
     window.scrollTo({ top: 0 })
@@ -50,7 +80,8 @@ async function record(action) {
   try {
     await api.post(`/weddings/${current.slug}/visits`, {
       visitor_id: visitorId,
-      guest_token: wedding.value?.guest?.token || route.query.guest || undefined,
+      guest_token:
+        wedding.value?.guest?.token || route.query.guest || undefined,
       action,
     })
   } catch {}
@@ -124,10 +155,14 @@ useSeo(() => ({
 <template>
   <div>
     <WeddingPreviewToolbar
-      v-if="(route.meta.preview || wedding?.is_demo) && wedding"
+      v-if="
+        !embeddedPreview && (route.meta.preview || wedding?.is_demo) && wedding
+      "
       :wedding="wedding"
       :wedding-id="route.params.id"
+      :device="previewDevice"
       @section="previewSection"
+      @device="previewDevice = $event"
     />
     <div v-if="loading || error" class="platform wedding-state">
       <PageState
@@ -135,23 +170,47 @@ useSeo(() => ({
         :error="error"
         title="Undangan belum tersedia"
         @retry="load"
-      /><RouterLink v-if="error" to="/" class="p-button secondary">Ke Beranda</RouterLink>
+      /><RouterLink v-if="error" to="/" class="p-button secondary"
+        >Ke Beranda</RouterLink
+      >
     </div>
-    <button v-if="pass" class="guest-qr-bubble" @click="showQr = true">QR Kehadiran</button>
+    <button v-if="pass" class="guest-qr-bubble" @click="showQr = true">
+      QR Kehadiran
+    </button>
     <BaseModal :open="showQr" title="QR Kehadiran" @close="showQr = false"
       ><div v-if="pass" class="platform">
         <h2>{{ pass.name }}</h2>
         <GuestQr :url="pass.pass_url" :name="pass.name" /></div
     ></BaseModal>
-    <WeddingRenderer
-      v-if="wedding && !loading && !error"
-      :key="`${wedding.slug}:${wedding.guest?.token || route.query.guest || ''}`"
-      ref="renderer"
-      :start-open="Boolean(route.params.id)"
-      :wedding="wedding"
-      :preview="Boolean(route.meta.preview || wedding.is_demo)"
-      @opened="record('open')"
-    />
+    <div
+      class="wedding-preview-canvas"
+      :class="
+        route.params.id && !embeddedPreview
+          ? `preview-device-${previewDevice}`
+          : ''
+      "
+    >
+      <iframe
+        v-if="
+          route.params.id && !embeddedPreview && wedding && !loading && !error
+        "
+        ref="previewFrame"
+        :src="previewFrameUrl"
+        title="Pratinjau undangan"
+        class="admin-preview-frame"
+      />
+      <WeddingRenderer
+        v-if="
+          (!route.params.id || embeddedPreview) && wedding && !loading && !error
+        "
+        :key="`${wedding.slug}:${wedding.guest?.token || route.query.guest || ''}`"
+        ref="renderer"
+        :start-open="Boolean(route.params.id)"
+        :wedding="wedding"
+        :preview="Boolean(route.meta.preview || wedding.is_demo)"
+        @opened="record('open')"
+      />
+    </div>
   </div>
 </template>
 <style scoped>

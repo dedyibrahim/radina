@@ -1,64 +1,64 @@
 /* Depth is applied to content layers, never the root containing fixed controls. */
 .wedding-page .depth-scene {
-    perspective: 1200px;
-    perspective-origin: 50% 45%;
+  perspective: 1200px;
+  perspective-origin: 50% 45%;
 }
 .wedding-page .depth-card {
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
-    transform-origin: center;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transform-origin: center;
 }
 .wedding-page.depth-on .depth-card {
-    rotate: var(--depth-axis-x, 1) var(--depth-axis-y, 0) 0
-        var(--depth-angle, 0.6deg);
-    translate: var(--depth-offset-x, 0px) var(--depth-offset-y, 0px) 14px;
-    transition:
-        rotate 350ms ease,
-        translate 350ms ease;
+  rotate: var(--depth-axis-x, 1) var(--depth-axis-y, 0) 0
+    var(--depth-angle, 0.6deg);
+  translate: var(--depth-offset-x, 0px) var(--depth-offset-y, 0px)
+    calc(10px * var(--visual-depth, 0.5));
+  transition:
+    rotate 350ms ease,
+    translate 350ms ease;
 }
 .wedding-page.depth-on .depth-card.depth-live {
-    transition-duration: 100ms;
+  transition-duration: 100ms;
 }
-.wedding-page
-    .depth-card:is(figure, .event-card, .bank-card, .floral-gallery-stage) {
-    box-shadow:
-        0 5px 0 color-mix(in srgb, var(--gold) 15%, transparent),
-        0 18px 35px #0000001a;
+.wedding-page .depth-typography {
+  rotate: none !important;
+  translate: none !important;
 }
 .wedding-page.depth-on .cover-title,
 .wedding-page.depth-on .floral-cover-names,
 .wedding-page.depth-on .studio-names {
-    text-shadow: 0 3px 12px #00000014;
+  text-shadow: 0 3px 12px #00000014;
 }
 @media (hover: none) {
-    .wedding-page.depth-on
-        .depth-card.depth-in-view:not(.depth-native-motion):not(
-            .depth-controls
-        ) {
-        animation: radina-depth-float 8s ease-in-out infinite;
+  .wedding-page.depth-on
+    .depth-card.depth-in-view:not(.depth-native-motion):not(
+      .depth-controls,
+      .depth-typography
+    ) {
+    animation: radina-depth-float 8s ease-in-out infinite;
+  }
+  @keyframes radina-depth-float {
+    0%,
+    100% {
+      rotate: 1 0 0 0.6deg;
+      translate: 0 0 calc(10px * var(--visual-depth, 0.5));
     }
-    @keyframes radina-depth-float {
-        0%,
-        100% {
-            rotate: 1 0 0 0.6deg;
-            translate: 0 0 14px;
-        }
-        50% {
-            rotate: 1 1 0 -1.2deg;
-            translate: 0 -3px 20px;
-        }
+    50% {
+      rotate: 1 1 0 -1.2deg;
+      translate: 0 -2px calc(14px * var(--visual-depth, 0.5));
     }
+  }
 }
 .wedding-page:not(.depth-on) .depth-card {
-    rotate: none;
-    translate: none;
-    transition: none;
+  rotate: none;
+  translate: none;
+  transition: none;
 }
 @media (prefers-reduced-motion: reduce) {
-    .wedding-page .depth-card {
-        rotate: none !important;
-        translate: none !important;
-        animation: none !important;
-        transition: none !important;
-    }
+  .wedding-page .depth-card {
+    rotate: none !important;
+    translate: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
 }

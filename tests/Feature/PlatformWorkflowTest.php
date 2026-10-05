@@ -85,15 +85,15 @@ class PlatformWorkflowTest extends TestCase
         $result = $this->postJson('/api/admin/orders/'.$order->id.'/wedding');
         $id = $result->json('data.id');
         $demo = Wedding::where('slug', 'demo-romantic-floral')->first()->loadContent();
-        $data = (new WeddingResource($demo))->resolve();
+        $data = json_decode(json_encode((new WeddingResource($demo))->resolve()), true);
         $wedding = Wedding::find($id);
         $data['slug'] = $order->slug;
         $data['expected_updated_at'] = $wedding->updated_at->toJSON();
-        foreach ($data['events'] as $event) {
-            $event->start_time = substr($event->start_time, 0, 5);
-            $event->end_time = substr($event->end_time, 0, 5);
+        foreach ($data['events'] as &$event) {
+            $event['start_time'] = substr($event['start_time'], 0, 5);
+            $event['end_time'] = substr($event['end_time'], 0, 5);
         }
-        $data = json_decode(json_encode($data), true);
+        unset($event);
         $this->putJson('/api/admin/weddings/'.$id, $data)->assertOk();
         $this->putJson('/api/admin/weddings/'.$id, $data)->assertStatus(409);
         $this->postJson('/api/admin/weddings/'.$id.'/publish')->assertOk()->assertJsonPath('data.status', 'PUBLISHED');

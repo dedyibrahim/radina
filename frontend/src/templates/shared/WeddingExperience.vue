@@ -26,6 +26,7 @@ import './visual-system.css'
 import './living-scene.css'
 import './cinematic.css'
 import './living-garden.css'
+import './identity-motion.css'
 import { visualConfigFor } from './templateVisualConfig'
 import { useDevicePerformance } from '../../composables/useDevicePerformance'
 import { useParallax } from '../../composables/useParallax'
@@ -166,6 +167,8 @@ onUnmounted(() => clearTimeout(timer))
     :data-music-skin="visualConfig.musicSkin"
     :data-motion-intensity="intensity"
     :data-motion-environment="visualConfig.motionProfile.environment"
+    :data-depth-style="visualConfig.motionDesign.style"
+    :data-camera-path="visualConfig.motionDesign.camera"
     :style="{
       '--visual-variant': visualConfig.variant,
       '--visual-depth': visualConfig.depthIntensity,
@@ -173,6 +176,10 @@ onUnmounted(() => clearTimeout(timer))
       '--world-ink': visualConfig.sceneProfile.palette.ink,
       '--world-accent': visualConfig.sceneProfile.palette.accent,
       '--world-highlight': visualConfig.sceneProfile.palette.highlight,
+      '--identity-duration': `${visualConfig.motionDesign.duration}s`,
+      '--identity-phase': `${visualConfig.motionDesign.phase}s`,
+      '--identity-sway': `${visualConfig.motionDesign.sway}s`,
+      '--identity-direction': visualConfig.motionDesign.direction,
       ...windStyle,
     }"
   >
@@ -229,7 +236,16 @@ onUnmounted(() => clearTimeout(timer))
         mode="out-in"
         @after-leave="finishOpening"
         @leave-cancelled="finishOpening"
-        ><div v-if="!opened" class="opening-stage" :aria-busy="opening">
+        ><div
+          v-if="!opened"
+          class="opening-stage"
+          :aria-busy="opening"
+          :data-ambient-running="
+            effectiveMotion &&
+            performance.active.value &&
+            !performance.reduced.value
+          "
+        >
           <component
             v-if="cinematicCategory"
             :is="cinematicCoverComponent || CinematicOpening"

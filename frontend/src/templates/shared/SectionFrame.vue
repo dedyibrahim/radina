@@ -1,5 +1,4 @@
 <script setup>
-import CoupleMonogram from '../../components/wedding/effects/CoupleMonogram.vue'
 import { provide, computed, inject, ref } from 'vue'
 import { useIntersectionAnimation } from '../../composables/useIntersectionAnimation'
 import { useSceneTimeline } from '../../composables/useSceneTimeline'
@@ -35,6 +34,7 @@ provide(
     class="section-frame"
     :class="{ 'floral-section-frame': floral }"
     :data-section="sectionKey"
+    :data-ambient-running="livingActive"
     :data-scene-state="sceneState"
     :data-scene-transition="visual?.config.value.sceneProfile.transition"
     :data-auto-pause="
@@ -54,13 +54,7 @@ provide(
       :active="livingActive"
       :quality="visual.performance.quality.value"
     />
-    <FloralCorners
-      v-if="floral && sectionKey !== 'home'"
-      compact
-    /><CoupleMonogram
-      v-if="visual && sectionKey === 'couple'"
-      class="section-monogram"
-    /><slot />
+    <FloralCorners v-if="floral && sectionKey !== 'home'" compact /><slot />
     <SectionDivider
       v-if="visual && !['home', 'closing'].includes(sectionKey)"
     />

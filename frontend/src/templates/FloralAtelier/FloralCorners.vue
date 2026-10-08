@@ -1,33 +1,25 @@
 <script setup>
 import { ref, inject, onMounted, onUnmounted } from 'vue'
 import FlowerSpray from './FlowerSpray.vue'
+import { useIntersectionAnimation } from '../../composables/useIntersectionAnimation'
 defineProps({ compact: Boolean })
 const design = inject('floralDesign'),
   root = ref(null),
-  visible = ref(false),
   active = ref(!document.hidden)
+const visible = useIntersectionAnimation(root)
 const visual = inject('weddingVisual', null)
 function plane(index) {
   return ['middle', 'background', 'foreground', 'middle'][
     (index + (visual?.config.value.variant || 0)) % 4
   ]
 }
-let observer
 const visibility = () => {
   active.value = !document.hidden
 }
 onMounted(() => {
-  observer = new IntersectionObserver(
-    ([entry]) => {
-      visible.value = entry.isIntersecting
-    },
-    { rootMargin: '80px' },
-  )
-  observer.observe(root.value)
   document.addEventListener('visibilitychange', visibility)
 })
 onUnmounted(() => {
-  observer?.disconnect()
   document.removeEventListener('visibilitychange', visibility)
 })
 </script>
@@ -39,7 +31,15 @@ onUnmounted(() => {
       `floral-motion-${design.corner_motion}`,
       { 'corners-compact': compact },
     ]"
-    :style="{ '--floral-play': visible && active ? 'running' : 'paused' }"
+    :style="{
+      '--floral-play':
+        visible &&
+        active &&
+        (visual?.motion.value ?? true) &&
+        !visual?.performance.reduced.value
+          ? 'running'
+          : 'paused',
+    }"
     aria-hidden="true"
     :data-flower="design.flower"
     :data-corner-motion="design.corner_motion"

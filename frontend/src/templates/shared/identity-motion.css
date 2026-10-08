@@ -1,0 +1,353 @@
+/* Motion inherits the catalog identity. No transforms on the page, navigation,
+   forms, or text; only scenery and decorative elements have a depth plane. */
+.wedding-page .section-monogram {
+  display: none;
+}
+.wedding-page .visual-atmosphere .visual-ornament > span {
+  animation-name: identity-float;
+  animation-duration: var(--identity-sway, 8s);
+  animation-delay: var(--identity-phase, 0s);
+  animation-direction: var(--identity-direction, alternate);
+  animation-timing-function: ease-in-out;
+}
+.wedding-page[data-depth-style='botanical']
+  .visual-atmosphere
+  .visual-ornament
+  > span {
+  animation-name: identity-breeze;
+}
+.wedding-page[data-depth-style='silk']
+  .visual-atmosphere
+  .visual-ornament
+  > span {
+  animation-name: identity-silk;
+  animation-duration: calc(var(--identity-sway) * 1.8);
+}
+.wedding-page[data-depth-style='luminous']
+  .visual-atmosphere
+  .visual-ornament
+  > span {
+  animation-name: identity-lantern;
+  animation-duration: calc(var(--identity-sway) * 1.6);
+}
+.wedding-page[data-depth-style='heritage']
+  .visual-atmosphere
+  .visual-ornament
+  > span {
+  animation-name: identity-carving;
+  animation-duration: calc(var(--identity-sway) * 2);
+}
+.wedding-page[data-depth-style='paper']
+  .visual-atmosphere
+  .visual-ornament
+  > span {
+  animation-name: identity-paper;
+}
+.wedding-page[data-depth-style='water']
+  .visual-atmosphere
+  .visual-ornament
+  > span {
+  animation-name: identity-wave;
+}
+.wedding-page[data-depth-style='starlight']
+  .visual-atmosphere
+  .visual-ornament
+  > span {
+  animation-name: identity-star;
+}
+.wedding-page[data-depth-style='glass']
+  .visual-atmosphere
+  .visual-ornament
+  > span {
+  animation-name: identity-glass;
+}
+.wedding-page[data-depth-style='architectural']
+  .visual-atmosphere
+  .visual-ornament
+  > span {
+  animation-name: identity-arch;
+  animation-duration: calc(var(--identity-sway) * 2.5);
+}
+.wedding-page[data-depth-style='celebration']
+  .visual-atmosphere
+  .visual-ornament
+  > span {
+  animation-name: identity-ribbon;
+}
+.wedding-page .visual-atmosphere .ornament-background > span {
+  animation-duration: calc(var(--identity-sway) * 2.7);
+}
+.wedding-page .visual-atmosphere .ornament-foreground > span {
+  animation-duration: calc(var(--identity-sway) * 0.85);
+}
+.wedding-page .visual-atmosphere .visual-light {
+  animation: identity-light var(--identity-duration, 24s) ease-in-out infinite
+    alternate;
+  animation-delay: var(--identity-phase, 0s);
+  animation-play-state: paused;
+}
+.wedding-page [data-running='true'] .visual-light {
+  animation-play-state: running;
+}
+.wedding-page .desktop-ambience .ambient-right {
+  rotate: none;
+}
+.wedding-page .cinematic-scene {
+  perspective: 1100px;
+}
+.wedding-page .cinematic-scene .cinematic-scene__camera {
+  inset: -11%;
+  width: 122%;
+  height: 122%;
+  max-width: none;
+  rotate: 1 1 0 0.65deg;
+  translate: var(--pointer-x, 0px) var(--parallax-y, 0px) 8px;
+}
+/* Background photographs overscan their container throughout every camera path. */
+.wedding-page
+  :is(
+    .design-cover:not(.cover-noir) > .cover-photo,
+    .design-hero:not(.hero-dark) > .hero-full-photo,
+    .design-closing > img
+  ) {
+  inset: -11%;
+  width: 122%;
+  height: 122%;
+  max-width: none;
+  object-fit: cover;
+  animation: identity-camera-dolly var(--identity-duration, 24s) ease-in-out
+    infinite alternate;
+  animation-delay: var(--identity-phase, 0s);
+  animation-play-state: paused;
+}
+.wedding-page[data-camera-path='glide']
+  :is(
+    .design-cover:not(.cover-noir) > .cover-photo,
+    .design-hero:not(.hero-dark) > .hero-full-photo,
+    .design-closing > img
+  ) {
+  animation-name: identity-camera-glide;
+}
+.wedding-page[data-camera-path='orbit']
+  :is(
+    .design-cover:not(.cover-noir) > .cover-photo,
+    .design-hero:not(.hero-dark) > .hero-full-photo,
+    .design-closing > img
+  ) {
+  animation-name: identity-camera-orbit;
+}
+.wedding-page
+  [data-ambient-running='true']
+  :is(
+    .design-cover:not(.cover-noir) > .cover-photo,
+    .design-hero:not(.hero-dark) > .hero-full-photo,
+    .design-closing > img
+  ) {
+  animation-play-state: running;
+}
+.wedding-page .atelier-corner {
+  perspective: 800px;
+}
+.wedding-page .atelier-corner[data-floral-plane='foreground'] {
+  rotate: 1 1 0 3deg;
+}
+.wedding-page .atelier-corner[data-floral-plane='background'] {
+  rotate: 1 1 0 -2deg;
+}
+.wedding-page .living-flecks.flecks-confetti i {
+  border-radius: 1px;
+  background: var(--dusty-rose);
+  width: var(--fleck-size);
+  height: calc(var(--fleck-size) * 0.7);
+}
+.wedding-page .living-flecks.flecks-confetti i:nth-child(3n) {
+  background: var(--gold);
+}
+.wedding-page .living-flecks.flecks-confetti i:nth-child(3n + 1) {
+  background: var(--sage);
+}
+.wedding-page .living-flecks.flecks-balloons i {
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--dusty-rose) 65%, transparent);
+  width: calc(var(--fleck-size) * 2);
+  height: calc(var(--fleck-size) * 2.6);
+  animation-name: identity-balloon;
+}
+.wedding-page .living-flecks.flecks-bubbles i {
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  background: transparent;
+  width: calc(var(--fleck-size) * 2);
+  height: calc(var(--fleck-size) * 2);
+  animation-name: identity-balloon;
+}
+@keyframes identity-breeze {
+  from {
+    transform: perspective(700px) translate3d(-2px, 0, 6px) rotateY(-5deg)
+      rotateZ(calc(var(--ornament-turn) - 2deg));
+  }
+  to {
+    transform: perspective(700px) translate3d(3px, -3px, 22px) rotateY(5deg)
+      rotateZ(calc(var(--ornament-turn) + 3deg));
+  }
+}
+@keyframes identity-float {
+  from {
+    transform: perspective(900px) translate3d(0, 0, 4px) rotateY(-3deg);
+  }
+  to {
+    transform: perspective(900px) translate3d(3px, -6px, 16px) rotateY(3deg);
+  }
+}
+@keyframes identity-silk {
+  from {
+    transform: perspective(800px) scaleX(0.97) rotateY(-6deg);
+  }
+  to {
+    transform: perspective(800px) scaleX(1.04) translate3d(0, -3px, 20px)
+      rotateY(5deg);
+  }
+}
+@keyframes identity-lantern {
+  from {
+    transform: perspective(900px) rotateY(-2deg) translateY(2px);
+    opacity: 0.7;
+  }
+  to {
+    transform: perspective(900px) rotateY(2deg) translate3d(0, -3px, 12px);
+    opacity: 1;
+  }
+}
+@keyframes identity-carving {
+  from {
+    transform: perspective(900px) rotateY(-4deg) translateZ(5px);
+  }
+  to {
+    transform: perspective(900px) rotateY(4deg) translateZ(18px);
+  }
+}
+@keyframes identity-paper {
+  from {
+    transform: perspective(700px) rotateX(-4deg) rotateZ(-2deg);
+  }
+  to {
+    transform: perspective(700px) translate3d(2px, -3px, 15px) rotateX(4deg)
+      rotateZ(2deg);
+  }
+}
+@keyframes identity-wave {
+  from {
+    transform: perspective(800px) scaleX(0.96) translate3d(-5px, 0, 5px);
+  }
+  to {
+    transform: perspective(800px) scaleX(1.05) translate3d(6px, 4px, 14px);
+  }
+}
+@keyframes identity-star {
+  from {
+    transform: perspective(900px) rotateY(-4deg) translateZ(4px);
+    opacity: 0.5;
+  }
+  to {
+    transform: perspective(900px) rotateY(4deg) translateZ(20px);
+    opacity: 1;
+  }
+}
+@keyframes identity-glass {
+  from {
+    transform: perspective(900px) rotateY(-6deg);
+  }
+  to {
+    transform: perspective(900px) rotateY(6deg) translateZ(15px);
+  }
+}
+@keyframes identity-arch {
+  from {
+    transform: perspective(1200px) rotateY(-1deg);
+  }
+  to {
+    transform: perspective(1200px) rotateY(1deg) translateZ(8px);
+  }
+}
+@keyframes identity-ribbon {
+  from {
+    transform: perspective(700px) translate3d(-3px, 0, 8px) rotateZ(-5deg)
+      rotateY(-8deg);
+  }
+  to {
+    transform: perspective(700px) translate3d(5px, -8px, 24px) rotateZ(5deg)
+      rotateY(8deg);
+  }
+}
+@keyframes identity-light {
+  from {
+    transform: perspective(1000px) translateZ(0) rotateZ(-3deg);
+    opacity: 0.1;
+  }
+  to {
+    transform: perspective(1000px) translateZ(20px) rotateZ(4deg);
+    opacity: 0.22;
+  }
+}
+@keyframes identity-camera-dolly {
+  from {
+    transform: perspective(1100px) scale(1.01) rotateY(-0.5deg);
+  }
+  to {
+    transform: perspective(1100px) scale(1.08) translate3d(0, -1%, 15px)
+      rotateY(0.5deg);
+  }
+}
+@keyframes identity-camera-glide {
+  from {
+    transform: perspective(1100px) scale(1.02) translateX(-2%) rotateY(-0.8deg);
+  }
+  to {
+    transform: perspective(1100px) scale(1.05) translate3d(2%, 0, 10px)
+      rotateY(0.8deg);
+  }
+}
+@keyframes identity-camera-orbit {
+  from {
+    transform: perspective(1100px) scale(1.02) rotateY(-1deg) rotateX(0.3deg);
+  }
+  to {
+    transform: perspective(1100px) scale(1.06) translateZ(14px) rotateY(1deg)
+      rotateX(-0.3deg);
+  }
+}
+@keyframes identity-balloon {
+  from {
+    transform: translate3d(0, 105vh, 0);
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 0.3;
+  }
+  to {
+    transform: translate3d(var(--fleck-drift), -20px, 0) rotate(12deg);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wedding-page
+    :is(
+      .visual-ornament > span,
+      .visual-light,
+      .cover-photo,
+      .hero-full-photo,
+      .design-closing > img
+    ) {
+    animation: none !important;
+  }
+  .wedding-page :is(.atelier-corner, .cinematic-scene__camera) {
+    rotate: none !important;
+    translate: none !important;
+  }
+}
+.wedding-page[data-visual-quality='lite']
+  :is(.atelier-corner, .cinematic-scene__camera) {
+  rotate: none;
+  translate: none;
+}

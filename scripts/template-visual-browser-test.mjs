@@ -316,6 +316,218 @@ async function fullBleed(cameras, viewportSelector, label) {
     label + ': scenery must cover every edge throughout the camera motion',
   )
 }
+if (process.env.RADINA_ALL_IDENTITIES === '1') {
+  try {
+    const contexts = await Promise.all(
+      Array.from({ length: 3 }, () =>
+        context({
+          viewport: { width: 390, height: 844 },
+          isMobile: true,
+          hasTouch: true,
+        }),
+      ),
+    )
+    const signatures = new Set()
+    let completed = 0
+    await Promise.all(
+      contexts.map(async (c, worker) => {
+        const p = await c.newPage()
+        for (const [index, row] of [...rows].reverse().entries()) {
+          if (index % contexts.length !== worker) continue
+          await p.goto(base + '/w/visual-' + row.key + '?to=Dedy%20Ibrahim', {
+            waitUntil: 'domcontentloaded',
+          })
+          const root = p.locator('.wedding-page')
+          await expect(root).toHaveAttribute(
+            'data-depth-style',
+            row.motionStyle,
+          )
+          await expect(root).toHaveAttribute('data-camera-path', row.cameraPath)
+          await expect(root).toHaveAttribute('data-visual-quality', 'standard')
+          await fits(p, row.key + ' cover')
+          if (row.key === 'elegant-luxury')
+            await expect(p.locator('.cover-noir > .cover-photo')).toHaveCSS(
+              'inset',
+              '0px',
+            )
+          await fullBleed(
+            p.locator('.opening-stage .cinematic-scene__camera'),
+            '.cinematic-scene',
+            row.key + ' opening',
+          )
+          await fullBleed(
+            p.locator(
+              '.opening-stage .design-cover:not(.cover-noir) > .cover-photo',
+            ),
+            '.design-cover',
+            row.key + ' cover photograph',
+          )
+          if (row.key === 'javanese-royal-garden')
+            await p
+              .getByRole('button', { name: 'Lewati animasi', exact: true })
+              .click()
+          await p
+            .getByRole('button', {
+              name: /^(Buka Undangan|Mulai Petualangan)$/,
+            })
+            .click()
+          await expect(p.locator('.opening-stage')).toHaveCount(0)
+          await expect(p.locator('#couple')).toContainText(
+            'Alya Putri Ramadhani',
+          )
+          await expect(p.locator('.section-monogram')).toHaveCount(0)
+          await fits(p, row.key + ' content')
+          const home = p.locator('.section-frame[data-section="home"]')
+          await home.evaluate((el) =>
+            el.scrollIntoView({ behavior: 'instant', block: 'center' }),
+          )
+          await expect(home).toHaveAttribute('data-ambient-running', 'true')
+          await fullBleed(
+            home.locator('.cinematic-scene__camera'),
+            '.cinematic-scene',
+            row.key + ' home',
+          )
+          await fullBleed(
+            home.locator('.design-hero:not(.hero-dark) > .hero-full-photo'),
+            '.design-hero',
+            row.key + ' hero photograph',
+          )
+          const before = await p.evaluate(
+            () =>
+              window.audioEvents.filter((e) => e.action === 'create').length,
+          )
+          await p.getByRole('button', { name: 'Gallery', exact: true }).click()
+          const photo = p
+            .locator('#gallery button[aria-label^="Perbesar foto"]')
+            .first()
+          await expect(photo).toBeVisible()
+          await photo.click()
+          await expect(p.getByRole('dialog')).toBeVisible()
+          await p.keyboard.press('Escape')
+          await expect(p.getByRole('dialog')).toHaveCount(0)
+          await expect(p.locator('#rsvp-name')).toHaveValue('Dedy Ibrahim')
+          await p
+            .locator('#rsvp')
+            .evaluate((el) =>
+              el.scrollIntoView({ behavior: 'instant', block: 'center' }),
+            )
+          await fits(p, row.key + ' RSVP')
+          assert.equal(
+            await p.evaluate(
+              () =>
+                window.audioEvents.filter((e) => e.action === 'create').length,
+            ),
+            before,
+            'One player across scene navigation',
+          )
+          signatures.add(
+            `${row.ornaments}/${row.secondary}/${row.motionStyle}/${row.cameraDuration}`,
+          )
+          if (++completed % 15 === 0)
+            console.log(`PASS identity templates ${completed}/${rows.length}`)
+        }
+        await c.close()
+      }),
+    )
+    assert(signatures.size > 50, 'Keep different template identities')
+    console.log(`PASS all ${rows.length} identities on mobile`)
+    const desktop = await context({ viewport: { width: 1440, height: 900 } })
+    const page = await desktop.newPage()
+    const representatives = [
+      ...new Map(rows.map((row) => [row.personality, row])).values(),
+    ]
+    for (const row of representatives) {
+      await page.goto(base + '/w/visual-' + row.key)
+      await expect(page.locator('.wedding-page')).toHaveAttribute(
+        'data-visual-quality',
+        'high',
+      )
+      const motionSelector =
+        row.key === 'midnight-romance'
+          ? '.midnight-scene .midnight-rose'
+          : '.visual-atmosphere .visual-ornament > span'
+      const ornament = page.locator('.opening-stage ' + motionSelector).first()
+      await expect(ornament).toHaveCSS('animation-play-state', 'running')
+      const transform = await ornament.evaluate(
+        (el) => getComputedStyle(el).transform,
+      )
+      await page.waitForTimeout(220)
+      assert.notEqual(
+        await ornament.evaluate((el) => getComputedStyle(el).transform),
+        transform,
+        row.key + ' ornaments must move',
+      )
+      assert(
+        await ornament.evaluate(
+          (el) => !new DOMMatrix(getComputedStyle(el).transform).is2D,
+        ),
+        row.key + ' ornament must have perspective',
+      )
+      await fullBleed(
+        page.locator('.opening-stage .cinematic-scene__camera'),
+        '.cinematic-scene',
+        row.key + ' desktop',
+      )
+      if (row.key === 'midnight-romance')
+        await fullBleed(
+          page.locator('.opening-stage .midnight-camera'),
+          '.midnight-scene__viewport',
+          row.key + ' bespoke desktop scenery',
+        )
+      await page.screenshot({
+        path: dir + '/identity-' + row.personality + '-desktop.png',
+        animations: 'allow',
+      })
+      await page
+        .getByRole('button', { name: /^(Buka Undangan|Mulai Petualangan)$/ })
+        .click()
+      await expect(page.locator('.opening-stage')).toHaveCount(0)
+      await page
+        .locator('#couple')
+        .evaluate((el) =>
+          el.scrollIntoView({ behavior: 'instant', block: 'start' }),
+        )
+      await fits(page, row.key + ' desktop')
+      await page
+        .getByRole('button', { name: 'Matikan animasi', exact: true })
+        .click()
+      await expect(page.locator('.wedding-page')).toHaveClass(/motion-off/)
+      await expect(page.locator(motionSelector).first()).toHaveCSS(
+        'animation-play-state',
+        'paused',
+      )
+      await page
+        .getByRole('button', { name: 'Aktifkan animasi', exact: true })
+        .click()
+      await page.emulateMedia({ reducedMotion: 'reduce' })
+      await expect(page.locator('.wedding-page')).toHaveAttribute(
+        'data-depth-enabled',
+        'false',
+      )
+      assert(
+        await page
+          .locator(motionSelector)
+          .evaluateAll((nodes) =>
+            nodes.every((node) =>
+              node
+                .getAnimations()
+                .every((animation) => animation.playState !== 'running'),
+            ),
+          ),
+      )
+      await page.emulateMedia({ reducedMotion: 'no-preference' })
+    }
+    await desktop.close()
+    assert.deepEqual(errors, [])
+    console.log(
+      `PASS all ${rows.length} identities: mobile, personalized RSVP, gallery, audio continuity, full bleed; ${representatives.length} design families desktop, actual 3D movement, pause and reduced motion`,
+    )
+  } finally {
+    await browser.close()
+    server.close()
+  }
+  process.exit(0)
+}
 if (process.env.RADINA_MIDNIGHT === '1') {
   try {
     const c = await context({ viewport: { width: 390, height: 844 } })

@@ -2,6 +2,7 @@ import studio from '../../../../config/template-studio.json'
 import floral from '../../../../config/floral-collection.json'
 import { contentPresets } from '../contentPresets'
 import cinematicWorlds from '../../../../config/cinematic-worlds.json'
+import { motionDesignFor } from './templateMotionDesign'
 
 // Presentation profiles, not template keys. New registry entries inherit a profile
 // from their catalog metadata and can opt into any combination with `visual`.
@@ -514,7 +515,7 @@ export function visualConfigFor(key, context = {}) {
     ...collection.visual,
     ...context.visual,
   }
-  return {
+  const config = {
     ...profile,
     personality,
     category: category || personality,
@@ -560,6 +561,21 @@ export function visualConfigFor(key, context = {}) {
     },
     sceneProfile,
   }
+  config.motionDesign = motionDesignFor(key, config)
+  if (!overrides.secondaryOrnament)
+    config.secondaryOrnament = config.motionDesign.secondary
+  if (
+    !world &&
+    !overrides.motionProfile?.particle &&
+    config.motionDesign.style === 'celebration'
+  ) {
+    const effects = collection.motion || preset.motion || []
+    config.motionProfile.particle =
+      ['confetti', 'balloons', 'bubbles', 'paper'].find((effect) =>
+        effects.includes(effect),
+      ) || 'confetti'
+  }
+  return config
 }
 export const templateVisualConfig = Object.fromEntries(
   Object.keys(contentPresets).map((key) => [key, visualConfigFor(key)]),

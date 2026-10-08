@@ -2,7 +2,7 @@ import { computed, ref, onMounted, onUnmounted, watch } from 'vue'
 
 // Individual rotate/translate preserve the original composition's transform/animation.
 const surfaces =
-  '.design-cover > figure, .design-cover > h1, .cover-title, .cover-invitation, .studio-names, .floral-cover-names, .hero-image-wrap, .person-composition figure, .floral-person figure, .celebration-person > img, .gallery-item, .event-card, .bank-card, .floral-person-photo, .floral-gallery-stage, .floral-hero-photo'
+  '.design-cover > figure, .design-cover > h1, .cover-title, .cover-invitation, .studio-names, .floral-cover-names, .hero-image-wrap, .person-composition figure, .floral-person figure, .celebration-person > img, .gallery-item, .event-card, .bank-card, .floral-person-photo, .floral-gallery-stage, .floral-hero-photo, .royal-portrait, .midnight-portrait'
 export function useInvitationDepth(root, motionOn, performance) {
   const reduced = ref(
       window.matchMedia('(prefers-reduced-motion: reduce)').matches,
@@ -66,7 +66,10 @@ export function useInvitationDepth(root, motionOn, performance) {
         )
       )
         card.classList.add('depth-typography')
-      if (card.querySelector('button, a, input, select, textarea'))
+      if (
+        card.matches('button, a, input, select, textarea') ||
+        card.querySelector('button, a, input, select, textarea')
+      )
         card.classList.add('depth-controls')
       card.parentElement.classList.add('depth-scene')
       if (getComputedStyle(card).animationName !== 'none')

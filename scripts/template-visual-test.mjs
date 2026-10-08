@@ -90,7 +90,7 @@ try {
       : studio[key]
         ? './shared/StudioInvitation.vue'
         : cinematicWorlds[key]
-          ? (paths[key] || './shared/StudioInvitation.vue')
+          ? paths[key] || './shared/StudioInvitation.vue'
           : paths[key]
     assert(component, `Missing Vue entry: ${key}`)
     const text = await readFile(
@@ -109,6 +109,11 @@ try {
     assert(config.animations.length >= 2, key)
     assert(visualProfiles[config.personality], key)
     assert(motionProfiles[config.personality], key)
+    assert(config.motionDesign.style && config.motionDesign.camera, key)
+    assert(
+      config.motionDesign.duration >= 16 && config.motionDesign.duration <= 30,
+      key,
+    )
     assert(
       config.motionProfile.environment && config.motionProfile.foreground,
       key,
@@ -170,6 +175,10 @@ try {
       personality: config.personality,
       existingLayout: config.layout,
       ornaments: config.ornamentFamily + '/' + config.ornament,
+      secondary: config.ornamentFamily + '/' + config.secondaryOrnament,
+      motionStyle: config.motionDesign.style,
+      cameraPath: config.motionDesign.camera,
+      cameraDuration: config.motionDesign.duration,
       depth: config.depthIntensity,
       motion: config.animations.join(', '),
       environment: config.motionProfile.environment,
@@ -203,6 +212,18 @@ try {
     'modern',
   )
   assert(new Set(rows.map((row) => row.personality)).size > 1)
+  assert(
+    new Set(rows.map((row) => row.motionStyle)).size >= 10,
+    'Categories need different movements',
+  )
+  assert(
+    new Set(rows.map((row) => row.ornaments)).size >= 20,
+    'Preserve different primary ornaments',
+  )
+  assert(
+    new Set(rows.map((row) => row.secondary)).size >= 20,
+    'Vary compatible secondary ornaments',
+  )
   await mkdir('test-results', { recursive: true })
   await writeFile(
     'test-results/template-visual-audit.json',

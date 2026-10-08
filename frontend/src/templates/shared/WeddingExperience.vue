@@ -40,6 +40,7 @@ const props = defineProps({
   cinematicCoverComponent: { type: Object, default: null },
   heroComponent: { type: Object, required: true },
   presentationComponents: { type: Object, default: () => ({}) },
+  canvasMotion: { type: Boolean, default: true },
 })
 const wedding = useWedding(props)
 const opened = inject('invitationOpened', ref(false))
@@ -216,7 +217,7 @@ onUnmounted(() => clearTimeout(timer))
         :preference="motionPreference"
         :effects="wedding.motion"
         :quality="
-          !cinematicCategory && intensity === 'cinematic'
+          canvasMotion && !cinematicCategory && intensity === 'cinematic'
             ? performance.quality.value
             : 'lite'
         "

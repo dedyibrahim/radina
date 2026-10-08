@@ -279,6 +279,231 @@ async function fits(page, label) {
     `Horizontal overflow: ${label}`,
   )
 }
+if (process.env.RADINA_MIDNIGHT === '1') {
+  try {
+    const c = await context({ viewport: { width: 390, height: 844 } })
+    const p = await c.newPage()
+    await p.goto(base + '/w/visual-midnight-romance?to=Dedy%20Ibrahim')
+    await expect(p.locator('.midnight-cover')).toContainText('Dedy Ibrahim')
+    const cover = p.locator('.midnight-cover .midnight-scene')
+    await expect(cover).toHaveAttribute('data-active', 'true')
+    await expect(p.locator('.scene-motion')).toHaveAttribute('data-frames', '0')
+    await expect
+      .poll(() =>
+        cover
+          .locator('.midnight-camera')
+          .evaluate((img) => img.complete && img.naturalWidth > 0),
+      )
+      .toBe(true)
+    assert.equal(
+      await p.evaluate(() =>
+        window.audioEvents.some((e) => e.action === 'play'),
+      ),
+      false,
+    )
+    for (const width of [320, 390, 768, 1440]) {
+      await p.setViewportSize({ width, height: 844 })
+      await fits(p, 'Midnight cover ' + width)
+      await p.screenshot({
+        path: `${dir}/midnight-living-${width}-cover.png`,
+        animations: 'allow',
+      })
+    }
+    await p.setViewportSize({ width: 390, height: 844 })
+    await p.getByRole('button', { name: 'Buka Undangan', exact: true }).click()
+    await expect(p.locator('.opening-stage')).toHaveCount(0)
+    await expect
+      .poll(() =>
+        p.evaluate(() => window.audioEvents.some((e) => e.action === 'play')),
+      )
+      .toBe(true)
+    const sections = await p
+      .locator('.section-frame')
+      .evaluateAll((nodes) => nodes.map((n) => n.dataset.section))
+    assert.equal(sections.length, 12)
+    for (const width of [320, 390, 768, 1440]) {
+      await p.setViewportSize({ width, height: 844 })
+      for (const section of sections) {
+        const frame = p.locator(`.section-frame[data-section="${section}"]`)
+        const scene = frame.locator('.midnight-scene')
+        await scene
+          .locator('.midnight-scene__viewport')
+          .evaluate((el) =>
+            el.scrollIntoView({ behavior: 'instant', block: 'center' }),
+          )
+        await expect(scene).toHaveAttribute('data-active', 'true')
+        await expect
+          .poll(() =>
+            scene
+              .locator('.midnight-camera')
+              .evaluate((img) => img.complete && img.naturalWidth > 0),
+          )
+          .toBe(true)
+        await fits(p, `Midnight ${width} ${section}`)
+        if (width === 390) {
+          const read = (el) =>
+            [
+              '.midnight-camera',
+              '.midnight-rose',
+              '.midnight-mist',
+              '.midnight-water i',
+              '.midnight-firefly',
+              '.midnight-candle i',
+            ].map(
+              (selector) =>
+                getComputedStyle(el.querySelector(selector)).transform,
+            )
+          const before = await scene.evaluate(read)
+          await p.waitForTimeout(300)
+          const after = await scene.evaluate(read)
+          after.forEach((value, i) =>
+            assert.notEqual(value, before[i], section + ' moving layer ' + i),
+          )
+          assert(
+            await scene.locator('.midnight-rose').evaluateAll((nodes) =>
+              nodes.every((node) => {
+                const style = getComputedStyle(node)
+                const matrix = new DOMMatrix(
+                  getComputedStyle(node.querySelector('img')).transform,
+                )
+                return (
+                  style.rotate === 'none' &&
+                  matrix.d > 0 &&
+                  node.getBoundingClientRect().bottom >
+                    node.parentElement.getBoundingClientRect().bottom + 30
+                )
+              }),
+            ),
+            'Upright roses must have their stem below the frame',
+          )
+          if (
+            ['home', 'couple', 'gallery', 'rsvp', 'closing'].includes(section)
+          ) {
+            await frame
+              .locator('[data-reveal]')
+              .evaluateAll((nodes) =>
+                Promise.all(
+                  nodes.map((node) =>
+                    Promise.all(
+                      node
+                        .getAnimations()
+                        .map((animation) => animation.finished.catch(() => {})),
+                    ),
+                  ),
+                ),
+              )
+            await p.screenshot({
+              path: `${dir}/midnight-living-${section}-390.png`,
+              animations: 'allow',
+            })
+          }
+        }
+      }
+    }
+    await p.setViewportSize({ width: 390, height: 844 })
+    await expect(p.locator('#couple')).toContainText('Alya Putri Ramadhani')
+    await expect(p.locator('#couple')).toContainText('Bapak Ahmad')
+    await p.locator('.gallery-item').first().click()
+    await expect(p.locator('.lightbox')).toBeVisible()
+    await p.keyboard.press('Escape')
+    await expect(p.locator('.lightbox')).toHaveCount(0)
+    await expect(p.locator('#rsvp-name')).toHaveValue('Dedy Ibrahim')
+    await p.locator('input[name="attendance"][value="Hadir"]').check()
+    await p.locator('#rsvp-message').fill('Selamat dan semoga bahagia.')
+    await p
+      .getByRole('button', { name: 'Kirim Konfirmasi', exact: true })
+      .click()
+    await expect(p.locator('.form-success')).toContainText('Terkirim!')
+    assert.equal(submissions[0].message, 'Selamat dan semoga bahagia.')
+    const closing = p.locator('[data-section="closing"] .midnight-scene')
+    await closing
+      .locator('.midnight-scene__viewport')
+      .evaluate((el) =>
+        el.scrollIntoView({ behavior: 'instant', block: 'center' }),
+      )
+    await expect(closing).toHaveAttribute('data-active', 'true')
+    await expect(
+      p.locator('[data-section="home"] .midnight-scene'),
+    ).toHaveAttribute('data-active', 'false')
+    await p
+      .getByRole('button', { name: 'Matikan animasi', exact: true })
+      .click()
+    await closing
+      .locator('.midnight-scene__viewport')
+      .evaluate((el) =>
+        el.scrollIntoView({ behavior: 'instant', block: 'center' }),
+      )
+    await expect(closing).toHaveAttribute('data-active', 'false')
+    await expect(closing.locator('.midnight-camera')).toHaveCSS(
+      'animation-play-state',
+      'paused',
+    )
+    await p
+      .getByRole('button', { name: 'Aktifkan animasi', exact: true })
+      .click()
+    await closing
+      .locator('.midnight-scene__viewport')
+      .evaluate((el) =>
+        el.scrollIntoView({ behavior: 'instant', block: 'center' }),
+      )
+    await expect(closing).toHaveAttribute('data-active', 'true')
+    await p.emulateMedia({ reducedMotion: 'reduce' })
+    await expect(closing).toHaveAttribute('data-active', 'false')
+    assert(
+      await p
+        .locator('.midnight-scene')
+        .evaluateAll((nodes) =>
+          nodes.every((node) =>
+            node
+              .getAnimations({ subtree: true })
+              .every((a) => a.playState !== 'running'),
+          ),
+        ),
+    )
+    assert.equal(
+      await p.evaluate(
+        () => window.audioEvents.filter((e) => e.action === 'create').length,
+      ),
+      1,
+    )
+    await c.close()
+    const slow = await context({ viewport: { width: 320, height: 844 } })
+    await slow.addInitScript(() =>
+      Object.defineProperty(navigator, 'hardwareConcurrency', { get: () => 2 }),
+    )
+    const mobile = await slow.newPage()
+    await mobile.goto(base + '/w/visual-midnight-romance')
+    await expect(mobile.locator('.midnight-scene')).toHaveAttribute(
+      'data-lite',
+      'true',
+    )
+    await expect(mobile.locator('.midnight-firefly')).toHaveCount(4)
+    await expect(mobile.locator('.midnight-scene')).toHaveAttribute(
+      'data-active',
+      'true',
+    )
+    await fits(mobile, 'Midnight lite')
+    await slow.close()
+    const preview = await context({ viewport: { width: 1280, height: 900 } })
+    const page = await preview.newPage()
+    await page.goto(base + '/templates/midnight-romance/preview')
+    const iframe = page.frameLocator('.admin-preview-frame')
+    await expect(iframe.locator('.midnight-cover')).toBeVisible()
+    await iframe
+      .getByRole('button', { name: 'Buka Undangan', exact: true })
+      .click()
+    await expect(iframe.locator('#home')).toBeVisible()
+    await preview.close()
+    assert.deepEqual(errors, [])
+    console.log(
+      'PASS Midnight: 12 sections across four widths; six layers move; upright flowers; RSVP/gallery; lite, reduced and manual motion; preview and one audio player',
+    )
+  } finally {
+    await browser.close()
+    server.close()
+  }
+  process.exit(0)
+}
 if (process.env.RADINA_ROYAL_OPENING === '1') {
   try {
     const c = await context({ viewport: { width: 390, height: 844 } })
@@ -688,6 +913,24 @@ if (process.env.RADINA_LIVING_GARDEN === '1') {
           section + ' scenery must stay visible',
         )
         const branch = layers.locator('.garden-branch').first()
+        assert(
+          await layers.locator('.garden-branch').evaluateAll((nodes) =>
+            nodes.every((node) => {
+              const style = getComputedStyle(node)
+              const image = new DOMMatrix(
+                getComputedStyle(node.querySelector('img')).transform,
+              )
+              return (
+                style.rotate === 'none' &&
+                style.scale === 'none' &&
+                image.d > 0 &&
+                node.getBoundingClientRect().bottom >
+                  node.parentElement.getBoundingClientRect().bottom + 25
+              )
+            }),
+          ),
+          section + ' branches must grow upright from below the frame',
+        )
         const before = await branch.evaluate(
           (el) => getComputedStyle(el).transform,
         )

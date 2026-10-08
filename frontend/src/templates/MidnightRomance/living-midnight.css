@@ -1,0 +1,431 @@
+/* Each CMS section has an independent environment, confined to this theme. */
+.theme-midnight .midnight-scene {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  z-index: 0;
+  pointer-events: none;
+  background: #111923;
+}
+.theme-midnight .midnight-scene__viewport {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  max-height: 100%;
+  overflow: clip;
+  container-type: size;
+}
+.theme-midnight .midnight-scene * {
+  animation-play-state: paused !important;
+}
+.theme-midnight .midnight-scene[data-active='true'] * {
+  animation-play-state: running !important;
+}
+.theme-midnight .midnight-camera {
+  position: absolute;
+  inset: -4%;
+  width: 108%;
+  height: 108%;
+  object-fit: cover;
+  object-position: 50% 40%;
+  animation: midnight-dolly 20s ease-in-out infinite alternate;
+  animation-delay: var(--midnight-phase);
+}
+.theme-midnight [data-shot='roses'] .midnight-camera {
+  object-position: 28% 85%;
+  animation-name: midnight-tracking;
+  animation-duration: 24s;
+}
+.theme-midnight [data-shot='water'] .midnight-camera {
+  object-position: 65% 100%;
+  animation-direction: alternate-reverse;
+}
+.theme-midnight .midnight-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#10162277, #18151fc2 45%, #11192370);
+}
+.theme-midnight .midnight-cover .midnight-veil {
+  background: linear-gradient(#10162255, #18151f70 45%, #111923aa);
+}
+.theme-midnight .midnight-moonlight {
+  position: absolute;
+  inset: -15%;
+  background: conic-gradient(
+    from 165deg at 70% 0%,
+    transparent,
+    #cfdef233 12deg,
+    transparent 25deg,
+    #cfdef217 34deg,
+    transparent 42deg
+  );
+  transform-origin: 70% 0;
+  animation: midnight-light 12s ease-in-out infinite alternate;
+  animation-delay: var(--midnight-phase);
+}
+.theme-midnight .midnight-mist {
+  position: absolute;
+  top: 52%;
+  left: -40%;
+  width: 170%;
+  height: 25%;
+  background: radial-gradient(
+    ellipse,
+    #cbd7e82e,
+    #bccddd0a 46%,
+    transparent 70%
+  );
+  animation: midnight-mist 17s ease-in-out infinite alternate;
+  animation-delay: var(--midnight-phase);
+}
+.theme-midnight .midnight-mist--2 {
+  top: auto;
+  bottom: 2%;
+  animation-duration: 23s;
+  animation-direction: alternate-reverse;
+}
+.theme-midnight .midnight-rose {
+  position: absolute;
+  width: clamp(100px, 33%, 190px);
+  bottom: -65px;
+  opacity: 0.85;
+  transform-origin: bottom left;
+  animation: midnight-sway 6s ease-in-out infinite alternate;
+  animation-delay: var(--midnight-phase);
+}
+.theme-midnight .midnight-rose img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.theme-midnight .midnight-rose--left {
+  left: -50px;
+}
+.theme-midnight .midnight-rose--right {
+  right: -50px;
+  transform-origin: bottom right;
+  animation-duration: 8s;
+  animation-direction: alternate-reverse;
+}
+.theme-midnight .midnight-rose--right img {
+  transform: scaleX(-1);
+}
+.theme-midnight .midnight-water {
+  position: absolute;
+  left: 24%;
+  right: 24%;
+  bottom: 6%;
+  height: 22%;
+  overflow: hidden;
+}
+.theme-midnight .midnight-water i {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 40%;
+  height: 14%;
+  border-radius: 50%;
+  border: 1px solid #f9ce9780;
+  animation: midnight-ripple 9s linear infinite;
+  animation-delay: var(--delay);
+}
+.theme-midnight .midnight-candle {
+  position: absolute;
+  bottom: 13%;
+  width: 80px;
+  height: 110px;
+  background: radial-gradient(ellipse, #ffc17d26, transparent 70%);
+  animation: midnight-candle-glow 3s ease-in-out infinite alternate;
+}
+.theme-midnight .midnight-candle--left {
+  left: 7%;
+}
+.theme-midnight .midnight-candle--right {
+  right: 7%;
+  bottom: 19%;
+  animation-delay: -1.4s;
+}
+.theme-midnight .midnight-candle i {
+  position: absolute;
+  top: 47%;
+  left: 49%;
+  width: 3px;
+  height: 10px;
+  border-radius: 60% 30% 40% 40%;
+  background: #ffe5b4;
+  box-shadow: 0 0 10px 2px #d99769aa;
+  transform-origin: bottom center;
+  animation: midnight-flame 1.2s ease-in-out infinite alternate;
+}
+.theme-midnight .midnight-firefly {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff1bf;
+  box-shadow: 0 0 7px 2px #f7c98270;
+  animation: midnight-firefly var(--duration) ease-in-out infinite alternate;
+  animation-delay: var(--delay);
+}
+.theme-midnight .midnight-petal {
+  position: absolute;
+  top: -5%;
+  left: var(--x);
+  width: 7px;
+  height: 11px;
+  background: linear-gradient(120deg, #dea69b, #6d263c);
+  border-radius: 70% 20% 70% 20%;
+  animation: midnight-petal var(--duration) linear infinite;
+  animation-delay: var(--delay);
+}
+.theme-midnight .midnight-shooting-star {
+  position: absolute;
+  top: 10%;
+  left: 45%;
+  width: 70px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ddeafa);
+  opacity: 0;
+  animation: midnight-star 18s linear infinite;
+  animation-delay: var(--midnight-phase);
+}
+.theme-midnight .section-frame {
+  min-height: 100svh;
+  overflow: clip;
+}
+.theme-midnight .section-frame > :not(.midnight-scene) {
+  position: relative;
+  z-index: 1;
+}
+.theme-midnight .section-frame > .section {
+  background: transparent;
+  padding-block: 76px 110px;
+}
+.theme-midnight .opening-stage > .visual-atmosphere,
+.theme-midnight .desktop-ambience > .visual-ornament {
+  display: none;
+}
+.theme-midnight :is(.invitation-form, .wish, .event-card, .bank-card) {
+  background: #201c28f2;
+  border: 1px solid #d6a09340;
+}
+.theme-midnight :is(.design-hero, .design-closing, .midnight-cover) {
+  background: transparent;
+  min-height: 100svh;
+}
+.theme-midnight .midnight-cover {
+  padding: 32px 24px;
+  gap: 16px;
+}
+.theme-midnight .midnight-cover > :not(.midnight-scene) {
+  position: relative;
+  z-index: 1;
+}
+.theme-midnight .midnight-edition {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  margin: 0;
+}
+.theme-midnight .midnight-edition span {
+  display: block;
+  font-size: 8px;
+  margin-top: 8px;
+}
+.theme-midnight .midnight-portrait {
+  width: min(50%, 180px);
+  aspect-ratio: 0.8;
+  margin: 24px auto 0;
+  padding: 5px;
+  border: 1px solid #d6a09399;
+  border-radius: 48% 48% 5px 5px;
+  background: #211c28;
+}
+.theme-midnight .midnight-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+.theme-midnight .midnight-cover h1 {
+  font-size: clamp(36px, 11cqi, 62px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.theme-midnight .midnight-cover .cover-date {
+  margin-block: 0 0 12px;
+}
+.theme-midnight .midnight-cover .cover-invitation {
+  padding: 20px 12px;
+  border: 1px solid #d6a09340;
+  border-radius: 16px;
+  background: #191923b8;
+}
+.theme-midnight .hero-dark {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 70px 28px 110px;
+  gap: 32px;
+}
+.theme-midnight .hero-dark > .hero-full-photo {
+  position: relative;
+  inset: auto;
+  z-index: 1;
+  width: 72%;
+  max-width: 280px;
+  height: auto;
+  aspect-ratio: 0.8;
+  border: 1px solid #d6a09370;
+  padding: 5px;
+  border-radius: 48% 48% 4px 4px;
+}
+.theme-midnight .hero-dark::after {
+  display: none;
+}
+.theme-midnight .midnight-closing {
+  gap: 20px;
+  padding-bottom: 130px;
+}
+.theme-midnight .midnight-closing h2 {
+  font: 400 clamp(36px, 10cqi, 58px)/1.1 var(--serif);
+  text-wrap: balance;
+  margin: 0;
+}
+.theme-midnight .midnight-closing p {
+  max-width: 34ch;
+  line-height: 1.9;
+  margin: 0;
+}
+.theme-midnight .midnight-closing footer {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  margin-top: 16px;
+}
+@keyframes midnight-dolly {
+  from {
+    transform: scale(1.01) translateY(1%);
+  }
+  to {
+    transform: scale(1.09) translateY(-1%);
+  }
+}
+@keyframes midnight-tracking {
+  from {
+    transform: scale(1.06) translateX(-2%);
+  }
+  to {
+    transform: scale(1.1) translateX(2%);
+  }
+}
+@keyframes midnight-light {
+  from {
+    transform: rotate(-6deg);
+    opacity: 0.35;
+  }
+  to {
+    transform: rotate(7deg);
+    opacity: 0.8;
+  }
+}
+@keyframes midnight-mist {
+  from {
+    transform: translateX(-9%);
+    opacity: 0.4;
+  }
+  to {
+    transform: translateX(15%);
+    opacity: 0.8;
+  }
+}
+@keyframes midnight-sway {
+  from {
+    transform: rotate(-2.5deg) translateY(-2px);
+  }
+  to {
+    transform: rotate(2.5deg) translateY(3px);
+  }
+}
+@keyframes midnight-ripple {
+  from {
+    transform: scale(0.35);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(2.4) translateY(40px);
+    opacity: 0;
+  }
+}
+@keyframes midnight-candle-glow {
+  from {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 0.85;
+    transform: scale(1.06);
+  }
+}
+@keyframes midnight-flame {
+  from {
+    transform: rotate(-7deg) scaleY(0.9);
+    opacity: 0.6;
+  }
+  to {
+    transform: rotate(6deg) scaleY(1.15);
+    opacity: 1;
+  }
+}
+@keyframes midnight-firefly {
+  from {
+    transform: translate3d(-12px, 18px, 0);
+    opacity: 0.15;
+  }
+  45% {
+    opacity: 0.9;
+  }
+  to {
+    transform: translate3d(24px, -30px, 0);
+    opacity: 0.2;
+  }
+}
+@keyframes midnight-petal {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0);
+    opacity: 0;
+  }
+  12%,
+  85% {
+    opacity: 0.7;
+  }
+  to {
+    transform: translate3d(50px, 112cqh, 0) rotate(250deg);
+    opacity: 0;
+  }
+}
+@keyframes midnight-star {
+  0%,
+  90% {
+    transform: translate3d(0, 0, 0) rotate(35deg);
+    opacity: 0;
+  }
+  92% {
+    opacity: 0.8;
+  }
+  99%,
+  100% {
+    transform: translate3d(130px, 85px, 0) rotate(35deg);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-midnight .midnight-scene * {
+    animation: none !important;
+  }
+}

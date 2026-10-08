@@ -122,29 +122,29 @@ const chapter = computed(() => Math.max(0, chapters.indexOf(props.scene)))
 }
 .garden-branch {
   position: absolute;
-  width: clamp(125px, 39%, 270px);
-  height: 53%;
-  transform-origin: 15% 90%;
+  width: clamp(100px, 30%, 180px);
+  bottom: -48px;
+  transform-origin: bottom left;
   animation: garden-branch-sway 7s ease-in-out infinite alternate;
   animation-delay: var(--garden-phase);
 }
 .garden-branch img {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;
   filter: drop-shadow(0 7px 7px #12302220);
 }
 .garden-branch--left {
-  left: -20%;
-  top: -11%;
-  rotate: 155deg;
+  left: -42px;
 }
 .garden-branch--right {
-  right: -21%;
-  bottom: -7%;
-  scale: -1 1;
+  right: -42px;
+  transform-origin: bottom right;
   animation-duration: 9s;
   animation-direction: alternate-reverse;
+}
+.garden-branch--right img {
+  transform: scaleX(-1);
 }
 .garden-mist {
   position: absolute;
@@ -255,17 +255,6 @@ const chapter = computed(() => Math.max(0, chapters.indexOf(props.scene)))
 .butterfly-wing--right {
   animation-direction: alternate-reverse;
 }
-[data-shot='gallery'] .garden-branch--left,
-[data-shot='event'] .garden-branch--left {
-  top: 40%;
-  rotate: 20deg;
-}
-[data-shot='couple'] .garden-branch--right,
-[data-shot='closing'] .garden-branch--right {
-  bottom: auto;
-  top: -5%;
-  rotate: 150deg;
-}
 [data-lite='true'] .garden-mist--near,
 [data-lite='true'] .garden-water,
 [data-lite='true'] .garden-sunbeam {
@@ -279,21 +268,14 @@ const chapter = computed(() => Math.max(0, chapters.indexOf(props.scene)))
   display: none;
 }
 [data-garden-plane='foreground'] .garden-branch {
-  width: 42%;
   opacity: 0.94;
-}
-[data-garden-plane='foreground'] .garden-branch--left {
-  left: -30%;
-}
-[data-garden-plane='foreground'] .garden-branch--right {
-  right: -30%;
 }
 @keyframes garden-branch-sway {
   from {
-    transform: rotate(-5deg) translateY(-6px);
+    transform: rotate(-2deg) translateY(-3px);
   }
   to {
-    transform: rotate(6deg) translateY(8px);
+    transform: rotate(2deg) translateY(3px);
   }
 }
 @keyframes garden-mist-flow {

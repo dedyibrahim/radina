@@ -385,6 +385,19 @@ if (process.env.RADINA_ROYAL_GARDEN === '1') {
       'quote',
       'closing',
     ]
+    await expect(p.locator('.royal-slide')).toHaveCount(8)
+    await expect(p.locator('.royal-scene')).toHaveCount(16)
+    const environments = await p
+      .locator('.royal-scene')
+      .evaluateAll((nodes) => [
+        ...new Set(nodes.map((node) => node.dataset.environment)),
+      ])
+    assert.equal(
+      environments.length,
+      3,
+      'Published chapters include walkway, pendopo and sunset; opening has the fourth entrance plate',
+    )
+    await expect(p.locator('.garden-branch')).toHaveCount(0)
     for (const width of [320, 360, 375, 390, 414, 430, 768, 1024, 1280, 1440]) {
       await p.setViewportSize({ width, height: 844 })
       for (const section of sections) {
@@ -407,7 +420,41 @@ if (process.env.RADINA_ROYAL_GARDEN === '1') {
           })
         }
       }
+      for (const slide of await p.locator('.royal-slide').all()) {
+        await slide.scrollIntoViewIfNeeded()
+        const key = await slide.getAttribute('data-royal-slide')
+        await fits(p, `Royal chapter ${width}/${key}`)
+        if (width === 390) {
+          await slide.evaluate((el) =>
+            el.scrollIntoView({ block: 'start', behavior: 'instant' }),
+          )
+          await p.waitForTimeout(800)
+          await p.screenshot({
+            path: `${dir}/royal-chapter-${key}-390.png`,
+            animations: 'allow',
+          })
+        }
+      }
     }
+    assert(
+      await p.locator('.royal-branch').evaluateAll((branches) =>
+        branches.every((branch) => {
+          const style = getComputedStyle(branch)
+          const image = branch.querySelector('img')
+          const matrix = new DOMMatrix(getComputedStyle(image).transform)
+          const environment = branch
+            .closest('.royal-scene__environment')
+            .getBoundingClientRect()
+          return (
+            style.rotate === 'none' &&
+            style.scale === 'none' &&
+            matrix.d > 0 &&
+            branch.getBoundingClientRect().bottom > environment.bottom + 15
+          )
+        }),
+      ),
+      'Branches must grow upright from outside the bottom edge, without exposed floating stems',
+    )
     await expect(p.locator('#couple')).toContainText('Bapak Ahmad')
     await expect(p.locator('#couple')).toContainText('Rizky Pratama')
     await expect(p.locator('#story')).toContainText('Pertemuan')
@@ -488,6 +535,26 @@ if (process.env.RADINA_ROYAL_GARDEN === '1') {
     await p.emulateMedia({ reducedMotion: 'reduce' })
     await expect(scene).toHaveAttribute('data-active', 'false')
     await expect(camera).toHaveCSS('animation-name', 'none')
+    assert(
+      await p
+        .locator('.royal-scene__camera')
+        .evaluateAll((nodes) =>
+          nodes.every(
+            (node) => getComputedStyle(node).animationName === 'none',
+          ),
+        ),
+    )
+    assert(
+      await p
+        .locator('.royal-atmosphere')
+        .evaluateAll((nodes) =>
+          nodes.every((node) =>
+            node
+              .getAnimations({ subtree: true })
+              .every((animation) => animation.playState !== 'running'),
+          ),
+        ),
+    )
     await p.goto(
       base + '/templates/javanese-royal-garden/preview?to=Dedy%20Ibrahim',
     )
@@ -503,6 +570,27 @@ if (process.env.RADINA_ROYAL_GARDEN === '1') {
       .getByRole('button', { name: 'Buka Undangan', exact: true })
       .click()
     await expect(frame.locator('.opening-stage')).toHaveCount(0)
+    await p.emulateMedia({ reducedMotion: 'no-preference' })
+    await p.addInitScript(() =>
+      Object.defineProperty(navigator, 'hardwareConcurrency', { get: () => 2 }),
+    )
+    await p.goto(
+      base +
+        '/templates/javanese-royal-garden/preview?event_type=office&preview_embed=1',
+    )
+    await p.getByRole('button', { name: 'Lewati animasi', exact: true }).click()
+    await expect(p.locator('.royal-atmosphere')).toHaveAttribute(
+      'data-lite',
+      'true',
+    )
+    await expect(p.locator('.royal-petal')).toHaveCount(5)
+    await p.getByRole('button', { name: 'Buka Undangan', exact: true }).click()
+    await expect(p.locator('.celebration-host')).toContainText(
+      'Keluarga Ibrahim',
+    )
+    await expect(
+      p.locator('[data-section="couple"] > .royal-scene'),
+    ).toBeVisible()
     for (const key of ['jawa-pendopo-pagi', 'romantic-floral']) {
       await p.goto(base + '/w/visual-' + key)
       await expect(p.locator('.opening-stage')).toBeVisible()

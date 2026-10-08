@@ -1,6 +1,6 @@
 <script setup>
 import { computed, inject, ref } from 'vue'
-import LivingGardenLayers from '../../components/cinematic/LivingGardenLayers.vue'
+import RoyalAtmosphere from './RoyalAtmosphere.vue'
 import { useIntersectionAnimation } from '../../composables/useIntersectionAnimation'
 const props = defineProps({
   scene: { type: String, default: 'home' },
@@ -8,8 +8,30 @@ const props = defineProps({
   stage: String,
 })
 const visual = inject('weddingVisual')
+const wedding = inject('wedding')
 const root = ref(null)
 const visible = useIntersectionAnimation(root)
+const composition = computed(() => {
+  const scene = props.scene
+  if (scene === 'opening')
+    return { plate: 'royal-gate', camera: 'dolly', sunset: false }
+  if (scene === 'closing' || scene === 'gift' || scene === 'wishes')
+    return { plate: 'melati-senja', camera: 'retreat', sunset: true }
+  if (scene === 'groom' || scene === 'event-0' || scene === 'story-2')
+    return { plate: 'jawa-pendopo', camera: 'dolly', sunset: false }
+  return {
+    plate: 'royal-walkway',
+    camera:
+      scene.startsWith('story') || scene === 'gallery' ? 'lateral' : 'dolly',
+    sunset: false,
+  }
+})
+// These CMS sections supply an environment for each individual chapter.
+const grouped = computed(() =>
+  props.scene === 'couple'
+    ? wedding.isWedding
+    : ['story', 'event'].includes(props.scene),
+)
 const active = computed(
   () =>
     visible.value &&
@@ -20,23 +42,23 @@ const active = computed(
 </script>
 <template>
   <div
+    v-if="!grouped"
     ref="root"
     class="royal-scene"
     :class="`royal-shot-${scene}`"
     :data-active="active"
     :data-arrival="arrival"
     :data-stage="stage"
+    :data-environment="composition.plate"
+    :data-camera="composition.camera"
     aria-hidden="true"
   >
     <div class="royal-scene__environment">
       <img
         class="royal-scene__camera"
         data-living-motion="true"
-        src="/images/cinematic/jawa-pendopo-640.webp"
-        srcset="
-          /images/cinematic/jawa-pendopo-640.webp   640w,
-          /images/cinematic/jawa-pendopo-1024.webp 1024w
-        "
+        :src="`/images/cinematic/${composition.plate}-640.webp`"
+        :srcset="`/images/cinematic/${composition.plate}-640.webp 640w, /images/cinematic/${composition.plate}-1024.webp 1024w`"
         sizes="(max-width: 640px) 100vw, 640px"
         alt=""
         :loading="arrival ? 'eager' : 'lazy'"
@@ -44,10 +66,11 @@ const active = computed(
         decoding="async"
       />
       <div class="royal-scene__veil"></div>
-      <LivingGardenLayers
+      <RoyalAtmosphere
         :scene="scene"
         :active="active"
         :quality="visual.performance.quality.value"
+        :sunset="composition.sunset"
       />
     </div>
   </div>

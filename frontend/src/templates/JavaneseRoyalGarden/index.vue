@@ -1,7 +1,7 @@
 <script setup>
 import { provide } from 'vue'
 import WeddingExperience from '../shared/WeddingExperience.vue'
-import DesignCouple from '../shared/DesignCouple.vue'
+import RoyalCouple from './RoyalCouple.vue'
 import CelebrationHost from '../shared/CelebrationHost.vue'
 import RoyalHero from './RoyalHero.vue'
 import RoyalStory from './RoyalStory.vue'
@@ -39,7 +39,7 @@ provide('weddingSceneComponent', RoyalScene)
       :presentation-components="{
         couple:
           !wedding.event_type || wedding.event_type === 'wedding'
-            ? DesignCouple
+            ? RoyalCouple
             : CelebrationHost,
         story: RoyalStory,
         event: RoyalEvents,

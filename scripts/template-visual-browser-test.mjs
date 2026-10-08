@@ -38,6 +38,7 @@ await new Promise((done) => server.listen(5181, '127.0.0.1', done))
 const browser = await chromium.launch({ channel: 'chrome', headless: true })
 const errors = [],
   apiCalls = []
+const submissions = []
 const base = 'http://127.0.0.1:5181'
 let eventTypeFixture = 'wedding'
 let journeyFixture = false
@@ -238,6 +239,9 @@ async function context(options) {
           (key.startsWith('anak-') ? 'birthday' : 'wedding'),
       )
       data.is_demo = true
+    } else if (path.endsWith('/rsvp') && route.request().method() === 'POST') {
+      submissions.push(route.request().postDataJSON())
+      data = { id: 1 }
     } else if (
       path.startsWith('/api/weddings/visual-') &&
       !/\/(visits|wishes|rsvps)$/.test(path)
@@ -274,6 +278,250 @@ async function fits(page, label) {
     ),
     `Horizontal overflow: ${label}`,
   )
+}
+if (process.env.RADINA_ROYAL_OPENING === '1') {
+  try {
+    const c = await context({ viewport: { width: 390, height: 844 } })
+    const p = await c.newPage()
+    await p.goto(base + '/w/visual-javanese-royal-garden?to=Dedy%20Ibrahim')
+    const opening = p.locator('.royal-opening')
+    await expect(opening).toHaveAttribute('data-reveal', 'ENVIRONMENT')
+    await expect(opening).toHaveAttribute('data-reveal', 'TITLE', {
+      timeout: 4500,
+    })
+    await expect(opening).toHaveAttribute('data-reveal', 'NAMES')
+    await expect(opening).toHaveAttribute('data-reveal', 'DATE')
+    await expect(opening).toHaveAttribute('data-reveal', 'READY')
+    assert.equal(
+      await p.evaluate(() =>
+        window.audioEvents.some((e) => e.action === 'play'),
+      ),
+      false,
+    )
+    await expect(opening).toContainText('Dedy Ibrahim')
+    await expect
+      .poll(() =>
+        opening
+          .locator('.royal-scene__camera')
+          .evaluate((img) => img.complete && img.naturalWidth > 0),
+      )
+      .toBe(true)
+    await fits(p, 'Royal Garden opening')
+    await p.screenshot({ path: dir + '/javanese-royal-garden-opening-390.png' })
+    await p.getByRole('button', { name: 'Buka Undangan', exact: true }).click()
+    await expect(p.locator('.opening-stage')).toHaveCount(0)
+    await expect
+      .poll(() =>
+        p.evaluate(() => window.audioEvents.some((e) => e.action === 'play')),
+      )
+      .toBe(true)
+    assert.deepEqual(errors, [])
+    await c.close()
+    console.log(
+      'PASS: Royal Garden six-second opening, guest, responsive scene and gesture-triggered music',
+    )
+  } finally {
+    await browser.close()
+    server.close()
+  }
+  process.exit(0)
+}
+if (process.env.RADINA_ROYAL_GARDEN === '1') {
+  try {
+    const c = await context({ viewport: { width: 390, height: 844 } })
+    await c.addInitScript(() => {
+      Object.defineProperty(navigator, 'clipboard', {
+        value: {
+          writeText: async (value) => {
+            window.copiedGift = value
+          },
+        },
+      })
+    })
+    const p = await c.newPage()
+    await p.goto(base + '/w/visual-javanese-royal-garden?to=Dedy%20Ibrahim')
+    await p.getByRole('button', { name: 'Lewati animasi', exact: true }).click()
+    await expect(p.locator('.royal-opening')).toContainText('Dedy Ibrahim')
+    await p.waitForTimeout(850)
+    for (const width of [320, 360, 375, 390, 414, 430, 768, 1024, 1280, 1440]) {
+      await p.setViewportSize({ width, height: 844 })
+      await fits(p, `Royal Garden opening ${width}`)
+      if ([320, 390, 1440].includes(width)) {
+        await p.screenshot({
+          path: `${dir}/royal-garden-${width}-opening.png`,
+          animations: 'allow',
+        })
+      }
+    }
+    await p.getByRole('button', { name: 'Buka Undangan', exact: true }).click()
+    await expect(p.locator('.opening-stage')).toHaveCount(0)
+    await p.locator('.wedding-page').evaluate((root) => {
+      window.royalRoot = root
+    })
+    const allocation = await p.evaluate(() => window.audioEvents.length)
+    for (const name of ['Couple', 'Event', 'Gallery', 'Gift', 'Home']) {
+      await p.getByRole('button', { name, exact: true }).click()
+      await expect(p.locator('.opening-stage')).toHaveCount(0)
+      assert.equal(
+        await p.evaluate(() => window.audioEvents.length),
+        allocation,
+      )
+      assert(
+        await p
+          .locator('.wedding-page')
+          .evaluate((root) => root === window.royalRoot),
+      )
+    }
+    const sections = [
+      'home',
+      'couple',
+      'story',
+      'event',
+      'location',
+      'gallery',
+      'gift',
+      'rsvp',
+      'wishes',
+      'quote',
+      'closing',
+    ]
+    for (const width of [320, 360, 375, 390, 414, 430, 768, 1024, 1280, 1440]) {
+      await p.setViewportSize({ width, height: 844 })
+      for (const section of sections) {
+        const node = p.locator('#' + section)
+        await node.scrollIntoViewIfNeeded()
+        await fits(p, `Royal Garden ${width}/${section}`)
+        if (
+          [320, 390, 1440].includes(width) &&
+          ['couple', 'story', 'event', 'gallery', 'rsvp', 'closing'].includes(
+            section,
+          )
+        ) {
+          await node.evaluate((el) =>
+            el.scrollIntoView({ block: 'start', behavior: 'instant' }),
+          )
+          await p.waitForTimeout(800)
+          await p.screenshot({
+            path: `${dir}/royal-garden-${width}-${section}.png`,
+            animations: 'allow',
+          })
+        }
+      }
+    }
+    await expect(p.locator('#couple')).toContainText('Bapak Ahmad')
+    await expect(p.locator('#couple')).toContainText('Rizky Pratama')
+    await expect(p.locator('#story')).toContainText('Pertemuan')
+    await expect(p.locator('.royal-countdown')).toHaveAttribute(
+      'data-countdown-event',
+      '9',
+    )
+    await expect(p.locator('#event')).toContainText('WITA')
+    await expect(p.locator('#event')).toContainText('Jalan Mawar 2')
+    const downloadPromise = p.waitForEvent('download')
+    await p
+      .getByRole('button', {
+        name: 'Tambahkan Resepsi ke kalender',
+        exact: true,
+      })
+      .click()
+    const download = await downloadPromise
+    const calendar = await readFile(await download.path(), 'utf8')
+    assert(calendar.includes('DTSTART:20261213T060000Z'))
+    assert.equal((calendar.match(/BEGIN:VEVENT/g) || []).length, 1)
+    await p.locator('#gallery .gallery-item').first().click()
+    await expect(p.locator('.lightbox-controls')).toContainText('1 / 6')
+    await p
+      .getByRole('button', { name: 'Foto berikutnya', exact: true })
+      .click()
+    await expect(p.locator('.lightbox-controls')).toContainText('2 / 6')
+    await p.keyboard.press('ArrowRight')
+    await expect(p.locator('.lightbox-controls')).toContainText('3 / 6')
+    await p.locator('.lightbox').dispatchEvent('touchstart', {
+      touches: [{ identifier: 1, clientX: 230 }],
+    })
+    await p.locator('.lightbox').dispatchEvent('touchend', {
+      changedTouches: [{ identifier: 1, clientX: 80 }],
+    })
+    await expect(p.locator('.lightbox-controls')).toContainText('4 / 6')
+    await p.keyboard.press('Escape')
+    await expect(p.locator('.lightbox')).toHaveCount(0)
+    await p
+      .locator('#gift')
+      .getByRole('button', { name: /Salin/ })
+      .first()
+      .click()
+    assert.equal(await p.evaluate(() => window.copiedGift), '8721354342')
+    await expect(p.locator('#rsvp-name')).toHaveValue('Dedy Ibrahim')
+    await p.locator('input[name="attendance"][value="Hadir"]').check()
+    await p
+      .getByRole('button', { name: 'Tambah jumlah tamu', exact: true })
+      .click()
+    await p
+      .locator('#rsvp-message')
+      .fill('Semoga menjadi keluarga yang bahagia.')
+    await p
+      .getByRole('button', { name: 'Kirim Konfirmasi', exact: true })
+      .click()
+    await expect(p.locator('.form-success')).toContainText('Terkirim!')
+    assert.equal(submissions.length, 1)
+    assert.equal(submissions[0].name, 'Dedy Ibrahim')
+    assert.equal(submissions[0].guests, 2)
+    assert.equal(submissions[0].attendance, 'Hadir')
+    assert.equal(
+      submissions[0].message,
+      'Semoga menjadi keluarga yang bahagia.',
+    )
+    await p
+      .locator('#closing')
+      .evaluate((el) =>
+        el.scrollIntoView({ behavior: 'instant', block: 'start' }),
+      )
+    const scene = p.locator('[data-section="closing"] > .royal-scene')
+    await expect(scene).toHaveAttribute('data-active', 'true')
+    const camera = scene.locator('.royal-scene__camera')
+    const before = await camera.evaluate((el) => getComputedStyle(el).transform)
+    await p.waitForTimeout(500)
+    assert.notEqual(
+      await camera.evaluate((el) => getComputedStyle(el).transform),
+      before,
+    )
+    await p.emulateMedia({ reducedMotion: 'reduce' })
+    await expect(scene).toHaveAttribute('data-active', 'false')
+    await expect(camera).toHaveCSS('animation-name', 'none')
+    await p.goto(
+      base + '/templates/javanese-royal-garden/preview?to=Dedy%20Ibrahim',
+    )
+    const frame = p.frameLocator('.admin-preview-frame')
+    await expect(frame.locator('.royal-opening')).toContainText('Dedy Ibrahim')
+    await frame
+      .getByRole('button', { name: 'Buka Undangan', exact: true })
+      .click()
+    await expect(frame.locator('.royal-events')).toBeVisible()
+    await p.getByRole('button', { name: 'Preview Cover', exact: true }).click()
+    await expect(frame.locator('.royal-opening')).toContainText('Dedy Ibrahim')
+    await frame
+      .getByRole('button', { name: 'Buka Undangan', exact: true })
+      .click()
+    await expect(frame.locator('.opening-stage')).toHaveCount(0)
+    for (const key of ['jawa-pendopo-pagi', 'romantic-floral']) {
+      await p.goto(base + '/w/visual-' + key)
+      await expect(p.locator('.opening-stage')).toBeVisible()
+      await expect(p.locator('.royal-scene')).toHaveCount(0)
+      await p
+        .getByRole('button', { name: 'Buka Undangan', exact: true })
+        .click()
+      await expect(p.locator('.invitation-content')).toBeVisible()
+    }
+    assert.deepEqual(errors, [])
+    await c.close()
+    console.log(
+      'PASS: Royal Garden ten widths, CMS content/countdown/event calendar, music and root continuity, gallery keyboard/swipe, gift copy, guest RSVP/wish submission, moving scenery, reduced motion and shared preview.',
+    )
+  } finally {
+    await browser.close()
+    server.close()
+  }
+  process.exit(0)
 }
 if (process.env.RADINA_LIVING_GARDEN === '1') {
   try {

@@ -70,8 +70,9 @@ try {
       'jawa-pendopo-pagi',
       'sunda-kabut-pegunungan',
       'melati-senja-cinematic',
+      'javanese-royal-garden',
     ].sort(),
-    'Only the three approved new cinematic worlds remain in the catalog',
+    'Only the approved new cinematic worlds remain in the catalog',
   )
   assert.equal(
     new Set(Object.values(cinematicWorlds).map((world) => world.scene)).size,
@@ -89,7 +90,7 @@ try {
       : studio[key]
         ? './shared/StudioInvitation.vue'
         : cinematicWorlds[key]
-          ? './shared/StudioInvitation.vue'
+          ? (paths[key] || './shared/StudioInvitation.vue')
           : paths[key]
     assert(component, `Missing Vue entry: ${key}`)
     const text = await readFile(

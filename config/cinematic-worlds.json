@@ -881,5 +881,137 @@
     "composition": "film-garden",
     "thumbnail": "/images/cinematic/melati-senja-640.webp",
     "livingNature": true
+  },
+  "javanese-royal-garden": {
+    "name": "Javanese Royal Garden",
+    "category": "Regional",
+    "description": "Undangan pernikahan dengan pendopo Jawa, taman pagi, perjalanan sinematik dan suasana senja yang tenang.",
+    "scene": "javanese-royal-garden",
+    "world": "Javanese Royal Garden",
+    "opening": "royal-garden-arrival",
+    "camera": "dolly-in",
+    "transition": "garden-dissolve",
+    "photo": "heritage-garden",
+    "typography": "heritage-serif",
+    "closing": "royal-garden-sunset",
+    "effects": ["leaves", "petals", "sparkles"],
+    "palette": {
+      "background": "#F6F0E4",
+      "ink": "#2C3028",
+      "accent": "#B9985A",
+      "highlight": "#E4E8DF"
+    },
+    "price": 179000,
+    "plate": "jawa-pendopo",
+    "thumbnail": "/images/cinematic/jawa-pendopo-640.webp",
+    "composition": "royal",
+    "content": {
+      "order": [
+        "home",
+        "couple",
+        "story",
+        "event",
+        "location",
+        "gallery",
+        "video",
+        "gift",
+        "livestream",
+        "rsvp",
+        "wishes",
+        "quote",
+        "closing"
+      ],
+      "sections": {
+        "home": {
+          "enabled": true,
+          "heading": "Momen Istimewa",
+          "subheading": "Sebuah hari untuk dikenang",
+          "content": ""
+        },
+        "couple": {
+          "enabled": true,
+          "heading": "Mempelai",
+          "subheading": "Dengan penuh rasa syukur",
+          "content": ""
+        },
+        "quote": {
+          "enabled": true,
+          "heading": "Sebuah Pesan",
+          "subheading": "Harapan baik untuk hari ini",
+          "content": ""
+        },
+        "date": {
+          "enabled": true,
+          "heading": "Simpan Tanggal",
+          "subheading": "Hari istimewa segera tiba",
+          "content": ""
+        },
+        "event": {
+          "enabled": true,
+          "heading": "Akad & Resepsi",
+          "subheading": "Kami menantikan kedatangan Anda",
+          "content": ""
+        },
+        "location": {
+          "enabled": true,
+          "heading": "Lokasi Acara",
+          "subheading": "Sampai bertemu di sini",
+          "content": ""
+        },
+        "story": {
+          "enabled": true,
+          "heading": "Perjalanan Kami",
+          "subheading": "Perjalanan penuh kenangan",
+          "content": ""
+        },
+        "gallery": {
+          "enabled": true,
+          "heading": "Kenangan Kami",
+          "subheading": "Potongan kenangan dalam bingkai",
+          "content": ""
+        },
+        "video": {
+          "enabled": true,
+          "heading": "Cerita Bergerak",
+          "subheading": "Kenangan yang hidup",
+          "content": ""
+        },
+        "gift": {
+          "enabled": true,
+          "heading": "Tanda Kasih",
+          "subheading": "Kehadiran Anda adalah kebahagiaan kami",
+          "content": ""
+        },
+        "livestream": {
+          "enabled": true,
+          "heading": "Saksikan Bersama",
+          "subheading": "Dari mana pun Anda berada",
+          "content": ""
+        },
+        "rsvp": {
+          "enabled": true,
+          "heading": "Konfirmasi Kehadiran",
+          "subheading": "Mohon kabari kami",
+          "content": ""
+        },
+        "wishes": {
+          "enabled": true,
+          "heading": "Doa & Ucapan",
+          "subheading": "Tinggalkan pesan yang hangat",
+          "content": ""
+        },
+        "closing": {
+          "enabled": true,
+          "heading": "TERIMA KASIH",
+          "subheading": "Atas doa dan restu yang diberikan.",
+          "content": ""
+        }
+      },
+      "opening_text": "Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan berbagi momen istimewa bersama kami.",
+      "closing_text": "Terima kasih atas kehadiran dan doa baik Anda.",
+      "quote": "Setiap pertemuan membawa kebahagiaan. Terima kasih telah menjadi bagian dari cerita kami.",
+      "quote_source": "Dengan penuh syukur"
+    },
+    "featured": true
   }
 }

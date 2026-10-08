@@ -9,6 +9,7 @@ import SectionDivider from '../../components/wedding/effects/SectionDivider.vue'
 import LivingGardenLayers from '../../components/cinematic/LivingGardenLayers.vue'
 const floral = inject('floralDesign', null)
 const visual = inject('weddingVisual', null)
+const sceneComponent = inject('weddingSceneComponent', null)
 const props = defineProps({ sectionKey: String, content: Object })
 const root = ref(null)
 const visible = useIntersectionAnimation(root)
@@ -40,8 +41,9 @@ provide(
       visual?.config.value.motionProfile.sectionPauses?.[sectionKey]
     "
   >
+    <component v-if="sceneComponent" :is="sceneComponent" :scene="sectionKey" />
     <VisualAtmosphere
-      v-if="visual"
+      v-else-if="visual"
       :scene="sectionKey === 'home' ? 'hero' : 'section'"
       :section="sectionKey"
     />

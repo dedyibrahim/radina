@@ -1,0 +1,553 @@
+.royal-garden .royal-scene,
+.royal-garden .wedding-page .royal-opening > .royal-scene {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  z-index: 0;
+  pointer-events: none;
+  container-type: size;
+  background: #f6f0e4;
+}
+.royal-garden .royal-scene__environment {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  max-height: 100%;
+  overflow: clip;
+  container-type: size;
+}
+.royal-garden .royal-scene .garden-branch {
+  width: clamp(100px, 29%, 200px);
+  height: 38%;
+  opacity: 0.7;
+}
+.royal-garden .royal-scene .garden-branch--left {
+  left: -12%;
+}
+.royal-garden .royal-scene .garden-branch--right {
+  right: -13%;
+}
+.royal-garden .royal-scene__camera {
+  position: absolute;
+  inset: -3%;
+  width: 106%;
+  height: 106%;
+  object-fit: cover;
+  object-position: center 80%;
+  transform: scale(1.02);
+}
+.royal-garden .royal-scene[data-active='true'] .royal-scene__camera {
+  animation: royal-dolly 28s ease-in-out infinite alternate;
+}
+.royal-garden .royal-shot-story .royal-scene__camera {
+  object-position: 30% 100%;
+  animation-name: royal-lateral !important;
+}
+.royal-garden .royal-shot-closing .royal-scene__camera {
+  filter: sepia(0.17) saturate(1.13);
+  animation-direction: alternate-reverse !important;
+}
+.royal-garden .royal-scene__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #f6f0e4e8, #f6f0e4b8 65%, #f6f0e477);
+}
+.royal-garden .royal-shot-opening .royal-scene__veil {
+  background: linear-gradient(180deg, #f6f0e433, transparent 70%);
+}
+.royal-garden .royal-scene[data-arrival='true'] .royal-scene__camera {
+  animation: none;
+  transition: transform 1500ms ease;
+  transform: scale(1.045);
+}
+.royal-garden .royal-scene[data-stage='ENVIRONMENT'] .royal-scene__camera {
+  transform: scale(1);
+}
+.royal-garden .royal-scene[data-stage='ENVIRONMENT'] {
+  animation: royal-arrival 1500ms ease both;
+}
+.royal-garden .wedding-page .royal-opening.cinematic-opening {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto auto;
+  align-items: center;
+  justify-items: center;
+  min-height: 100svh;
+  padding: max(28px, env(safe-area-inset-top)) 24px
+    max(20px, env(safe-area-inset-bottom));
+  gap: 16px;
+  text-align: center;
+  color: #203c30;
+  isolation: isolate;
+}
+.royal-garden .royal-opening > :not(.royal-scene) {
+  position: relative;
+  z-index: 1;
+}
+.royal-edition {
+  align-self: start;
+  margin: 0;
+  font:
+    600 9px/1.6 'DM Sans',
+    sans-serif;
+  letter-spacing: 0.18em;
+}
+.royal-edition span {
+  display: block;
+  margin-top: 7px;
+  font-size: 8px;
+  font-weight: 400;
+}
+.royal-garden .royal-opening .royal-skip {
+  position: absolute;
+  z-index: 20;
+  top: 90px;
+  right: 20px;
+  padding: 8px 12px;
+  font-size: 10px;
+  border: 1px solid #203c3055;
+  border-radius: 20px;
+  background: #f6f0e4e8;
+}
+.royal-opening__names {
+  align-self: start;
+  padding-top: clamp(32px, 8svh, 90px);
+  width: 100%;
+}
+.royal-kicker {
+  margin: 0 0 15px;
+  font:
+    500 10px/1.7 'DM Sans',
+    sans-serif;
+  letter-spacing: 0.28em;
+}
+.royal-garden .royal-opening h1 {
+  font:
+    400 clamp(40px, 12cqi, 74px)/1.05 'Cormorant Garamond',
+    Georgia,
+    serif;
+  margin: 0 auto;
+  max-width: 13ch;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.royal-opening time {
+  display: block;
+  margin: 20px 0;
+  font:
+    500 11px/1.7 'DM Sans',
+    sans-serif;
+  letter-spacing: 0.13em;
+}
+.royal-opening__guest {
+  width: max-content;
+  max-width: 100%;
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+  padding: 15px 24px;
+  background: #f6f0e4e8;
+  border: 1px solid #fff8;
+  border-radius: 3px;
+}
+.royal-opening__guest p {
+  margin: 0;
+  font-size: 10px;
+}
+.royal-opening__guest strong {
+  font-size: 14px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.royal-garden .royal-enter {
+  margin-top: 10px;
+  min-height: 46px;
+  color: #f6f0e4;
+  background: #203c30;
+  border: 1px solid #203c30;
+}
+.royal-signature {
+  background: #f6f0e4d9;
+  padding: 4px 12px;
+  font:
+    11px/1.7 'Cormorant Garamond',
+    serif;
+}
+.royal-opening .royal-kicker,
+.royal-opening h1,
+.royal-opening time,
+.royal-opening__guest {
+  transition:
+    opacity 800ms ease,
+    translate 800ms ease;
+}
+.royal-opening:is([data-reveal='ENVIRONMENT'], [data-reveal='DOLLY'])
+  .royal-kicker,
+.royal-opening:is(
+    [data-reveal='ENVIRONMENT'],
+    [data-reveal='DOLLY'],
+    [data-reveal='TITLE']
+  )
+  h1,
+.royal-opening:is(
+    [data-reveal='ENVIRONMENT'],
+    [data-reveal='DOLLY'],
+    [data-reveal='TITLE'],
+    [data-reveal='NAMES']
+  )
+  time,
+.royal-opening:not([data-reveal='READY']) .royal-opening__guest {
+  opacity: 0;
+  translate: 0 8px;
+}
+.royal-garden .opening-stage.cover-leave-active {
+  transition: opacity 1100ms ease;
+}
+.royal-garden .opening-stage.cover-leave-to {
+  opacity: 0;
+  transform: none;
+}
+.royal-garden .cover-leave-active .royal-opening__names,
+.royal-garden .cover-leave-active .royal-opening__guest {
+  opacity: 0;
+}
+.royal-garden .cover-leave-active .royal-scene__camera {
+  transform: scale(1.1) !important;
+}
+.royal-garden .wedding-page .section-frame > .royal-scene {
+  position: absolute;
+  z-index: 0;
+}
+.royal-garden .wedding-page .section-frame > :not(.royal-scene) {
+  position: relative;
+  z-index: 1;
+}
+.royal-garden .section-frame {
+  min-height: min(100svh, 860px);
+  overflow: clip;
+}
+.royal-garden .section-frame .section {
+  background: transparent;
+  padding: 70px 28px;
+}
+.royal-garden .desktop-ambience > .visual-ornament {
+  display: none;
+}
+.royal-garden :is(.button, input, textarea) {
+  max-width: 100%;
+}
+.royal-garden button:focus-visible,
+.royal-garden a:focus-visible {
+  outline: 2px solid #203c30;
+  outline-offset: 4px;
+}
+@keyframes royal-dolly {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.075) translateY(-1%);
+  }
+}
+@keyframes royal-lateral {
+  from {
+    transform: scale(1.04) translateX(-1.5%);
+  }
+  to {
+    transform: scale(1.08) translateX(1.5%);
+  }
+}
+@keyframes royal-arrival {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (max-width: 359px) {
+  .royal-garden .section-frame .section {
+    padding-inline: 20px;
+  }
+  .royal-garden .royal-edition {
+    max-width: 190px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .royal-garden .royal-scene__camera,
+  .royal-garden .royal-opening * {
+    animation: none !important;
+    transition: none !important;
+  }
+  .royal-garden .opening-stage.cover-leave-active {
+    transition-duration: 100ms;
+  }
+}
+
+.royal-garden .royal-hero,
+.royal-garden .royal-closing {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 24px;
+  min-height: 100svh;
+  text-align: center;
+}
+.royal-garden :is(.royal-hero h1, .royal-closing h2) {
+  font:
+    400 clamp(40px, 11cqi, 68px)/1.1 'Cormorant Garamond',
+    Georgia,
+    serif;
+  margin: 0;
+  max-width: 14ch;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.royal-garden .royal-portrait {
+  width: min(68%, 240px);
+  aspect-ratio: 0.8;
+  margin: 0;
+  padding: 5px;
+  border: 1px solid #b9985a;
+  border-radius: 48% 48% 3px 3px;
+  overflow: hidden;
+  background: #f6f0e4;
+}
+.royal-garden .royal-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+.royal-garden .royal-introduction {
+  max-width: 36ch;
+  font-size: 14px;
+  line-height: 1.9;
+  margin: 0;
+  text-align: center;
+}
+.royal-garden .couple-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+}
+.royal-garden .person-composition {
+  min-width: 0;
+  background: none;
+  text-align: center;
+}
+.royal-garden .person-composition figure {
+  width: min(72%, 220px);
+  aspect-ratio: 0.75;
+  margin: 0 auto 24px;
+  border-radius: 48% 48% 3px 3px;
+  overflow: hidden;
+  outline: 1px solid #b9985a99;
+  outline-offset: 5px;
+}
+.royal-garden .person-composition figure > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.royal-garden .person-copy h3 {
+  font:
+    400 36px/1.2 'Cormorant Garamond',
+    serif;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+.royal-garden .person-copy p {
+  font-size: 13px;
+  line-height: 1.9;
+}
+.royal-garden .person-copy a {
+  color: #203c30;
+  overflow-wrap: anywhere;
+}
+.royal-garden .royal-story__path {
+  position: relative;
+  padding-left: 24px;
+}
+.royal-garden .royal-story__path::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  inset-block: 0;
+  width: 1px;
+  background: linear-gradient(transparent, #b9985a, #203c3077, transparent);
+}
+.royal-garden .royal-story__chapter {
+  position: relative;
+  margin-bottom: 52px;
+  max-width: 100%;
+}
+.royal-garden .royal-story__chapter::before {
+  content: '';
+  position: absolute;
+  left: -25px;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid #b9985a;
+  background: #f6f0e4;
+}
+.royal-garden .royal-story__year {
+  font:
+    600 11px/1.6 'DM Sans',
+    sans-serif;
+  letter-spacing: 0.16em;
+  color: #76533d;
+}
+.royal-garden .royal-story__chapter figure {
+  width: 85%;
+  max-width: 290px;
+  margin: 20px 0;
+  padding: 6px;
+  background: #f6f0e4;
+  box-shadow: 0 8px 22px #203c3020;
+}
+.royal-garden .royal-story__chapter:nth-child(even) figure {
+  margin-left: auto;
+}
+.royal-garden .royal-story__chapter img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.royal-garden .royal-story__chapter h3 {
+  font:
+    400 32px/1.2 'Cormorant Garamond',
+    serif;
+  margin: 20px 0 10px;
+}
+.royal-garden .royal-story__chapter p {
+  font-size: 14px;
+  line-height: 1.9;
+}
+.royal-garden .royal-countdown {
+  text-align: center;
+  padding-bottom: 25px;
+  font-size: 12px;
+}
+.royal-garden .royal-countdown .countdown {
+  max-width: 380px;
+  margin-inline: auto;
+  gap: 6px;
+}
+.royal-garden .countdown > div {
+  border: 0;
+  border-bottom: 1px solid #b9985a;
+  background: #f6f0e480;
+  padding: 12px 4px;
+  min-width: 0;
+}
+.royal-garden .countdown span {
+  font-size: clamp(22px, 7cqi, 42px);
+}
+.royal-garden .royal-event {
+  text-align: center;
+  padding: 32px 0;
+  border-top: 1px solid #b9985a66;
+}
+.royal-garden .royal-event > small {
+  color: #76533d;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+}
+.royal-garden .royal-event h3 {
+  font:
+    400 38px/1.2 'Cormorant Garamond',
+    serif;
+  margin: 15px 0;
+}
+.royal-garden .royal-event time {
+  font-size: 13px;
+}
+.royal-garden .royal-event__time {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  font-size: 13px;
+  margin: 15px 0 25px;
+}
+.royal-garden .royal-event strong {
+  display: block;
+  font-weight: 500;
+}
+.royal-garden .royal-event__address {
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 12px auto;
+  max-width: 35ch;
+}
+.royal-garden .royal-event__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+.royal-garden .royal-event__actions .button {
+  min-height: 44px;
+  background: #f6f0e4e8;
+}
+.royal-garden .gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.royal-garden .gallery-item:first-child {
+  grid-column: 1 / -1;
+  aspect-ratio: 1.25;
+}
+.royal-garden .gallery-item {
+  min-width: 0;
+  border: 5px solid #f6f0e4;
+  outline: 1px solid #b9985a55;
+  border-radius: 2px;
+}
+.royal-garden .gallery-item:nth-child(3n) {
+  border-radius: 45% 45% 2px 2px;
+}
+.royal-garden .gallery-item img {
+  object-fit: cover;
+}
+.royal-garden :is(.invitation-form, .bank-card, .wish) {
+  background: #f6f0e4fa;
+  border: 1px solid #203c3022;
+  box-shadow: none;
+}
+.royal-garden .invitation-form {
+  padding: 20px 16px;
+  border-radius: 8px;
+}
+.royal-garden input,
+.royal-garden textarea {
+  color: #2c3028;
+  background: #fffaf2;
+}
+.royal-garden .bank-card {
+  border-radius: 3px;
+}
+.royal-garden .royal-shot-closing .royal-scene__veil {
+  background: linear-gradient(180deg, #f6f0e4e0, #f4ddafb8 65%, #d2af7177);
+}
+.royal-garden .royal-closing {
+  padding-bottom: 140px !important;
+}
+@container (min-width:520px) {
+  .royal-garden .couple-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px;
+  }
+  .royal-garden .person-composition figure {
+    width: 82%;
+  }
+  .royal-garden .person-copy h3 {
+    font-size: 30px;
+  }
+}

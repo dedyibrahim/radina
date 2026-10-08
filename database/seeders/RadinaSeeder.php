@@ -36,7 +36,7 @@ class RadinaSeeder extends Seeder
                 'template_key' => $key, 'component_name' => TemplateCatalog::worldComponent($key),
                 'name' => $entry['name'], 'category_id' => $category->id,
                 'description' => $entry['description'], 'price' => config('invitation-pricing.templates.'.$key, $entry['price']),
-                'status' => 'ACTIVE', 'is_featured' => false,
+                'status' => 'ACTIVE', 'is_featured' => $entry['featured'] ?? false,
                 'thumbnail' => $entry['thumbnail'] ?? '/images/templates/cinematic-worlds/'.$key.'.svg',
                 'preview_image' => $entry['thumbnail'] ?? '/images/templates/cinematic-worlds/'.$key.'.svg',
                 'features' => ['Cinematic world', 'RSVP & ucapan', 'Galeri foto', 'Musik latar', 'CMS bersama', 'Responsive'],

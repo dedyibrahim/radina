@@ -9,6 +9,7 @@ const worldPresets = Object.fromEntries(
     key,
     {
       ...worldContent,
+      ...(world.content || {}),
       name: world.name,
       studio: true,
       category: world.category,

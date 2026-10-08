@@ -12,7 +12,7 @@ class TemplateContent
         if (isset($worlds[$key ?? ''])) {
             $world = $worlds[$key];
             $content = json_decode(file_get_contents(config_path('cinematic-content.json')), true, 512, JSON_THROW_ON_ERROR);
-            return array_merge($content, [
+            return array_merge($content, $world['content'] ?? [], [
                 'name' => $world['name'], 'category' => $world['category'], 'studio' => true,
                 'gallery_style' => $world['photo'], 'mood' => [$world['category'], $world['world']],
                 'motion' => $world['effects'], 'palette' => $world['palette'],

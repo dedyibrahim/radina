@@ -23,6 +23,9 @@ export const templateRegistry = {
       defineAsyncComponent(() => import('./shared/StudioInvitation.vue')),
     ]),
   ),
+  'javanese-royal-garden': defineAsyncComponent(
+    () => import('./JavaneseRoyalGarden/index.vue'),
+  ),
   'nur-jannah': defineAsyncComponent(() => import('./NurJannah/index.vue')),
   'mihrab-emerald': defineAsyncComponent(
     () => import('./MihrabEmerald/index.vue'),

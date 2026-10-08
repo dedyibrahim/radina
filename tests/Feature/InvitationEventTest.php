@@ -54,6 +54,44 @@ class InvitationEventTest extends TestCase
         return $data;
     }
 
+    public function test_royal_garden_additive_install_preserves_existing_templates_customers_and_licenses(): void
+    {
+        $key = 'javanese-royal-garden';
+        Template::where('template_key', $key)->delete();
+        $templates = Template::orderBy('id')->get()->map->getRawOriginal()->all();
+        $weddings = Wedding::orderBy('id')->get()->map->getRawOriginal()->all();
+        $orders = Order::orderBy('id')->get()->map->getRawOriginal()->all();
+        $guard = app(DeploymentLicenseGuard::class);
+        $licenses = $guard->backup(str_repeat('f', 40));
+        $migration = require database_path('migrations/2026_10_08_000005_add_javanese_royal_garden_template.php');
+        $migration->up();
+        $template = Template::where('template_key', $key)->firstOrFail();
+        $this->assertSame(179000, $template->price);
+        $this->assertTrue((bool) $template->is_featured);
+        $this->assertFileExists(base_path('frontend/public'.$template->thumbnail));
+        $template->update(['price' => 187500]);
+        $migration->up(); $migration->up();
+        $this->assertSame(187500, $template->fresh()->price);
+        $this->assertSame(1, Template::where('template_key', $key)->count());
+        $this->assertSame($templates, Template::where('template_key', '!=', $key)->orderBy('id')->get()->map->getRawOriginal()->all());
+        $this->assertSame($weddings, Wedding::orderBy('id')->get()->map->getRawOriginal()->all());
+        $this->assertSame($orders, Order::orderBy('id')->get()->map->getRawOriginal()->all());
+        $guard->assertPreserved($licenses);
+        $this->getJson('/api/templates/'.$key.'/preview')->assertOk()
+            ->assertJsonPath('data.template.template_key', $key)
+            ->assertJsonStructure(['data' => ['bride', 'groom', 'events', 'stories', 'gallery', 'gift_methods', 'settings']]);
+        $booking = array_replace($this->booking('wedding', 'royal-cms'), [
+            'template_id' => $template->id, 'bride_name' => 'Dewi Maharani', 'groom_name' => 'Bagas Pradana',
+        ]);
+        $id = $this->postJson('/api/orders', $booking)->assertCreated()->assertJsonPath('data.total', 187500)->json('data.id');
+        $this->patchJson('/api/admin/orders/'.$id.'/payment')->assertOk();
+        $weddingId = $this->postJson('/api/admin/orders/'.$id.'/wedding')->assertCreated()->json('data.id');
+        $this->getJson('/api/admin/weddings/'.$weddingId.'/preview')->assertOk()
+            ->assertJsonPath('data.template.template_key', $key)
+            ->assertJsonPath('data.bride.full_name', 'Dewi Maharani')
+            ->assertJsonPath('data.groom.full_name', 'Bagas Pradana');
+    }
+
     public function test_living_garden_catalog_and_repeat_migration_preserve_existing_content_pricing_and_licenses(): void
     {
         $template = Template::where('template_key', 'melati-senja-cinematic')->firstOrFail();
@@ -102,7 +140,7 @@ class InvitationEventTest extends TestCase
         $this->assertSame($weddingSnapshot, $wedding->fresh()->getRawOriginal());
         $this->assertSame($orderSnapshot, $order->fresh()->getRawOriginal());
         $this->assertSame(98765, $sunda->fresh()->price);
-        $this->getJson('/api/templates?category=regional')->assertOk()->assertJsonPath('meta.total', 3);
+        $this->getJson('/api/templates?category=regional')->assertOk()->assertJsonPath('meta.total', 4);
         $this->getJson('/api/templates/'.$used->slug.'/preview')->assertNotFound();
         $guard->assertPreserved($licenses);
     }

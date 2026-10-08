@@ -37,6 +37,7 @@ const props = defineProps({
   theme: { type: String, default: 'floral' },
   design: { type: String, default: 'amore' },
   coverComponent: { type: Object, required: true },
+  cinematicCoverComponent: { type: Object, default: null },
   heroComponent: { type: Object, required: true },
   presentationComponents: { type: Object, default: () => ({}) },
 })
@@ -228,8 +229,9 @@ onUnmounted(() => clearTimeout(timer))
         @after-leave="finishOpening"
         @leave-cancelled="finishOpening"
         ><div v-if="!opened" class="opening-stage" :aria-busy="opening">
-          <CinematicOpening
+          <component
             v-if="cinematicCategory"
+            :is="cinematicCoverComponent || CinematicOpening"
             :guest="guest"
             @open="openInvitation"
           />

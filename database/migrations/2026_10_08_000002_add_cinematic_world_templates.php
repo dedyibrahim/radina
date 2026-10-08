@@ -32,7 +32,7 @@ return new class extends Migration
                 'component_name' => TemplateCatalog::worldComponent($key),
                 'template_key' => $key,
                 'status' => 'ACTIVE',
-                'is_featured' => false,
+                'is_featured' => $world['featured'] ?? false,
                 'features' => json_encode(['Cinematic world', 'RSVP & ucapan', 'Galeri foto', 'Musik latar', 'CMS bersama', 'Responsive'], JSON_THROW_ON_ERROR),
                 'created_at' => $now,
                 'updated_at' => $now,

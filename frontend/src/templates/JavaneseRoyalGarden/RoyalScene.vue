@@ -43,7 +43,6 @@ const active = computed(
 <template>
   <div
     v-if="!grouped"
-    ref="root"
     class="royal-scene"
     :class="`royal-shot-${scene}`"
     :data-active="active"
@@ -51,12 +50,17 @@ const active = computed(
     :data-stage="stage"
     :data-environment="composition.plate"
     :data-camera="composition.camera"
+    :data-lite="visual.performance.quality.value === 'lite'"
+    :style="{
+      '--royal-backdrop': `url(/images/cinematic/${composition.plate}-640.webp)`,
+    }"
     aria-hidden="true"
   >
-    <div class="royal-scene__environment">
+    <div ref="root" class="royal-scene__environment">
       <img
         class="royal-scene__camera"
         data-living-motion="true"
+        data-parallax="0.35"
         :src="`/images/cinematic/${composition.plate}-640.webp`"
         :srcset="`/images/cinematic/${composition.plate}-640.webp 640w, /images/cinematic/${composition.plate}-1024.webp 1024w`"
         sizes="(max-width: 640px) 100vw, 640px"

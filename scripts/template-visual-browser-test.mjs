@@ -279,6 +279,43 @@ async function fits(page, label) {
     `Horizontal overflow: ${label}`,
   )
 }
+async function fullBleed(cameras, viewportSelector, label) {
+  const gaps = await cameras.evaluateAll(
+    (nodes, viewportSelector) =>
+      nodes.flatMap((camera) => {
+        const viewport = camera
+          .closest(viewportSelector)
+          .getBoundingClientRect()
+        const animation = camera.getAnimations()[0]
+        const originalTime = animation?.currentTime
+        const duration = animation?.effect.getTiming().duration || 1
+        const errors = []
+        for (const progress of [0, 0.25, 0.5, 0.75, 1]) {
+          if (animation) animation.currentTime = duration * progress
+          const image = camera.getBoundingClientRect()
+          if (
+            image.left > viewport.left + 0.5 ||
+            image.top > viewport.top + 0.5 ||
+            image.right < viewport.right - 0.5 ||
+            image.bottom < viewport.bottom - 0.5
+          )
+            errors.push({
+              progress,
+              image: image.toJSON(),
+              viewport: viewport.toJSON(),
+            })
+        }
+        if (animation) animation.currentTime = originalTime
+        return errors
+      }),
+    viewportSelector,
+  )
+  assert.deepEqual(
+    gaps,
+    [],
+    label + ': scenery must cover every edge throughout the camera motion',
+  )
+}
 if (process.env.RADINA_MIDNIGHT === '1') {
   try {
     const c = await context({ viewport: { width: 390, height: 844 } })
@@ -340,6 +377,11 @@ if (process.env.RADINA_MIDNIGHT === '1') {
           )
           .toBe(true)
         await fits(p, `Midnight ${width} ${section}`)
+        await fullBleed(
+          scene.locator('.midnight-camera'),
+          '.midnight-scene__viewport',
+          `Midnight ${width}/${section}`,
+        )
         if (width === 390) {
           const read = (el) =>
             [
@@ -623,12 +665,31 @@ if (process.env.RADINA_ROYAL_GARDEN === '1') {
       'Published chapters include walkway, pendopo and sunset; opening has the fourth entrance plate',
     )
     await expect(p.locator('.garden-branch')).toHaveCount(0)
+    await expect(p.locator('.section-monogram')).toBeHidden()
+    assert(
+      await p
+        .locator('#couple')
+        .evaluate(
+          (section) =>
+            Math.abs(
+              section.getBoundingClientRect().top -
+                section.querySelector('.royal-slide').getBoundingClientRect()
+                  .top,
+            ) < 1,
+        ),
+      'No empty monogram block before the bride chapter',
+    )
     for (const width of [320, 360, 375, 390, 414, 430, 768, 1024, 1280, 1440]) {
       await p.setViewportSize({ width, height: 844 })
       for (const section of sections) {
         const node = p.locator('#' + section)
         await node.scrollIntoViewIfNeeded()
         await fits(p, `Royal Garden ${width}/${section}`)
+        await fullBleed(
+          node.locator('.royal-scene__camera'),
+          '.royal-scene__environment',
+          `Royal ${width}/${section}`,
+        )
         if (
           [320, 390, 1440].includes(width) &&
           ['couple', 'story', 'event', 'gallery', 'rsvp', 'closing'].includes(
@@ -649,6 +710,11 @@ if (process.env.RADINA_ROYAL_GARDEN === '1') {
         await slide.scrollIntoViewIfNeeded()
         const key = await slide.getAttribute('data-royal-slide')
         await fits(p, `Royal chapter ${width}/${key}`)
+        await fullBleed(
+          slide.locator('.royal-scene__camera'),
+          '.royal-scene__environment',
+          `Royal chapter ${width}/${key}`,
+        )
         if (width === 390) {
           await slide.evaluate((el) =>
             el.scrollIntoView({ block: 'start', behavior: 'instant' }),
@@ -681,6 +747,33 @@ if (process.env.RADINA_ROYAL_GARDEN === '1') {
       'Branches must grow upright from outside the bottom edge, without exposed floating stems',
     )
     await expect(p.locator('#couple')).toContainText('Bapak Ahmad')
+    await p.setViewportSize({ width: 1440, height: 844 })
+    const depthSlide = p.locator('[data-royal-slide="bride"]')
+    await depthSlide.evaluate((el) =>
+      el.scrollIntoView({ block: 'center', behavior: 'instant' }),
+    )
+    const surface = await depthSlide.boundingBox()
+    await p.mouse.move(surface.x + surface.width * 0.8, 420)
+    const depthCamera = depthSlide.locator('.royal-scene__camera')
+    await expect
+      .poll(() =>
+        depthCamera.evaluate((el) => el.style.getPropertyValue('--pointer-x')),
+      )
+      .not.toBe('')
+    assert(
+      await depthCamera.evaluate(
+        (el) => !new DOMMatrix(getComputedStyle(el).transform).is2D,
+      ),
+      'Royal camera must render perspective depth',
+    )
+    assert(
+      await depthSlide
+        .locator('.royal-branch')
+        .first()
+        .evaluate((el) => !new DOMMatrix(getComputedStyle(el).transform).is2D),
+      'Foreground flowers must move on a separate depth plane',
+    )
+    await p.setViewportSize({ width: 390, height: 844 })
     await expect(p.locator('#couple')).toContainText('Rizky Pratama')
     await expect(p.locator('#story')).toContainText('Pertemuan')
     await expect(p.locator('.royal-countdown')).toHaveAttribute(
@@ -900,7 +993,9 @@ if (process.env.RADINA_LIVING_GARDEN === '1') {
       )
       for (const section of sections) {
         const frame = p.locator(`.section-frame[data-section="${section}"]`)
-        await frame.scrollIntoViewIfNeeded()
+        await frame.evaluate((el) =>
+          el.scrollIntoView({ behavior: 'instant', block: 'center' }),
+        )
         const layers = frame.locator(
           ".living-garden[data-garden-plane='foreground']",
         )

@@ -21,3 +21,15 @@ Verification:
 - Guest personalization, music gesture and navigation continuity, CMS countdown/event calendar, gallery keyboard/swipe, gift clipboard, RSVP with message, all 16 scenes, upright branch geometry, reduced motion, slower-device particle limits, shared preview and old renderer smoke checks. Individual chapter screenshots are in `test-results/template-visuals/royal-chapter-*`.
 
 Browser interaction checks use fixtures; production deployment and live-device audio behavior are not asserted by these checks.
+
+## Full bleed and depth refinement
+
+The decorative section monogram is hidden in this renderer; it previously entered normal flow because of the content-layer positioning rule and created a large empty block before the bride. Dividers outside the individual chapter scenes are also hidden. Cover names and customer content are retained.
+
+Scenery bypasses Tailwind's image max-width constraint and extends 11% beyond each viewport edge. This prevents pale strips at the right and lower edges during camera motion. A matching backdrop covers the whole scene for chapters taller than the viewport. The same max-width correction applies to the shared photographic cinematic plate and Midnight Romance.
+
+Camera and foreground flowers now use independent perspective transforms. Royal Garden also responds to desktop pointer/scroll with different parallax strengths for scenery, mist and flowers. Low-end Royal cameras retain two-dimensional movement; reduced motion disables animation and parallax. The visibility observer tracks the sticky environment rather than the whole long CMS section.
+
+Browser checks sample camera coverage at five positions throughout the animation across all ten Royal widths and all four Midnight widths. They also verify that the bride chapter begins without the monogram gap and that the camera/foreground render distinct 3D transforms and desktop pointer parallax.
+
+The shared visibility composable now consumes the last queued IntersectionObserver entry. Reading only the first could leave a visible section paused after fast scrolling. The living garden browser checks reproduced this in the video section before the correction and now verify movement across all fourteen sections on desktop, mobile and reduced-motion profiles.

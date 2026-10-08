@@ -23,9 +23,10 @@
 }
 .theme-midnight .midnight-camera {
   position: absolute;
-  inset: -4%;
-  width: 108%;
-  height: 108%;
+  inset: -11%;
+  width: 122%;
+  max-width: none;
+  height: 122%;
   object-fit: cover;
   object-position: 50% 40%;
   animation: midnight-dolly 20s ease-in-out infinite alternate;
@@ -307,18 +308,20 @@
 }
 @keyframes midnight-dolly {
   from {
-    transform: scale(1.01) translateY(1%);
+    transform: perspective(1100px) scale(1.01) translateY(1%) rotateY(-1deg);
   }
   to {
-    transform: scale(1.09) translateY(-1%);
+    transform: perspective(1100px) scale(1.09) translate3d(0, -1%, 18px)
+      rotateY(1deg);
   }
 }
 @keyframes midnight-tracking {
   from {
-    transform: scale(1.06) translateX(-2%);
+    transform: perspective(1100px) scale(1.06) translateX(-2%) rotateY(-1.2deg);
   }
   to {
-    transform: scale(1.1) translateX(2%);
+    transform: perspective(1100px) scale(1.1) translate3d(2%, 0, 20px)
+      rotateY(1.2deg);
   }
 }
 @keyframes midnight-light {
@@ -343,10 +346,12 @@
 }
 @keyframes midnight-sway {
   from {
-    transform: rotate(-2.5deg) translateY(-2px);
+    transform: perspective(700px) translate3d(0, -2px, 24px) rotateY(-4deg)
+      rotateZ(-2.5deg);
   }
   to {
-    transform: rotate(2.5deg) translateY(3px);
+    transform: perspective(700px) translate3d(0, 3px, 36px) rotateY(4deg)
+      rotateZ(2.5deg);
   }
 }
 @keyframes midnight-ripple {

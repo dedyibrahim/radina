@@ -6,7 +6,7 @@
   z-index: 0;
   pointer-events: none;
   container-type: size;
-  background: #f6f0e4;
+  background: #f6f0e4 var(--royal-backdrop) center / cover no-repeat;
 }
 .royal-garden .royal-scene__environment {
   position: sticky;
@@ -18,14 +18,17 @@
 }
 .royal-garden .royal-scene__camera {
   position: absolute;
-  inset: -3%;
-  width: 106%;
-  height: 106%;
+  inset: -11%;
+  width: 122%;
+  height: 122%;
+  max-width: none;
   object-fit: cover;
   object-position: center 80%;
   transform: scale(1.02);
   animation: royal-dolly 24s ease-in-out infinite alternate;
   animation-play-state: paused;
+  translate: var(--pointer-x, 0px)
+    calc(var(--parallax-y, 0px) + var(--pointer-y, 0px));
 }
 .royal-garden .royal-scene[data-active='true'] .royal-scene__camera {
   animation-play-state: running;
@@ -219,6 +222,20 @@
   position: relative;
   z-index: 1;
 }
+.royal-garden .section-monogram {
+  display: none;
+}
+.royal-garden .section-frame:has(> .royal-chapters) > .section-divider {
+  display: none;
+}
+.royal-garden .royal-scene[data-lite='true'] .royal-scene__camera {
+  animation-name: royal-dolly-lite;
+}
+.royal-garden
+  .royal-scene[data-lite='true'][data-camera='lateral']
+  .royal-scene__camera {
+  animation-name: royal-lateral-lite;
+}
 .royal-garden .section-frame {
   min-height: min(100svh, 860px);
   overflow: clip;
@@ -240,18 +257,21 @@
 }
 @keyframes royal-dolly {
   from {
-    transform: scale(1.02);
+    transform: perspective(1100px) scale(1.02) rotateY(-1deg) rotateX(0.4deg);
   }
   to {
-    transform: scale(1.075) translateY(-1%);
+    transform: perspective(1100px) scale(1.075) translate3d(0, -1%, 18px)
+      rotateY(1deg) rotateX(-0.4deg);
   }
 }
 @keyframes royal-lateral {
   from {
-    transform: scale(1.04) translateX(-1.5%);
+    transform: perspective(1100px) scale(1.04) translate3d(-1.5%, 0, 0)
+      rotateY(-1.4deg);
   }
   to {
-    transform: scale(1.08) translateX(1.5%);
+    transform: perspective(1100px) scale(1.08) translate3d(1.5%, 0, 20px)
+      rotateY(1.4deg);
   }
 }
 @keyframes royal-arrival {
@@ -260,6 +280,22 @@
   }
   to {
     opacity: 1;
+  }
+}
+@keyframes royal-dolly-lite {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.075) translateY(-1%);
+  }
+}
+@keyframes royal-lateral-lite {
+  from {
+    transform: scale(1.04) translateX(-1.5%);
+  }
+  to {
+    transform: scale(1.08) translateX(1.5%);
   }
 }
 @media (max-width: 359px) {
@@ -636,10 +672,12 @@
 .royal-garden .royal-branch {
   position: absolute;
   width: clamp(95px, 30%, 155px);
-  bottom: -32px;
+  bottom: -52px;
   opacity: 0.78;
   animation: royal-branch-sway 7s ease-in-out infinite alternate;
   animation-delay: var(--royal-phase);
+  translate: calc(var(--pointer-x, 0px) * -1)
+    calc(var(--parallax-y, 0px) + var(--pointer-y, 0px));
 }
 .royal-garden .royal-branch img {
   display: block;
@@ -698,6 +736,7 @@
   );
   animation: royal-mist-drift 21s ease-in-out infinite alternate;
   animation-delay: var(--royal-phase);
+  translate: var(--pointer-x, 0px) var(--parallax-y, 0px);
 }
 .royal-garden .royal-mist--2 {
   top: auto;
@@ -781,10 +820,12 @@
 }
 @keyframes royal-branch-sway {
   from {
-    transform: rotate(-2deg) translateY(0);
+    transform: perspective(700px) translate3d(-2px, 0, 24px) rotateY(-4deg)
+      rotateZ(-2deg);
   }
   to {
-    transform: rotate(2deg) translateY(3px);
+    transform: perspective(700px) translate3d(3px, 3px, 40px) rotateY(4deg)
+      rotateZ(2deg);
   }
 }
 @keyframes royal-light {

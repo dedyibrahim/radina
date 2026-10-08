@@ -9,8 +9,11 @@ export function useIntersectionAnimation(root) {
       return
     }
     observer = new IntersectionObserver(
-      ([entry]) => {
-        visible.value = entry.isIntersecting
+      (entries) => {
+        // Fast scrolling can queue several changes for this one observed element.
+        // The last entry describes its current visibility.
+        const entry = entries[entries.length - 1]
+        if (entry) visible.value = entry.isIntersecting
       },
       { rootMargin: '60px' },
     )

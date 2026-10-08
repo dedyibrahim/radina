@@ -37,7 +37,7 @@ export function useParallax(root, enabled, intensity) {
       frame = 0
       for (const layer of visible) {
         const rect = layer
-          .closest('.visual-atmosphere')
+          .closest('.visual-atmosphere, .royal-scene__environment')
           ?.getBoundingClientRect()
         if (!rect) continue
         const progress =

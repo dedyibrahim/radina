@@ -27,10 +27,15 @@ const phase = computed(
       v-for="i in light ? 1 : 2"
       :key="`mist-${i}`"
       class="royal-mist"
+      data-parallax="0.6"
       :class="`royal-mist--${i}`"
       data-living-motion="true"
     ></div>
-    <div class="royal-branch royal-branch--left" data-living-motion="true">
+    <div
+      class="royal-branch royal-branch--left"
+      data-living-motion="true"
+      data-parallax="1.2"
+    >
       <img
         src="/images/cinematic/melati-branch.webp"
         alt=""
@@ -38,7 +43,11 @@ const phase = computed(
         decoding="async"
       />
     </div>
-    <div class="royal-branch royal-branch--right" data-living-motion="true">
+    <div
+      class="royal-branch royal-branch--right"
+      data-living-motion="true"
+      data-parallax="1.4"
+    >
       <img
         src="/images/cinematic/melati-branch.webp"
         alt=""

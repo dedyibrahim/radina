@@ -19,6 +19,7 @@
   transform-origin: 50% 65%;
 }
 .cinematic-scene__plate {
+  max-width: none;
   object-fit: cover;
   object-position: center bottom;
 }

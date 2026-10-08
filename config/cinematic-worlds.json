@@ -856,5 +856,30 @@
     "environmentAsset": "kids-enchanted-book",
     "mascot": "original-owl",
     "retired": true
+  },
+  "melati-senja-cinematic": {
+    "name": "Melati Senja Cinematic",
+    "category": "Regional",
+    "description": "Taman melati hidup di setiap bagian: dedaunan bergoyang, kabut melintas, kupu-kupu, pantulan air dan cahaya senja.",
+    "scene": "melati-living-garden",
+    "world": "Senandung Taman Melati",
+    "opening": "garden-light-reveal",
+    "camera": "dolly-in",
+    "transition": "garden-dissolve",
+    "photo": "carved-frame",
+    "typography": "heritage-serif",
+    "closing": "garden-sunset",
+    "effects": ["leaves", "petals", "birds", "sparkles"],
+    "palette": {
+      "background": "#f3eddf",
+      "ink": "#294338",
+      "accent": "#a48655",
+      "highlight": "#c1cfaf"
+    },
+    "price": 169000,
+    "plate": "melati-senja",
+    "composition": "film-garden",
+    "thumbnail": "/images/cinematic/melati-senja-640.webp",
+    "livingNature": true
   }
 }

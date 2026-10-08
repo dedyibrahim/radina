@@ -61,24 +61,22 @@ try {
     'Every registered template needs an existing CMS content contract',
   )
   const rows = []
-  assert.equal(
-    Object.values(cinematicWorlds).filter(
-      (world) => world.category === 'Regional',
-    ).length,
-    20,
-    'The regional collection includes twenty scene worlds',
-  )
-  assert.equal(
-    Object.values(cinematicWorlds).filter(
-      (world) => world.category === 'Kids & Birthday',
-    ).length,
-    16,
-    'The kids and birthday collection includes at least fifteen distinct worlds',
+  assert.deepEqual(
+    Object.entries(cinematicWorlds)
+      .filter(([, world]) => !world.retired)
+      .map(([key]) => key)
+      .sort(),
+    [
+      'jawa-pendopo-pagi',
+      'sunda-kabut-pegunungan',
+      'melati-senja-cinematic',
+    ].sort(),
+    'Only the three approved new cinematic worlds remain in the catalog',
   )
   assert.equal(
     new Set(Object.values(cinematicWorlds).map((world) => world.scene)).size,
-    36,
-    'Every new template has its own environment',
+    Object.keys(cinematicWorlds).length,
+    'Each cinematic template has its own environment, including customer archives',
   )
   assert.doesNotMatch(
     JSON.stringify(cinematicWorlds),
@@ -146,6 +144,7 @@ try {
             performance: {
               active: ref(true),
               quality: ref('standard'),
+              reduced: ref(false),
             },
           })
           return () =>

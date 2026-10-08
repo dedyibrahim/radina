@@ -664,7 +664,8 @@
   }
 }
 
-.wedding-page[data-visual-quality='lite'] *,
+/* Lightweight nature layers opt in; heavy and unrelated effects stay disabled. */
+.wedding-page[data-visual-quality='lite'] *:not([data-living-motion='true']),
 .wedding-page[data-visual-quality='lite'] *::before,
 .wedding-page[data-visual-quality='lite'] *::after {
   animation: none !important;

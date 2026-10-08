@@ -1,12 +1,14 @@
 <script setup>
 import { computed, useId } from 'vue'
 import OriginalMascot from './OriginalMascot.vue'
+import LivingGardenLayers from './LivingGardenLayers.vue'
 
 const props = defineProps({
   world: { type: Object, required: true },
   scene: { type: String, default: 'opening' },
   active: Boolean,
   showMascot: { type: Boolean, default: true },
+  quality: { type: String, default: 'standard' },
 })
 const palette = computed(() => props.world.palette || {})
 const marker = `cinematic-${useId().replaceAll(':', '')}`
@@ -33,6 +35,7 @@ const marker = `cinematic-${useId().replaceAll(':', '')}`
     <img
       v-if="world.plate || world.environmentAsset"
       class="cinematic-scene__plate cinematic-scene__camera"
+      :data-living-motion="world.livingNature ? 'true' : undefined"
       :src="
         world.plate
           ? `/images/cinematic/${world.plate}-640.webp`
@@ -784,6 +787,13 @@ const marker = `cinematic-${useId().replaceAll(':', '')}`
         />
       </g>
     </svg>
+    <LivingGardenLayers
+      v-if="world.livingNature"
+      :scene="scene"
+      :active="active"
+      :quality="quality"
+      :plane="scene === 'opening' ? 'all' : 'background'"
+    />
     <div
       v-if="['jawa-pendopo', 'sunda-mountain'].includes(world.scene)"
       class="regional-mist"

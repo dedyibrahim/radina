@@ -6,11 +6,19 @@ import { useSceneTimeline } from '../../composables/useSceneTimeline'
 import FloralCorners from '../FloralAtelier/FloralCorners.vue'
 import VisualAtmosphere from '../../components/wedding/effects/VisualAtmosphere.vue'
 import SectionDivider from '../../components/wedding/effects/SectionDivider.vue'
+import LivingGardenLayers from '../../components/cinematic/LivingGardenLayers.vue'
 const floral = inject('floralDesign', null)
 const visual = inject('weddingVisual', null)
 const props = defineProps({ sectionKey: String, content: Object })
 const root = ref(null)
 const visible = useIntersectionAnimation(root)
+const livingActive = computed(
+  () =>
+    visible.value &&
+    visual?.performance.active.value &&
+    visual?.motion.value &&
+    !visual?.performance.reduced.value,
+)
 const sceneState = useSceneTimeline(
   visible,
   computed(() => !visual?.motion.value),
@@ -36,6 +44,13 @@ provide(
       v-if="visual"
       :scene="sectionKey === 'home' ? 'hero' : 'section'"
       :section="sectionKey"
+    />
+    <LivingGardenLayers
+      v-if="visual?.config.value.sceneProfile.livingNature"
+      plane="foreground"
+      :scene="sectionKey"
+      :active="livingActive"
+      :quality="visual.performance.quality.value"
     />
     <FloralCorners
       v-if="floral && sectionKey !== 'home'"

@@ -13,7 +13,8 @@ const active = computed(
   () =>
     visual.performance.active.value &&
     visual.motion.value &&
-    visual.performance.quality.value !== 'lite',
+    !visual.performance.reduced.value &&
+    (world.value.livingNature || visual.performance.quality.value !== 'lite'),
 )
 const phase = ref('ENVIRONMENT')
 const timeline = new SceneTimeline()
@@ -72,7 +73,12 @@ const initial = computed(() =>
     :data-scene="world.scene"
     :data-reveal="phase"
   >
-    <CinematicScene :world="world" scene="opening" :active="active" />
+    <CinematicScene
+      :world="world"
+      scene="opening"
+      :active="active"
+      :quality="visual.performance.quality.value"
+    />
     <div class="cinematic-opening__veil" aria-hidden="true"></div>
     <div class="cinematic-opening__edition">
       <span>RADINA</span><i></i><span>{{ world.world }}</span>

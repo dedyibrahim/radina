@@ -527,7 +527,7 @@
     [data-visual-quality='lite']
   )
   .cinematic-scene
-  * {
+  *:not([data-living-motion='true']) {
   animation: none !important;
 }
 .wedding-page:is(.motion-off, [data-visual-quality='lite']) .scene-particles {

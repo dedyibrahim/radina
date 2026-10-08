@@ -20,7 +20,9 @@ const active = computed(
     visible.value &&
     visual.performance.active.value &&
     visual.motion.value &&
-    visual.performance.quality.value !== 'lite',
+    !visual.performance.reduced.value &&
+    (visual.config.value.sceneProfile.livingNature ||
+      visual.performance.quality.value !== 'lite'),
 )
 const livingOrnament = computed(() =>
   visual.config.value.ornamentFamily === 'floral'
@@ -49,6 +51,7 @@ const livingOrnament = computed(() =>
         :world="visual.config.value.sceneProfile"
         :scene="section || scene"
         :active="active"
+        :quality="visual.performance.quality.value"
         :show-mascot="
           scene === 'hero' && visual.config.value.category === 'Kids & Birthday'
         "

@@ -54,6 +54,27 @@ class InvitationEventTest extends TestCase
         return $data;
     }
 
+    public function test_living_garden_catalog_and_repeat_migration_preserve_existing_content_pricing_and_licenses(): void
+    {
+        $template = Template::where('template_key', 'melati-senja-cinematic')->firstOrFail();
+        $this->assertSame(169000, $template->price);
+        $this->assertFileExists(base_path('frontend/public'.$template->thumbnail));
+        $this->assertFileExists(base_path('frontend/public/images/cinematic/melati-branch.webp'));
+        $demos = Wedding::where('is_demo', true)->get()->map->getRawOriginal()->all();
+        $this->getJson('/api/templates/'.$template->slug.'/preview')->assertOk()
+            ->assertJsonPath('data.template.template_key', $template->template_key)
+            ->assertJsonStructure(['data' => ['events', 'gallery', 'gift_methods', 'settings']]);
+        $template->update(['price' => 123456]);
+        $guard = app(DeploymentLicenseGuard::class);
+        $licenses = $guard->backup(str_repeat('d', 40));
+        $migration = require database_path('migrations/2026_10_08_000004_add_melati_senja_cinematic_template.php');
+        $migration->up(); $migration->up();
+        $this->assertSame(123456, $template->fresh()->price);
+        $this->assertSame($demos, Wedding::where('is_demo', true)->get()->map->getRawOriginal()->all());
+        $this->assertSame(1, Template::where('template_key', $template->template_key)->count());
+        $guard->assertPreserved($licenses);
+    }
+
     public function test_regional_catalog_cleanup_preserves_used_templates_custom_prices_customers_and_licenses(): void
     {
         $jawa = Template::where('template_key', 'jawa-pendopo-pagi')->firstOrFail();
@@ -81,7 +102,7 @@ class InvitationEventTest extends TestCase
         $this->assertSame($weddingSnapshot, $wedding->fresh()->getRawOriginal());
         $this->assertSame($orderSnapshot, $order->fresh()->getRawOriginal());
         $this->assertSame(98765, $sunda->fresh()->price);
-        $this->getJson('/api/templates?category=regional')->assertOk()->assertJsonPath('meta.total', 2);
+        $this->getJson('/api/templates?category=regional')->assertOk()->assertJsonPath('meta.total', 3);
         $this->getJson('/api/templates/'.$used->slug.'/preview')->assertNotFound();
         $guard->assertPreserved($licenses);
     }

@@ -152,6 +152,8 @@ function wedding(key, eventType = 'wedding') {
         ].map((key) => ['enable_' + key, true]),
       ),
       enable_auto_journey: journeyFixture,
+      enable_video: process.env.RADINA_LIVING_GARDEN === '1',
+      enable_livestream: process.env.RADINA_LIVING_GARDEN === '1',
       auto_journey_speed: 'slow',
       motion_intensity: 'cinematic',
     },
@@ -166,7 +168,18 @@ function wedding(key, eventType = 'wedding') {
       volume: 40,
       autoplay_after_open: true,
     },
-    livestream: {},
+    video_url:
+      process.env.RADINA_LIVING_GARDEN === '1'
+        ? 'https://www.youtube.com/watch?v=abcdefghijk'
+        : null,
+    livestream_url:
+      process.env.RADINA_LIVING_GARDEN === '1'
+        ? 'https://www.youtube.com/watch?v=abcdefghijk'
+        : null,
+    livestream:
+      process.env.RADINA_LIVING_GARDEN === '1'
+        ? { url: 'https://www.youtube.com/watch?v=abcdefghijk' }
+        : {},
     section_content: {},
     event_details: {
       host_name: 'Keluarga Ibrahim',
@@ -261,6 +274,183 @@ async function fits(page, label) {
     ),
     `Horizontal overflow: ${label}`,
   )
+}
+if (process.env.RADINA_LIVING_GARDEN === '1') {
+  try {
+    for (const profile of [
+      'desktop',
+      'mobile-lite',
+      'mobile-narrow',
+      'reduced',
+    ]) {
+      const c = await context({
+        viewport: {
+          width:
+            profile === 'desktop'
+              ? 1440
+              : profile === 'mobile-narrow'
+                ? 320
+                : 390,
+          height: 844,
+        },
+        reducedMotion: profile === 'reduced' ? 'reduce' : 'no-preference',
+      })
+      if (profile.startsWith('mobile-'))
+        await c.addInitScript(() => {
+          Object.defineProperty(navigator, 'hardwareConcurrency', {
+            get: () => 2,
+          })
+          Object.defineProperty(navigator, 'deviceMemory', { get: () => 2 })
+        })
+      const p = await c.newPage()
+      await p.goto(base + '/w/visual-melati-senja-cinematic?to=Dedy%20Ibrahim')
+      await expect(p.locator('.cinematic-opening')).toHaveAttribute(
+        'data-reveal',
+        'READY',
+      )
+      await expect
+        .poll(() =>
+          p
+            .locator('.cinematic-opening .garden-branch img')
+            .first()
+            .evaluate((img) => img.complete && img.naturalWidth > 0),
+        )
+        .toBe(true)
+      const quiet = profile === 'reduced'
+      await expect(
+        p.locator('.cinematic-opening .living-garden'),
+      ).toHaveAttribute('data-active', String(!quiet))
+      await p.screenshot({
+        path: dir + '/melati-senja-' + profile + '-opening.png',
+        animations: 'allow',
+      })
+      await p
+        .getByRole('button', { name: 'Buka Undangan', exact: true })
+        .click()
+      await expect(p.locator('.opening-stage')).toHaveCount(0)
+      const frames = p.locator('.section-frame')
+      const sections = await frames.evaluateAll((frames) =>
+        frames.map((frame) => frame.dataset.section),
+      )
+      assert.equal(
+        sections.length,
+        14,
+        'All fourteen configured CMS sections must render',
+      )
+      for (const section of sections) {
+        const frame = p.locator(`.section-frame[data-section="${section}"]`)
+        await frame.scrollIntoViewIfNeeded()
+        const layers = frame.locator(
+          ".living-garden[data-garden-plane='foreground']",
+        )
+        await expect(layers).toHaveAttribute('data-active', String(!quiet))
+        assert.equal(
+          await frame
+            .locator('.cinematic-scene')
+            .evaluate((el) => getComputedStyle(el).opacity),
+          '1',
+          section + ' scenery must stay visible',
+        )
+        const branch = layers.locator('.garden-branch').first()
+        const before = await branch.evaluate(
+          (el) => getComputedStyle(el).transform,
+        )
+        const atmosphere = frame.locator('.visual-atmosphere')
+        const readScenery = (el) =>
+          ['.cinematic-scene__plate', '.garden-mist--far'].map(
+            (selector) =>
+              getComputedStyle(el.querySelector(selector)).transform,
+          )
+        const sceneryBefore = await atmosphere.evaluate(readScenery)
+        await p.waitForTimeout(220)
+        const after = await branch.evaluate(
+          (el) => getComputedStyle(el).transform,
+        )
+        if (quiet)
+          assert.equal(after, before, section + ' must respect reduced motion')
+        else
+          assert.notEqual(
+            after,
+            before,
+            section + ' foliage must actually move',
+          )
+        const sceneryAfter = await atmosphere.evaluate(readScenery)
+        if (quiet)
+          assert.deepEqual(
+            sceneryAfter,
+            sceneryBefore,
+            section + ' scenery must stay quiet',
+          )
+        else
+          sceneryAfter.forEach((value, i) =>
+            assert.notEqual(
+              value,
+              sceneryBefore[i],
+              section + ' camera/mist must move',
+            ),
+          )
+        await fits(p, profile + ' ' + section)
+        if (['home', 'event', 'gallery', 'rsvp'].includes(section))
+          await frame.screenshot({
+            path: dir + '/melati-senja-' + profile + '-' + section + '.png',
+            animations: 'allow',
+          })
+      }
+      if (!quiet) {
+        await expect(
+          frames
+            .first()
+            .locator(".living-garden[data-garden-plane='foreground']"),
+        ).toHaveAttribute('data-active', 'false')
+        const last = frames
+          .last()
+          .locator(".living-garden[data-garden-plane='foreground']")
+        await p
+          .getByRole('button', { name: 'Matikan animasi', exact: true })
+          .click()
+        await frames.last().scrollIntoViewIfNeeded()
+        await expect(last).toHaveAttribute('data-active', 'false')
+        const branch = last.locator('.garden-branch').first()
+        await expect
+          .poll(() =>
+            branch.evaluate((el) => getComputedStyle(el).animationPlayState),
+          )
+          .toBe('paused')
+        await p.waitForTimeout(80)
+        const frozen = await branch.evaluate(
+          (el) => getComputedStyle(el).transform,
+        )
+        await p.waitForTimeout(250)
+        assert.equal(
+          await branch.evaluate((el) => getComputedStyle(el).transform),
+          frozen,
+        )
+        await p
+          .getByRole('button', { name: 'Aktifkan animasi', exact: true })
+          .click()
+        await frames.last().scrollIntoViewIfNeeded()
+        await expect(last).toHaveAttribute('data-active', 'true')
+      }
+      assert.equal(
+        await p.evaluate(
+          () => window.audioEvents.filter((e) => e.action === 'create').length,
+        ),
+        1,
+        'Scene changes must retain one music player',
+      )
+      console.log(
+        'PASS living nature: ' +
+          profile +
+          ', 14 CMS sections, actual movement, visibility and motion controls',
+      )
+      await c.close()
+    }
+    assert.deepEqual(errors, [])
+  } finally {
+    await browser.close()
+    server.close()
+  }
+  process.exit(0)
 }
 if (process.env.RADINA_CINEMATIC_PREVIEW === '1') {
   try {

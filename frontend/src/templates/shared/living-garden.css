@@ -1,0 +1,129 @@
+/* One opt-in cinematic template; controls and customer content stay above the scene. */
+.wedding-page[data-world='melati-living-garden'] .section-frame {
+  min-height: 100svh;
+  padding: 56px 24px;
+  display: grid;
+  align-content: center;
+  container-type: inline-size;
+}
+.wedding-page[data-world='melati-living-garden']
+  .visual-background
+  > .cinematic-scene {
+  opacity: 1;
+}
+.wedding-page[data-world='melati-living-garden'] .cinematic-scene {
+  container-type: size;
+}
+.wedding-page[data-world='melati-living-garden']
+  .section-frame
+  > :is(.section, .world-hero, .world-closing) {
+  width: 100%;
+  min-width: 0;
+  background: #fffaf0ed;
+  border: 1px solid #fffef8;
+  border-radius: 100px 100px 12px 12px;
+  padding: 42px 20px;
+  box-shadow: 0 14px 40px #143a252b;
+}
+.wedding-page[data-world='melati-living-garden']
+  .section-frame:is(
+    [data-section='rsvp'],
+    [data-section='wishes'],
+    [data-section='gift'],
+    [data-section='event']
+  )
+  > .section {
+  border-radius: 14px;
+}
+.wedding-page[data-world='melati-living-garden']
+  .section-frame
+  > .section-divider {
+  margin-block: 24px 0;
+}
+.wedding-page[data-world='melati-living-garden'] .world-hero figure {
+  width: min(85%, 280px);
+}
+.wedding-page[data-world='melati-living-garden'] .world-hero h1 {
+  font-size: clamp(36px, 10cqi, 58px);
+}
+.wedding-page[data-world='melati-living-garden'] .cinematic-opening {
+  min-height: max(100svh, 760px);
+  grid-template-rows: auto auto auto 1fr auto auto;
+  gap: 16px;
+  padding: 32px 24px 24px;
+}
+.wedding-page[data-world='melati-living-garden'] .cinematic-opening__portrait {
+  width: 102px;
+  border: 3px solid #fffdf2;
+  box-shadow: 0 5px 24px #223d3526;
+}
+.wedding-page[data-world='melati-living-garden'] .cinematic-opening__copy {
+  background: #fffaf0db;
+  border: 1px solid #fffaf0;
+  border-radius: 70px 70px 12px 12px;
+  padding: 24px 18px 18px;
+  width: 100%;
+}
+.wedding-page[data-world='melati-living-garden'] .cinematic-opening__invite {
+  grid-row: 5;
+  background: #fffaf0ed;
+  border: 1px solid #fffaf0;
+  border-radius: 14px;
+  padding: 14px;
+}
+.wedding-page[data-world='melati-living-garden'] .cinematic-opening__signature {
+  grid-row: 6;
+}
+.wedding-page[data-world='melati-living-garden'] .cinematic-scene__plate {
+  object-position: 50% 90%;
+  transform: scale(1.06);
+}
+.wedding-page[data-world='melati-living-garden']
+  .cinematic-scene[data-active='true']
+  .cinematic-scene__plate {
+  animation: garden-camera-orbit 16s ease-in-out infinite alternate;
+}
+.wedding-page[data-world='melati-living-garden']
+  .cinematic-scene:is(.shot-couple, .shot-gallery, .shot-wishes)
+  .cinematic-scene__plate {
+  object-position: 35% 100%;
+  animation-direction: alternate-reverse;
+}
+.wedding-page[data-world='melati-living-garden']
+  .cinematic-scene:is(.shot-quote, .shot-story, .shot-gift)
+  .cinematic-scene__plate {
+  object-position: 70% 72%;
+  animation-duration: 21s;
+}
+@keyframes garden-camera-orbit {
+  from {
+    transform: scale(1.06) translate3d(-1.6%, 0, 0);
+  }
+  to {
+    transform: scale(1.14) translate3d(1.6%, -1.5%, 0);
+  }
+}
+@media (max-width: 359px) {
+  .wedding-page[data-world='melati-living-garden'] .section-frame {
+    padding-inline: 16px;
+  }
+  .wedding-page[data-world='melati-living-garden']
+    .section-frame
+    > :is(.section, .world-hero, .world-closing) {
+    padding-inline: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wedding-page[data-world='melati-living-garden'] .cinematic-scene__plate {
+    animation: none !important;
+  }
+}
+
+.wedding-page[data-world='melati-living-garden']
+  .section-frame
+  > .living-garden {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}

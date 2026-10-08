@@ -26,6 +26,7 @@ const form = reactive({
   event_title: '',
   host_name: '',
   honoree_name: '',
+  honoree_age: '',
   customer_name: '',
   whatsapp: '',
   email: '',
@@ -68,6 +69,12 @@ watch(
         .replace(/[^a-z0-9-]/g, '')
         .replace(/-+/g, '-')
         .replace(/^-+|-+$/g, '')
+  },
+)
+watch(
+  () => form.event_type,
+  (type) => {
+    if (type !== 'birthday') form.honoree_age = ''
   },
 )
 async function load() {
@@ -203,6 +210,13 @@ async function submit() {
               v-model="form.honoree_name"
               :label="profile.honoree_label"
               required
+          /><FormField
+              v-if="profile.honoree_age"
+              v-model="form.honoree_age"
+              label="Usia saat perayaan (opsional)"
+              type="number"
+              :min="1"
+              :max="120"
           /></template>
           <template v-if="isWedding"
             ><FormField
@@ -253,6 +267,10 @@ async function submit() {
                     : form.event_title
                 }}
               </dd>
+            </div>
+            <div v-if="profile.honoree_age && form.honoree_age">
+              <dt>Usia yang dirayakan</dt>
+              <dd>{{ form.honoree_age }} tahun</dd>
             </div>
             <div>
               <dt>Template</dt>

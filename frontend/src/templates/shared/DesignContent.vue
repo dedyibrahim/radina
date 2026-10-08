@@ -23,7 +23,7 @@ const props = defineProps({
 })
 defineEmits(['toast'])
 const wedding = inject('wedding')
-const components = {
+const components = computed(() => ({
   home: props.heroComponent,
   couple: DesignCouple,
   story: DesignStory,
@@ -39,7 +39,7 @@ const components = {
   gift: WeddingGift,
   livestream: LiveStreaming,
   ...props.presentationComponents,
-}
+}))
 const available = computed(() => ({
   home: true,
   couple: true,
@@ -59,7 +59,7 @@ const available = computed(() => ({
 const order = computed(() =>
   [...new Set(wedding.sectionOrder)].filter(
     (key) =>
-      components[key] &&
+      components.value[key] &&
       available.value[key] &&
       wedding.sections[key]?.enabled !== false &&
       !(

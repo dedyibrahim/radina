@@ -13,17 +13,18 @@ import AudioPlayer from './PlaylistPlayer.vue'
 import FloatingNavigation from '../RomanticFloral/components/FloatingNavigation.vue'
 import BaseToast from '../../components/BaseToast.vue'
 import FloatingOrnament from '../../components/wedding/effects/FloatingOrnament.vue'
-import VisualAtmosphere from '../../components/wedding/effects/VisualAtmosphere.vue'
 import CoupleMonogram from '../../components/wedding/effects/CoupleMonogram.vue'
 import SceneMotion from './SceneMotion.vue'
 import AutoJourney from '../../components/wedding/effects/AutoJourney.vue'
-import CurtainOpening from '../../components/wedding/effects/CurtainOpening.vue'
+import CinematicOpening from './CinematicOpening.vue'
+import VisualAtmosphere from '../../components/wedding/effects/VisualAtmosphere.vue'
 import { useWedding } from '../../composables/useWedding'
 import { getGuestName } from '../../composables/useGuest'
 import { useInvitationDepth } from '../../composables/useInvitationDepth'
 import './invitation-depth.css'
 import './visual-system.css'
 import './living-scene.css'
+import './cinematic.css'
 import { visualConfigFor } from './templateVisualConfig'
 import { useDevicePerformance } from '../../composables/useDevicePerformance'
 import { useParallax } from '../../composables/useParallax'
@@ -40,6 +41,7 @@ const props = defineProps({
 })
 const wedding = useWedding(props)
 const opened = inject('invitationOpened', ref(false))
+const motionPreference = inject('invitationMotionPreference', ref(null))
 const motionOn = ref(
   !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
 )
@@ -56,6 +58,9 @@ const visualConfig = computed(() =>
     design: props.design,
     category: props.wedding.template?.category?.name,
   }),
+)
+const cinematicCategory = computed(
+  () => visualConfig.value.sceneProfile?.cinematic,
 )
 const parallaxEnabled = computed(
   () =>
@@ -135,12 +140,23 @@ onUnmounted(() => clearTimeout(timer))
     :class="[
       `theme-${theme}`,
       `design-${design}`,
-      { 'motion-off': !effectiveMotion, 'depth-on': depthEnabled },
+      {
+        'motion-off': !effectiveMotion,
+        'depth-on': depthEnabled,
+        'cinematic-world-template': cinematicCategory,
+      },
     ]"
     :data-depth-enabled="depthEnabled"
     :data-visual-quality="performance.quality.value"
     :data-visual-personality="visualConfig.personality"
+    :data-scene-category="visualConfig.sceneProfile.category"
     :data-opening="visualConfig.openingEffect"
+    :data-world="visualConfig.sceneProfile.scene"
+    :data-world-photo="visualConfig.sceneProfile.photo"
+    :data-world-type="visualConfig.sceneProfile.typography"
+    :data-cover-state="
+      opening ? 'OPENING' : opened ? 'OPENED' : 'COVER_VISIBLE'
+    "
     :data-photo-frame="visualConfig.photoFrame"
     :data-event-surface="visualConfig.eventSurface"
     :data-gift-surface="visualConfig.giftSurface"
@@ -150,6 +166,10 @@ onUnmounted(() => clearTimeout(timer))
     :style="{
       '--visual-variant': visualConfig.variant,
       '--visual-depth': visualConfig.depthIntensity,
+      '--world-sky': visualConfig.sceneProfile.palette.background,
+      '--world-ink': visualConfig.sceneProfile.palette.ink,
+      '--world-accent': visualConfig.sceneProfile.palette.accent,
+      '--world-highlight': visualConfig.sceneProfile.palette.highlight,
       ...windStyle,
     }"
   >
@@ -191,9 +211,12 @@ onUnmounted(() => clearTimeout(timer))
     </div>
     <main class="invitation-shell" id="invitation" tabindex="-1">
       <SceneMotion
+        :preference="motionPreference"
         :effects="wedding.motion"
         :quality="
-          intensity === 'cinematic' ? performance.quality.value : 'lite'
+          !cinematicCategory && intensity === 'cinematic'
+            ? performance.quality.value
+            : 'lite'
         "
         :disabled="intensity === 'off'"
         @change="motionOn = $event"
@@ -204,24 +227,19 @@ onUnmounted(() => clearTimeout(timer))
         @after-leave="finishOpening"
         @leave-cancelled="finishOpening"
         ><div v-if="!opened" class="opening-stage" :aria-busy="opening">
-          <VisualAtmosphere scene="opening" /><component
-            :is="coverComponent"
+          <CinematicOpening
+            v-if="cinematicCategory"
             :guest="guest"
             @open="openInvitation"
           />
-          <CurtainOpening
-            v-if="
-              intensity === 'cinematic' &&
-              [
-                'silk-curtain',
-                'royal-curtain',
-                'floral-curtain',
-                'garden-gate',
-                'panels',
-              ].includes(visualConfig.motionProfile.openingType)
-            "
-            :type="visualConfig.motionProfile.openingType"
-          />
+          <template v-else>
+            <component
+              :is="coverComponent"
+              :guest="guest"
+              @open="openInvitation"
+            />
+            <VisualAtmosphere scene="cover" />
+          </template>
         </div>
         <InvitationContent
           v-else

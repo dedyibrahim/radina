@@ -29,10 +29,10 @@ class TemplateExpansionTest extends TestCase
     public function test_every_public_category_has_at_least_five_active_working_templates_and_diverse_animation_effects(): void
     {
         config(['platform.api_rate_limit' => 1000]);
-        $categories = $this->getJson('/api/categories')->assertOk()->assertJsonCount(11, 'data')->json('data');
+        $categories = $this->getJson('/api/categories')->assertOk()->assertJsonCount(13, 'data')->json('data');
         $effects = [];
         $templates = Template::where('status', 'ACTIVE')->get();
-        $this->assertCount(111, $templates);
+        $this->assertCount(count(TemplateCatalog::keys()), $templates);
         $this->assertCount(111, TemplateCatalog::KEYS);
         foreach ($categories as $category) {
             $count = $this->getJson('/api/templates?category='.$category['slug'])->assertOk()->json('meta.total');
@@ -79,7 +79,7 @@ class TemplateExpansionTest extends TestCase
             $this->assertTrue(TemplateContent::preset($key)['studio']);
             $this->assertFileExists(base_path('frontend/public/images/templates/previews/'.$key.'.webp'));
         }
-        $this->assertSame(56, Template::whereNotIn('template_key', array_keys($collection))->count());
+        $this->assertSame(count(TemplateCatalog::keys()) - count($collection), Template::whereNotIn('template_key', array_keys($collection))->count());
     }
 
     public function test_reseeding_keeps_existing_customer_content_approval_prices_and_license_records(): void

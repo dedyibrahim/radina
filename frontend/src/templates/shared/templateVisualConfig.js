@@ -1,6 +1,7 @@
 import studio from '../../../../config/template-studio.json'
 import floral from '../../../../config/floral-collection.json'
 import { contentPresets } from '../contentPresets'
+import cinematicWorlds from '../../../../config/cinematic-worlds.json'
 
 // Presentation profiles, not template keys. New registry entries inherit a profile
 // from their catalog metadata and can opt into any combination with `visual`.
@@ -71,7 +72,7 @@ export const visualProfiles = {
     secondaryOrnament: 'silk',
     texture: 'silk',
     photoFrame: 'floating',
-    openingEffect: 'curtain',
+    openingEffect: 'arch',
     divider: 'gold',
     musicSkin: 'gold',
     eventSurface: 'glass',
@@ -226,7 +227,7 @@ export const motionProfiles = {
     environment: 'garden',
     foreground: 'flower',
     particle: 'petal',
-    openingType: 'floral-curtain',
+    openingType: 'bloom-reveal',
     ambient: 'soft',
   },
   garden: {
@@ -240,7 +241,7 @@ export const motionProfiles = {
     environment: 'silk',
     foreground: 'fabric',
     particle: 'dust',
-    openingType: 'silk-curtain',
+    openingType: 'light-reveal',
     ambient: 'slow',
   },
   minimalist: {
@@ -308,9 +309,9 @@ export const motionProfiles = {
   },
   classical: {
     environment: 'hall',
-    foreground: 'curtain',
+    foreground: 'architecture',
     particle: 'dust',
-    openingType: 'royal-curtain',
+    openingType: 'arch-reveal',
     ambient: 'slow',
   },
   oriental: {
@@ -323,6 +324,8 @@ export const motionProfiles = {
 }
 const categories = {
   Creative: 'playful',
+  Regional: 'nusantara',
+  'Kids & Birthday': 'playful',
   Classical: 'classical',
   Oriental: 'oriental',
   Romantic: 'floral',
@@ -392,7 +395,7 @@ const openings = {
 }
 export function visualConfigFor(key, context = {}) {
   const preset = contentPresets[key] || {}
-  const collection = floral[key] || studio[key] || {}
+  const collection = floral[key] || studio[key] || cinematicWorlds[key] || {}
   // Category wins over mood: studio catalog music mood is not a design identity.
   const category = collection.category || preset.category || context.category
   const gallery = (preset.gallery_style || '').toLowerCase()
@@ -434,6 +437,74 @@ export function visualConfigFor(key, context = {}) {
         ? 'cinematic'
         : 'floral')
   const profile = visualProfiles[personality]
+  const world = cinematicWorlds[key]
+  const genericScenes = {
+    classical: 'melayu-river-palace',
+    oriental: 'sunda-mountain',
+    floral: 'kids-firefly-garden',
+    garden: 'bali-water-garden',
+    luxury: 'melayu-river-palace',
+    minimalist: 'nusantara-horizon',
+    islamic: 'quiet-arch',
+    nusantara: 'nusantara-horizon',
+    cinematic: 'film-garden',
+    celestial: 'kids-space-expedition',
+    vintage: 'betawi-garden-house',
+    coastal: 'maluku-island-dusk',
+    modern: 'glass-atrium',
+    playful: 'kids-candy-cloud',
+  }
+  const sceneProfile = world
+    ? { ...world, id: key }
+    : {
+        id: personality,
+        name: profile.ornament,
+        category: personality,
+        world: preset.name || 'Radina',
+        scene: genericScenes[personality] || 'nusantara-horizon',
+        opening: profile.openingEffect,
+        camera: ['dolly-in', 'pan-left', 'pan-right', 'dolly-out'][
+          [...(key || 'radina')].reduce(
+            (sum, char) => sum + char.codePointAt(0),
+            0,
+          ) % 4
+        ],
+        transition: 'light-dissolve',
+        photo: profile.photoFrame,
+        typography: personality,
+        closing: 'soft-fade',
+        effects:
+          motionProfiles[personality]?.particle === 'none'
+            ? []
+            : [motionProfiles[personality]?.particle || 'dust'],
+        palette: {
+          background: 'var(--ivory)',
+          ink: 'var(--ink)',
+          accent: 'var(--gold)',
+          highlight: 'var(--sage)',
+        },
+      }
+  // A dedicated art direction for this existing key; no new template or CMS data.
+  if (key === 'golden-atelier')
+    Object.assign(sceneProfile, {
+      id: key,
+      category: 'Luxury',
+      scene: 'golden-atelier',
+      world: 'Golden Atelier',
+      opening: 'atelier-light',
+      camera: 'dolly-out',
+      photo: 'editorial',
+      typography: 'editorial',
+      plate: 'golden-atelier',
+      composition: 'atelier',
+      palette: {
+        background: '#231c16',
+        ink: '#fff5df',
+        accent: '#e6bd74',
+        highlight: '#a48356',
+      },
+    })
+  sceneProfile.cinematic = Boolean(world || key === 'golden-atelier')
   const variant = [...(key || 'radina')].reduce(
     (sum, char) => (sum * 31 + char.codePointAt(0)) >>> 0,
     0,
@@ -452,8 +523,10 @@ export function visualConfigFor(key, context = {}) {
     galleryStyle: preset.gallery_style || 'original',
     ornament: artOrnaments[collection.art] || profile.ornament,
     secondaryOrnament: profile.secondaryOrnament || profile.ornament,
-    photoFrame: frames[collection.family] || profile.photoFrame,
-    openingEffect: openings[collection.family] || profile.openingEffect,
+    photoFrame: world?.photo || frames[collection.family] || profile.photoFrame,
+    openingEffect: sceneProfile.cinematic
+      ? sceneProfile.opening
+      : openings[collection.family] || profile.openingEffect,
     ...(collection.art === 'dunes'
       ? { openingEffect: 'light', divider: 'line' }
       : {}),
@@ -476,8 +549,16 @@ export function visualConfigFor(key, context = {}) {
     ...overrides,
     motionProfile: {
       ...motionProfiles[personality],
+      ...(world
+        ? {
+            environment: world.scene,
+            particle: world.effects[0] || 'none',
+            openingType: world.opening,
+          }
+        : {}),
       ...(overrides.motionProfile || {}),
     },
+    sceneProfile,
   }
 }
 export const templateVisualConfig = Object.fromEntries(

@@ -40,6 +40,9 @@ try {
   const floral = JSON.parse(
     await readFile('config/floral-collection.json', 'utf8'),
   )
+  const cinematicWorlds = JSON.parse(
+    await readFile('config/cinematic-worlds.json', 'utf8'),
+  )
   const registryText = await readFile(
     'frontend/src/templates/templateRegistry.js',
     'utf8',
@@ -58,12 +61,38 @@ try {
     'Every registered template needs an existing CMS content contract',
   )
   const rows = []
+  assert.equal(
+    Object.values(cinematicWorlds).filter(
+      (world) => world.category === 'Regional',
+    ).length,
+    20,
+    'The regional collection includes twenty scene worlds',
+  )
+  assert.equal(
+    Object.values(cinematicWorlds).filter(
+      (world) => world.category === 'Kids & Birthday',
+    ).length,
+    16,
+    'The kids and birthday collection includes at least fifteen distinct worlds',
+  )
+  assert.equal(
+    new Set(Object.values(cinematicWorlds).map((world) => world.scene)).size,
+    36,
+    'Every new template has its own environment',
+  )
+  assert.doesNotMatch(
+    JSON.stringify(cinematicWorlds),
+    /spongebob|mickey|doraemon|upin ipin|elsa|naruto|pokemon|marvel|dc comics/i,
+    'Original characters only',
+  )
   for (const key of Object.keys(templateRegistry)) {
     const component = floral[key]
       ? './FloralAtelier/FloralInvitation.vue'
       : studio[key]
         ? './shared/StudioInvitation.vue'
-        : paths[key]
+        : cinematicWorlds[key]
+          ? './shared/StudioInvitation.vue'
+          : paths[key]
     assert(component, `Missing Vue entry: ${key}`)
     const text = await readFile(
       resolve('frontend/src/templates', component),
@@ -133,6 +162,10 @@ try {
     rows.push({
       key,
       name: contentPresets[key].name,
+      worldCategory: cinematicWorlds[key]?.category || null,
+      world: cinematicWorlds[key]?.world || null,
+      scene: config.sceneProfile.scene,
+      sceneOpening: config.sceneProfile.opening,
       component,
       personality: config.personality,
       existingLayout: config.layout,
@@ -196,7 +229,7 @@ try {
       '',
       `Found ${rows.length} registry entries. Read-only local database snapshot: ${JSON.stringify(database.statuses)}. Production status was not queried or changed. Inactive templates use the same visual system and retain their availability setting.`,
       '',
-      'Catalog sources: template-presets.json, floral-presets.json, template-studio.json, floral-collection.json, RadinaSeeder, WeddingPlatformSeeder and ExperienceSeeder. Studio/Atelier entries intentionally share a configurable renderer; their component_name labels are not separate Vue files.',
+      'Catalog sources: template-presets.json, floral-presets.json, template-studio.json, floral-collection.json, cinematic-worlds.json and the Radina catalog seeders. Studio/Atelier entries intentionally share a configurable renderer; their component_name labels are not separate Vue files.',
       '',
       '| Template | Vue entry | Personality / existing layout | Ornament / depth | Living scene | Reveal / opening | Existing gallery | Photo / divider / music | Local status |',
       '| --- | --- | --- | --- | --- | --- | --- | --- | --- |',

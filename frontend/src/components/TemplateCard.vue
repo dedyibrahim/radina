@@ -4,6 +4,7 @@ import { formatMoney } from '../services/api'
 import { ref, computed } from 'vue'
 import { useTemplateCollection } from '../composables/useTemplateCollection'
 import floral from '../../../config/floral-collection.json'
+import cinematicWorlds from '../../../config/cinematic-worlds.json'
 const { favorites, comparison, favorite, compare } = useTemplateCollection()
 const hovering = ref(false)
 const previewScale = ref(0.8)
@@ -16,8 +17,16 @@ const props = defineProps({
   template: Object,
   eventType: { type: String, default: 'wedding' },
 })
+const targetEventType = computed(() =>
+  props.eventType === 'wedding' &&
+  cinematicWorlds[props.template.template_key]?.category === 'Kids & Birthday'
+    ? 'birthday'
+    : props.eventType,
+)
 const eventQuery = computed(() =>
-  props.eventType !== 'wedding' ? `?event_type=${props.eventType}` : '',
+  targetEventType.value !== 'wedding'
+    ? `?event_type=${targetEventType.value}`
+    : '',
 )
 </script>
 <template>
@@ -40,9 +49,18 @@ const eventQuery = computed(() =>
       <span v-if="floral[template.template_key]" class="new-floral-label"
         >BARU</span
       >
+      <span
+        v-else-if="cinematicWorlds[template.template_key]"
+        class="world-template-label"
+        >{{
+          cinematicWorlds[template.template_key].category === 'Regional'
+            ? 'NUSANTARA'
+            : 'KIDS & BIRTHDAY'
+        }}</span
+      >
       <div v-if="hovering" class="template-mini-preview" aria-hidden="true">
         <iframe
-          :src="`/templates/${template.slug}/preview?mini=1${eventType !== 'wedding' ? `&event_type=${eventType}` : ''}`"
+          :src="`/templates/${template.slug}/preview?mini=1${targetEventType !== 'wedding' ? `&event_type=${targetEventType}` : ''}`"
           :style="{ transform: `scale(${previewScale})` }"
           title="Mini template preview"
           tabindex="-1"
@@ -120,6 +138,19 @@ const eventQuery = computed(() =>
   padding: 7px 12px;
   font-size: 10px;
   letter-spacing: 1.5px;
+}
+.world-template-label {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 7px 12px;
+  border: 1px solid #ffffff80;
+  border-radius: 999px;
+  background: #172e3bd9;
+  color: #fff8e8;
+  font-size: 9px;
+  letter-spacing: 1.3px;
 }
 .collection-actions {
   display: flex;

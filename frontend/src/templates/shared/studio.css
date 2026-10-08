@@ -50,7 +50,11 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 15% 25%, var(--studio-highlight), transparent 55%),
+    radial-gradient(
+      ellipse at 15% 25%,
+      var(--studio-highlight),
+      transparent 55%
+    ),
     radial-gradient(ellipse at 80% 80%, var(--gold), transparent 60%);
   filter: blur(22px);
   animation: studio-sway 12s ease-in-out infinite alternate;
@@ -440,7 +444,12 @@
     -18px 18px 0 color-mix(in srgb, var(--gold) 15%, var(--ivory));
 }
 .studio-cover.layout-grid .studio-frame {
-  background-image: linear-gradient(90deg, transparent 49.7%, var(--gold) 50%, transparent 50.3%);
+  background-image: linear-gradient(
+    90deg,
+    transparent 49.7%,
+    var(--gold) 50%,
+    transparent 50.3%
+  );
   opacity: 0.2;
 }
 .studio-cover.layout-gate .studio-frame {
@@ -540,7 +549,7 @@
   border-radius: 0;
 }
 .studio-cover.layout-curtain .studio-art {
-  opacity: 0.68;
+  opacity: 0.22;
 }
 .studio-cover.layout-curtain .studio-frame {
   border: none;
@@ -560,7 +569,11 @@
 }
 .studio-cover.layout-window .studio-frame {
   border: none;
-  background: linear-gradient(90deg, var(--studio-highlight) 0 20%, transparent 20%);
+  background: linear-gradient(
+    90deg,
+    var(--studio-highlight) 0 20%,
+    transparent 20%
+  );
   inset: 20px;
 }
 .studio-cover.layout-window .studio-cover-photo {
@@ -628,7 +641,12 @@
 .studio-cover.layout-clapper .studio-cover-label {
   padding: 12px;
   border-top: 10px solid var(--ink);
-  border-image: repeating-linear-gradient(45deg, var(--ink) 0 10px, var(--ivory) 10px 20px) 10;
+  border-image: repeating-linear-gradient(
+      45deg,
+      var(--ink) 0 10px,
+      var(--ivory) 10px 20px
+    )
+    10;
   border-bottom: 1px solid var(--gold);
 }
 .studio-cover.layout-reel .studio-cover-photo {

@@ -101,7 +101,7 @@ class PlatformWorkflowTest extends TestCase
         $this->putJson('/api/admin/weddings/'.$id, $data)->assertUnprocessable()->assertJsonValidationErrors('wedding_date');
         Template::where('id', $order->template_id)->update(['status' => 'DISABLED']);
         $this->getJson('/api/weddings/'.$order->slug)->assertOk();
-        $this->getJson('/api/templates/romantic-floral')->assertNotFound();
+        $this->getJson('/api/templates/'.Template::findOrFail($order->template_id)->slug)->assertNotFound();
         $this->postJson('/api/weddings/'.$order->slug.'/rsvp', ['name' => 'Guest Test', 'guests' => 2, 'attendance' => 'Hadir'])->assertCreated();
         $this->postJson('/api/weddings/'.$order->slug.'/wishes', ['name' => 'Guest Test', 'message' => 'Semoga selalu bahagia.'])->assertCreated();
         $this->assertDatabaseHas('wedding_rsvps', ['wedding_id' => $id, 'guests' => 2]);
@@ -134,8 +134,8 @@ class PlatformWorkflowTest extends TestCase
     public function test_radina_catalog_and_gift_methods_use_one_contract(): void
     {
         config(['platform.api_rate_limit' => 1000]);
-        $this->assertSame(111, Template::count());
-        foreach (TemplateCatalog::KEYS as $key) {
+        $this->assertSame(count(TemplateCatalog::keys()), Template::count());
+        foreach (TemplateCatalog::keys() as $key) {
             $this->getJson('/api/templates/'.$key.'/preview')->assertOk()->assertJsonPath('data.template.template_key', $key)->assertJsonStructure(['data' => ['bride', 'groom', 'events', 'stories', 'gallery', 'gift_methods', 'settings']]);
         }
         $order = $this->order();

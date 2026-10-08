@@ -27,7 +27,7 @@ class WeddingContentCsv
         }
         if ($eventType !== 'wedding') {
             $profile = InvitationEvent::profile($eventType);
-            $add('event_details.', 'Data acara', ['host_name' => $profile['host_label'], 'honoree_name' => $profile['honoree_label'] ?? 'Nama tokoh acara (opsional)', 'father_name' => 'Nama ayah (opsional)', 'mother_name' => 'Nama ibu (opsional)', 'description' => 'Deskripsi penyelenggara / acara', 'photo' => 'URL foto atau logo']);
+            $add('event_details.', 'Data acara', ['host_name' => $profile['host_label'], 'honoree_name' => $profile['honoree_label'] ?? 'Nama tokoh acara (opsional)', 'honoree_age' => 'Usia yang dirayakan (opsional)', 'father_name' => 'Nama ayah (opsional)', 'mother_name' => 'Nama ibu (opsional)', 'description' => 'Deskripsi penyelenggara / acara', 'photo' => 'URL foto atau logo']);
         }
         $add('music.', 'Musik', ['music_url' => 'URL audio', 'volume' => 'Volume 0-100', 'autoplay_after_open' => 'Putar otomatis: ya/tidak', 'shuffle' => 'Acak lagu: ya/tidak', 'repeat' => 'Ulangi lagu: ya/tidak']);
         $add('livestream.', 'Live streaming', ['platform' => 'Platform', 'url' => 'URL siaran']);

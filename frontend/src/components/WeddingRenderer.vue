@@ -12,6 +12,8 @@ const props = defineProps({
 const invitationOpened = ref(
   props.startOpen || props.wedding.section_content?.opening?.enabled === false,
 )
+const motionPreference = ref(null)
+provide('invitationMotionPreference', motionPreference)
 const emit = defineEmits(['opened', 'ready'])
 watch(
   invitationOpened,
@@ -43,6 +45,9 @@ const selectedTemplate = computed(() =>
       ],
 )
 defineExpose({
+  setMotion: (enabled) => {
+    motionPreference.value = enabled
+  },
   showCover: () => {
     invitationOpened.value = false
   },

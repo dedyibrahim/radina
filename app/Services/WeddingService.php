@@ -30,7 +30,7 @@ class WeddingService
             }
             $type = $order->event_type ?? 'wedding';
             $wedding = Wedding::create(['order_id' => $order->id, 'template_id' => $order->template_id, 'slug' => $order->slug,
-                'event_type' => $type, 'event_details' => InvitationEvent::details(['host_name' => $order->host_name ?? '', 'honoree_name' => $order->honoree_name ?? '']),
+                'event_type' => $type, 'event_details' => InvitationEvent::details(['host_name' => $order->host_name ?? '', 'honoree_name' => $order->honoree_name ?? '', 'honoree_age' => $order->honoree_age ?? '']),
                 'title' => $type === 'wedding' ? mb_substr('The Wedding of '.$order->bride_name.' & '.$order->groom_name, 0, 255) : $order->event_title, 'status' => 'DRAFT']);
             $initial = TemplateContent::initial(Template::findOrFail($order->template_id)->template_key);
             $wedding->update($type === 'wedding' ? $initial : array_merge($initial, InvitationEvent::initial($type)));
@@ -85,7 +85,7 @@ class WeddingService
                 $base['music_repeat'] = $data['music']['repeat'];
             }
             $wedding->update($base);
-            $order->update(['slug' => $data['slug'], 'event_type' => $wedding->event_type, 'event_title' => $wedding->title, 'host_name' => $wedding->event_details['host_name'] ?? null, 'honoree_name' => $wedding->event_details['honoree_name'] ?? null]);
+            $order->update(['slug' => $data['slug'], 'event_type' => $wedding->event_type, 'event_title' => $wedding->title, 'host_name' => $wedding->event_details['host_name'] ?? null, 'honoree_name' => $wedding->event_details['honoree_name'] ?? null, 'honoree_age' => ($wedding->event_details['honoree_age'] ?? null) ?: null]);
             foreach (['bride', 'groom'] as $role) {
                 if ($wedding->event_type !== 'wedding') {
                     continue;

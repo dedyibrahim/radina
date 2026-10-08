@@ -51,7 +51,7 @@ class AdminDemoVisibilityTest extends TestCase
         $this->getJson('/api/admin/orders')->assertOk()->assertJsonPath('meta.total', 0)->assertJsonCount(0, 'data');
         $this->getJson('/api/admin/dashboard')->assertOk()->assertJsonPath('data.total_orders', 0)->assertJsonCount(0, 'data.recent_orders')->assertJsonCount(0, 'data.attention_orders');
         $this->assertGreaterThanOrEqual(111, Wedding::where('is_demo', true)->count());
-        $this->getJson('/api/templates')->assertOk()->assertJsonPath('meta.total', 111);
+        $this->getJson('/api/templates')->assertOk()->assertJsonPath('meta.total', count(\App\Services\TemplateCatalog::keys()));
         Sanctum::actingAs(User::factory()->create());
         $this->getJson('/api/admin/orders')->assertForbidden();
         $this->getJson('/api/admin/dashboard')->assertForbidden();

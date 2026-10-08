@@ -6,6 +6,7 @@ const props = defineProps({
   effects: Array,
   quality: { type: String, default: 'standard' },
   disabled: Boolean,
+  preference: { type: Boolean, default: null },
 })
 const emit = defineEmits(['change'])
 const opened = inject('invitationOpened', ref(false))
@@ -312,6 +313,12 @@ watch(enabled, () => {
 watch(() => props.effects, fill)
 watch(() => props.disabled, start)
 watch(
+  () => props.preference,
+  (value) => {
+    if (value !== null) enabled.value = value && !query?.matches
+  },
+)
+watch(
   () => props.quality,
   () => {
     fill()
@@ -340,7 +347,7 @@ onMounted(() => {
   try {
     saved = localStorage.getItem('radina-motion')
   } catch {}
-  enabled.value = !query.matches && saved !== 'off'
+  enabled.value = !query.matches && (props.preference ?? saved !== 'off')
   emit('change', enabled.value)
   position()
   start()

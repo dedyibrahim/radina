@@ -57,7 +57,7 @@ function wedding(key, eventType = 'wedding') {
       template_key: key,
       name: row.name,
       status: 'ACTIVE',
-      category: { name: 'Modern' },
+      category: { name: row.worldCategory || row.category || 'Modern' },
       features: [],
     },
     bride: {
@@ -171,6 +171,7 @@ function wedding(key, eventType = 'wedding') {
     event_details: {
       host_name: 'Keluarga Ibrahim',
       honoree_name: 'Dedy',
+      honoree_age: 7,
       description: 'Mari hadir dan merayakan momen istimewa bersama kami.',
       photo: '/images/demos/photo-1.webp',
     },
@@ -183,6 +184,7 @@ async function context(options) {
     class AudioFixture extends EventTarget {
       constructor(src) {
         super()
+        window.audioInstance = this
         this.src = src
         this.muted = false
         this.currentTime = 0
@@ -215,6 +217,11 @@ async function context(options) {
     if (path === '/api/admin/me') data = { id: 1, name: 'Admin', role: 'admin' }
     else if (path === '/api/admin/weddings/1/preview')
       data = wedding('romantic-floral')
+    else if (/^\/api\/templates\/[^/]+\/preview$/.test(path)) {
+      const key = path.split('/')[3]
+      data = wedding(key, new URL(route.request().url()).searchParams.get('event_type') || (key.startsWith('anak-') ? 'birthday' : 'wedding'))
+      data.is_demo = true
+    }
     else if (
       path.startsWith('/api/weddings/visual-') &&
       !/\/(visits|wishes|rsvps)$/.test(path)
@@ -252,6 +259,118 @@ async function fits(page, label) {
     `Horizontal overflow: ${label}`,
   )
 }
+if (process.env.RADINA_CINEMATIC_PREVIEW === '1') {
+  try {
+    const c = await context({ viewport: { width: 1280, height: 900 } })
+    const p = await c.newPage()
+    for (const key of ['jawa-pendopo-pagi', 'golden-atelier', 'anak-petualangan-laut']) {
+      await p.goto(`${base}/templates/${key}/preview?to=Dedy%20Ibrahim`)
+      const frame = p.frameLocator('.admin-preview-frame')
+      await expect(frame.locator('.cinematic-opening')).toHaveAttribute('data-reveal', 'READY')
+      await expect(frame.locator('.cinematic-opening')).toContainText('Dedy Ibrahim')
+      if (key.startsWith('anak-')) await expect(frame.locator('.cinematic-opening')).toContainText('Merayakan usia ke-7')
+      await p.getByRole('button', { name: 'Mobile', exact: true }).click()
+      await expect(p.locator('.wedding-preview-canvas')).toHaveClass(/preview-device-mobile/)
+      await p.getByRole('button', { name: 'Animasi ON', exact: true }).click()
+      await expect(frame.locator('.wedding-page')).toHaveClass(/motion-off/)
+      await frame.getByRole('button', { name: /^(Buka Undangan|Mulai Petualangan)$/ }).click()
+      await expect(frame.locator('.opening-stage')).toHaveCount(0)
+      await frame.getByRole('button', { name: 'Detail playlist', exact: true }).click()
+      const volume = frame.getByRole('slider', { name: 'Volume musik', exact: true })
+      await volume.evaluate((input) => { input.value = '25'; input.dispatchEvent(new Event('input', { bubbles: true })) })
+      await expect(frame.locator('.playlist-volume')).toContainText('25%')
+      const inner = p.frames().find(f => f !== p.mainFrame())
+      await inner.evaluate(() => { window.audioInstance.currentTime = 42 })
+      await frame.getByRole('button', { name: 'Bisukan suara', exact: true }).click()
+      assert.equal(await inner.evaluate(() => window.audioInstance.muted), true)
+      assert.equal(await inner.evaluate(() => window.audioInstance.volume), 0.25)
+      await frame.getByRole('button', { name: 'Aktifkan suara', exact: true }).click()
+      for (const id of ['gallery', 'gift', 'rsvp']) {
+        await frame.locator('#'+id).scrollIntoViewIfNeeded()
+        await expect(frame.locator('.opening-stage')).toHaveCount(0)
+      }
+      assert.equal(await inner.evaluate(() => window.audioInstance.currentTime), 42)
+      assert.equal(await inner.evaluate(() => window.audioEvents.filter(e => e.action === 'create').length), 1)
+      await p.getByRole('button', { name: 'Preview Cover', exact: true }).click()
+      await expect(frame.locator('.opening-stage')).toBeVisible()
+      await p.screenshot({ path: `${dir}/${key}-public-preview.png` })
+      console.log('Preview, replay, volume and navigation passed:', key)
+      // Each new page begins with the default toolbar preference.
+      await p.reload()
+    }
+    await c.close()
+    assert.deepEqual(errors, [])
+  } finally { await browser.close(); server.close() }
+  process.exit(0)
+}
+if (process.env.RADINA_VISUAL_SLICE === '1') {
+  try {
+    const c = await context({ viewport: { width: 390, height: 844 } })
+    const p = await c.newPage()
+    for (const key of [
+      'jawa-pendopo-pagi',
+      'golden-atelier',
+      'anak-petualangan-laut',
+    ]) {
+      eventTypeFixture = key.startsWith('anak-') ? 'birthday' : 'wedding'
+      for (const width of [
+        320, 360, 375, 390, 414, 430, 768, 1024, 1280, 1440,
+      ]) {
+        await p.setViewportSize({ width, height: 844 })
+        await p.goto(base + '/w/visual-' + key + '?to=Dedy%20Ibrahim')
+        await expect(p.locator('.cinematic-opening')).toHaveAttribute(
+          'data-reveal',
+          'READY',
+        )
+        await expect(p.locator('.cinematic-opening')).toContainText(
+          'Dedy Ibrahim',
+        )
+        await fits(p, key + ' cover ' + width)
+        if ([390, 1440].includes(width))
+          await p.screenshot({
+            path: dir + '/' + key + '-' + width + '-opening.png',
+            animations: 'disabled',
+            fullPage: true,
+          })
+        await p
+          .getByRole('button', {
+            name: /^(Buka Undangan|Mulai Petualangan)$/,
+          })
+          .click()
+        await expect(p.locator('.invitation-content')).toBeVisible()
+        await expect(p.locator('.opening-stage')).toHaveCount(0)
+        await fits(p, key + ' content ' + width)
+        if ([390, 1440].includes(width))
+          await p.locator('#home').screenshot({
+            path: dir + '/' + key + '-' + width + '-home.png',
+            animations: 'disabled',
+          })
+        const creates = await p.evaluate(
+          () => window.audioEvents.filter((e) => e.action === 'create').length,
+        )
+        assert.equal(creates, 1)
+        for (const id of ['gallery', 'gift', 'rsvp']) {
+          await p.locator('#' + id).scrollIntoViewIfNeeded()
+          await expect(p.locator('.opening-stage')).toHaveCount(0)
+        }
+        assert.equal(
+          await p.evaluate(
+            () =>
+              window.audioEvents.filter((e) => e.action === 'create').length,
+          ),
+          creates,
+        )
+        console.log('Reference:', key, width, 'passed')
+      }
+    }
+    assert.deepEqual(errors, [])
+    await c.close()
+  } finally {
+    await browser.close()
+    server.close()
+  }
+  process.exit(0)
+}
 try {
   const batch = await context({
     viewport: { width: 390, height: 820 },
@@ -273,16 +392,20 @@ try {
       'data-visual-quality',
       'lite',
     )
-    await expect(page.locator('.opening-stage .visual-atmosphere')).toHaveCount(
-      1,
-    )
+    await expect(
+      page.locator(
+        '.opening-stage > .visual-atmosphere, .opening-stage .cinematic-scene',
+      ),
+    ).toHaveCount(1)
     await fits(page, row.key + ' cover')
     await page.screenshot({
       path: `${dir}/${row.key}-cover.png`,
       animations: 'disabled',
     })
     await page
-      .getByRole('button', { name: 'Buka Undangan', exact: true })
+      .getByRole('button', {
+        name: /^(Buka Undangan|Mulai Petualangan)$/,
+      })
       .click()
     await expect(page.locator('.invitation-content')).toBeVisible()
     await expect(page.locator('#date .big-date > span')).toHaveText('13')
@@ -366,7 +489,9 @@ try {
       await expect(page.locator('.opening-stage')).toBeVisible()
       await fits(page, `${row.key} ${width}px cover`)
       await page
-        .getByRole('button', { name: 'Buka Undangan', exact: true })
+        .getByRole('button', {
+          name: /^(Buka Undangan|Mulai Petualangan)$/,
+        })
         .click()
       await expect(page.locator('.invitation-content')).toBeVisible()
       await fits(page, `${row.key} ${width}px content`)
@@ -415,7 +540,9 @@ try {
     eventTypeFixture = type
     await page.goto(`${base}/w/visual-rosalia-arch`)
     await page
-      .getByRole('button', { name: 'Buka Undangan', exact: true })
+      .getByRole('button', {
+        name: /^(Buka Undangan|Mulai Petualangan)$/,
+      })
       .click()
     await expect(page.locator('#couple')).toContainText('Keluarga Ibrahim')
     await fits(page, type)
@@ -443,7 +570,11 @@ try {
   for (const row of representatives) {
     await d.goto(`${base}/w/visual-${row.key}`)
     await expect(d.locator('.opening-stage')).toBeVisible()
-    await d.getByRole('button', { name: 'Buka Undangan', exact: true }).click()
+    await d
+      .getByRole('button', {
+        name: /^(Buka Undangan|Mulai Petualangan)$/,
+      })
+      .click()
     await expect(d.locator('.opening-stage')).toHaveClass(/cover-leave-active/)
     await expect(d.locator('.invitation-content')).toBeVisible()
     const events = await d.evaluate(() => window.audioEvents)
@@ -540,9 +671,11 @@ try {
   journeyFixture = true
   const living = representatives.find((row) => row.personality === 'luxury')
   await d.goto(`${base}/w/visual-${living.key}`)
-  await expect(d.locator('.living-opening')).toBeVisible()
+  await expect(d.locator('.opening-stage')).toBeVisible()
   await expect(d.locator('.auto-journey')).toHaveCount(0)
-  await d.getByRole('button', { name: 'Buka Undangan', exact: true }).click()
+  await d
+    .getByRole('button', { name: /^(Buka Undangan|Mulai Petualangan)$/ })
+    .click()
   await expect(d.locator('.invitation-content')).toBeVisible()
   const journeyButton = d.locator('[data-journey-control] button')
   await expect(journeyButton).toBeVisible()
@@ -580,7 +713,7 @@ try {
   const reducedPage = await reducedJourney.newPage()
   await reducedPage.goto(`${base}/w/visual-${living.key}`)
   await reducedPage
-    .getByRole('button', { name: 'Buka Undangan', exact: true })
+    .getByRole('button', { name: /^(Buka Undangan|Mulai Petualangan)$/ })
     .click()
   await expect(reducedPage.locator('.invitation-content')).toBeVisible()
   await expect(reducedPage.locator('.auto-journey')).toHaveCount(0)
@@ -591,7 +724,9 @@ try {
     reducedMotion: 'no-preference',
   })
   await lite.addInitScript(() =>
-    Object.defineProperty(navigator, 'hardwareConcurrency', { get: () => 2 }),
+    Object.defineProperty(navigator, 'hardwareConcurrency', {
+      get: () => 2,
+    }),
   )
   const low = await lite.newPage()
   await low.goto(`${base}/w/visual-rosalia-arch`)

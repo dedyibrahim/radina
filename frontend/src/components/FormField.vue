@@ -9,6 +9,8 @@ defineProps({
   placeholder: String,
   options: Array,
   help: String,
+  min: [String, Number],
+  max: [String, Number],
 })
 defineEmits(['update:modelValue'])
 const id = useId()
@@ -34,7 +36,11 @@ const id = useId()
       :disabled="disabled"
       @change="$emit('update:modelValue', $event.target.value)"
     >
-      <option v-for="option in options" :key="option.value" :value="option.value">
+      <option
+        v-for="option in options"
+        :key="option.value"
+        :value="option.value"
+      >
         {{ option.label }}
       </option></select
     ><input
@@ -45,10 +51,14 @@ const id = useId()
       :required="required"
       :disabled="disabled"
       :placeholder="placeholder"
+      :min="min"
+      :max="max"
       @input="
         $emit(
           'update:modelValue',
-          type === 'number' ? Number($event.target.value) : $event.target.value,
+          type === 'number' && $event.target.value !== ''
+            ? Number($event.target.value)
+            : $event.target.value,
         )
       "
     /><small v-if="help">{{ help }}</small>

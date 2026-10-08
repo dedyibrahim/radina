@@ -6,6 +6,7 @@ import LivingFlower from './LivingFlower.vue'
 import MovingClouds from './MovingClouds.vue'
 import PetalSystem from './PetalSystem.vue'
 import AmbientLight from './AmbientLight.vue'
+import CinematicScene from '../../cinematic/CinematicScene.vue'
 import { useIntersectionAnimation } from '../../../composables/useIntersectionAnimation'
 const props = defineProps({
   scene: { type: String, default: 'section' },
@@ -43,6 +44,15 @@ const livingOrnament = computed(() =>
     aria-hidden="true"
   >
     <div class="visual-background" data-plane="background">
+      <CinematicScene
+        v-if="visual.config.value.sceneProfile.cinematic"
+        :world="visual.config.value.sceneProfile"
+        :scene="section || scene"
+        :active="active"
+        :show-mascot="
+          scene === 'hero' && visual.config.value.category === 'Kids & Birthday'
+        "
+      />
       <span class="visual-texture" /><span
         class="visual-light"
         data-parallax="0.15"

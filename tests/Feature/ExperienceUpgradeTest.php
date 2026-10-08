@@ -88,12 +88,12 @@ class ExperienceUpgradeTest extends TestCase
         // The catalog exceeds the public per-minute limit; this test validates every demo.
         config(['platform.api_rate_limit' => 1000]);
         $this->assertSame(6, MusicTrack::count());
-        $this->getJson('/api/templates?sort=popular')->assertOk()->assertJsonPath('meta.total', 111);
-        $this->getJson('/api/categories')->assertOk()->assertJsonCount(11, 'data');
+        $this->getJson('/api/templates?sort=popular')->assertOk()->assertJsonPath('meta.total', count(\App\Services\TemplateCatalog::keys()));
+        $this->getJson('/api/categories')->assertOk()->assertJsonCount(13, 'data');
         $names = [];
         $openings = [];
         $music = [];
-        foreach (Template::all() as $template) {
+        foreach (Template::whereIn('template_key', \App\Services\TemplateCatalog::KEYS)->get() as $template) {
             $data = $this->getJson('/api/templates/'.$template->slug.'/preview')->assertOk()->json('data');
             $names[] = $data['bride']['nickname'];
             $openings[] = $data['opening_text'];

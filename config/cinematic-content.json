@@ -1,0 +1,108 @@
+{
+  "order": [
+    "home",
+    "couple",
+    "quote",
+    "date",
+    "event",
+    "location",
+    "story",
+    "gallery",
+    "video",
+    "gift",
+    "livestream",
+    "rsvp",
+    "wishes",
+    "closing"
+  ],
+  "sections": {
+    "home": {
+      "enabled": true,
+      "heading": "Momen Istimewa",
+      "subheading": "Sebuah hari untuk dikenang",
+      "content": ""
+    },
+    "couple": {
+      "enabled": true,
+      "heading": "Yang Berbahagia",
+      "subheading": "Dengan penuh rasa syukur",
+      "content": ""
+    },
+    "quote": {
+      "enabled": true,
+      "heading": "Sebuah Pesan",
+      "subheading": "Harapan baik untuk hari ini",
+      "content": ""
+    },
+    "date": {
+      "enabled": true,
+      "heading": "Simpan Tanggal",
+      "subheading": "Hari istimewa segera tiba",
+      "content": ""
+    },
+    "event": {
+      "enabled": true,
+      "heading": "Waktu & Tempat",
+      "subheading": "Kami menantikan kedatangan Anda",
+      "content": ""
+    },
+    "location": {
+      "enabled": true,
+      "heading": "Lokasi Acara",
+      "subheading": "Sampai bertemu di sini",
+      "content": ""
+    },
+    "story": {
+      "enabled": true,
+      "heading": "Cerita Kita",
+      "subheading": "Perjalanan penuh kenangan",
+      "content": ""
+    },
+    "gallery": {
+      "enabled": true,
+      "heading": "Momen Bahagia",
+      "subheading": "Potongan kenangan dalam bingkai",
+      "content": ""
+    },
+    "video": {
+      "enabled": true,
+      "heading": "Cerita Bergerak",
+      "subheading": "Kenangan yang hidup",
+      "content": ""
+    },
+    "gift": {
+      "enabled": true,
+      "heading": "Tanda Kasih",
+      "subheading": "Kehadiran Anda adalah kebahagiaan kami",
+      "content": ""
+    },
+    "livestream": {
+      "enabled": true,
+      "heading": "Saksikan Bersama",
+      "subheading": "Dari mana pun Anda berada",
+      "content": ""
+    },
+    "rsvp": {
+      "enabled": true,
+      "heading": "Konfirmasi Kehadiran",
+      "subheading": "Mohon kabari kami",
+      "content": ""
+    },
+    "wishes": {
+      "enabled": true,
+      "heading": "Ucapan & Doa",
+      "subheading": "Tinggalkan pesan yang hangat",
+      "content": ""
+    },
+    "closing": {
+      "enabled": true,
+      "heading": "Sampai Bertemu",
+      "subheading": "Terima kasih telah menjadi bagian dari hari ini",
+      "content": ""
+    }
+  },
+  "opening_text": "Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan berbagi momen istimewa bersama kami.",
+  "closing_text": "Terima kasih atas kehadiran dan doa baik Anda.",
+  "quote": "Setiap pertemuan membawa kebahagiaan. Terima kasih telah menjadi bagian dari cerita kami.",
+  "quote_source": "Dengan penuh syukur"
+}

@@ -8,7 +8,11 @@ const wedding = inject('wedding'),
   <section
     id="home"
     class="design-hero studio-hero"
-    :class="[`hero-${design.family}`, `layout-${design.layout}`]"
+    :class="[
+      `hero-${design.family}`,
+      `layout-${design.layout}`,
+      `photo-${design.photo}`,
+    ]"
   >
     <StudioArt /><span class="studio-kicker">{{ wedding.occasionLabel }}</span>
     <figure v-if="wedding.hero" class="studio-hero-photo">
@@ -18,6 +22,8 @@ const wedding = inject('wedding'),
     <time class="studio-date">{{ wedding.date.display }}</time>
     <p class="studio-intro">{{ wedding.openingText }}</p>
     <span class="studio-name-rule" aria-hidden="true"></span>
-    <small v-if="wedding.location.name" class="studio-location">{{ wedding.location.name }}</small>
+    <small v-if="wedding.location.name" class="studio-location">{{
+      wedding.location.name
+    }}</small>
   </section>
 </template>

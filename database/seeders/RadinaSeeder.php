@@ -30,6 +30,18 @@ class RadinaSeeder extends Seeder
                 'features' => ['Playlist musik', 'RSVP & ucapan', 'Wedding gift', 'CMS bersama', 'Galeri interaktif', 'Responsive'],
             ]);
         }
+        foreach (TemplateCatalog::worlds() as $key => $entry) {
+            $category = TemplateCategory::firstOrCreate(['slug' => strtolower(str_replace(' & ', '-', $entry['category']))], ['name' => $entry['category']]);
+            Template::firstOrCreate(['slug' => $key], [
+                'template_key' => $key, 'component_name' => TemplateCatalog::worldComponent($key),
+                'name' => $entry['name'], 'category_id' => $category->id,
+                'description' => $entry['description'], 'price' => config('invitation-pricing.templates.'.$key, $entry['price']),
+                'status' => 'ACTIVE', 'is_featured' => false,
+                'thumbnail' => $entry['thumbnail'] ?? '/images/templates/cinematic-worlds/'.$key.'.svg',
+                'preview_image' => $entry['thumbnail'] ?? '/images/templates/cinematic-worlds/'.$key.'.svg',
+                'features' => ['Cinematic world', 'RSVP & ucapan', 'Galeri foto', 'Musik latar', 'CMS bersama', 'Responsive'],
+            ]);
+        }
         // Catalog taxonomy changes presentation metadata, never wedding content or prices.
         $taxonomy = ['romantic-floral' => 'Romantic', 'elegant-luxury' => 'Luxury', 'minimalist-white' => 'Minimalist', 'nusantara-heritage' => 'Traditional', 'garden-dream' => 'Garden', 'classic-vintage' => 'Vintage', 'midnight-romance' => 'Modern', 'sakinah' => 'Islamic', 'eternal-story' => 'Cinematic', 'blush' => 'Creative', 'celestial' => 'Romantic'];
         foreach (['Romantic', 'Luxury', 'Minimalist', 'Traditional', 'Garden', 'Islamic', 'Cinematic', 'Vintage', 'Destination', 'Creative', 'Modern'] as $name) {

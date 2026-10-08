@@ -54,6 +54,41 @@ class InvitationEventTest extends TestCase
         return $data;
     }
 
+    public function test_cinematic_catalog_birthday_age_template_switch_and_repeat_migration_preserve_customer_data(): void
+    {
+        $template = Template::where('template_key', 'anak-petualangan-laut')->firstOrFail();
+        $beforeDemos = Wedding::where('is_demo', true)->get()->map->getRawOriginal()->all();
+        $this->getJson('/api/templates/'.$template->slug.'/preview')->assertOk()
+            ->assertJsonPath('data.event_type', 'birthday')->assertJsonPath('data.event_details.honoree_age', 7)
+            ->assertJsonPath('data.bride', null);
+        $this->assertSame($beforeDemos, Wedding::where('is_demo', true)->get()->map->getRawOriginal()->all());
+
+        $booking = array_replace($this->booking('birthday', 'cinematic-birthday'), ['template_id' => $template->id, 'honoree_age' => 7]);
+        $this->postJson('/api/orders', array_replace($booking, ['honoree_age' => 999]))->assertUnprocessable()->assertJsonValidationErrors('honoree_age');
+        $id = $this->postJson('/api/orders', $booking)->assertCreated()->assertJsonPath('data.honoree_age', 7)->json('data.id');
+        $this->patchJson('/api/admin/orders/'.$id.'/payment')->assertOk();
+        $weddingId = $this->postJson('/api/admin/orders/'.$id.'/wedding')->assertCreated()->json('data.id');
+        $wedding = Wedding::findOrFail($weddingId);
+        $this->assertEquals(7, $wedding->event_details['honoree_age']);
+        $payload = $this->payload($wedding);
+        $payload['template_id'] = Template::where('template_key', 'anak-kota-robot')->firstOrFail()->id;
+        $payload['event_details']['description'] = 'Pesan asli keluarga, tetap tersimpan.';
+        $this->putJson('/api/admin/weddings/'.$weddingId, $payload)->assertOk()
+            ->assertJsonPath('data.event_details.honoree_age', 7)
+            ->assertJsonPath('data.event_details.description', 'Pesan asli keluarga, tetap tersimpan.');
+        $template->update(['price' => 123456, 'status' => 'INACTIVE']);
+        $snapshot = $wedding->fresh()->getRawOriginal();
+        $guard = app(DeploymentLicenseGuard::class);
+        $licenses = $guard->backup(str_repeat('e', 40));
+        $migration = require database_path('migrations/2026_10_08_000002_add_cinematic_world_templates.php');
+        $migration->up(); $migration->up();
+        $guard->assertPreserved($licenses);
+        $this->assertSame($snapshot, $wedding->fresh()->getRawOriginal());
+        $this->assertSame(123456, $template->fresh()->price);
+        $this->assertSame('INACTIVE', $template->fresh()->status);
+        $this->assertDatabaseCount('templates', count(\App\Services\TemplateCatalog::keys()));
+    }
+
     public function test_five_new_islamic_themes_have_real_demos_and_generic_previews_do_not_change_saved_weddings(): void
     {
         $this->getJson('/api/templates?category=islamic')->assertOk()->assertJsonPath('meta.total', 11);

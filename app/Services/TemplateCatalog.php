@@ -12,6 +12,28 @@ class TemplateCatalog
         );
     }
 
+    public static function worlds(): array
+    {
+        return json_decode(file_get_contents(config_path('cinematic-worlds.json')), true, 512, JSON_THROW_ON_ERROR);
+    }
+
+    public static function worldComponent(string $key): string
+    {
+        return preg_replace_callback('/(^|-)([a-z])/', fn ($match) => strtoupper($match[2]), $key).'.vue';
+    }
+
+    public static function keys(): array
+    {
+        return array_values(array_unique(array_merge(self::KEYS, array_keys(self::worlds()))));
+    }
+
+    public static function components(): array
+    {
+        $worldComponents = array_map(fn ($key) => self::worldComponent($key), array_keys(self::worlds()));
+
+        return array_values(array_unique(array_merge(self::COMPONENTS, $worldComponents)));
+    }
+
     public const KEYS = ['romantic-floral', 'elegant-luxury', 'minimalist-white', 'nusantara-heritage', 'garden-dream', 'classic-vintage', 'midnight-romance', 'sakinah', 'eternal-story', 'blush', 'celestial', 'editorial', 'ocean-vows', 'royal-heritage', 'paper-petals', 'botanica', 'monochrome', 'blossom-east', 'neon-love', 'timeless-romance', 'nur-jannah', 'mihrab-emerald', 'sahara-gold', 'qamar-blue', 'zahra-ivory', 'rose-ribbon', 'linen-atelier', 'quiet-form', 'ivory-grid', 'wayang-senja', 'batik-kencana', 'songket-raya', 'aurora-glass', 'urban-signature', 'riviera-postcard', 'santorini-sky', 'desert-horizon', 'golden-atelier', 'velvet-gala', 'pearl-palace', 'olive-grove', 'wildflower-meadow', 'fern-serenade', 'glasshouse-morning', 'golden-hour', 'starlight-premiere', 'silver-screen', 'motion-picture', 'sepia-memories', 'postal-romance', 'vinyl-vows', 'art-deco-letter', 'confetti-club', 'balloon-fiesta', 'origami-dream', 'retro-festival', 'rosalia-arch', 'peony-love-letter', 'magnolia-muse', 'rosewood-nocturne', 'sakura-serenade', 'orchid-royale', 'champagne-correspondence', 'fleur-de-palais', 'velours-botanique', 'pearl-blossom', 'white-cosmos', 'linen-blossom-letter', 'eucalyptus-notes', 'moonstone-magnolia', 'petal-stillness', 'melati-keraton', 'puspa-songket', 'cempaka-pendopo', 'anggrek-batik-malam', 'kamboja-senja', 'daisy-conservatory', 'wildflower-letters', 'fern-botanique', 'rose-garden-twilight', 'meadow-butterfly', 'raudhah-bloom', 'jannah-letters', 'maryam-garden', 'noor-petals', 'firdaus-breeze', 'moonlit-garden', 'petal-nocturne', 'bloom-premiere', 'velvet-dusk', 'stella-flower', 'rosette-postcard', 'lavender-correspondence', 'camellia-journal', 'butterfly-memoir', 'sakura-keepsake', 'azure-orchid', 'riviera-blossom-letter', 'tropical-botanique', 'coral-moonrise', 'island-petals', 'pastel-carnival', 'flower-pop-letter', 'sakura-cloud', 'midnight-fiesta', 'butterfly-confetti', 'fleur-geometry', 'botanical-signature', 'urban-petal-editorial', 'midnight-orchid', 'bloom-motion'];
 
     public const COMPONENTS = ['RomanticFloralTemplate.vue', 'RomanticFloral.vue', 'ElegantLuxury.vue', 'MinimalistWhite.vue', 'NusantaraHeritage.vue', 'GardenDream.vue', 'ClassicVintage.vue', 'MidnightRomance.vue', 'Sakinah.vue', 'EternalStory.vue', 'Blush.vue', 'Celestial.vue', 'Editorial.vue', 'OceanVows.vue', 'RoyalHeritage.vue', 'PaperPetals.vue', 'Botanica.vue', 'Monochrome.vue', 'BlossomEast.vue', 'NeonLove.vue', 'TimelessRomance.vue', 'NurJannah.vue', 'MihrabEmerald.vue', 'SaharaGold.vue', 'QamarBlue.vue', 'ZahraIvory.vue', 'RoseRibbon.vue', 'LinenAtelier.vue', 'QuietForm.vue', 'IvoryGrid.vue', 'WayangSenja.vue', 'BatikKencana.vue', 'SongketRaya.vue', 'AuroraGlass.vue', 'UrbanSignature.vue', 'RivieraPostcard.vue', 'SantoriniSky.vue', 'DesertHorizon.vue', 'GoldenAtelier.vue', 'VelvetGala.vue', 'PearlPalace.vue', 'OliveGrove.vue', 'WildflowerMeadow.vue', 'FernSerenade.vue', 'GlasshouseMorning.vue', 'GoldenHour.vue', 'StarlightPremiere.vue', 'SilverScreen.vue', 'MotionPicture.vue', 'SepiaMemories.vue', 'PostalRomance.vue', 'VinylVows.vue', 'ArtDecoLetter.vue', 'ConfettiClub.vue', 'BalloonFiesta.vue', 'OrigamiDream.vue', 'RetroFestival.vue', 'RosaliaArch.vue', 'PeonyLoveLetter.vue', 'MagnoliaMuse.vue', 'RosewoodNocturne.vue', 'SakuraSerenade.vue', 'OrchidRoyale.vue', 'ChampagneCorrespondence.vue', 'FleurdePalais.vue', 'VeloursBotanique.vue', 'PearlBlossom.vue', 'WhiteCosmos.vue', 'LinenBlossomLetter.vue', 'EucalyptusNotes.vue', 'MoonstoneMagnolia.vue', 'PetalStillness.vue', 'MelatiKeraton.vue', 'PuspaSongket.vue', 'CempakaPendopo.vue', 'AnggrekBatikMalam.vue', 'KambojaSenja.vue', 'DaisyConservatory.vue', 'WildflowerLetters.vue', 'FernBotanique.vue', 'RoseGardenTwilight.vue', 'MeadowButterfly.vue', 'RaudhahBloom.vue', 'JannahLetters.vue', 'MaryamGarden.vue', 'NoorPetals.vue', 'FirdausBreeze.vue', 'MoonlitGarden.vue', 'PetalNocturne.vue', 'BloomPremiere.vue', 'VelvetDusk.vue', 'StellaFlower.vue', 'RosettePostcard.vue', 'LavenderCorrespondence.vue', 'CamelliaJournal.vue', 'ButterflyMemoir.vue', 'SakuraKeepsake.vue', 'AzureOrchid.vue', 'RivieraBlossomLetter.vue', 'TropicalBotanique.vue', 'CoralMoonrise.vue', 'IslandPetals.vue', 'PastelCarnival.vue', 'FlowerPopLetter.vue', 'SakuraCloud.vue', 'MidnightFiesta.vue', 'ButterflyConfetti.vue', 'FleurGeometry.vue', 'BotanicalSignature.vue', 'UrbanPetalEditorial.vue', 'MidnightOrchid.vue', 'BloomMotion.vue'];

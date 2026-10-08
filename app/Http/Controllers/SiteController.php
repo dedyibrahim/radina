@@ -117,7 +117,7 @@ class SiteController extends Controller
         $analyticsId = config('services.google_analytics.measurement_id');
         if ($status === 200 && config('services.google_analytics.enabled') && is_string($analyticsId) && preg_match('/^G-[A-Z0-9]+$/D', $analyticsId)) {
             // The Vue router loads the tag only on public marketing pages.
-            $analytics = json_encode(['id' => $analyticsId, 'templates' => TemplateCatalog::KEYS], JSON_THROW_ON_ERROR);
+            $analytics = json_encode(['id' => $analyticsId, 'templates' => TemplateCatalog::keys()], JSON_THROW_ON_ERROR);
             $html = str_replace('</head>', '<meta name="radina-google-analytics" content="'.e($analytics).'" /></head>', $html);
         }
 

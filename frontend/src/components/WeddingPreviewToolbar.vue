@@ -5,8 +5,9 @@ defineProps({
   wedding: Object,
   weddingId: [String, Number],
   device: { type: String, default: 'desktop' },
+  motion: { type: Boolean, default: true },
 })
-defineEmits(['section', 'device'])
+defineEmits(['section', 'device', 'motion'])
 const sections = [
   ['cover', 'Preview Cover'],
   ['couple', 'Couple'],
@@ -33,7 +34,7 @@ const sections = [
         >Pilih<ArrowUpRight :size="15"
       /></RouterLink>
     </div>
-    <div v-if="weddingId" class="preview-controls">
+    <div class="preview-controls">
       <div
         class="preview-device-controls"
         role="group"
@@ -55,7 +56,7 @@ const sections = [
         </button>
       </div>
       <button
-        v-for="item in sections"
+        v-for="item in weddingId ? sections : sections.slice(0, 1)"
         :key="item[0]"
         @click="$emit('section', item[0])"
       >
@@ -64,6 +65,9 @@ const sections = [
             ? 'Profil'
             : item[1]
         }}
+      </button>
+      <button :aria-pressed="motion" @click="$emit('motion', !motion)">
+        {{ motion ? 'Animasi ON' : 'Animasi OFF' }}
       </button>
     </div>
   </header>

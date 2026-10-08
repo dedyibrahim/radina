@@ -1,9 +1,11 @@
 import profiles from '../../../config/invitation-events.json'
 export const eventProfiles = profiles
-export const eventOptions = Object.entries(profiles).map(([value, profile]) => ({
-  value,
-  label: profile.label,
-}))
+export const eventOptions = Object.entries(profiles).map(
+  ([value, profile]) => ({
+    value,
+    label: profile.label,
+  }),
+)
 export const agendaOptions = [
   ['akad', 'Akad Nikah'],
   ['reception', 'Resepsi'],
@@ -26,9 +28,17 @@ export function eventDetailsFields(type) {
   if (profile.honoree)
     fields.push(
       ['honoree_name', profile.honoree_label, 'text', true],
+      ...(profile.honoree_age
+        ? [['honoree_age', 'Usia saat perayaan (opsional)', 'number', false]]
+        : []),
       ['father_name', 'Nama ayah (opsional)', 'text', false],
       ['mother_name', 'Nama ibu (opsional)', 'text', false],
     )
-  fields.push(['description', 'Tentang acara / penyelenggara', 'textarea', false])
+  fields.push([
+    'description',
+    'Tentang acara / penyelenggara',
+    'textarea',
+    false,
+  ])
   return fields
 }

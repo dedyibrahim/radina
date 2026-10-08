@@ -15,10 +15,17 @@ import { trackEvent } from '../../services/analytics'
 const renderer = ref(null)
 const previewDevice = ref('desktop')
 const previewFrame = ref(null)
+const previewMotion = ref(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
 const embeddedPreview = computed(
-  () => Boolean(route.params.id) && route.query.preview_embed === '1',
+  () => Boolean(route.meta.preview) && (route.query.preview_embed === '1' || route.query.mini === '1'),
 )
-const previewFrameUrl = computed(() => `${route.path}?preview_embed=1`)
+const previewFrameUrl = computed(() => `${route.path}?${new URLSearchParams({ ...route.query, preview_embed: '1' })}`)
+function setPreviewMotion(enabled) {
+  previewMotion.value = enabled
+  if (route.meta.preview && !embeddedPreview.value) {
+    previewFrame.value?.contentWindow?.postMessage({ type: 'radina-admin-preview', motion: enabled }, window.location.origin)
+  } else renderer.value?.setMotion(enabled)
+}
 function previewMessage(event) {
   if (
     !embeddedPreview.value ||
@@ -27,6 +34,10 @@ function previewMessage(event) {
     event.data?.type !== 'radina-admin-preview'
   )
     return
+  if (typeof event.data.motion === 'boolean') {
+    setPreviewMotion(event.data.motion)
+    return
+  }
   if (
     ['cover', 'couple', 'event', 'gallery', 'gift', 'closing'].includes(
       event.data.section,
@@ -37,7 +48,7 @@ function previewMessage(event) {
 onMounted(() => window.addEventListener('message', previewMessage))
 onUnmounted(() => window.removeEventListener('message', previewMessage))
 async function previewSection(key) {
-  if (route.params.id && !embeddedPreview.value) {
+  if (route.meta.preview && !embeddedPreview.value) {
     previewFrame.value?.contentWindow?.postMessage(
       { type: 'radina-admin-preview', section: key },
       window.location.origin,
@@ -104,7 +115,7 @@ async function load() {
       await api.get(path, {
         params:
           route.meta.preview && !route.params.id
-            ? { event_type: route.query.event_type || 'wedding' }
+            ? { event_type: route.query.event_type || undefined }
             : {},
       })
     ).data.data
@@ -161,6 +172,8 @@ useSeo(() => ({
       :wedding="wedding"
       :wedding-id="route.params.id"
       :device="previewDevice"
+      :motion="previewMotion"
+      @motion="setPreviewMotion"
       @section="previewSection"
       @device="previewDevice = $event"
     />
@@ -185,14 +198,14 @@ useSeo(() => ({
     <div
       class="wedding-preview-canvas"
       :class="
-        route.params.id && !embeddedPreview
+        route.meta.preview && !embeddedPreview
           ? `preview-device-${previewDevice}`
           : ''
       "
     >
       <iframe
         v-if="
-          route.params.id && !embeddedPreview && wedding && !loading && !error
+          route.meta.preview && !embeddedPreview && wedding && !loading && !error
         "
         ref="previewFrame"
         :src="previewFrameUrl"
@@ -201,7 +214,7 @@ useSeo(() => ({
       />
       <WeddingRenderer
         v-if="
-          (!route.params.id || embeddedPreview) && wedding && !loading && !error
+          (!route.meta.preview || embeddedPreview) && wedding && !loading && !error
         "
         :key="`${wedding.slug}:${wedding.guest?.token || route.query.guest || ''}`"
         ref="renderer"

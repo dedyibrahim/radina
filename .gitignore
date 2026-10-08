@@ -13,6 +13,7 @@ __pycache__/
 /public/images/templates
 /public/images/demos
 /public/images/bouquets
+/public/images/cinematic
 /public/images/*.webp
 /public/storage
 /storage/*.key

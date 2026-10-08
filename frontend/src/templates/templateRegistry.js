@@ -1,6 +1,7 @@
 import { defineAsyncComponent } from 'vue'
 import studio from '../../../config/template-studio.json'
 import floral from '../../../config/floral-collection.json'
+import cinematicWorlds from '../../../config/cinematic-worlds.json'
 export const templateRegistry = {
   ...Object.fromEntries(
     Object.keys(floral).map((key) => [
@@ -12,6 +13,12 @@ export const templateRegistry = {
   ),
   ...Object.fromEntries(
     Object.keys(studio).map((key) => [
+      key,
+      defineAsyncComponent(() => import('./shared/StudioInvitation.vue')),
+    ]),
+  ),
+  ...Object.fromEntries(
+    Object.keys(cinematicWorlds).map((key) => [
       key,
       defineAsyncComponent(() => import('./shared/StudioInvitation.vue')),
     ]),
@@ -72,7 +79,17 @@ export const templateOptions = [
   ...Object.entries(studio).map(([value, entry]) => ({
     value,
     label: entry.name,
+    category: entry.category,
     component: entry.component,
+  })),
+  ...Object.entries(cinematicWorlds).map(([value, entry]) => ({
+    value,
+    label: entry.name,
+    category: entry.category,
+    component: `${value
+      .split('-')
+      .map((part) => part[0].toUpperCase() + part.slice(1))
+      .join('')}.vue`,
   })),
   { value: 'nur-jannah', label: 'Nur Jannah', component: 'NurJannah.vue' },
   {

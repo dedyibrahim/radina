@@ -18,7 +18,7 @@ class InvitationEvent
 
     public static function details(?array $details = null): array
     {
-        return array_merge(array_fill_keys(['host_name', 'honoree_name', 'father_name', 'mother_name', 'description', 'photo'], ''), $details ?? []);
+        return array_merge(array_fill_keys(['host_name', 'honoree_name', 'honoree_age', 'father_name', 'mother_name', 'description', 'photo'], ''), $details ?? []);
     }
 
     public static function rules(string $prefix, string $type, bool $required = true): array
@@ -26,9 +26,10 @@ class InvitationEvent
         $profile = self::profile($type);
         $need = $required && $type !== 'wedding';
 
-        return [$prefix => ($need ? 'required' : 'sometimes').'|array:host_name,honoree_name,father_name,mother_name,description,photo',
+        return [$prefix => ($need ? 'required' : 'sometimes').'|array:host_name,honoree_name,honoree_age,father_name,mother_name,description,photo',
             $prefix.'.host_name' => ($need ? 'required' : 'nullable').'|string|min:2|max:120',
             $prefix.'.honoree_name' => ($need && $profile['honoree'] ? 'required' : 'nullable').'|string|min:2|max:120',
+            $prefix.'.honoree_age' => 'nullable|integer|min:1|max:120',
             $prefix.'.father_name' => 'nullable|string|max:120', $prefix.'.mother_name' => 'nullable|string|max:120',
             $prefix.'.description' => 'nullable|string|max:3000', $prefix.'.photo' => ['nullable', 'string', 'max:2048', new SafeMediaUrl]];
     }

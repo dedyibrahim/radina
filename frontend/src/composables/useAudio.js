@@ -3,6 +3,18 @@ export function useAudio(src, volume = 0.4, options = () => ({})) {
   const playing = ref(false)
   const error = ref('')
   const index = ref(0)
+  const volumeLevel = ref(Math.min(1, Math.max(0, toValue(volume))))
+  const muted = ref(false)
+  function setVolume(value) {
+    const number = Number(value)
+    if (!Number.isFinite(number)) return
+    volumeLevel.value = Math.min(1, Math.max(0, number))
+    if (audio) audio.volume = volumeLevel.value
+  }
+  function toggleMute() {
+    muted.value = !muted.value
+    if (audio) audio.muted = muted.value
+  }
   const tracks = computed(() => {
     const value = toValue(src)
     return Array.isArray(value)
@@ -22,7 +34,8 @@ export function useAudio(src, volume = 0.4, options = () => ({})) {
       audio = new Audio(currentTrack.value?.url)
       audio.loop = false
       audio.addEventListener('ended', ended)
-      audio.volume = Math.min(1, Math.max(0, toValue(volume)))
+      audio.volume = volumeLevel.value
+      audio.muted = muted.value
       audio.preload = 'metadata'
     }
   }
@@ -43,7 +56,7 @@ export function useAudio(src, volume = 0.4, options = () => ({})) {
   async function play() {
     ensureAudio()
     if (!currentTrack.value) return
-    audio.muted = false
+    audio.muted = muted.value
     if (audio.getAttribute('src') !== currentTrack.value.url)
       audio.src = currentTrack.value.url
     const request = ++generation
@@ -115,7 +128,7 @@ export function useAudio(src, volume = 0.4, options = () => ({})) {
   watch(
     () => toValue(volume),
     (value) => {
-      if (audio) audio.volume = Math.min(1, Math.max(0, value))
+      setVolume(value)
     },
   )
   watch(
@@ -148,6 +161,10 @@ export function useAudio(src, volume = 0.4, options = () => ({})) {
     tracks,
     index,
     currentTrack,
+    volumeLevel,
+    muted,
+    setVolume,
+    toggleMute,
     next: () => advance(1),
     previous: () => advance(-1),
   }

@@ -8,6 +8,16 @@ class TemplateContent
     {
         $presets = json_decode(file_get_contents(config_path('template-presets.json')), true, 512, JSON_THROW_ON_ERROR);
         $floral = json_decode(file_get_contents(config_path('floral-presets.json')), true, 512, JSON_THROW_ON_ERROR);
+        $worlds = TemplateCatalog::worlds();
+        if (isset($worlds[$key ?? ''])) {
+            $world = $worlds[$key];
+            $content = json_decode(file_get_contents(config_path('cinematic-content.json')), true, 512, JSON_THROW_ON_ERROR);
+            return array_merge($content, [
+                'name' => $world['name'], 'category' => $world['category'], 'studio' => true,
+                'gallery_style' => $world['photo'], 'mood' => [$world['category'], $world['world']],
+                'motion' => $world['effects'], 'palette' => $world['palette'],
+            ]);
+        }
 
         return $floral[$key ?? ''] ?? $presets[$key ?? 'romantic-floral'] ?? $presets['romantic-floral'];
     }

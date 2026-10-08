@@ -27,7 +27,7 @@ class PublicController extends Controller
 
     public function categories()
     {
-        return response()->json(['data' => TemplateCategory::whereIn('slug', ['romantic', 'luxury', 'minimalist', 'traditional', 'garden', 'islamic', 'cinematic', 'vintage', 'destination', 'creative', 'modern'])->get()]);
+        return response()->json(['data' => TemplateCategory::whereIn('id', Template::where('status', 'ACTIVE')->select('category_id'))->orderBy('id')->get()]);
     }
 
     public function templates(Request $request)
@@ -69,7 +69,10 @@ class PublicController extends Controller
             ?? Wedding::where('is_demo', true)->firstOrFail())->loadContent();
         $wedding->setRelation('template', $template);
         $wedding->setAttribute('template_id', $template->id);
-        $type = $request->input('event_type', 'wedding');
+        $world = \App\Services\TemplateCatalog::worlds()[$template->template_key] ?? null;
+        $type = $request->input('event_type', ($world['category'] ?? '') === 'Kids & Birthday' ? 'birthday' : 'wedding');
+        // A fallback demo supplies photographs and events, not another template's copy.
+        if ($world) $wedding->fill(\App\Services\TemplateContent::initial($template->template_key));
         if ($type !== 'wedding') {
             $profile = InvitationEvent::profile($type);
             $wedding->event_type = $type;
@@ -81,6 +84,7 @@ class PublicController extends Controller
                 'honoree_name' => match ($type) {
                     'khitanan' => 'Ahmad Ibrahim', 'birthday' => 'Naila Ibrahim', 'aqiqah' => 'Amina Ibrahim', default => ''
                 },
+                'honoree_age' => $type === 'birthday' ? 7 : '',
                 'father_name' => $profile['honoree'] ? 'Bapak Ibrahim' : '', 'mother_name' => $profile['honoree'] ? 'Ibu Siti' : '',
                 'description' => 'Pratinjau contoh. Seluruh nama, jadwal, dan lokasi dapat disesuaikan dengan acara Anda.']);
             $wedding->fill(InvitationEvent::initial($type));

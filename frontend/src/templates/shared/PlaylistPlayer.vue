@@ -1,28 +1,75 @@
 <script setup>
 import { ref, inject } from 'vue'
-import { Music2, Pause, Play, SkipBack, SkipForward, ChevronUp } from 'lucide-vue-next'
+import {
+  Music2,
+  Pause,
+  Play,
+  SkipBack,
+  SkipForward,
+  ChevronUp,
+} from 'lucide-vue-next'
 const expanded = ref(false)
 const wedding = inject('wedding')
-const { playing, toggle, currentTrack, tracks, next, previous } = inject('weddingAudio')
+const {
+  playing,
+  toggle,
+  currentTrack,
+  tracks,
+  next,
+  previous,
+  volumeLevel,
+  setVolume,
+  muted,
+  toggleMute,
+} = inject('weddingAudio')
 </script>
 <template>
   <aside
     class="playlist-player"
-    :aria-label="wedding.isWedding ? 'Wedding music player' : 'Pemutar musik acara'"
+    :aria-label="
+      wedding.isWedding ? 'Wedding music player' : 'Pemutar musik acara'
+    "
   >
     <div v-if="expanded" class="playlist-details">
-      <small>{{ wedding.isWedding ? 'WEDDING SOUNDTRACK' : 'MUSIK ACARA' }}</small
+      <small>{{
+        wedding.isWedding ? 'WEDDING SOUNDTRACK' : 'MUSIK ACARA'
+      }}</small
       ><strong>{{ currentTrack?.title }}</strong
       ><span>{{ currentTrack?.artist }}</span>
       <div class="playlist-controls">
-        <button aria-label="Lagu sebelumnya" :disabled="tracks.length < 2" @click="previous">
+        <button
+          aria-label="Lagu sebelumnya"
+          :disabled="tracks.length < 2"
+          @click="previous"
+        >
           <SkipBack :size="18" /></button
-        ><button :aria-label="playing ? 'Pause music' : 'Play music'" @click="toggle">
+        ><button
+          :aria-label="playing ? 'Pause music' : 'Play music'"
+          @click="toggle"
+        >
           <Pause v-if="playing" :size="20" /><Play v-else :size="20" /></button
-        ><button aria-label="Lagu berikutnya" :disabled="tracks.length < 2" @click="next">
+        ><button
+          aria-label="Lagu berikutnya"
+          :disabled="tracks.length < 2"
+          @click="next"
+        >
           <SkipForward :size="18" />
         </button>
       </div>
+      <label class="playlist-volume"
+        >Volume {{ Math.round(volumeLevel * 100) }}%
+        <input
+          type="range"
+          min="0"
+          max="100"
+          :value="Math.round(volumeLevel * 100)"
+          aria-label="Volume musik"
+          @input="setVolume(Number($event.target.value) / 100)"
+        />
+      </label>
+      <button class="playlist-mute" :aria-pressed="muted" @click="toggleMute">
+        {{ muted ? 'Aktifkan suara' : 'Bisukan suara' }}
+      </button>
     </div>
     <div class="playlist-buttons">
       <button
@@ -44,6 +91,22 @@ const { playing, toggle, currentTrack, tracks, next, previous } = inject('weddin
   </aside>
 </template>
 <style>
+.playlist-volume {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+}
+.playlist-volume input {
+  width: 100%;
+  accent-color: var(--gold);
+}
+.playlist-mute {
+  min-height: 38px;
+  background: none;
+  color: inherit;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+}
 .playlist-player {
   position: fixed;
   right: max(14px, env(safe-area-inset-right));

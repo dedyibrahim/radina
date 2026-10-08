@@ -784,6 +784,13 @@ const marker = `cinematic-${useId().replaceAll(':', '')}`
         />
       </g>
     </svg>
+    <div
+      v-if="['jawa-pendopo', 'sunda-mountain'].includes(world.scene)"
+      class="regional-mist"
+      aria-hidden="true"
+    >
+      <i></i><i></i>
+    </div>
     <span class="scene-light-ray"></span>
     <div class="scene-particles">
       <i

@@ -17,6 +17,16 @@ class TemplateCatalog
         return json_decode(file_get_contents(config_path('cinematic-worlds.json')), true, 512, JSON_THROW_ON_ERROR);
     }
 
+    public static function availableWorlds(): array
+    {
+        return array_filter(self::worlds(), fn ($world) => ! ($world['retired'] ?? false));
+    }
+
+    public static function retiredKeys(): array
+    {
+        return array_keys(array_filter(self::worlds(), fn ($world) => $world['retired'] ?? false));
+    }
+
     public static function worldComponent(string $key): string
     {
         return preg_replace_callback('/(^|-)([a-z])/', fn ($match) => strtoupper($match[2]), $key).'.vue';
@@ -24,7 +34,7 @@ class TemplateCatalog
 
     public static function keys(): array
     {
-        return array_values(array_unique(array_merge(self::KEYS, array_keys(self::worlds()))));
+        return array_values(array_unique(array_merge(self::KEYS, array_keys(self::availableWorlds()))));
     }
 
     public static function components(): array

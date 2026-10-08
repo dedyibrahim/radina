@@ -82,15 +82,17 @@ export const templateOptions = [
     category: entry.category,
     component: entry.component,
   })),
-  ...Object.entries(cinematicWorlds).map(([value, entry]) => ({
-    value,
-    label: entry.name,
-    category: entry.category,
-    component: `${value
-      .split('-')
-      .map((part) => part[0].toUpperCase() + part.slice(1))
-      .join('')}.vue`,
-  })),
+  ...Object.entries(cinematicWorlds)
+    .filter(([, entry]) => !entry.retired)
+    .map(([value, entry]) => ({
+      value,
+      label: entry.name,
+      category: entry.category,
+      component: `${value
+        .split('-')
+        .map((part) => part[0].toUpperCase() + part.slice(1))
+        .join('')}.vue`,
+    })),
   { value: 'nur-jannah', label: 'Nur Jannah', component: 'NurJannah.vue' },
   {
     value: 'mihrab-emerald',

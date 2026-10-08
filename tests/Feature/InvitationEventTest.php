@@ -54,11 +54,43 @@ class InvitationEventTest extends TestCase
         return $data;
     }
 
+    public function test_regional_catalog_cleanup_preserves_used_templates_custom_prices_customers_and_licenses(): void
+    {
+        $jawa = Template::where('template_key', 'jawa-pendopo-pagi')->firstOrFail();
+        $sunda = Template::where('template_key', 'sunda-kabut-pegunungan')->firstOrFail();
+        $sunda->forceFill(['created_at' => now()->addMinute(), 'price' => 98765])->save();
+        $this->getJson('/api/templates')->assertOk()->assertJsonPath('data.0.template_key', $sunda->template_key);
+        $this->getJson('/api/templates?sort=newest')->assertOk()->assertJsonPath('data.0.template_key', $sunda->template_key);
+        $used = $jawa->replicate();
+        $used->fill(['slug' => 'bali-taman-air', 'template_key' => 'bali-taman-air'])->save();
+        $unused = $jawa->replicate();
+        $unused->fill(['slug' => 'minang-rumah-gadang', 'template_key' => 'minang-rumah-gadang'])->save();
+        $wedding = $this->invitation('office');
+        $wedding->update(['template_id' => $used->id]);
+        $order = Order::findOrFail($wedding->order_id);
+        $order->update(['template_id' => $used->id]);
+        $weddingSnapshot = $wedding->getRawOriginal();
+        $orderSnapshot = $order->getRawOriginal();
+        $guard = app(DeploymentLicenseGuard::class);
+        $licenses = $guard->backup(str_repeat('f', 40));
+        $migration = require database_path('migrations/2026_10_08_000003_focus_cinematic_catalog_on_jawa_and_sunda.php');
+        $migration->up(); $migration->up();
+        $this->seed(\Database\Seeders\RadinaSeeder::class);
+        $this->assertNull($unused->fresh());
+        $this->assertSame('DISABLED', $used->fresh()->status);
+        $this->assertSame($weddingSnapshot, $wedding->fresh()->getRawOriginal());
+        $this->assertSame($orderSnapshot, $order->fresh()->getRawOriginal());
+        $this->assertSame(98765, $sunda->fresh()->price);
+        $this->getJson('/api/templates?category=regional')->assertOk()->assertJsonPath('meta.total', 2);
+        $this->getJson('/api/templates/'.$used->slug.'/preview')->assertNotFound();
+        $guard->assertPreserved($licenses);
+    }
+
     public function test_cinematic_catalog_birthday_age_template_switch_and_repeat_migration_preserve_customer_data(): void
     {
-        $template = Template::where('template_key', 'anak-petualangan-laut')->firstOrFail();
+        $template = Template::where('template_key', 'jawa-pendopo-pagi')->firstOrFail();
         $beforeDemos = Wedding::where('is_demo', true)->get()->map->getRawOriginal()->all();
-        $this->getJson('/api/templates/'.$template->slug.'/preview')->assertOk()
+        $this->getJson('/api/templates/'.$template->slug.'/preview?event_type=birthday')->assertOk()
             ->assertJsonPath('data.event_type', 'birthday')->assertJsonPath('data.event_details.honoree_age', 7)
             ->assertJsonPath('data.bride', null);
         $this->assertSame($beforeDemos, Wedding::where('is_demo', true)->get()->map->getRawOriginal()->all());
@@ -71,7 +103,7 @@ class InvitationEventTest extends TestCase
         $wedding = Wedding::findOrFail($weddingId);
         $this->assertEquals(7, $wedding->event_details['honoree_age']);
         $payload = $this->payload($wedding);
-        $payload['template_id'] = Template::where('template_key', 'anak-kota-robot')->firstOrFail()->id;
+        $payload['template_id'] = Template::where('template_key', 'sunda-kabut-pegunungan')->firstOrFail()->id;
         $payload['event_details']['description'] = 'Pesan asli keluarga, tetap tersimpan.';
         $this->putJson('/api/admin/weddings/'.$weddingId, $payload)->assertOk()
             ->assertJsonPath('data.event_details.honoree_age', 7)

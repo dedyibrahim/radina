@@ -35,7 +35,7 @@
     "photo": "mountain-window",
     "typography": "quiet-editorial",
     "closing": "valley-dusk",
-    "effects": ["bubbles", "leaves", "birds"],
+    "effects": ["leaves", "birds", "sparkles"],
     "palette": {
       "background": "#dce8e1",
       "ink": "#28443c",
@@ -43,7 +43,9 @@
       "highlight": "#b8cfc6"
     },
     "price": 159000,
-    "composition": "panorama"
+    "composition": "panorama",
+    "plate": "sunda-pegunungan",
+    "thumbnail": "/images/cinematic/sunda-pegunungan-640.webp"
   },
   "bali-taman-air": {
     "name": "Taman Air Bali",
@@ -64,7 +66,8 @@
       "accent": "#a47745",
       "highlight": "#bad0a7"
     },
-    "price": 169000
+    "price": 169000,
+    "retired": true
   },
   "minang-rumah-gadang": {
     "name": "Rumah Gadang di Kaki Bukit",
@@ -86,7 +89,8 @@
       "highlight": "#d5b17a"
     },
     "price": 179000,
-    "composition": "heritage"
+    "composition": "heritage",
+    "retired": true
   },
   "betawi-kampung-taman": {
     "name": "Kampung Betawi",
@@ -108,7 +112,8 @@
       "highlight": "#e3bb73"
     },
     "price": 139000,
-    "composition": "journal"
+    "composition": "journal",
+    "retired": true
   },
   "bugis-pelayaran-senja": {
     "name": "Pelayaran Senja Bugis",
@@ -130,7 +135,8 @@
       "highlight": "#89bec1"
     },
     "price": 159000,
-    "composition": "panorama"
+    "composition": "panorama",
+    "retired": true
   },
   "melayu-istana-sungai": {
     "name": "Istana di Tepi Sungai",
@@ -152,7 +158,8 @@
       "highlight": "#c4b27e"
     },
     "price": 179000,
-    "composition": "heritage"
+    "composition": "heritage",
+    "retired": true
   },
   "papua-hutan-dataran-tinggi": {
     "name": "Hutan Dataran Tinggi Papua",
@@ -174,7 +181,8 @@
       "highlight": "#a9c590"
     },
     "price": 169000,
-    "composition": "journal"
+    "composition": "journal",
+    "retired": true
   },
   "maluku-pulau-senja": {
     "name": "Pulau Senja Maluku",
@@ -196,7 +204,8 @@
       "highlight": "#e3b77b"
     },
     "price": 159000,
-    "composition": "panorama"
+    "composition": "panorama",
+    "retired": true
   },
   "nusantara-horizon": {
     "name": "Cakrawala Nusantara",
@@ -218,7 +227,8 @@
       "highlight": "#b7b49a"
     },
     "price": 189000,
-    "composition": "panorama"
+    "composition": "panorama",
+    "retired": true
   },
   "anak-petualangan-laut": {
     "name": "Petualangan Laut Dalam",
@@ -243,7 +253,8 @@
     "price": 129000,
     "plate": "underwater",
     "composition": "adventure",
-    "thumbnail": "/images/cinematic/underwater-640.webp"
+    "thumbnail": "/images/cinematic/underwater-640.webp",
+    "retired": true
   },
   "anak-lembah-dinosaurus": {
     "name": "Lembah Dinosaurus",
@@ -265,7 +276,8 @@
       "accent": "#e8844d",
       "highlight": "#afc86a"
     },
-    "price": 139000
+    "price": 139000,
+    "retired": true
   },
   "anak-ekspedisi-angkasa": {
     "name": "Ekspedisi Angkasa",
@@ -288,7 +300,8 @@
       "highlight": "#787be0"
     },
     "price": 149000,
-    "composition": "mission"
+    "composition": "mission",
+    "retired": true
   },
   "anak-ekspedisi-hutan": {
     "name": "Ekspedisi Hutan",
@@ -310,7 +323,8 @@
       "accent": "#d99a54",
       "highlight": "#8cbd72"
     },
-    "price": 139000
+    "price": 139000,
+    "retired": true
   },
   "anak-istana-bulan": {
     "name": "Istana di Bawah Bulan",
@@ -333,7 +347,8 @@
       "highlight": "#d5b9ed"
     },
     "price": 159000,
-    "composition": "storybook"
+    "composition": "storybook",
+    "retired": true
   },
   "anak-negeri-permen": {
     "name": "Negeri Permen",
@@ -355,7 +370,8 @@
       "accent": "#ed8494",
       "highlight": "#f4c968"
     },
-    "price": 129000
+    "price": 129000,
+    "retired": true
   },
   "anak-taman-peri": {
     "name": "Taman Peri Kunang-Kunang",
@@ -378,7 +394,8 @@
       "highlight": "#d8cb82"
     },
     "price": 149000,
-    "composition": "storybook"
+    "composition": "storybook",
+    "retired": true
   },
   "anak-kota-pahlawan": {
     "name": "Kota Pahlawan Cilik",
@@ -401,7 +418,8 @@
       "highlight": "#f3c84f"
     },
     "price": 149000,
-    "composition": "mission"
+    "composition": "mission",
+    "retired": true
   },
   "anak-pesta-kebun": {
     "name": "Pesta Kebun Ceria",
@@ -423,7 +441,8 @@
       "accent": "#d87952",
       "highlight": "#e7bf5c"
     },
-    "price": 129000
+    "price": 129000,
+    "retired": true
   },
   "anak-pesta-bawah-laut": {
     "name": "Pesta Bawah Laut",
@@ -445,7 +464,8 @@
       "accent": "#f18b62",
       "highlight": "#79cfc0"
     },
-    "price": 139000
+    "price": 139000,
+    "retired": true
   },
   "palembang-songket-senja": {
     "name": "Songket Senja Palembang",
@@ -468,7 +488,8 @@
     "description": "Rumah limas di tepian sungai, cahaya tembaga dan detail anyaman geometris.",
     "effects": ["leaves", "sparkles"],
     "composition": "heritage",
-    "environmentAsset": "palembang-limas"
+    "environmentAsset": "palembang-limas",
+    "retired": true
   },
   "batak-danau-toba": {
     "name": "Danau Toba Batak",
@@ -491,7 +512,8 @@
     "description": "Rumah Bolon beratap melengkung di tepi danau yang tenang.",
     "effects": ["leaves", "sparkles"],
     "composition": "panorama",
-    "environmentAsset": "batak-bolon"
+    "environmentAsset": "batak-bolon",
+    "retired": true
   },
   "aceh-serambi-pagi": {
     "name": "Serambi Pagi Aceh",
@@ -514,7 +536,8 @@
     "description": "Serambi rumah panggung Aceh dalam cahaya pagi dengan detail kayu dan taman.",
     "effects": ["leaves", "sparkles"],
     "composition": "heritage",
-    "environmentAsset": "aceh-serambi"
+    "environmentAsset": "aceh-serambi",
+    "retired": true
   },
   "dayak-rumah-panjang": {
     "name": "Rumah Panjang Dayak",
@@ -537,7 +560,8 @@
     "description": "Hunian memanjang yang terinspirasi Radakng, dinaungi hutan hijau berlapis.",
     "effects": ["leaves", "sparkles"],
     "composition": "sanctuary",
-    "environmentAsset": "dayak-longhouse"
+    "environmentAsset": "dayak-longhouse",
+    "retired": true
   },
   "banjar-romansa-sungai": {
     "name": "Romansa Sungai Banjar",
@@ -560,7 +584,8 @@
     "description": "Atap bubungan tinggi, panggung kayu dan bayangan lembut di atas sungai.",
     "effects": ["leaves", "sparkles"],
     "composition": "sanctuary",
-    "environmentAsset": "banjar-river"
+    "environmentAsset": "banjar-river",
+    "retired": true
   },
   "sasak-lombok-tenang": {
     "name": "Lombok Tenang Sasak",
@@ -583,7 +608,8 @@
     "description": "Bale beratap alang-alang dan tanah hangat dengan latar perbukitan Lombok.",
     "effects": ["leaves", "sparkles"],
     "composition": "journal",
-    "environmentAsset": "sasak-bale"
+    "environmentAsset": "sasak-bale",
+    "retired": true
   },
   "toraja-dataran-tinggi": {
     "name": "Dataran Tinggi Toraja",
@@ -606,7 +632,8 @@
     "description": "Siluet atap Tongkonan yang melengkung di antara lapisan perbukitan.",
     "effects": ["leaves", "sparkles"],
     "composition": "heritage",
-    "environmentAsset": "toraja-highland"
+    "environmentAsset": "toraja-highland",
+    "retired": true
   },
   "madura-tanean-hangat": {
     "name": "Tanean Hangat Madura",
@@ -629,7 +656,8 @@
     "description": "Deretan rumah dan halaman panjang, suasana pertemuan keluarga yang akrab.",
     "effects": ["leaves", "sparkles"],
     "composition": "journal",
-    "environmentAsset": "madura-courtyard"
+    "environmentAsset": "madura-courtyard",
+    "retired": true
   },
   "lampung-serambi-ramah": {
     "name": "Serambi Ramah Lampung",
@@ -652,7 +680,8 @@
     "description": "Serambi rumah panggung Lampung dan tangga penyambutan dalam warna hangat.",
     "effects": ["leaves", "sparkles"],
     "composition": "heritage",
-    "environmentAsset": "lampung-veranda"
+    "environmentAsset": "lampung-veranda",
+    "retired": true
   },
   "ntt-savanna-sumba": {
     "name": "Savanna Sumba NTT",
@@ -675,7 +704,8 @@
     "description": "Perbukitan savanna dan siluet rumah beratap menjulang yang terinspirasi Sumba.",
     "effects": ["leaves", "sparkles"],
     "composition": "panorama",
-    "environmentAsset": "ntt-savanna"
+    "environmentAsset": "ntt-savanna",
+    "retired": true
   },
   "anak-pulau-harta": {
     "name": "Pulau Harta Karun",
@@ -699,7 +729,8 @@
     "effects": ["balloons", "confetti"],
     "composition": "adventure",
     "environmentAsset": "kids-treasure-island",
-    "mascot": "original-sea-friends"
+    "mascot": "original-sea-friends",
+    "retired": true
   },
   "anak-kota-robot": {
     "name": "Kota Robot Ceria",
@@ -723,7 +754,8 @@
     "effects": ["balloons", "confetti"],
     "composition": "mission",
     "environmentAsset": "kids-robot-workshop",
-    "mascot": "original-robot"
+    "mascot": "original-robot",
+    "retired": true
   },
   "anak-sirkuit-pelangi": {
     "name": "Sirkuit Pelangi",
@@ -747,7 +779,8 @@
     "effects": ["balloons", "confetti"],
     "composition": "mission",
     "environmentAsset": "kids-racing-track",
-    "mascot": "original-racer"
+    "mascot": "original-racer",
+    "retired": true
   },
   "anak-kampung-ceria": {
     "name": "Kampung Ceria",
@@ -771,7 +804,8 @@
     "effects": ["balloons", "confetti"],
     "composition": "adventure",
     "environmentAsset": "kids-indonesian-village",
-    "mascot": "original-village-friend"
+    "mascot": "original-village-friend",
+    "retired": true
   },
   "anak-pulau-tropis": {
     "name": "Liburan Pulau Tropis",
@@ -795,7 +829,8 @@
     "effects": ["balloons", "confetti"],
     "composition": "adventure",
     "environmentAsset": "kids-tropical-island",
-    "mascot": "original-fish"
+    "mascot": "original-fish",
+    "retired": true
   },
   "anak-buku-ajaib": {
     "name": "Buku Cerita Ajaib",
@@ -819,6 +854,7 @@
     "effects": ["balloons", "confetti"],
     "composition": "storybook",
     "environmentAsset": "kids-enchanted-book",
-    "mascot": "original-owl"
+    "mascot": "original-owl",
+    "retired": true
   }
 }

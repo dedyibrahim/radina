@@ -219,10 +219,13 @@ async function context(options) {
       data = wedding('romantic-floral')
     else if (/^\/api\/templates\/[^/]+\/preview$/.test(path)) {
       const key = path.split('/')[3]
-      data = wedding(key, new URL(route.request().url()).searchParams.get('event_type') || (key.startsWith('anak-') ? 'birthday' : 'wedding'))
+      data = wedding(
+        key,
+        new URL(route.request().url()).searchParams.get('event_type') ||
+          (key.startsWith('anak-') ? 'birthday' : 'wedding'),
+      )
       data.is_demo = true
-    }
-    else if (
+    } else if (
       path.startsWith('/api/weddings/visual-') &&
       !/\/(visits|wishes|rsvps)$/.test(path)
     )
@@ -263,35 +266,74 @@ if (process.env.RADINA_CINEMATIC_PREVIEW === '1') {
   try {
     const c = await context({ viewport: { width: 1280, height: 900 } })
     const p = await c.newPage()
-    for (const key of ['jawa-pendopo-pagi', 'golden-atelier', 'anak-petualangan-laut']) {
+    for (const key of ['jawa-pendopo-pagi', 'sunda-kabut-pegunungan']) {
       await p.goto(`${base}/templates/${key}/preview?to=Dedy%20Ibrahim`)
       const frame = p.frameLocator('.admin-preview-frame')
-      await expect(frame.locator('.cinematic-opening')).toHaveAttribute('data-reveal', 'READY')
-      await expect(frame.locator('.cinematic-opening')).toContainText('Dedy Ibrahim')
-      if (key.startsWith('anak-')) await expect(frame.locator('.cinematic-opening')).toContainText('Merayakan usia ke-7')
+      await expect(frame.locator('.cinematic-opening')).toHaveAttribute(
+        'data-reveal',
+        'READY',
+      )
+      await expect(frame.locator('.cinematic-opening')).toContainText(
+        'Dedy Ibrahim',
+      )
+      if (key.startsWith('anak-'))
+        await expect(frame.locator('.cinematic-opening')).toContainText(
+          'Merayakan usia ke-7',
+        )
       await p.getByRole('button', { name: 'Mobile', exact: true }).click()
-      await expect(p.locator('.wedding-preview-canvas')).toHaveClass(/preview-device-mobile/)
+      await expect(p.locator('.wedding-preview-canvas')).toHaveClass(
+        /preview-device-mobile/,
+      )
       await p.getByRole('button', { name: 'Animasi ON', exact: true }).click()
       await expect(frame.locator('.wedding-page')).toHaveClass(/motion-off/)
-      await frame.getByRole('button', { name: /^(Buka Undangan|Mulai Petualangan)$/ }).click()
+      await frame
+        .getByRole('button', { name: /^(Buka Undangan|Mulai Petualangan)$/ })
+        .click()
       await expect(frame.locator('.opening-stage')).toHaveCount(0)
-      await frame.getByRole('button', { name: 'Detail playlist', exact: true }).click()
-      const volume = frame.getByRole('slider', { name: 'Volume musik', exact: true })
-      await volume.evaluate((input) => { input.value = '25'; input.dispatchEvent(new Event('input', { bubbles: true })) })
+      await frame
+        .getByRole('button', { name: 'Detail playlist', exact: true })
+        .click()
+      const volume = frame.getByRole('slider', {
+        name: 'Volume musik',
+        exact: true,
+      })
+      await volume.evaluate((input) => {
+        input.value = '25'
+        input.dispatchEvent(new Event('input', { bubbles: true }))
+      })
       await expect(frame.locator('.playlist-volume')).toContainText('25%')
-      const inner = p.frames().find(f => f !== p.mainFrame())
-      await inner.evaluate(() => { window.audioInstance.currentTime = 42 })
-      await frame.getByRole('button', { name: 'Bisukan suara', exact: true }).click()
+      const inner = p.frames().find((f) => f !== p.mainFrame())
+      await inner.evaluate(() => {
+        window.audioInstance.currentTime = 42
+      })
+      await frame
+        .getByRole('button', { name: 'Bisukan suara', exact: true })
+        .click()
       assert.equal(await inner.evaluate(() => window.audioInstance.muted), true)
-      assert.equal(await inner.evaluate(() => window.audioInstance.volume), 0.25)
-      await frame.getByRole('button', { name: 'Aktifkan suara', exact: true }).click()
+      assert.equal(
+        await inner.evaluate(() => window.audioInstance.volume),
+        0.25,
+      )
+      await frame
+        .getByRole('button', { name: 'Aktifkan suara', exact: true })
+        .click()
       for (const id of ['gallery', 'gift', 'rsvp']) {
-        await frame.locator('#'+id).scrollIntoViewIfNeeded()
+        await frame.locator('#' + id).scrollIntoViewIfNeeded()
         await expect(frame.locator('.opening-stage')).toHaveCount(0)
       }
-      assert.equal(await inner.evaluate(() => window.audioInstance.currentTime), 42)
-      assert.equal(await inner.evaluate(() => window.audioEvents.filter(e => e.action === 'create').length), 1)
-      await p.getByRole('button', { name: 'Preview Cover', exact: true }).click()
+      assert.equal(
+        await inner.evaluate(() => window.audioInstance.currentTime),
+        42,
+      )
+      assert.equal(
+        await inner.evaluate(
+          () => window.audioEvents.filter((e) => e.action === 'create').length,
+        ),
+        1,
+      )
+      await p
+        .getByRole('button', { name: 'Preview Cover', exact: true })
+        .click()
       await expect(frame.locator('.opening-stage')).toBeVisible()
       await p.screenshot({ path: `${dir}/${key}-public-preview.png` })
       console.log('Preview, replay, volume and navigation passed:', key)
@@ -300,18 +342,17 @@ if (process.env.RADINA_CINEMATIC_PREVIEW === '1') {
     }
     await c.close()
     assert.deepEqual(errors, [])
-  } finally { await browser.close(); server.close() }
+  } finally {
+    await browser.close()
+    server.close()
+  }
   process.exit(0)
 }
 if (process.env.RADINA_VISUAL_SLICE === '1') {
   try {
     const c = await context({ viewport: { width: 390, height: 844 } })
     const p = await c.newPage()
-    for (const key of [
-      'jawa-pendopo-pagi',
-      'golden-atelier',
-      'anak-petualangan-laut',
-    ]) {
+    for (const key of ['jawa-pendopo-pagi', 'sunda-kabut-pegunungan']) {
       eventTypeFixture = key.startsWith('anak-') ? 'birthday' : 'wedding'
       for (const width of [
         320, 360, 375, 390, 414, 430, 768, 1024, 1280, 1440,

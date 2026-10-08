@@ -30,7 +30,7 @@ class RadinaSeeder extends Seeder
                 'features' => ['Playlist musik', 'RSVP & ucapan', 'Wedding gift', 'CMS bersama', 'Galeri interaktif', 'Responsive'],
             ]);
         }
-        foreach (TemplateCatalog::worlds() as $key => $entry) {
+        foreach (TemplateCatalog::availableWorlds() as $key => $entry) {
             $category = TemplateCategory::firstOrCreate(['slug' => strtolower(str_replace(' & ', '-', $entry['category']))], ['name' => $entry['category']]);
             Template::firstOrCreate(['slug' => $key], [
                 'template_key' => $key, 'component_name' => TemplateCatalog::worldComponent($key),

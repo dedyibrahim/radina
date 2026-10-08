@@ -36,7 +36,7 @@ const displayedTemplates = computed(() =>
 const platform = usePlatformStore(),
   search = ref(''),
   category = ref(route.query.category || ''),
-  sort = ref('popular'),
+  sort = ref('newest'),
   templates = ref([]),
   loading = ref(true),
   error = ref(''),
@@ -60,7 +60,9 @@ async function load(append = false) {
       },
     })
     if (current !== sequence) return
-    templates.value = append ? [...templates.value, ...result.data.data] : result.data.data
+    templates.value = append
+      ? [...templates.value, ...result.data.data]
+      : result.data.data
     hasMore.value = result.data.meta.current_page < result.data.meta.last_page
   } catch (e) {
     if (current === sequence) error.value = errorMessage(e)
@@ -106,7 +108,11 @@ useSeo(() => ({
     <div class="market-toolbar">
       <label class="form-field"
         >Jenis acara<select v-model="eventType" aria-label="Jenis acara">
-          <option v-for="option in eventOptions" :key="option.value" :value="option.value">
+          <option
+            v-for="option in eventOptions"
+            :key="option.value"
+            :value="option.value"
+          >
             {{ option.label }}
           </option>
         </select></label
@@ -124,10 +130,14 @@ useSeo(() => ({
       </select>
     </div>
     <div class="category-tabs">
-      <button :class="{ selected: favoritesOnly }" @click="favoritesOnly = !favoritesOnly">
+      <button
+        :class="{ selected: favoritesOnly }"
+        @click="favoritesOnly = !favoritesOnly"
+      >
         ♡ Favorit saya
       </button>
-      <button :class="{ selected: !category }" @click="category = ''">Semua</button
+      <button :class="{ selected: !category }" @click="category = ''">
+        Semua</button
       ><button
         v-for="cat in platform.categories"
         :key="cat.id"
@@ -162,7 +172,9 @@ useSeo(() => ({
     </p>
     <div v-if="comparison.length" class="comparison-tray">
       <span>{{ comparison.length }} / 3 desain dipilih</span
-      ><button class="p-button" @click="showComparison = true">Bandingkan</button>
+      ><button class="p-button" @click="showComparison = true">
+        Bandingkan
+      </button>
     </div>
     <TemplateComparison
       :open="showComparison"

@@ -27,12 +27,12 @@ class PublicController extends Controller
 
     public function categories()
     {
-        return response()->json(['data' => TemplateCategory::whereIn('id', Template::where('status', 'ACTIVE')->select('category_id'))->orderBy('id')->get()]);
+        return response()->json(['data' => TemplateCategory::whereIn('id', Template::where('status', 'ACTIVE')->whereNotIn('template_key', \App\Services\TemplateCatalog::retiredKeys())->select('category_id'))->orderBy('id')->get()]);
     }
 
     public function templates(Request $request)
     {
-        $query = Template::with('category')->where('status', 'ACTIVE');
+        $query = Template::with('category')->where('status', 'ACTIVE')->whereNotIn('template_key', \App\Services\TemplateCatalog::retiredKeys());
         if ($request->boolean('favorites')) {
             $data = $request->validate(['favorite_keys' => 'sometimes|array|max:100', 'favorite_keys.*' => 'string|max:80']);
             $query->whereIn('template_key', $data['favorite_keys'] ?? []);
@@ -49,8 +49,8 @@ class PublicController extends Controller
         }
         match ($request->input('sort')) {
             'popular' => $query->orderByDesc(Order::selectRaw('count(*)')->whereColumn('template_id', 'templates.id')->where('is_demo', false)->where('status', '!=', 'CANCELLED')->whereHas('payment', fn ($p) => $p->where('status', 'PAID')))->orderByDesc('is_featured')->orderBy('id'),
-            'newest' => $query->latest(),
-            'price-asc' => $query->orderBy('price'),'price-desc' => $query->orderByDesc('price'),default => $query->orderByDesc('is_featured')->latest()
+            'newest' => $query->latest()->orderByDesc('id'),
+            'price-asc' => $query->orderBy('price'),'price-desc' => $query->orderByDesc('price'),default => $query->latest()->orderByDesc('id')
         };
 
         return TemplateResource::collection($query->paginate(9));
@@ -58,13 +58,13 @@ class PublicController extends Controller
 
     public function template(string $slug)
     {
-        return new TemplateResource(Template::with('category')->where('slug', $slug)->where('status', 'ACTIVE')->firstOrFail());
+        return new TemplateResource(Template::with('category')->where('slug', $slug)->where('status', 'ACTIVE')->whereNotIn('template_key', \App\Services\TemplateCatalog::retiredKeys())->firstOrFail());
     }
 
     public function demo(Request $request, string $slug)
     {
         $request->validate(['event_type' => ['sometimes', \Illuminate\Validation\Rule::in(array_keys(InvitationEvent::types()))]]);
-        $template = Template::with('category')->where('slug', $slug)->where('status', 'ACTIVE')->firstOrFail();
+        $template = Template::with('category')->where('slug', $slug)->where('status', 'ACTIVE')->whereNotIn('template_key', \App\Services\TemplateCatalog::retiredKeys())->firstOrFail();
         $wedding = (Wedding::where('is_demo', true)->where('slug', 'radina-demo-'.$template->template_key)->first()
             ?? Wedding::where('is_demo', true)->firstOrFail())->loadContent();
         $wedding->setRelation('template', $template);
@@ -122,7 +122,7 @@ class PublicController extends Controller
                 $data['groom_name'] = '';
             }
             $template = Template::lockForUpdate()->findOrFail($data['template_id']);
-            abort_unless($template->status === 'ACTIVE', 422, 'Template sudah tidak aktif.');
+            abort_unless($template->status === 'ACTIVE' && ! in_array($template->template_key, \App\Services\TemplateCatalog::retiredKeys(), true), 422, 'Template sudah tidak aktif.');
             $pricing = app(\App\Services\OrderPricingService::class)->calculate($template, $data['package_id'] ?? null, $data['addon_ids'] ?? []);
             abort_if(isset($data['expected_total']) && (int) $data['expected_total'] !== $pricing['total'], 409, 'Harga berubah. Periksa kembali ringkasan pesanan.');
             $packageId = $data['package_id'] ?? null;

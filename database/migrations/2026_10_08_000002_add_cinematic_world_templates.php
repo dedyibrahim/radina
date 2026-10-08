@@ -10,7 +10,7 @@ return new class extends Migration
     public function up(): void
     {
         $now = now();
-        foreach (TemplateCatalog::worlds() as $key => $world) {
+        foreach (TemplateCatalog::availableWorlds() as $key => $world) {
             $categorySlug = Str::slug($world['category']);
             $categoryId = DB::table('template_categories')->where('slug', $categorySlug)->value('id');
             if (! $categoryId) {

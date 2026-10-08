@@ -10,7 +10,7 @@ class AdminTemplateController extends Controller
 {
     public function index()
     {
-        return TemplateResource::collection(Template::with('category')->latest()->get());
+        return TemplateResource::collection(Template::with('category')->whereNotIn('template_key', \App\Services\TemplateCatalog::retiredKeys())->latest()->orderByDesc('id')->get());
     }
 
     public function store(SaveTemplateRequest $request)

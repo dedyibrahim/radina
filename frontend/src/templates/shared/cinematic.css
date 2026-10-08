@@ -1,4 +1,4 @@
-﻿/* World layers use the invitation container, not the desktop viewport. */
+ï»¿/* World layers use the invitation container, not the desktop viewport. */
 .wedding-page.cinematic-world-template .invitation-shell {
   container-type: inline-size;
 }
@@ -1034,4 +1034,70 @@
 }
 .wedding-page[data-world='golden-atelier'] {
   --paper: #30251c;
+}
+
+/* Detailed regional artwork has its own drifting atmosphere. */
+.regional-mist {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.regional-mist i {
+  position: absolute;
+  left: -25%;
+  top: 57%;
+  width: 150%;
+  height: 18%;
+  background: radial-gradient(ellipse, #fffaf070, transparent 68%);
+  filter: blur(14px);
+  opacity: 0.48;
+}
+.regional-mist i + i {
+  top: 74%;
+  opacity: 0.25;
+  transform: translateX(12%);
+}
+.cinematic-scene[data-active='true'] .regional-mist i {
+  animation: regional-mist-drift 24s ease-in-out infinite alternate;
+}
+.cinematic-scene[data-active='true'] .regional-mist i + i {
+  animation-duration: 32s;
+  animation-direction: alternate-reverse;
+}
+@keyframes regional-mist-drift {
+  from {
+    transform: translateX(-9%);
+  }
+  to {
+    transform: translateX(9%);
+  }
+}
+.wedding-page.cinematic-world-template
+  .cinematic-opening[data-scene='sunda-mountain']
+  .cinematic-opening__portrait {
+  width: 140px;
+  aspect-ratio: 1.12;
+  border-radius: 80px 80px 4px 4px;
+  border: 3px solid #fffaf0b3;
+}
+.wedding-page.cinematic-world-template
+  .cinematic-opening:is(
+    [data-scene='jawa-pendopo'],
+    [data-scene='sunda-mountain']
+  )
+  .cinematic-opening__invite {
+  align-self: end;
+  padding: 12px 16px;
+  width: auto;
+  max-width: 100%;
+  border: 1px solid #fffaf077;
+  border-radius: 10px;
+  background: #fffaf0df;
+  box-shadow: 0 8px 24px #20352418;
+}
+@media (prefers-reduced-motion: reduce) {
+  .regional-mist i {
+    animation: none !important;
+  }
 }

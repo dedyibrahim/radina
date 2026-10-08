@@ -186,6 +186,9 @@ function normalize(data) {
   result.settings.enable_parents ??= true
   result.settings.enable_family ??= result.settings.enable_parents
   result.settings.enable_social ??= true
+  result.settings.motion_intensity ??= 'cinematic'
+  result.settings.enable_auto_journey ??= false
+  result.settings.auto_journey_speed ??= 'slow'
   result.section_content ||= {}
   result.music.playlist ||= []
   result.gift_methods ||= []
@@ -475,7 +478,11 @@ watch(tab, (value) => {
               v-model="form[field[0]]"
               :label="field[1]"
               :type="field[2]"
-              :help="field[0] === 'quote' ? 'Gunakan Enter atau /n untuk memisahkan teks Arab dan artinya ke baris baru.' : undefined"
+              :help="
+                field[0] === 'quote'
+                  ? 'Gunakan Enter atau /n untuk memisahkan teks Arab dan artinya ke baris baru.'
+                  : undefined
+              "
               :required="field[0] === 'title'"
             /><FormField
               v-model="form.slug"
@@ -551,8 +558,8 @@ watch(tab, (value) => {
           <div v-if="isWedding" class="couple-visibility repeater-card">
             <h3>Tampilan pada undangan</h3>
             <p class="panel-subtitle">
-              Berlaku untuk kedua pengantin. Data tetap tersimpan ketika disembunyikan.
-              Klik Simpan untuk menerapkan perubahan.
+              Berlaku untuk kedua pengantin. Data tetap tersimpan ketika
+              disembunyikan. Klik Simpan untuk menerapkan perubahan.
             </p>
             <label class="toggle-row">
               <span>Tampilkan orang tua</span>
@@ -648,15 +655,26 @@ watch(tab, (value) => {
             </div>
             <label class="toggle-row">
               <span>Tampilkan acara di undangan</span>
-              <input v-model="event.is_visible" type="checkbox" role="switch" :disabled="pending" />
+              <input
+                v-model="event.is_visible"
+                type="checkbox"
+                role="switch"
+                :disabled="pending"
+              />
             </label>
             <label class="toggle-row">
               <span>Tampilkan lokasi di Meet us here</span>
-              <input v-model="event.show_on_map" type="checkbox" role="switch" :disabled="pending || !event.is_visible" />
+              <input
+                v-model="event.show_on_map"
+                type="checkbox"
+                role="switch"
+                :disabled="pending || !event.is_visible"
+              />
             </label>
             <p class="panel-subtitle">
-              Data tetap tersimpan saat acara disembunyikan. Aktifkan lokasi yang ingin tampil
-              di bagian Lokasi (Meet us here), lalu klik Simpan.
+              Data tetap tersimpan saat acara disembunyikan. Aktifkan lokasi
+              yang ingin tampil di bagian Lokasi (Meet us here), lalu klik
+              Simpan.
             </p>
             <div class="form-grid">
               <FormField
@@ -893,10 +911,32 @@ watch(tab, (value) => {
             :key="key"
             class="toggle-row"
             ><span>{{ label }}</span
-            ><input
-              v-model="form.settings[`enable_${key}`]"
-              type="checkbox" /></label
-        ></template>
+            ><input v-model="form.settings[`enable_${key}`]" type="checkbox"
+          /></label>
+          <h3>Pengalaman undangan</h3>
+          <label class="form-field"
+            >Intensitas gerak
+            <select v-model="form.settings.motion_intensity">
+              <option value="off">Off</option>
+              <option value="soft">Soft</option>
+              <option value="cinematic">Cinematic</option>
+            </select>
+          </label>
+          <label class="toggle-row"
+            ><span>Izinkan Auto Journey</span>
+            <input
+              v-model="form.settings.enable_auto_journey"
+              type="checkbox"
+            />
+          </label>
+          <label v-if="form.settings.enable_auto_journey" class="form-field"
+            >Kecepatan Auto Journey
+            <select v-model="form.settings.auto_journey_speed">
+              <option value="slow">Pelan</option>
+              <option value="normal">Normal</option>
+            </select>
+          </label></template
+        >
         <template v-else-if="tab === 'template'"
           ><div class="panel-title">
             <h2>Template Radina</h2>

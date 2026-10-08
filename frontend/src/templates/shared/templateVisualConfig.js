@@ -68,6 +68,7 @@ export const visualProfiles = {
   luxury: {
     ornamentFamily: 'luxury',
     ornament: 'pearl',
+    secondaryOrnament: 'silk',
     texture: 'silk',
     photoFrame: 'floating',
     openingEffect: 'curtain',
@@ -98,6 +99,7 @@ export const visualProfiles = {
   islamic: {
     ornamentFamily: 'islamic',
     ornament: 'arabesque',
+    secondaryOrnament: 'arch',
     texture: 'paper',
     photoFrame: 'arch',
     openingEffect: 'arch',
@@ -113,6 +115,7 @@ export const visualProfiles = {
   nusantara: {
     ornamentFamily: 'nusantara',
     ornament: 'kawung',
+    secondaryOrnament: 'songket',
     texture: 'woven',
     photoFrame: 'carved',
     openingEffect: 'gate',
@@ -214,6 +217,108 @@ export const visualProfiles = {
     depthIntensity: 0.5,
     parallaxIntensity: 0.25,
     animations: ['bloom', 'drift', 'rise'],
+  },
+}
+// Motion belongs to the design identity. New templates inherit it from their
+// visual profile and may replace individual fields in `visual.motionProfile`.
+export const motionProfiles = {
+  floral: {
+    environment: 'garden',
+    foreground: 'flower',
+    particle: 'petal',
+    openingType: 'floral-curtain',
+    ambient: 'soft',
+  },
+  garden: {
+    environment: 'garden',
+    foreground: 'leaf',
+    particle: 'petal',
+    openingType: 'garden-gate',
+    ambient: 'soft',
+  },
+  luxury: {
+    environment: 'silk',
+    foreground: 'fabric',
+    particle: 'dust',
+    openingType: 'silk-curtain',
+    ambient: 'slow',
+  },
+  minimalist: {
+    environment: 'architectural',
+    foreground: 'geometry',
+    particle: 'none',
+    openingType: 'panels',
+    ambient: 'slow',
+  },
+  islamic: {
+    environment: 'arch',
+    foreground: 'lantern',
+    particle: 'light',
+    openingType: 'arch',
+    ambient: 'slow',
+  },
+  nusantara: {
+    environment: 'textile',
+    foreground: 'pattern',
+    particle: 'dust',
+    openingType: 'gate',
+    ambient: 'slow',
+  },
+  cinematic: {
+    environment: 'film',
+    foreground: 'light',
+    particle: 'dust',
+    openingType: 'film-light',
+    ambient: 'slow',
+  },
+  celestial: {
+    environment: 'night',
+    foreground: 'star',
+    particle: 'star',
+    openingType: 'night-sky',
+    ambient: 'slow',
+  },
+  vintage: {
+    environment: 'paper',
+    foreground: 'letter',
+    particle: 'dust',
+    openingType: 'envelope',
+    ambient: 'slow',
+  },
+  coastal: {
+    environment: 'coast',
+    foreground: 'wave',
+    particle: 'light',
+    openingType: 'wave',
+    ambient: 'soft',
+  },
+  modern: {
+    environment: 'glass',
+    foreground: 'reflection',
+    particle: 'light',
+    openingType: 'glass',
+    ambient: 'slow',
+  },
+  playful: {
+    environment: 'paper',
+    foreground: 'ribbon',
+    particle: 'petal',
+    openingType: 'paper',
+    ambient: 'soft',
+  },
+  classical: {
+    environment: 'hall',
+    foreground: 'curtain',
+    particle: 'dust',
+    openingType: 'royal-curtain',
+    ambient: 'slow',
+  },
+  oriental: {
+    environment: 'bamboo',
+    foreground: 'leaf',
+    particle: 'petal',
+    openingType: 'paper',
+    ambient: 'soft',
   },
 }
 const categories = {
@@ -346,7 +451,7 @@ export function visualConfigFor(key, context = {}) {
       collection.layout || collection.family || context.design || 'original',
     galleryStyle: preset.gallery_style || 'original',
     ornament: artOrnaments[collection.art] || profile.ornament,
-    secondaryOrnament: profile.ornament,
+    secondaryOrnament: profile.secondaryOrnament || profile.ornament,
     photoFrame: frames[collection.family] || profile.photoFrame,
     openingEffect: openings[collection.family] || profile.openingEffect,
     ...(collection.art === 'dunes'
@@ -369,6 +474,10 @@ export function visualConfigFor(key, context = {}) {
     variant: variant % 6,
     particleType: (collection.motion || preset.motion || ['sparkles'])[0],
     ...overrides,
+    motionProfile: {
+      ...motionProfiles[personality],
+      ...(overrides.motionProfile || {}),
+    },
   }
 }
 export const templateVisualConfig = Object.fromEntries(

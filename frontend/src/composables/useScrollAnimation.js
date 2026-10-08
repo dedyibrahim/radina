@@ -7,7 +7,9 @@ export function useScrollAnimation() {
     const root = visual?.root.value
     if (!root) return
     const lite =
-      visual.performance.quality.value === 'lite' || !visual.motion.value
+      visual.performance.quality.value === 'lite' ||
+      !visual.motion.value ||
+      visual.intensity?.value !== 'cinematic'
     for (const element of root.querySelectorAll('[data-reveal]')) {
       if (lite) {
         element.classList.remove('reveal-ready')
@@ -57,7 +59,10 @@ export function useScrollAnimation() {
         childList: true,
         subtree: true,
       })
-      stopWatch = watch([visual.performance.quality, visual.motion], discover)
+      stopWatch = watch(
+        [visual.performance.quality, visual.motion, visual.intensity],
+        discover,
+      )
     }
   })
   onUnmounted(() => {

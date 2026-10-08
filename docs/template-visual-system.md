@@ -35,6 +35,10 @@ developer-managed `visual` object to its preset, Studio or Atelier definition:
 
 The configuration controls ornaments, materials, opening and reveal motion,
 photo details, dividers and music skin. It does not choose or replace the layout.
+`motionProfile` adds a shared living environment, foreground material, particle
+type and opening sequence. Each of the current catalog personalities has its own
+motion language; a new template inherits one from its category and may override
+individual fields without changing `WeddingExperience`.
 All audio remains in the single `useAudio` instance provided by WeddingRenderer.
 The click silently prepares that same element; audible playback starts after
 the cover leaves. Section navigation still calls `scrollIntoView()`.
@@ -60,6 +64,22 @@ reported memory/core counts and data-saving preference are used locally.
 Nothing is recorded or sent for device detection. Offscreen decorations pause;
 document visibility and the existing Animasi button pause the experience.
 SVG/paper/linen/silk textures stay subtle. Content is never hidden in LITE.
+
+Admin Pengaturan includes Motion Off/Soft/Cinematic and an optional Auto Journey
+switch with Slow/Normal speed. Auto Journey never starts without a guest click.
+It pauses immediately for wheel, touch, keyboard or interactive controls, waits
+at story/couple/event, and hands control to the guest at gallery, gift, RSVP and
+wishes. It resumes only when the guest presses Lanjutkan perjalanan. Reduced
+motion and the Animasi Off control disable it. A small progress line stays by
+its button. Browser navigation never remounts the audio engine.
+
+The living scene has six decorative planes, with cloud movement, wind-driven
+botanical/flower motion, occasional profile-specific flecks and drifting light.
+All use CSS transform/opacity, bounded parallax and the existing observer based
+visibility management. Curtain/gate/panel openings render only for appropriate
+profiles. The persistent data, customer approval and license logic stay in the
+existing shared Laravel and Vue services. Default settings leave earlier
+approval fingerprints valid; a changed presentation requires review.
 
 Admin preview embeds the same authenticated preview route in a single iframe.
 Desktop/Tablet/Mobile resize its viewport without changing `src` or recreating

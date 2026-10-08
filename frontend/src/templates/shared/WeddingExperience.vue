@@ -16,14 +16,19 @@ import FloatingOrnament from '../../components/wedding/effects/FloatingOrnament.
 import VisualAtmosphere from '../../components/wedding/effects/VisualAtmosphere.vue'
 import CoupleMonogram from '../../components/wedding/effects/CoupleMonogram.vue'
 import SceneMotion from './SceneMotion.vue'
+import AutoJourney from '../../components/wedding/effects/AutoJourney.vue'
+import CurtainOpening from '../../components/wedding/effects/CurtainOpening.vue'
 import { useWedding } from '../../composables/useWedding'
 import { getGuestName } from '../../composables/useGuest'
 import { useInvitationDepth } from '../../composables/useInvitationDepth'
 import './invitation-depth.css'
 import './visual-system.css'
+import './living-scene.css'
 import { visualConfigFor } from './templateVisualConfig'
 import { useDevicePerformance } from '../../composables/useDevicePerformance'
 import { useParallax } from '../../composables/useParallax'
+import { useAmbientWind } from '../../composables/useAmbientWind'
+import { useAutoJourney } from '../../composables/useAutoJourney'
 const props = defineProps({
   wedding: { type: Object, required: true },
   preview: Boolean,
@@ -34,11 +39,18 @@ const props = defineProps({
   presentationComponents: { type: Object, default: () => ({}) },
 })
 const wedding = useWedding(props)
+const opened = inject('invitationOpened', ref(false))
 const motionOn = ref(
   !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
 )
 const experienceRoot = ref(null)
 const performance = useDevicePerformance()
+const intensity = computed(
+  () => wedding.settings.motion_intensity || 'cinematic',
+)
+const effectiveMotion = computed(
+  () => motionOn.value && intensity.value !== 'off',
+)
 const visualConfig = computed(() =>
   visualConfigFor(props.wedding.template?.template_key, {
     design: props.design,
@@ -47,27 +59,40 @@ const visualConfig = computed(() =>
 )
 const parallaxEnabled = computed(
   () =>
-    motionOn.value &&
+    effectiveMotion.value &&
+    intensity.value === 'cinematic' &&
     performance.active.value &&
     performance.quality.value === 'high' &&
     !performance.coarse.value,
 )
 const parallaxIntensity = computed(() => visualConfig.value.parallaxIntensity)
+const windStyle = useAmbientWind(
+  visualConfig,
+  performance.quality,
+  effectiveMotion,
+)
+const journey = useAutoJourney(
+  experienceRoot,
+  computed(() => wedding.settings.enable_auto_journey === true && opened.value),
+  computed(() => performance.reduced.value || !effectiveMotion.value),
+  computed(() => wedding.settings.auto_journey_speed || 'slow'),
+)
+provide('weddingJourney', journey)
 provide('weddingVisual', {
   config: visualConfig,
   performance,
-  motion: motionOn,
+  motion: effectiveMotion,
+  intensity,
   root: experienceRoot,
 })
 useParallax(experienceRoot, parallaxEnabled, parallaxIntensity)
 const { enabled: depthEnabled } = useInvitationDepth(
   experienceRoot,
-  motionOn,
+  computed(() => effectiveMotion.value && intensity.value === 'cinematic'),
   performance,
 )
 provide('weddingDesign', props.design)
-const opened = inject('invitationOpened', ref(false)),
-  guest = props.wedding.guest?.name || getGuestName(),
+const guest = props.wedding.guest?.name || getGuestName(),
   toast = ref('')
 const { error, play, preparePlayback } = inject('weddingAudio')
 const opening = ref(false)
@@ -110,7 +135,7 @@ onUnmounted(() => clearTimeout(timer))
     :class="[
       `theme-${theme}`,
       `design-${design}`,
-      { 'motion-off': !motionOn, 'depth-on': depthEnabled },
+      { 'motion-off': !effectiveMotion, 'depth-on': depthEnabled },
     ]"
     :data-depth-enabled="depthEnabled"
     :data-visual-quality="performance.quality.value"
@@ -120,9 +145,12 @@ onUnmounted(() => clearTimeout(timer))
     :data-event-surface="visualConfig.eventSurface"
     :data-gift-surface="visualConfig.giftSurface"
     :data-music-skin="visualConfig.musicSkin"
+    :data-motion-intensity="intensity"
+    :data-motion-environment="visualConfig.motionProfile.environment"
     :style="{
       '--visual-variant': visualConfig.variant,
       '--visual-depth': visualConfig.depthIntensity,
+      ...windStyle,
     }"
   >
     <div class="desktop-ambience" aria-hidden="true">
@@ -164,7 +192,10 @@ onUnmounted(() => clearTimeout(timer))
     <main class="invitation-shell" id="invitation" tabindex="-1">
       <SceneMotion
         :effects="wedding.motion"
-        :quality="performance.quality.value"
+        :quality="
+          intensity === 'cinematic' ? performance.quality.value : 'lite'
+        "
+        :disabled="intensity === 'off'"
         @change="motionOn = $event"
       />
       <Transition
@@ -177,6 +208,19 @@ onUnmounted(() => clearTimeout(timer))
             :is="coverComponent"
             :guest="guest"
             @open="openInvitation"
+          />
+          <CurtainOpening
+            v-if="
+              intensity === 'cinematic' &&
+              [
+                'silk-curtain',
+                'royal-curtain',
+                'floral-curtain',
+                'garden-gate',
+                'panels',
+              ].includes(visualConfig.motionProfile.openingType)
+            "
+            :type="visualConfig.motionProfile.openingType"
           />
         </div>
         <InvitationContent
@@ -192,7 +236,7 @@ onUnmounted(() => clearTimeout(timer))
       ><AudioPlayer
         v-if="
           wedding.settings.enable_music && wedding.music
-        " /><FloatingNavigation /></template
+        " /><FloatingNavigation /><AutoJourney /></template
     ><BaseToast :message="toast" />
   </div>
 </template>

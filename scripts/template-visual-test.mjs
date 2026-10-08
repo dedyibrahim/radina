@@ -20,9 +20,8 @@ try {
   const { contentPresets } = await server.ssrLoadModule(
     '/src/templates/contentPresets.js',
   )
-  const { visualConfigFor, visualProfiles } = await server.ssrLoadModule(
-    '/src/templates/shared/templateVisualConfig.js',
-  )
+  const { visualConfigFor, visualProfiles, motionProfiles } =
+    await server.ssrLoadModule('/src/templates/shared/templateVisualConfig.js')
   const { ornamentLibrary } = await server.ssrLoadModule(
     '/src/components/wedding/effects/ornamentLibrary.js',
   )
@@ -81,6 +80,15 @@ try {
     assert(config.parallaxIntensity >= 0 && config.parallaxIntensity <= 1, key)
     assert(config.animations.length >= 2, key)
     assert(visualProfiles[config.personality], key)
+    assert(motionProfiles[config.personality], key)
+    assert(
+      config.motionProfile.environment && config.motionProfile.foreground,
+      key,
+    )
+    assert(
+      config.motionProfile.openingType && config.motionProfile.particle,
+      key,
+    )
     assert(
       ornamentLibrary[`${config.ornamentFamily}/${config.ornament}`],
       `Missing ornament ${key}: ${config.ornamentFamily}/${config.ornament}`,
@@ -131,6 +139,8 @@ try {
       ornaments: config.ornamentFamily + '/' + config.ornament,
       depth: config.depthIntensity,
       motion: config.animations.join(', '),
+      environment: config.motionProfile.environment,
+      livingMotion: `${config.motionProfile.foreground} / ${config.motionProfile.particle} / ${config.motionProfile.openingType}`,
       opening: config.openingEffect,
       gallery: config.galleryStyle,
       photo: config.photoFrame,
@@ -153,6 +163,7 @@ try {
   })
   assert.equal(future.personality, 'islamic')
   assert.equal(future.photoFrame, 'floating')
+  assert.equal(future.motionProfile.openingType, 'arch')
   assert.equal(
     visualConfigFor('future-minimal', { category: 'Minimalist' })
       .ornamentFamily,
@@ -181,18 +192,18 @@ try {
     const lines = [
       '# Template visual audit',
       '',
-      'Audit: 5 October 2026. Registry entries and Vue entry points are discovered from the current project; no fixed template count is used.',
+      'Audit: 8 October 2026. Registry entries and Vue entry points are discovered from the current project; no fixed template count is used.',
       '',
       `Found ${rows.length} registry entries. Read-only local database snapshot: ${JSON.stringify(database.statuses)}. Production status was not queried or changed. Inactive templates use the same visual system and retain their availability setting.`,
       '',
       'Catalog sources: template-presets.json, floral-presets.json, template-studio.json, floral-collection.json, RadinaSeeder, WeddingPlatformSeeder and ExperienceSeeder. Studio/Atelier entries intentionally share a configurable renderer; their component_name labels are not separate Vue files.',
       '',
-      '| Template | Vue entry | Personality / existing layout | Ornament / depth | Reveal / opening | Existing gallery | Photo / divider / music | Local status |',
-      '| --- | --- | --- | --- | --- | --- | --- | --- |',
+      '| Template | Vue entry | Personality / existing layout | Ornament / depth | Living scene | Reveal / opening | Existing gallery | Photo / divider / music | Local status |',
+      '| --- | --- | --- | --- | --- | --- | --- | --- | --- |',
     ]
     for (const row of rows)
       lines.push(
-        `| ${escape(row.name)} (${row.key}) | ${row.component} | ${row.personality} / ${row.existingLayout} | ${row.ornaments} / ${row.depth} | ${row.motion} / ${row.opening} | ${row.gallery} | ${row.photo} / ${row.divider} / ${row.music} | ${statuses[row.key] || 'unknown'} |`,
+        `| ${escape(row.name)} (${row.key}) | ${row.component} | ${row.personality} / ${row.existingLayout} | ${row.ornaments} / ${row.depth} | ${row.environment}: ${row.livingMotion} | ${row.motion} / ${row.opening} | ${row.gallery} | ${row.photo} / ${row.divider} / ${row.music} | ${statuses[row.key] || 'unknown'} |`,
       )
     await mkdir('docs', { recursive: true })
     await writeFile('docs/template-visual-audit.md', lines.join('\n') + '\n')

@@ -40,6 +40,7 @@ const errors = [],
   apiCalls = []
 const base = 'http://127.0.0.1:5181'
 let eventTypeFixture = 'wedding'
+let journeyFixture = false
 function wedding(key, eventType = 'wedding') {
   const row = rows.find((row) => row.key === key)
   return {
@@ -134,21 +135,26 @@ function wedding(key, eventType = 'wedding') {
       },
     ],
     shipping_gift: {},
-    settings: Object.fromEntries(
-      [
-        'parents',
-        'family',
-        'social',
-        'music',
-        'gallery',
-        'story',
-        'rsvp',
-        'wishes',
-        'gift',
-        'countdown',
-        'maps',
-      ].map((key) => ['enable_' + key, true]),
-    ),
+    settings: {
+      ...Object.fromEntries(
+        [
+          'parents',
+          'family',
+          'social',
+          'music',
+          'gallery',
+          'story',
+          'rsvp',
+          'wishes',
+          'gift',
+          'countdown',
+          'maps',
+        ].map((key) => ['enable_' + key, true]),
+      ),
+      enable_auto_journey: journeyFixture,
+      auto_journey_speed: 'slow',
+      motion_intensity: 'cinematic',
+    },
     music: {
       playlist: [
         {
@@ -261,6 +267,7 @@ try {
     await expect(page.locator('.wedding-page')).toHaveAttribute(
       'data-visual-personality',
       row.personality,
+      { timeout: 20000 },
     )
     await expect(page.locator('.wedding-page')).toHaveAttribute(
       'data-visual-quality',
@@ -475,9 +482,13 @@ try {
   await d.goto(`${base}/admin/weddings/1/preview`)
   const frame = d.frameLocator('.admin-preview-frame')
   await expect(frame.locator('.invitation-content')).toBeVisible()
-  await frame.locator('.wedding-page').evaluate(element => { window.previewRoot = element })
+  await frame.locator('.wedding-page').evaluate((element) => {
+    window.previewRoot = element
+  })
   await frame.getByRole('button', { name: 'Music OFF', exact: true }).click()
-  await expect(frame.getByRole('button', { name: 'Music ON', exact: true })).toBeVisible()
+  await expect(
+    frame.getByRole('button', { name: 'Music ON', exact: true }),
+  ).toBeVisible()
   for (const [name, width] of [
     ['Mobile', 390],
     ['Tablet', 768],
@@ -504,14 +515,77 @@ try {
       )
       .toBeLessThan(10)
     await expect(frame.locator('.opening-stage')).toHaveCount(0)
-    assert(await frame.locator('.wedding-page').evaluate(element => element === window.previewRoot))
-    assert.equal(await frame.locator('body').evaluate(() => window.audioEvents.filter(event => event.action === 'create').length), 1)
-    await expect(frame.getByRole('button', { name: 'Music ON', exact: true })).toBeVisible()
+    assert(
+      await frame
+        .locator('.wedding-page')
+        .evaluate((element) => element === window.previewRoot),
+    )
+    assert.equal(
+      await frame
+        .locator('body')
+        .evaluate(
+          () =>
+            window.audioEvents.filter((event) => event.action === 'create')
+              .length,
+        ),
+      1,
+    )
+    await expect(
+      frame.getByRole('button', { name: 'Music ON', exact: true }),
+    ).toBeVisible()
   }
   await d.getByRole('button', { name: 'Preview Cover', exact: true }).click()
   await expect(frame.locator('.opening-stage')).toBeVisible()
   await d.screenshot({ path: `${dir}/admin-responsive-preview.png` })
+  journeyFixture = true
+  const living = representatives.find((row) => row.personality === 'luxury')
+  await d.goto(`${base}/w/visual-${living.key}`)
+  await expect(d.locator('.living-opening')).toBeVisible()
+  await expect(d.locator('.auto-journey')).toHaveCount(0)
+  await d.getByRole('button', { name: 'Buka Undangan', exact: true }).click()
+  await expect(d.locator('.invitation-content')).toBeVisible()
+  const journeyButton = d.locator('[data-journey-control] button')
+  await expect(journeyButton).toBeVisible()
+  const initialY = await d.evaluate(() => scrollY)
+  await d.waitForTimeout(350)
+  assert.equal(
+    await d.evaluate(() => scrollY),
+    initialY,
+    'Auto Journey must be opt in',
+  )
+  await journeyButton.click()
+  await expect(journeyButton).toHaveAttribute('aria-pressed', 'true')
+  await expect
+    .poll(() => d.evaluate(() => scrollY))
+    .toBeGreaterThan(initialY + 3)
+  await d.mouse.wheel(0, 30)
+  await expect(journeyButton).toHaveAttribute('aria-pressed', 'false')
+  await journeyButton.click()
+  await expect(journeyButton).toHaveAttribute('aria-pressed', 'true')
+  await d.getByRole('button', { name: 'Event', exact: true }).click()
+  await expect(journeyButton).toHaveAttribute('aria-pressed', 'false')
+  assert.equal(
+    await d.evaluate(
+      () =>
+        window.audioEvents.filter((event) => event.action === 'create').length,
+    ),
+    1,
+  )
+  await expect(d.locator('.opening-stage')).toHaveCount(0)
   await desktop.close()
+  const reducedJourney = await context({
+    viewport: { width: 390, height: 820 },
+    reducedMotion: 'reduce',
+  })
+  const reducedPage = await reducedJourney.newPage()
+  await reducedPage.goto(`${base}/w/visual-${living.key}`)
+  await reducedPage
+    .getByRole('button', { name: 'Buka Undangan', exact: true })
+    .click()
+  await expect(reducedPage.locator('.invitation-content')).toBeVisible()
+  await expect(reducedPage.locator('.auto-journey')).toHaveCount(0)
+  await reducedJourney.close()
+  journeyFixture = false
   const lite = await context({
     viewport: { width: 1440, height: 900 },
     reducedMotion: 'no-preference',
@@ -549,8 +623,12 @@ try {
     ),
   )
   console.log(
-    `PASS: all ${rows.length} mobile/desktop templates, five mobile widths, content/calendar/gift preservation, shared lightbox, navigation without remount/audio restart, opening transition/audio timing and real responsive admin preview.`,
+    `PASS: all ${rows.length} mobile/desktop templates, five mobile widths, content/calendar/gift preservation, shared lightbox, navigation and music continuity, cinematic opening, opt-in Auto Journey with manual pause/resume, reduced motion and responsive admin preview.`,
   )
+} catch (error) {
+  console.error('Browser page errors:', errors)
+  console.error('Recent API calls:', apiCalls.slice(-12))
+  throw error
 } finally {
   await browser.close()
   await new Promise((done) => server.close(done))

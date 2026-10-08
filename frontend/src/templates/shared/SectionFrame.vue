@@ -17,6 +17,9 @@ provide(
     class="section-frame"
     :class="{ 'floral-section-frame': floral }"
     :data-section="sectionKey"
+    :data-auto-pause="
+      visual?.config.value.motionProfile.sectionPauses?.[sectionKey]
+    "
   >
     <VisualAtmosphere
       v-if="visual"

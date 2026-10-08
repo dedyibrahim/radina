@@ -139,7 +139,7 @@ class WeddingService
                     $wedding->{$relation}()->create(collect($entry)->only($createFields)->all() + ['sort_order' => $index]);
                 }
             }
-            $settings = collect($data['settings'])->filter(fn ($v, $key) => str_starts_with($key, 'enable_'))->all();
+            $settings = collect($data['settings'])->filter(fn ($v, $key) => str_starts_with($key, 'enable_') || in_array($key, ['motion_intensity', 'auto_journey_speed'], true))->all();
             $wedding->settings()->updateOrCreate(['wedding_id' => $wedding->id], $settings);
             // Microsecond precision avoids equal versions for rapid edits in the same second.
             $wedding->touch();

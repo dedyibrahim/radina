@@ -1,0 +1,496 @@
+/* A shared scene vocabulary; each template selects its own environment and
+   opening through the registry-derived motion profile. All layers are decor. */
+.wedding-page .living-far,
+.wedding-page .living-atmosphere,
+.wedding-page .living-clouds,
+.wedding-page .living-rays,
+.wedding-page .living-flecks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: clip;
+}
+.wedding-page .living-far {
+  z-index: 0;
+  translate: 0 var(--parallax-y, 0px);
+}
+.wedding-page .visual-background {
+  z-index: 0;
+}
+.wedding-page .visual-midground {
+  z-index: 1;
+}
+.wedding-page .visual-foreground {
+  z-index: 2;
+}
+.wedding-page .living-atmosphere {
+  z-index: 3;
+}
+.wedding-page .visual-atmosphere .scene-ornament-far {
+  inset: 3% auto auto -13%;
+  width: 36%;
+  opacity: 0.085;
+  rotate: -18deg;
+}
+.wedding-page .visual-atmosphere .scene-ornament-side {
+  inset: 55% -17% auto auto;
+  width: 31%;
+  opacity: 0.22;
+  rotate: 14deg;
+}
+.wedding-page .visual-atmosphere .scene-ornament-near {
+  inset: auto auto -10% -23%;
+  width: 57%;
+  opacity: 0.39;
+  rotate: -13deg;
+  filter: blur(1px);
+}
+.wedding-page .section-frame:nth-of-type(even) .scene-ornament-near {
+  bottom: 2%;
+  left: -29%;
+  rotate: 12deg;
+}
+.wedding-page .atmosphere-opening .scene-ornament-near,
+.wedding-page .atmosphere-hero .scene-ornament-near {
+  width: 64%;
+  opacity: 0.44;
+}
+.wedding-page[data-motion-environment='architectural'] .scene-ornament-near,
+.wedding-page[data-motion-environment='film'] .scene-ornament-near {
+  opacity: 0.13;
+}
+.wedding-page[data-motion-environment='arch'] .scene-ornament-near,
+.wedding-page[data-motion-environment='textile'] .scene-ornament-near {
+  opacity: 0.24;
+}
+.wedding-page .living-clouds {
+  opacity: 0.12;
+}
+.wedding-page .living-clouds i {
+  position: absolute;
+  top: 10%;
+  left: -25%;
+  width: 45%;
+  height: 9%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 50% 75%,
+    var(--ivory) 0 48%,
+    transparent 72%
+  );
+  filter: blur(5px);
+  animation: living-cloud-drift 55s ease-in-out infinite alternate;
+  animation-delay: var(--cloud-phase);
+  animation-play-state: paused;
+}
+.wedding-page .living-clouds .cloud-middle {
+  top: 27%;
+  left: 38%;
+  width: 38%;
+  opacity: 0.7;
+  animation-duration: 43s;
+  animation-direction: alternate-reverse;
+}
+.wedding-page .living-clouds .cloud-near {
+  top: 65%;
+  left: 6%;
+  width: 55%;
+  opacity: 0.34;
+  animation-duration: 32s;
+}
+.wedding-page [data-running='true'] .living-clouds i {
+  animation-play-state: running;
+}
+.wedding-page[data-motion-environment='night'] .living-clouds {
+  opacity: 0.09;
+}
+.wedding-page[data-motion-environment='coast'] .living-clouds {
+  opacity: 0.18;
+}
+.wedding-page :is(.living-plant, .living-flower) > span {
+  animation-name: living-botanical-sway;
+  animation-duration: 5.7s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  transform-origin: 20% 90%;
+  animation-delay: calc(var(--ornament-phase, 0s) + var(--wind-phase, 0s));
+}
+.wedding-page .living-plant.ornament-background > span {
+  animation-duration: 8.3s;
+}
+.wedding-page .living-plant.ornament-foreground > span {
+  animation-duration: 4.2s;
+}
+.wedding-page .living-flower.ornament-middle > span {
+  animation-duration: 7.1s;
+}
+.wedding-page .living-flower.ornament-foreground > span {
+  animation-duration: 5.7s;
+}
+.wedding-page [data-running='true'] .living-plant > span,
+.wedding-page [data-running='true'] .living-flower > span {
+  animation-play-state: running;
+}
+.wedding-page .living-flecks i {
+  position: absolute;
+  left: var(--fleck-x);
+  top: -12px;
+  width: var(--fleck-size);
+  height: calc(var(--fleck-size) * 1.55);
+  border-radius: 100% 0 100% 10%;
+  background: color-mix(in srgb, var(--dusty-rose) 70%, var(--gold));
+  opacity: 0;
+  transform: translate3d(0, -10px, 0) rotate(-25deg);
+  animation: living-fall var(--fleck-duration) linear infinite;
+  animation-delay: var(--fleck-delay);
+  animation-play-state: paused;
+}
+.wedding-page .living-flecks i:nth-child(3n) {
+  filter: blur(1.2px);
+  opacity: 0.22;
+}
+.wedding-page .living-flecks i:nth-child(2n) {
+  scale: 0.7;
+}
+.wedding-page .flecks-dust i,
+.wedding-page .flecks-light i,
+.wedding-page .flecks-star i {
+  width: calc(var(--fleck-size) * 0.55);
+  height: calc(var(--fleck-size) * 0.55);
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--gold) 40%, transparent);
+}
+.wedding-page .flecks-dust i {
+  opacity: 0.12;
+}
+.wedding-page .flecks-light i {
+  opacity: 0.17;
+}
+.wedding-page .flecks-star i {
+  opacity: 0.22;
+  clip-path: polygon(
+    50% 0,
+    60% 42%,
+    100% 50%,
+    60% 58%,
+    50% 100%,
+    40% 58%,
+    0 50%,
+    40% 42%
+  );
+}
+.wedding-page [data-running='true'] .living-flecks i {
+  animation-play-state: running;
+}
+.wedding-page .living-rays i {
+  position: absolute;
+  width: 46%;
+  height: 68%;
+  top: -20%;
+  right: -8%;
+  transform: rotate(-18deg);
+  transform-origin: top right;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    color-mix(in srgb, var(--gold) 12%, transparent) 50%,
+    transparent 72%
+  );
+  opacity: 0.4;
+  animation: living-light 18s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+.wedding-page .living-rays i:last-child {
+  right: 10%;
+  width: 30%;
+  animation-delay: -9s;
+  opacity: 0.25;
+}
+.wedding-page [data-running='true'] .living-rays i {
+  animation-play-state: running;
+}
+.wedding-page[data-motion-environment='architectural'] .living-rays,
+.wedding-page[data-motion-environment='paper'] .living-rays {
+  display: none;
+}
+.wedding-page[data-motion-environment='coast'] .visual-light {
+  animation: living-coast-light 13s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+.wedding-page[data-motion-environment='glass'] .visual-light,
+.wedding-page[data-motion-environment='silk'] .visual-light {
+  animation: living-light 15s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+.wedding-page [data-running='true'] .visual-light {
+  animation-play-state: running;
+}
+
+.wedding-page .living-opening {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+  overflow: hidden;
+  perspective: 800px;
+}
+.wedding-page .opening-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 31%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #00000026 0 6%,
+      #ffffff17 12%,
+      transparent 17%,
+      #0000001c 21%,
+      transparent 27%
+    ),
+    linear-gradient(
+      90deg,
+      var(--ink),
+      color-mix(in srgb, var(--ink) 80%, var(--gold)) 48%,
+      var(--ink)
+    );
+  box-shadow:
+    inset -18px 0 22px #0003,
+    12px 0 24px #0003;
+  transform-origin: left center;
+  animation: living-fabric 8.3s ease-in-out infinite alternate;
+}
+.wedding-page .panel-left {
+  left: 0;
+}
+.wedding-page .panel-right {
+  right: 0;
+  scale: -1 1;
+  animation-duration: 7.1s;
+  animation-delay: -2.5s;
+}
+.wedding-page .opening-floral-curtain .opening-panel,
+.wedding-page .opening-garden-gate .opening-panel {
+  background:
+    radial-gradient(
+      ellipse at 95% 30%,
+      color-mix(in srgb, var(--sage) 70%, transparent),
+      transparent 65%
+    ),
+    repeating-linear-gradient(
+      65deg,
+      transparent 0 15px,
+      color-mix(in srgb, var(--gold) 15%, transparent) 16px 18px,
+      transparent 19px 30px
+    );
+  box-shadow: none;
+  width: 24%;
+  opacity: 0.72;
+}
+.wedding-page .opening-floral-curtain .opening-panel {
+  filter: hue-rotate(-15deg);
+}
+.wedding-page .living-opening .opening-panel .visual-ornament {
+  inset: auto;
+  bottom: 12%;
+  left: -20%;
+  width: 140%;
+  opacity: 0.32;
+  filter: none;
+}
+.wedding-page .living-opening .opening-panel .visual-ornament > span {
+  animation-duration: 7.1s;
+}
+.wedding-page .opening-panels .opening-panel {
+  background: linear-gradient(
+    90deg,
+    var(--ivory),
+    color-mix(in srgb, var(--ivory) 80%, var(--ink))
+  );
+  box-shadow: 4px 0 18px #0002;
+}
+.wedding-page .opening-light {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--gold) 30%, transparent),
+    transparent 50%
+  );
+  opacity: 0;
+}
+.wedding-page :is([data-motion-intensity='soft'], .motion-off) .living-opening {
+  display: none;
+}
+.wedding-page:has(.living-opening) .opening-stage.cover-leave-active {
+  transition: opacity 1600ms ease;
+}
+.wedding-page:has(.living-opening) .opening-stage.cover-leave-to {
+  opacity: 0;
+  transform: none;
+  clip-path: none;
+}
+.wedding-page .opening-stage.cover-leave-active .opening-panel {
+  animation: none;
+  transition: transform 1250ms cubic-bezier(0.4, 0, 0.2, 1) 200ms;
+}
+.wedding-page .opening-stage.cover-leave-to .panel-left {
+  transform: perspective(800px) rotateY(28deg) translateX(-120%);
+}
+.wedding-page .opening-stage.cover-leave-to .panel-right {
+  transform: perspective(800px) rotateY(-28deg) translateX(120%);
+}
+.wedding-page .opening-stage.cover-leave-active .opening-light {
+  transition: opacity 420ms ease 500ms;
+}
+.wedding-page .opening-stage.cover-leave-to .opening-light {
+  opacity: 0.34;
+}
+
+.wedding-page .auto-journey {
+  position: fixed;
+  z-index: 18;
+  bottom: max(91px, calc(env(safe-area-inset-bottom) + 91px));
+  left: max(12px, calc(50% - 300px));
+  display: grid;
+  gap: 4px;
+  width: max-content;
+  max-width: 42vw;
+  color: var(--ink);
+}
+.wedding-page .auto-journey button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 5px 11px;
+  border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ivory) 92%, transparent);
+  color: inherit;
+  font:
+    11px 'DM Sans',
+    sans-serif;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0002;
+}
+.wedding-page .auto-journey button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.wedding-page .journey-progress {
+  height: 2px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--gold) 20%, transparent);
+}
+.wedding-page .journey-progress i {
+  display: block;
+  height: 100%;
+  background: var(--gold);
+  transition: width 0.2s linear;
+}
+@media (max-width: 600px) {
+  .wedding-page .living-flecks i:nth-child(n + 7) {
+    display: none;
+  }
+  .wedding-page .visual-atmosphere .scene-ornament-near {
+    width: 65%;
+    left: -33%;
+    opacity: 0.36;
+  }
+  .wedding-page .visual-atmosphere .scene-ornament-side {
+    right: -23%;
+  }
+  .wedding-page .living-clouds {
+    opacity: 0.08;
+  }
+  .wedding-page .living-rays {
+    opacity: 0.45;
+  }
+  .wedding-page .opening-panel {
+    width: 25%;
+  }
+  .wedding-page .auto-journey {
+    bottom: max(92px, calc(env(safe-area-inset-bottom) + 92px));
+  }
+}
+.wedding-page[data-visual-quality='standard'] .living-flecks i:nth-child(n + 9),
+.wedding-page[data-visual-quality='lite'] .living-flecks,
+.wedding-page[data-visual-quality='lite'] .living-rays {
+  display: none;
+}
+.wedding-page.motion-off .living-opening,
+.wedding-page.motion-off .living-flecks {
+  display: none;
+}
+.wedding-page[data-motion-intensity='soft'] .living-flecks {
+  display: none;
+}
+.wedding-page[data-visual-quality='lite'] .living-clouds i,
+.wedding-page[data-visual-quality='lite'] .living-plant > span,
+.wedding-page[data-visual-quality='lite'] .living-flower > span {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wedding-page .living-opening,
+  .wedding-page .living-flecks {
+    display: none;
+  }
+}
+@keyframes living-botanical-sway {
+  0%,
+  100% {
+    transform: rotate(calc(var(--ornament-turn) - var(--wind-strength) * 2deg))
+      translateX(var(--wind-x, 0px));
+  }
+  45% {
+    transform: rotate(calc(var(--ornament-turn) + var(--wind-strength) * 3deg))
+      translateX(calc(var(--wind-x, 0px) + var(--wind-strength) * 4px));
+  }
+  72% {
+    transform: rotate(calc(var(--ornament-turn) - var(--wind-strength) * 1deg))
+      translateX(calc(var(--wind-strength) * -2px));
+  }
+}
+@keyframes living-fall {
+  0% {
+    transform: translate3d(0, -16px, 0) rotate(-30deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.32;
+  }
+  80% {
+    opacity: 0.28;
+  }
+  100% {
+    transform: translate3d(var(--fleck-drift), min(100vh, 850px), 0)
+      rotate(290deg);
+    opacity: 0;
+  }
+}
+@keyframes living-cloud-drift {
+  to {
+    transform: translateX(42px) scale(1.06);
+  }
+}
+@keyframes living-light {
+  to {
+    opacity: 0.62;
+    transform: rotate(-12deg) translateX(-12px);
+  }
+}
+@keyframes living-coast-light {
+  to {
+    opacity: 0.21;
+    transform: translateX(-11px);
+  }
+}
+@keyframes living-fabric {
+  to {
+    transform: perspective(800px) rotateY(3deg) scaleX(0.98);
+  }
+}

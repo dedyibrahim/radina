@@ -36,6 +36,15 @@ class CustomerPortalService
         if (($data['settings']['enable_family'] ?? $data['settings']['enable_parents'] ?? true) === ($data['settings']['enable_parents'] ?? true)) {
             unset($data['settings']['enable_family']);
         }
+        // Existing approvals predate presentation controls. Their defaults do
+        // not alter the approved invitation; non-default choices still require
+        // the customer to review the changed experience.
+        if (($data['settings']['motion_intensity'] ?? 'cinematic') === 'cinematic') unset($data['settings']['motion_intensity']);
+        if (($data['settings']['enable_auto_journey'] ?? false) === false) {
+            unset($data['settings']['enable_auto_journey'], $data['settings']['auto_journey_speed']);
+        } elseif (($data['settings']['auto_journey_speed'] ?? 'slow') === 'slow') {
+            unset($data['settings']['auto_journey_speed']);
+        }
         $legacyMap = true;
         foreach ($data['events'] as $index => $event) {
             if ($event['show_on_map'] !== ($index === 0)) $legacyMap = false;

@@ -5,6 +5,7 @@ import { Sparkles, Pause } from 'lucide-vue-next'
 const props = defineProps({
   effects: Array,
   quality: { type: String, default: 'standard' },
+  disabled: Boolean,
 })
 const emit = defineEmits(['change'])
 const opened = inject('invitationOpened', ref(false))
@@ -282,8 +283,17 @@ function draw(timestamp) {
 }
 function start() {
   stop()
-  emit('change', enabled.value && !document.hidden && visible)
-  if (enabled.value && props.quality !== 'lite' && !document.hidden && visible)
+  emit(
+    'change',
+    enabled.value && !props.disabled && !document.hidden && visible,
+  )
+  if (
+    enabled.value &&
+    !props.disabled &&
+    props.quality !== 'lite' &&
+    !document.hidden &&
+    visible
+  )
     frame = requestAnimationFrame(draw)
 }
 function toggle() {
@@ -300,6 +310,7 @@ watch(enabled, () => {
   start()
 })
 watch(() => props.effects, fill)
+watch(() => props.disabled, start)
 watch(
   () => props.quality,
   () => {
@@ -362,7 +373,7 @@ onUnmounted(() => {
     :data-effects="effects?.join(',')"
   />
   <button
-    v-if="ready"
+    v-if="ready && !disabled"
     class="motion-toggle"
     type="button"
     :aria-pressed="enabled"

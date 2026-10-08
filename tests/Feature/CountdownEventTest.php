@@ -56,6 +56,42 @@ class CountdownEventTest extends TestCase
         return $data;
     }
 
+    public function test_living_scene_defaults_preserve_approvals_and_admin_can_save_motion_controls(): void
+    {
+        $wedding = $this->wedding();
+        License::create(['key' => 'ABCDE-FGHIJ-KLMNO-PQRST-UVWXY', 'customer_name' => 'Pemilik Lisensi', 'product_name' => 'Produk', 'status' => 'active', 'max_activations' => 1]);
+        $guard = app(DeploymentLicenseGuard::class);
+        $backup = $guard->backup(str_repeat('d', 40));
+        $migration = require database_path('migrations/2026_10_06_000001_add_living_scene_settings.php');
+        \Illuminate\Foundation\Testing\RefreshDatabaseState::$migrated = false;
+        $migration->down();
+        $before = CustomerPortalService::fingerprint($wedding->fresh());
+        $migration->up();
+        $this->assertSame($before, CustomerPortalService::fingerprint($wedding->fresh()));
+        $this->assertFalse($wedding->fresh()->settings->enable_auto_journey);
+        $this->assertSame('cinematic', $wedding->fresh()->settings->motion_intensity);
+
+        $data = $this->data($wedding);
+        $data['settings']['motion_intensity'] = 'soft';
+        $data['settings']['enable_auto_journey'] = true;
+        $data['settings']['auto_journey_speed'] = 'normal';
+        $this->putJson($this->path($wedding), $data)->assertOk()
+            ->assertJsonPath('data.settings.motion_intensity', 'soft')
+            ->assertJsonPath('data.settings.enable_auto_journey', true)
+            ->assertJsonPath('data.settings.auto_journey_speed', 'normal');
+        $this->assertNotSame($before, CustomerPortalService::fingerprint($wedding->fresh()));
+        $oldClient = $this->data($wedding);
+        unset($oldClient['settings']['motion_intensity'], $oldClient['settings']['enable_auto_journey'], $oldClient['settings']['auto_journey_speed']);
+        $this->putJson($this->path($wedding), $oldClient)->assertOk()
+            ->assertJsonPath('data.settings.motion_intensity', 'soft')
+            ->assertJsonPath('data.settings.enable_auto_journey', true);
+        $invalid = $this->data($wedding);
+        $invalid['settings']['motion_intensity'] = 'extreme';
+        $this->putJson($this->path($wedding), $invalid)->assertUnprocessable()
+            ->assertJsonValidationErrors('settings.motion_intensity');
+        $guard->assertPreserved($backup);
+    }
+
     public function test_countdown_upgrade_keeps_existing_approvals_content_and_licenses(): void
     {
         $wedding = $this->wedding();

@@ -225,7 +225,9 @@ class InvitationEventTest extends TestCase
         $this->getJson('/api/templates?category=islamic')->assertOk()->assertJsonPath('meta.total', 11);
         foreach (['nur-jannah', 'mihrab-emerald', 'sahara-gold', 'qamar-blue', 'zahra-ivory'] as $key) {
             $template = Template::where('template_key', $key)->firstOrFail();
-            $this->assertFileExists(base_path('frontend/public'.$template->thumbnail));
+            $thumbnail = $this->getJson('/api/templates/'.$key)->assertOk()->json('data.thumbnail');
+            $this->assertSame('/images/templates/previews/'.$key.'.webp', $thumbnail);
+            $this->assertFileExists(base_path('frontend/public'.$thumbnail));
             $this->getJson('/api/templates/'.$key.'/preview')->assertOk()->assertJsonPath('data.template.template_key', $key)->assertJsonPath('data.event_type', 'wedding');
             $wedding = Wedding::where('slug', 'radina-demo-'.$key)->firstOrFail();
             $before = $wedding->toArray();

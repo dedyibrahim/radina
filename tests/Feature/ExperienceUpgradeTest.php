@@ -89,7 +89,7 @@ class ExperienceUpgradeTest extends TestCase
         config(['platform.api_rate_limit' => 1000]);
         $this->assertSame(6, MusicTrack::count());
         $this->getJson('/api/templates?sort=popular')->assertOk()->assertJsonPath('meta.total', count(\App\Services\TemplateCatalog::keys()));
-        $this->getJson('/api/categories')->assertOk()->assertJsonCount(12, 'data');
+        $this->getJson('/api/categories')->assertOk()->assertJsonCount(13, 'data');
         $names = [];
         $openings = [];
         $music = [];

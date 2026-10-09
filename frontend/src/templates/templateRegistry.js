@@ -20,7 +20,11 @@ export const templateRegistry = {
   ...Object.fromEntries(
     Object.keys(cinematicWorlds).map((key) => [
       key,
-      defineAsyncComponent(() => import('./shared/StudioInvitation.vue')),
+      defineAsyncComponent(() =>
+        cinematicWorlds[key].kidsTheme
+          ? import('./KidsCinematic/KidsInvitation.vue')
+          : import('./shared/StudioInvitation.vue'),
+      ),
     ]),
   ),
   'javanese-royal-garden': defineAsyncComponent(

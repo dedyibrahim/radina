@@ -113,6 +113,46 @@ class InvitationEventTest extends TestCase
         $guard->assertPreserved($licenses);
     }
 
+    public function test_kids_cinematic_catalog_preview_booking_and_repeat_migration_preserve_existing_data(): void
+    {
+        $keys = ['anak-unicorn-cinematic', 'anak-tom-jerry-cinematic', 'anak-doraemon-cinematic', 'anak-upin-ipin-cinematic'];
+        $demos = Wedding::where('is_demo', true)->get()->map->getRawOriginal()->all();
+        $this->getJson('/api/templates?category=kids-birthday')->assertOk()->assertJsonPath('meta.total', 4);
+        foreach ($keys as $key) {
+            $template = Template::where('template_key', $key)->firstOrFail();
+            $this->assertSame('ACTIVE', $template->status);
+            $this->assertFileExists(base_path('frontend/public'.$template->thumbnail));
+            $this->getJson('/api/templates/'.$template->slug.'/preview')->assertOk()
+                ->assertJsonPath('data.template.template_key', $key)
+                ->assertJsonPath('data.event_type', 'birthday')
+                ->assertJsonPath('data.event_details.honoree_age', 7)
+                ->assertJsonPath('data.bride', null);
+        }
+        $template = Template::where('template_key', $keys[0])->firstOrFail();
+        $booking = array_replace($this->booking('birthday', 'unicorn-birthday'), ['template_id' => $template->id, 'honoree_age' => 5]);
+        $id = $this->postJson('/api/orders', $booking)->assertCreated()->assertJsonPath('data.total', $template->price)->json('data.id');
+        $this->patchJson('/api/admin/orders/'.$id.'/payment')->assertOk();
+        $weddingId = $this->postJson('/api/admin/orders/'.$id.'/wedding')->assertCreated()->json('data.id');
+        $wedding = Wedding::findOrFail($weddingId);
+        $this->getJson('/api/admin/weddings/'.$weddingId.'/preview')->assertOk()
+            ->assertJsonPath('data.event_type', 'birthday')->assertJsonPath('data.event_details.honoree_age', 5)
+            ->assertJsonPath('data.event_details.honoree_name', 'Ahmad Ibrahim');
+        $snapshot = $wedding->getRawOriginal();
+        $orderSnapshot = Order::findOrFail($id)->getRawOriginal();
+        $template->update(['price' => 123456, 'status' => 'INACTIVE']);
+        $guard = app(DeploymentLicenseGuard::class);
+        $licenses = $guard->backup(str_repeat('a', 40));
+        $migration = require database_path('migrations/2026_10_09_000001_add_kids_character_cinematic_templates.php');
+        $migration->up(); $migration->up();
+        $this->assertSame(123456, $template->fresh()->price);
+        $this->assertSame('INACTIVE', $template->fresh()->status);
+        foreach ($keys as $key) $this->assertSame(1, Template::where('template_key', $key)->count());
+        $this->assertSame($snapshot, $wedding->fresh()->getRawOriginal());
+        $this->assertSame($orderSnapshot, Order::findOrFail($id)->getRawOriginal());
+        $this->assertSame($demos, Wedding::where('is_demo', true)->get()->map->getRawOriginal()->all());
+        $guard->assertPreserved($licenses);
+    }
+
     public function test_regional_catalog_cleanup_preserves_used_templates_custom_prices_customers_and_licenses(): void
     {
         $jawa = Template::where('template_key', 'jawa-pendopo-pagi')->firstOrFail();

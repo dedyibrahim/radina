@@ -1013,5 +1013,125 @@
       "quote_source": "Dengan penuh syukur"
     },
     "featured": true
+  },
+  "anak-unicorn-cinematic": {
+    "name": "Unicorn Sky Party",
+    "category": "Kids & Birthday",
+    "description": "Awan pastel, pelangi, unicorn melayang, bintang dan balon dalam petualangan ulang tahun yang penuh keajaiban.",
+    "scene": "kids-unicorn",
+    "world": "Negeri Pelangi Unicorn",
+    "opening": "kids-unicorn-arrival",
+    "camera": "float-up",
+    "transition": "cloud-dissolve",
+    "photo": "cloud-arch",
+    "typography": "playful-rounded",
+    "closing": "kids-unicorn-farewell",
+    "effects": [
+      "stars",
+      "balloons",
+      "sparkles"
+    ],
+    "palette": {
+      "background": "#f5e8f8",
+      "ink": "#54345f",
+      "accent": "#9750ad",
+      "highlight": "#f7bddc"
+    },
+    "price": 90000,
+    "kidsTheme": "unicorn",
+    "plate": "kids/bg-unicorn",
+    "composition": "kids-party",
+    "thumbnail": "/images/cinematic/kids/preview-unicorn.webp",
+    "featured": true
+  },
+  "anak-tom-jerry-cinematic": {
+    "name": "Tom & Jerry Garden Party",
+    "category": "Kids & Birthday",
+    "description": "Tom dan Jerry bermain di taman rumah yang hangat, ditemani balon, confetti, lampu pesta dan gerakan kamera yang ceria.",
+    "scene": "kids-tom-jerry",
+    "world": "Taman Ceria Tom & Jerry",
+    "opening": "kids-tom-jerry-arrival",
+    "camera": "pan-right",
+    "transition": "party-wipe",
+    "photo": "party-ticket",
+    "typography": "playful-rounded",
+    "closing": "kids-tom-jerry-farewell",
+    "effects": [
+      "confetti",
+      "balloons",
+      "sparkles"
+    ],
+    "palette": {
+      "background": "#fff2ce",
+      "ink": "#503322",
+      "accent": "#a45724",
+      "highlight": "#8ebba8"
+    },
+    "price": 110000,
+    "kidsTheme": "tom-jerry",
+    "plate": "kids/bg-tom-jerry",
+    "composition": "kids-party",
+    "thumbnail": "/images/cinematic/kids/preview-tom-jerry.webp",
+    "featured": true
+  },
+  "anak-doraemon-cinematic": {
+    "name": "Doraemon Magic Door",
+    "category": "Kids & Birthday",
+    "description": "Doraemon terbang di antara awan, pintu ajaib bercahaya, baling-baling dan bintang di langit biru yang berlapis.",
+    "scene": "kids-doraemon",
+    "world": "Petualangan Pintu Ajaib",
+    "opening": "kids-doraemon-arrival",
+    "camera": "float-forward",
+    "transition": "portal-dissolve",
+    "photo": "magic-door",
+    "typography": "playful-rounded",
+    "closing": "kids-doraemon-farewell",
+    "effects": [
+      "bubbles",
+      "stars",
+      "sparkles"
+    ],
+    "palette": {
+      "background": "#e6f4ff",
+      "ink": "#163d67",
+      "accent": "#147aba",
+      "highlight": "#f39cc8"
+    },
+    "price": 125000,
+    "kidsTheme": "doraemon",
+    "plate": "kids/bg-doraemon",
+    "composition": "kids-party",
+    "thumbnail": "/images/cinematic/kids/preview-doraemon.webp",
+    "featured": true
+  },
+  "anak-upin-ipin-cinematic": {
+    "name": "Upin & Ipin Kampung Party",
+    "category": "Kids & Birthday",
+    "description": "Upin dan Ipin mengajak bermain di halaman kampung, dengan daun tertiup angin, kupu-kupu, balon dan cahaya senja.",
+    "scene": "kids-upin-ipin",
+    "world": "Pesta Kampung Upin & Ipin",
+    "opening": "kids-upin-ipin-arrival",
+    "camera": "dolly-in",
+    "transition": "sunbeam-dissolve",
+    "photo": "kampung-window",
+    "typography": "playful-rounded",
+    "closing": "kids-upin-ipin-farewell",
+    "effects": [
+      "leaves",
+      "balloons",
+      "sparkles"
+    ],
+    "palette": {
+      "background": "#eff6d8",
+      "ink": "#2f4937",
+      "accent": "#557238",
+      "highlight": "#f4c564"
+    },
+    "price": 100000,
+    "kidsTheme": "upin-ipin",
+    "plate": "kids/bg-upin-ipin",
+    "composition": "kids-party",
+    "thumbnail": "/images/cinematic/kids/preview-upin-ipin.webp",
+    "featured": true
   }
 }

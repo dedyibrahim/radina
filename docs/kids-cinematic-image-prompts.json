@@ -1,0 +1,46 @@
+{
+  "mode": "built-in image_gen",
+  "assetDirectory": "frontend/public/images/cinematic/kids",
+  "prompts": [
+    {
+      "asset": "bg-unicorn",
+      "transparent_background": false,
+      "prompt": "A premium cinematic 3D illustration background for a children's Unicorn birthday invitation. A magical pastel lavender and blush cloud kingdom, a rainbow arch over a winding path, a distant tiny fantasy castle, clouds, sparkling star lights, soft candy-colored meadow and small flowers at the lower edges. Lush detailed rendered scenery, layered atmospheric depth, dreamy morning light. Vertical portrait 2:3 framing, background full bleed to every edge. Leave the central 60 percent relatively calm for invitation text. NO characters, no animals, no people, no text or logos. This is a background plate; characters and moving decorations will be separate."
+    },
+    {
+      "asset": "bg-tom-jerry",
+      "transparent_background": false,
+      "prompt": "A premium cinematic 3D illustration background for a Tom and Jerry children's birthday invitation. A cozy sunny suburban house garden with a warmly lit kitchen through the back door, green lawn, a playful winding picnic path, a mouse-size wooden door by a wall in a lower corner, a distant picnic table set for a birthday. Rich buttery yellow, teal and warm terracotta colors, glossy animated-film scenery with lively layered depth and warm afternoon light. Vertical portrait 2:3, full bleed all edges, central 60 percent calm for invitation text. NO characters or animals, no people, no text or logos. A background plate for separately animated characters and decorations."
+    },
+    {
+      "asset": "bg-doraemon",
+      "transparent_background": false,
+      "prompt": "A premium cinematic 3D illustration background for a Doraemon children's birthday invitation. A sunny futuristic play world above a bright blue Japanese neighborhood, a fantastical pale pink freestanding door opening onto fluffy clouds, a distant whimsical floating island, charming blue-sky landscape with stars. Fresh cyan, blue, white and pale pink, highly polished rendered animated-film scenery, layered atmospheric depth and sunbeams. Vertical portrait 2:3, full bleed all edges, center 60 percent calm for invitation text. NO characters or animals, no people, no text or logos. Background plate only; animated characters and gadgets will be separate."
+    },
+    {
+      "asset": "bg-upin-ipin",
+      "transparent_background": false,
+      "prompt": "A premium cinematic 3D illustration background for an Upin and Ipin children's birthday invitation. A charming lush Malaysian kampung garden with a traditional wooden house, coconut and banana trees, a little footpath through grass, a woven picnic mat in a lower corner, warm late-afternoon sun rays and distant green hills. Joyful yellow, green, sky blue, warm natural colors, polished detailed animated-film scenery, deep layered atmosphere. Vertical portrait 2:3, full bleed all edges, central 60 percent calm for invitation text. NO people, no characters, no animals, no text or logos. Background plate only; characters and moving decorations will be separate."
+    },
+    {
+      "asset": "character-unicorn",
+      "transparent_background": true,
+      "prompt": "Use case: stylized-concept. Asset type: single character sprite for a cinematic children's birthday web invitation. A charming white baby unicorn in polished high-quality 3D animated-film rendering, pastel pink/lavender/turquoise flowing mane and tail, small gold horn, friendly big eyes, smiling, lightly prancing as if floating. Full entire unicorn visible including horn, tail, all legs and hooves, facing slightly toward viewer, generous clear padding. Isolated on a genuinely TRANSPARENT background, no floor, no shadows cast onto a floor, no surrounding scenery, no text, no logo. Portrait sprite, bright soft studio lighting, adorable detailed materials. Character only, not a scene."
+    },
+    {
+      "asset": "character-tom-jerry",
+      "transparent_background": true,
+      "prompt": "Use case: stylized-concept. Asset type: two-character transparent sprite atlas for a children's Tom & Jerry birthday invitation. High-quality polished 3D cartoon renders of the recognizable classic Tom and Jerry characters, Tom the blue-grey cat with white muzzle/chest and Jerry the small brown mouse with rounded ears and beige belly. Tom smiles mischievously with one hand raised; Jerry waves happily. Friendly birthday energy, no weapons or violence. BOTH full bodies with complete ears, tails and feet. SQUARE transparent canvas divided invisibly into two equal vertical halves: Tom entirely in LEFT half, Jerry entirely in RIGHT half, neither crosses central line; large clear gap in the center; each character faces slightly inward. Jerry is depicted larger than realistic mouse size for readability, around 70% of Tom's height. Both feet at same baseline, plenty of padding. Truly transparent background, no floor, no scene, no text, no logo. Only the two separate characters, not touching, no framing."
+    },
+    {
+      "asset": "character-doraemon",
+      "transparent_background": true,
+      "prompt": "Use case: stylized-concept. Asset type: single character sprite for a Doraemon children's birthday web invitation. A recognizable adorable Doraemon, round blue robot cat, white circular face and belly, red nose and red collar with golden bell, cheerful open smile, white paws, tiny red tail, waving one paw. Polished high-quality 3D animated cartoon rendering, bright soft studio lighting, smooth materials. ENTIRE full body including feet and head visible with generous padding. Isolated on a genuinely transparent background; no floor, no scenery, no other characters, no text, no logo. Square sprite."
+    },
+    {
+      "asset": "character-upin-ipin",
+      "transparent_background": true,
+      "prompt": "Use case: stylized-concept. Asset type: two-character transparent sprite atlas for an Upin & Ipin children's birthday invitation. Recognizable Upin and Ipin, the two cheerful small Malaysian twin boys from the animated series: Upin in a yellow sleeveless shirt and dark shorts with a single curl of hair; Ipin bald in a blue sleeveless shirt and dark shorts. Polished warm expressive 3D cartoon rendering, friendly smiles, both waving and in playful poses. BOTH entire full bodies including hands and feet. SQUARE transparent canvas invisibly divided into two equal vertical halves: Upin entirely LEFT, Ipin entirely RIGHT, neither crosses the central dividing line, a large empty gap between the boys, each faces slightly inward; both feet at the same baseline. Generous padding above heads and outside hands/feet. Truly transparent background, no floor, no scenery, no text, no logos. Only two independent characters, not touching."
+    }
+  ]
+}

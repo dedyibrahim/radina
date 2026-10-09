@@ -42,9 +42,11 @@ const submissions = []
 const base = 'http://127.0.0.1:5181'
 let eventTypeFixture = 'wedding'
 let journeyFixture = false
+const kidsFixture = process.env.RADINA_KIDS_CINEMATIC === '1'
+const mediaFixture = kidsFixture || process.env.RADINA_LIVING_GARDEN === '1'
 function wedding(key, eventType = 'wedding') {
   const row = rows.find((row) => row.key === key)
-  return {
+  const data = {
     id: 1,
     slug: `visual-${key}`,
     title: 'Alya & Rizky',
@@ -153,8 +155,8 @@ function wedding(key, eventType = 'wedding') {
         ].map((key) => ['enable_' + key, true]),
       ),
       enable_auto_journey: journeyFixture,
-      enable_video: process.env.RADINA_LIVING_GARDEN === '1',
-      enable_livestream: process.env.RADINA_LIVING_GARDEN === '1',
+      enable_video: mediaFixture,
+      enable_livestream: mediaFixture,
       auto_journey_speed: 'slow',
       motion_intensity: 'cinematic',
     },
@@ -169,18 +171,15 @@ function wedding(key, eventType = 'wedding') {
       volume: 40,
       autoplay_after_open: true,
     },
-    video_url:
-      process.env.RADINA_LIVING_GARDEN === '1'
-        ? 'https://www.youtube.com/watch?v=abcdefghijk'
-        : null,
-    livestream_url:
-      process.env.RADINA_LIVING_GARDEN === '1'
-        ? 'https://www.youtube.com/watch?v=abcdefghijk'
-        : null,
-    livestream:
-      process.env.RADINA_LIVING_GARDEN === '1'
-        ? { url: 'https://www.youtube.com/watch?v=abcdefghijk' }
-        : {},
+    video_url: mediaFixture
+      ? 'https://www.youtube.com/watch?v=abcdefghijk'
+      : null,
+    livestream_url: mediaFixture
+      ? 'https://www.youtube.com/watch?v=abcdefghijk'
+      : null,
+    livestream: mediaFixture
+      ? { url: 'https://www.youtube.com/watch?v=abcdefghijk' }
+      : {},
     section_content: {},
     event_details: {
       host_name: 'Keluarga Ibrahim',
@@ -190,6 +189,24 @@ function wedding(key, eventType = 'wedding') {
       photo: '/images/demos/photo-1.webp',
     },
   }
+  if (kidsFixture) {
+    Object.assign(data, {
+      title: 'Ulang Tahun Naila Ibrahim',
+      bride: null,
+      groom: null,
+      cover_image: '',
+      hero_image: '',
+      closing_image: '',
+      opening_text:
+        'Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu beserta ananda untuk hadir dan merayakan ulang tahun putri kami. Kehadiran dan doa baik Anda akan melengkapi kebahagiaan keluarga kami.',
+      closing_text: 'Terima kasih atas kehadiran dan doa baik untuk Naila.',
+    })
+    data.event_details.honoree_name = 'Naila Ibrahim'
+    data.event_details.photo = ''
+    data.events[0].title = 'Pesta Ulang Tahun'
+    data.events[1].title = 'Bermain Bersama'
+  }
+  return data
 }
 async function context(options) {
   const context = await browser.newContext(options)
@@ -315,6 +332,27 @@ async function fullBleed(cameras, viewportSelector, label) {
     [],
     label + ': scenery must cover every edge throughout the camera motion',
   )
+}
+if (kidsFixture) {
+  try {
+    eventTypeFixture = 'birthday'
+    const { testKidsCinematic } = await import('./kids-cinematic-browser.mjs')
+    await testKidsCinematic({
+      context,
+      rows,
+      base,
+      dir,
+      fits,
+      fullBleed,
+      errors,
+      submissions,
+      weddingFixture: wedding,
+    })
+  } finally {
+    await browser.close()
+    await new Promise((done) => server.close(done))
+  }
+  process.exit(0)
 }
 if (process.env.RADINA_ALL_IDENTITIES === '1') {
   try {
@@ -445,7 +483,9 @@ if (process.env.RADINA_ALL_IDENTITIES === '1') {
       const motionSelector =
         row.key === 'midnight-romance'
           ? '.midnight-scene .midnight-rose'
-          : '.visual-atmosphere .visual-ornament > span'
+          : row.component.includes('KidsCinematic')
+            ? '.kids-scene .kids-actor'
+            : '.visual-atmosphere .visual-ornament > span'
       const ornament = page.locator('.opening-stage ' + motionSelector).first()
       await expect(ornament).toHaveCSS('animation-play-state', 'running')
       const transform = await ornament.evaluate(

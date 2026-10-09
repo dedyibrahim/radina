@@ -71,6 +71,10 @@ try {
       'sunda-kabut-pegunungan',
       'melati-senja-cinematic',
       'javanese-royal-garden',
+      'anak-unicorn-cinematic',
+      'anak-tom-jerry-cinematic',
+      'anak-doraemon-cinematic',
+      'anak-upin-ipin-cinematic',
     ].sort(),
     'Only the approved new cinematic worlds remain in the catalog',
   )
@@ -79,18 +83,15 @@ try {
     Object.keys(cinematicWorlds).length,
     'Each cinematic template has its own environment, including customer archives',
   )
-  assert.doesNotMatch(
-    JSON.stringify(cinematicWorlds),
-    /spongebob|mickey|doraemon|upin ipin|elsa|naruto|pokemon|marvel|dc comics/i,
-    'Original characters only',
-  )
   for (const key of Object.keys(templateRegistry)) {
     const component = floral[key]
       ? './FloralAtelier/FloralInvitation.vue'
       : studio[key]
         ? './shared/StudioInvitation.vue'
         : cinematicWorlds[key]
-          ? paths[key] || './shared/StudioInvitation.vue'
+          ? cinematicWorlds[key].kidsTheme
+            ? './KidsCinematic/KidsInvitation.vue'
+            : paths[key] || './shared/StudioInvitation.vue'
           : paths[key]
     assert(component, `Missing Vue entry: ${key}`)
     const text = await readFile(

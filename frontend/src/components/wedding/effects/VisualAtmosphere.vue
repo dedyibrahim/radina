@@ -24,10 +24,11 @@ const active = computed(
     (visual.config.value.sceneProfile.livingNature ||
       visual.performance.quality.value !== 'lite'),
 )
+const direction = computed(() => visual.config.value.artDirection)
 const livingOrnament = computed(() =>
-  visual.config.value.ornamentFamily === 'floral'
+  direction.value.primary.family === 'floral'
     ? LivingFlower
-    : visual.config.value.ornamentFamily === 'botanical'
+    : direction.value.primary.family === 'botanical'
       ? LivingPlant
       : FloatingOrnament,
 )
@@ -73,48 +74,23 @@ const livingOrnament = computed(() =>
     </div>
     <div class="visual-midground" data-plane="midground">
       <component
+        v-if="!direction.nativeCorners"
         :is="livingOrnament"
-        :family="visual.config.value.ornamentFamily"
-        :name="visual.config.value.ornament"
-        plane="background"
-        :variant="visual.config.value.variant"
-      />
-      <FloatingOrnament
-        :family="visual.config.value.ornamentFamily"
-        :name="visual.config.value.ornament"
-        :variant="visual.config.value.variant + 1"
-      />
-      <component
-        :is="livingOrnament"
-        :family="visual.config.value.ornamentFamily"
-        :name="visual.config.value.secondaryOrnament"
+        :family="direction.primary.family"
+        :name="direction.primary.name"
         plane="middle"
-        class="scene-ornament-side"
-        :variant="visual.config.value.variant + 3"
-      />
-      <FloatingOrnament
-        :family="visual.config.value.ornamentFamily"
-        :name="visual.config.value.ornament"
-        plane="background"
-        class="scene-ornament-far"
-        :variant="visual.config.value.variant + 4"
+        class="signature-primary"
+        :variant="visual.config.value.variant"
       />
     </div>
     <div class="visual-foreground" data-plane="foreground">
-      <component
-        :is="livingOrnament"
-        :family="visual.config.value.ornamentFamily"
-        :name="visual.config.value.secondaryOrnament"
+      <FloatingOrnament
+        v-if="!direction.nativeCorners"
+        :family="direction.accent.family"
+        :name="direction.accent.name"
         plane="foreground"
+        class="signature-accent"
         :variant="visual.config.value.variant + 2"
-      />
-      <component
-        :is="livingOrnament"
-        :family="visual.config.value.ornamentFamily"
-        :name="visual.config.value.ornament"
-        plane="foreground"
-        class="scene-ornament-near"
-        :variant="visual.config.value.variant + 5"
       />
     </div>
     <div

@@ -136,6 +136,17 @@ try {
       visualConfigFor(key, { design }),
       'Configuration is deterministic',
     )
+    const direction = config.artDirection
+    if (!config.sceneProfile.cinematic && !['floral', 'botanical'].includes(direction.primary.family)) {
+      assert(!direction.effects.includes('petals'), key + ' must not inherit a generic petal shower')
+    }
+    for (const motif of [direction.primary, direction.accent]) {
+      assert(ornamentLibrary[`${motif.family}/${motif.name}`], key + ' missing signature motif')
+    }
+    assert.equal(new Set(direction.corners).size, 2, key + ' must have asymmetric corner anchors')
+    if (floral[key] && ['Islamic', 'Modern', 'Creative', 'Traditional', 'Vintage', 'Luxury', 'Minimalist', 'Cinematic', 'Destination'].includes(floral[key].category)) {
+      assert.notEqual(direction.primary.family, 'floral', key + ' should not reuse a flower bouquet as its primary motif')
+    }
     const html = await renderToString(
       createSSRApp({
         setup() {
@@ -175,8 +186,11 @@ try {
       component,
       personality: config.personality,
       existingLayout: config.layout,
-      ornaments: config.ornamentFamily + '/' + config.ornament,
-      secondary: config.ornamentFamily + '/' + config.secondaryOrnament,
+      ornaments: direction.primary.family + '/' + direction.primary.name,
+      secondary: direction.accent.family + '/' + direction.accent.name,
+      artSignature: direction.signature,
+      nativeOrnaments: direction.nativeCorners,
+      ornamentLayout: direction.arrangement,
       motionStyle: config.motionDesign.style,
       cameraPath: config.motionDesign.camera,
       cameraDuration: config.motionDesign.duration,
@@ -213,6 +227,9 @@ try {
     'modern',
   )
   assert(new Set(rows.map((row) => row.personality)).size > 1)
+  const atelierRows = rows.filter(row => row.nativeOrnaments)
+  assert.equal(atelierRows.length, Object.keys(floral).length)
+  assert.equal(new Set(atelierRows.map(row => row.artSignature)).size, atelierRows.length, 'Every Atelier template must have a distinct curated composition')
   assert(
     new Set(rows.map((row) => row.motionStyle)).size >= 10,
     'Categories need different movements',

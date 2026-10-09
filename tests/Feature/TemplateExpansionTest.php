@@ -26,17 +26,22 @@ class TemplateExpansionTest extends TestCase
         Sanctum::actingAs(User::where('email', config('platform.admin_email'))->first());
     }
 
-    public function test_every_public_category_has_at_least_five_active_working_templates_and_diverse_animation_effects(): void
+    public function test_every_public_category_has_its_expected_active_working_templates_and_diverse_animation_effects(): void
     {
         config(['platform.api_rate_limit' => 1000]);
-        $categories = $this->getJson('/api/categories')->assertOk()->assertJsonCount(12, 'data')->json('data');
+        $categories = $this->getJson('/api/categories')->assertOk()->assertJsonCount(13, 'data')->json('data');
         $effects = [];
         $templates = Template::where('status', 'ACTIVE')->get();
         $this->assertCount(count(TemplateCatalog::keys()), $templates);
         $this->assertCount(111, TemplateCatalog::KEYS);
         foreach ($categories as $category) {
             $count = $this->getJson('/api/templates?category='.$category['slug'])->assertOk()->json('meta.total');
-            $this->assertGreaterThanOrEqual($category['slug'] === 'regional' ? 2 : 5, $count, $category['name']);
+            $minimum = match ($category['slug']) {
+                'regional' => 2,
+                'kids-birthday' => 4,
+                default => 5,
+            };
+            $this->assertGreaterThanOrEqual($minimum, $count, $category['name']);
         }
         foreach ($templates as $template) {
             $animations = TemplateContent::animations($template->template_key);

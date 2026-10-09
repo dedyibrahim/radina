@@ -27,6 +27,7 @@ import './living-scene.css'
 import './cinematic.css'
 import './living-garden.css'
 import './identity-motion.css'
+import './exclusive-ornaments.css'
 import { visualConfigFor } from './templateVisualConfig'
 import { useDevicePerformance } from '../../composables/useDevicePerformance'
 import { useParallax } from '../../composables/useParallax'
@@ -169,6 +170,9 @@ onUnmounted(() => clearTimeout(timer))
     :data-motion-environment="visualConfig.motionProfile.environment"
     :data-depth-style="visualConfig.motionDesign.style"
     :data-camera-path="visualConfig.motionDesign.camera"
+    :data-art-direction="visualConfig.artDirection.id"
+    :data-ornament-layout="visualConfig.artDirection.arrangement"
+    :data-native-ornaments="visualConfig.artDirection.nativeCorners"
     :style="{
       '--visual-variant': visualConfig.variant,
       '--visual-depth': visualConfig.depthIntensity,
@@ -185,12 +189,12 @@ onUnmounted(() => clearTimeout(timer))
   >
     <div class="desktop-ambience" aria-hidden="true">
       <FloatingOrnament
-        :family="visualConfig.ornamentFamily"
-        :name="visualConfig.ornament"
+        :family="visualConfig.artDirection.primary.family"
+        :name="visualConfig.artDirection.primary.name"
         class="ambient-left"
       /><FloatingOrnament
-        :family="visualConfig.ornamentFamily"
-        :name="visualConfig.ornament"
+        :family="visualConfig.artDirection.accent.family"
+        :name="visualConfig.artDirection.accent.name"
         class="ambient-right"
       />
       <div class="desktop-note">
@@ -222,7 +226,7 @@ onUnmounted(() => clearTimeout(timer))
     <main class="invitation-shell" id="invitation" tabindex="-1">
       <SceneMotion
         :preference="motionPreference"
-        :effects="wedding.motion"
+        :effects="visualConfig.artDirection.effects"
         :quality="
           canvasMotion && !cinematicCategory && intensity === 'cinematic'
             ? performance.quality.value

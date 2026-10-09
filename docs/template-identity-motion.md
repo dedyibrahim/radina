@@ -1,12 +1,12 @@
 # Template identity motion
 
-All existing registry entries inherit the shared motion system through `WeddingExperience`. Primary artwork, palettes and layouts remain in their original template configuration. `templateMotionDesign.js` chooses a compatible secondary ornament and stable camera path, timing and phase from each template key. Explicit `visual.secondaryOrnament` overrides still take precedence.
+All existing registry entries inherit the shared motion system through `WeddingExperience`. Palettes, photographs and layouts remain in their original template configuration. `templateMotionDesign.js` chooses a stable camera path, timing and phase from each template key. `templateArtDirection.js` now assigns curated primary and supporting motifs, cross-material accents and asymmetric placement, replacing the repeated four-corner bouquets. See [exclusive-template-ornaments.md](exclusive-template-ornaments.md).
 
 The motion styles follow the template personality: botanical breeze for flowers/gardens, silk for luxury, illuminated arches for Islamic, carved patterns for Nusantara, paper for vintage, waves for coastal, stars for celestial, glass for modern, restrained architecture for minimalist/classical, and ribbons/confetti/balloons for celebrations. Dedicated Royal Garden, Melati and Midnight scenery retains its own artwork and choreography.
 
 Background cameras overscan their clipped scene to cover every edge during movement. Depth affects decorative layers and photographs; fixed navigation stays outside transformed ancestors. The large inter-section monogram is removed. Floral corners pause when outside the viewport or when animation is disabled. Existing low-power, reduced-motion and hidden-document behavior remains in place.
 
-No database migration or catalog seeding is required. Package prices, customer records, template availability and licensing are unaffected.
+No database migration or catalog seeding is required. Package prices, customer records, template availability and licensing are unaffected. Catalog responses use refreshed screenshots for default thumbnails while preserving custom images uploaded by admins.
 
 Validation commands, run from the backend directory:
 

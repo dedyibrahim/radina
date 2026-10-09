@@ -54,7 +54,11 @@ provide(
       :active="livingActive"
       :quality="visual.performance.quality.value"
     />
-    <FloralCorners v-if="floral && sectionKey !== 'home'" compact /><slot />
+    <FloralCorners
+      v-if="floral && sectionKey !== 'home'"
+      compact
+      :section-key="sectionKey"
+    /><slot />
     <SectionDivider
       v-if="visual && !['home', 'closing'].includes(sectionKey)"
     />

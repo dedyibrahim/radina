@@ -3,6 +3,7 @@ import floral from '../../../../config/floral-collection.json'
 import { contentPresets } from '../contentPresets'
 import cinematicWorlds from '../../../../config/cinematic-worlds.json'
 import { motionDesignFor } from './templateMotionDesign'
+import { artDirectionFor } from './templateArtDirection'
 
 // Presentation profiles, not template keys. New registry entries inherit a profile
 // from their catalog metadata and can opt into any combination with `visual`.
@@ -575,6 +576,7 @@ export function visualConfigFor(key, context = {}) {
         effects.includes(effect),
       ) || 'confetti'
   }
+  config.artDirection = artDirectionFor(key, config, collection)
   return config
 }
 export const templateVisualConfig = Object.fromEntries(

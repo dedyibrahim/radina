@@ -16,8 +16,8 @@ const visual = inject('weddingVisual')
     />
     <FloatingOrnament
       v-else
-      :family="visual.config.value.ornamentFamily"
-      :name="visual.config.value.ornament"
+      :family="visual.config.value.artDirection.accent.family"
+      :name="visual.config.value.artDirection.accent.name"
       :variant="visual.config.value.variant"
     />
     <span class="divider-rule" />

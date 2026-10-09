@@ -3,6 +3,7 @@ import { createServer } from 'node:http'
 import { readFile, mkdir, writeFile } from 'node:fs/promises'
 import { resolve, extname } from 'node:path'
 import { chromium, expect } from '@playwright/test'
+import { execFileSync } from 'node:child_process'
 
 const rows = JSON.parse(
   await readFile('test-results/template-visual-audit.json', 'utf8'),
@@ -44,6 +45,12 @@ let eventTypeFixture = 'wedding'
 let journeyFixture = false
 const kidsFixture = process.env.RADINA_KIDS_CINEMATIC === '1'
 const mediaFixture = kidsFixture || process.env.RADINA_LIVING_GARDEN === '1'
+const catalogCapture = process.env.RADINA_CAPTURE_EXCLUSIVE_ONLY === '1'
+const catalogSources = catalogCapture
+  ? await Promise.all(['additional-template-demos', 'floral-demos', 'template-studio', 'floral-collection'].map(async name => JSON.parse(await readFile(`config/${name}.json`, 'utf8'))))
+  : []
+const catalogDemos = Object.fromEntries((catalogSources[0] || []).concat(catalogSources[1] || []).map(demo => [demo.key, demo]))
+const catalogDesigns = { ...catalogSources[2], ...catalogSources[3] }
 function wedding(key, eventType = 'wedding') {
   const row = rows.find((row) => row.key === key)
   const data = {
@@ -188,6 +195,18 @@ function wedding(key, eventType = 'wedding') {
       description: 'Mari hadir dan merayakan momen istimewa bersama kami.',
       photo: '/images/demos/photo-1.webp',
     },
+  }
+  if (catalogCapture) {
+    const demo = catalogDemos[key]
+    const photoNumber = demo?.hero_photo || catalogDesigns[key]?.hero_photo || (rows.findIndex(row => row.key === key) % 30) + 1
+    const photo = `/images/demos/photo-${photoNumber}.webp`
+    data.cover_image = data.hero_image = photo
+    data.bride.photo = photo
+    if (demo) {
+      data.title = `${demo.bride} & ${demo.groom}`
+      data.bride.full_name = data.bride.nickname = demo.bride
+      data.groom.full_name = data.groom.nickname = demo.groom
+    }
   }
   if (kidsFixture) {
     Object.assign(data, {
@@ -354,6 +373,26 @@ if (kidsFixture) {
   }
   process.exit(0)
 }
+if (process.env.RADINA_CAPTURE_EXCLUSIVE_ONLY === '1') {
+  try {
+    const { captureExclusiveCovers } = await import('./exclusive-ornaments-browser.mjs')
+    await captureExclusiveCovers({ context, rows, base, dir, fits, errors })
+  } finally {
+    await browser.close()
+    await new Promise(done => server.close(done))
+  }
+  process.exit(0)
+}
+if (process.env.RADINA_EXCLUSIVE_DETAILS === '1') {
+  try {
+    const { testExclusiveOrnaments } = await import('./exclusive-ornaments-browser.mjs')
+    await testExclusiveOrnaments({ context, rows, base, dir, fits, errors })
+  } finally {
+    await browser.close()
+    await new Promise(done => server.close(done))
+  }
+  process.exit(0)
+}
 if (process.env.RADINA_ALL_IDENTITIES === '1') {
   try {
     const contexts = await Promise.all(
@@ -383,6 +422,21 @@ if (process.env.RADINA_ALL_IDENTITIES === '1') {
           await expect(root).toHaveAttribute('data-camera-path', row.cameraPath)
           await expect(root).toHaveAttribute('data-visual-quality', 'standard')
           await fits(p, row.key + ' cover')
+          await expect(root).toHaveAttribute('data-art-direction', row.key)
+          const coverOrnaments = p.locator('.opening-stage .signature-corner')
+          if (row.nativeOrnaments) {
+            await expect(coverOrnaments).toHaveCount(2)
+            assert.deepEqual(await coverOrnaments.evaluateAll(nodes => nodes.map(node => node.dataset.ornament)), [row.ornaments, row.secondary])
+            await expect(p.locator('.opening-stage .visual-atmosphere .visual-ornament')).toHaveCount(0)
+            assert(await coverOrnaments.evaluateAll(nodes => nodes.every(node => getComputedStyle(node).transform === 'none')), row.key + ' upright motifs')
+          }
+          if (process.env.RADINA_CAPTURE_EXCLUSIVE === '1' && !row.worldCategory) {
+            await expect.poll(() => p.locator('.opening-stage img').evaluateAll(nodes => nodes.every(node => node.complete && node.naturalWidth > 0))).toBe(true)
+            await p.evaluate(() => document.fonts.ready)
+            const coverPath = `${dir}/exclusive-${row.key}-cover.png`
+            await p.locator('.opening-stage').screenshot({ path: coverPath })
+            execFileSync('php', ['scripts/convert-demo-image.php', coverPath, `frontend/public/images/templates/previews/${row.key}.webp`])
+          }
           if (row.key === 'elegant-luxury')
             await expect(p.locator('.cover-noir > .cover-photo')).toHaveCSS(
               'inset',
@@ -414,6 +468,10 @@ if (process.env.RADINA_ALL_IDENTITIES === '1') {
             'Alya Putri Ramadhani',
           )
           await expect(p.locator('.section-monogram')).toHaveCount(0)
+          if (row.nativeOrnaments) {
+            await expect(p.locator('[data-section="couple"] .signature-corner')).toHaveCount(1)
+            await expect(p.locator('[data-section="couple"] .visual-atmosphere .visual-ornament')).toHaveCount(0)
+          }
           await fits(p, row.key + ' content')
           const home = p.locator('.section-frame[data-section="home"]')
           await home.evaluate((el) =>
@@ -485,6 +543,8 @@ if (process.env.RADINA_ALL_IDENTITIES === '1') {
           ? '.midnight-scene .midnight-rose'
           : row.component.includes('KidsCinematic')
             ? '.kids-scene .kids-actor'
+            : row.nativeOrnaments
+              ? '.floral-corners .signature-motion'
             : '.visual-atmosphere .visual-ornament > span'
       const ornament = page.locator('.opening-stage ' + motionSelector).first()
       await expect(ornament).toHaveCSS('animation-play-state', 'running')

@@ -3,21 +3,15 @@ let flowerInstance = 0
 </script>
 <script setup>
 import { inject, computed } from 'vue'
-const props = defineProps({ compact: Boolean })
-const design = inject('floralDesign')
+const props = defineProps({ compact: Boolean, flower: String })
+const original = inject('floralDesign')
+const design = computed(() => ({
+  ...original.value,
+  flower: props.flower || original.value.flower,
+}))
 const uid = `flower-spray-${++flowerInstance}`
 const flowers = computed(() =>
-  props.compact
-    ? [
-        [78, 72, 0.52],
-        [34, 141, 0.28],
-      ]
-    : [
-        [95, 93, 0.78],
-        [43, 174, 0.5],
-        [167, 47, 0.36],
-        [154, 171, 0.28],
-      ],
+  props.compact ? [[112, 108, 0.65]] : [[112, 108, 0.82]],
 )
 </script>
 <template>
@@ -43,7 +37,7 @@ const flowers = computed(() =>
         d="M-6-8C10 66 23 136 69 255M0 0C49 30 89 23 219 60M2 2C30 90 82 110 184 208M0 0C71 86 141 66 223 125"
       />
       <g
-        v-for="i in 11"
+        v-for="i in compact ? 4 : 6"
         :key="`leaf-${i}`"
         :transform="`translate(${8 + i * 14},${20 + i * 15}) rotate(${i % 2 ? -35 : 45})`"
       >
@@ -56,7 +50,7 @@ const flowers = computed(() =>
         </g>
       </g>
       <g
-        v-for="i in 5"
+        v-for="i in 2"
         :key="`bud-${i}`"
         :transform="`translate(${25 + i * 38},${24 + i * 8})`"
       >

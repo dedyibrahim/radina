@@ -1,13 +1,37 @@
 <script setup>
-import { ref, inject, onMounted, onUnmounted } from 'vue'
+import { computed, ref, inject, onMounted, onUnmounted } from 'vue'
 import FlowerSpray from './FlowerSpray.vue'
 import { useIntersectionAnimation } from '../../composables/useIntersectionAnimation'
-defineProps({ compact: Boolean })
+import { ornamentAsset } from '../../components/wedding/effects/ornamentLibrary'
+const props = defineProps({ compact: Boolean, sectionKey: String })
 const design = inject('floralDesign'),
   root = ref(null),
   active = ref(!document.hidden)
 const visible = useIntersectionAnimation(root)
 const visual = inject('weddingVisual', null)
+const direction = computed(
+  () =>
+    visual?.config.value.artDirection || {
+      primary: { family: 'floral', name: design.value.flower },
+      accent: { family: 'luxury', name: 'pearl' },
+      corners: ['tl', 'br'],
+      arrangement: 'crest',
+    },
+)
+const motifs = computed(() => {
+  const pair = ['primary', 'accent'].map((role, i) => ({
+    role,
+    corner: direction.value.corners[i],
+    ...direction.value[role],
+  }))
+  if (!props.compact) return pair
+  const index =
+    [...(props.sectionKey || 'section')].reduce(
+      (sum, c) => sum + c.codePointAt(0),
+      0,
+    ) % 2
+  return [pair[index]]
+})
 function plane(index) {
   return ['middle', 'background', 'foreground', 'middle'][
     (index + (visual?.config.value.variant || 0)) % 4
@@ -43,15 +67,30 @@ onUnmounted(() => {
     aria-hidden="true"
     :data-flower="design.flower"
     :data-corner-motion="design.corner_motion"
+    :data-composition="direction.arrangement"
   >
     <div
-      v-for="(corner, index) in ['tl', 'tr', 'bl', 'br']"
-      :key="corner"
-      class="atelier-corner"
-      :class="`corner-${corner}`"
+      v-for="(motif, index) in motifs"
+      :key="motif.role"
+      class="atelier-corner signature-corner"
+      :class="[`corner-${motif.corner}`, `signature-${motif.role}`]"
       :data-floral-plane="plane(index)"
+      :data-ornament="`${motif.family}/${motif.name}`"
     >
-      <FlowerSpray :compact="compact" />
+      <span class="signature-motion">
+        <FlowerSpray
+          v-if="motif.role === 'primary' && motif.family === 'floral'"
+          :compact="compact"
+          :flower="motif.name"
+        />
+        <span
+          v-else
+          class="signature-mask"
+          :style="{
+            '--signature-mask': `url(${ornamentAsset(motif.family, motif.name)})`,
+          }"
+        />
+      </span>
     </div>
   </div>
 </template>

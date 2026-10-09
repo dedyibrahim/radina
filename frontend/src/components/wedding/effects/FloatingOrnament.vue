@@ -19,6 +19,7 @@ const style = computed(() => ({
     :class="`ornament-${plane}`"
     :style="style"
     :data-plane="plane"
+    :data-ornament="`${family}/${name}`"
     :data-parallax="
       plane === 'foreground' ? 1.15 : plane === 'middle' ? 0.35 : 0.15
     "

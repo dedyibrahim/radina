@@ -1,0 +1,199 @@
+/* Art direction is decoration only. Never transform text, forms or navigation. */
+.wedding-page .visual-atmosphere .signature-primary {
+  inset: 4% auto auto -7%;
+  width: 28%;
+  opacity: 0.17;
+  filter: none;
+  rotate: none;
+}
+.wedding-page .visual-atmosphere .signature-accent {
+  inset: auto -5% 7% auto;
+  width: 22%;
+  opacity: 0.14;
+  filter: none;
+  rotate: none;
+}
+.wedding-page[data-ornament-layout='vertical'] .signature-primary {
+  width: 20%;
+  top: 28%;
+  left: -4%;
+}
+.wedding-page[data-ornament-layout='vertical'] .signature-accent {
+  top: auto;
+  bottom: 3%;
+  right: 3%;
+  width: 16%;
+}
+.wedding-page[data-ornament-layout='canopy'] .signature-accent {
+  top: 3%;
+  right: -3%;
+  bottom: auto;
+}
+.wedding-page[data-ornament-layout='margin'] .signature-primary {
+  top: 8%;
+  right: -6%;
+  left: auto;
+}
+.wedding-page[data-ornament-layout='margin'] .signature-accent {
+  left: -4%;
+  right: auto;
+}
+.wedding-page[data-ornament-layout='horizon'] .signature-primary {
+  top: auto;
+  bottom: 3%;
+  width: 34%;
+}
+.wedding-page[data-ornament-layout='drape'] .signature-primary {
+  width: 37%;
+  right: -5%;
+  left: auto;
+}
+.wedding-page[data-ornament-layout='orbit'] .signature-primary {
+  right: -9%;
+  left: auto;
+  width: 35%;
+}
+.wedding-page[data-native-ornaments='true'] .visual-divider {
+  min-height: 16px;
+  margin: 0 auto 12px;
+  max-width: 90px;
+}
+.wedding-page[data-native-ornaments='true'] .visual-divider .visual-ornament {
+  display: none;
+}
+.wedding-page .floral-corners .signature-corner {
+  transform: none;
+  rotate: none;
+  translate: none;
+  scale: 1;
+  opacity: 0.65;
+  filter: none;
+  width: clamp(92px, 29%, 165px);
+  aspect-ratio: 250/270;
+}
+.wedding-page .floral-corners .signature-accent {
+  width: clamp(55px, 17%, 100px);
+  opacity: 0.4;
+}
+.wedding-page .floral-corners .corner-tl {
+  top: 10px;
+  left: -16px;
+}
+.wedding-page .floral-corners .corner-tr {
+  top: 14px;
+  right: -12px;
+}
+.wedding-page .floral-corners .corner-bl {
+  bottom: 12px;
+  left: -12px;
+}
+.wedding-page .floral-corners .corner-br {
+  bottom: 10px;
+  right: -12px;
+}
+.wedding-page .signature-motion,
+.wedding-page .signature-mask {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.wedding-page .signature-mask {
+  background: linear-gradient(
+    130deg,
+    var(--gold),
+    var(--floral-highlight, var(--sage)) 50%,
+    var(--gold)
+  );
+  mask: var(--signature-mask) center / contain no-repeat;
+}
+.wedding-page .signature-motion {
+  animation: identity-float var(--identity-sway, 8s) ease-in-out infinite
+    alternate;
+  animation-delay: var(--identity-phase, 0s);
+  animation-play-state: var(--floral-play, paused);
+  transform-origin: 50% 65%;
+}
+.wedding-page .signature-accent .signature-motion {
+  animation-duration: calc(var(--identity-sway, 8s) * 1.8);
+  animation-direction: alternate-reverse;
+}
+.wedding-page[data-depth-style='silk'] .signature-motion {
+  animation-name: identity-silk;
+}
+.wedding-page[data-depth-style='luminous'] .signature-motion {
+  animation-name: identity-lantern;
+}
+.wedding-page[data-depth-style='heritage'] .signature-motion {
+  animation-name: identity-carving;
+}
+.wedding-page[data-depth-style='paper'] .signature-motion {
+  animation-name: identity-paper;
+}
+.wedding-page[data-depth-style='glass'] .signature-motion {
+  animation-name: identity-glass;
+}
+.wedding-page[data-depth-style='architectural'] .signature-motion {
+  animation-name: identity-arch;
+}
+.wedding-page[data-depth-style='starlight'] .signature-motion {
+  animation-name: identity-star;
+}
+.wedding-page[data-depth-style='water'] .signature-motion {
+  animation-name: identity-wave;
+}
+.wedding-page[data-depth-style='celebration'] .signature-motion {
+  animation-name: identity-ribbon;
+}
+.wedding-page .floral-corners[data-composition='vertical'] .signature-primary {
+  top: 26%;
+  width: 23%;
+  left: -12px;
+}
+.wedding-page .floral-corners[data-composition='vertical'] .signature-accent {
+  bottom: 8%;
+  left: 5%;
+  width: 14%;
+}
+.wedding-page .floral-corners[data-composition='drape'] .signature-primary {
+  width: 35%;
+  top: -2%;
+  right: -7%;
+}
+.wedding-page .floral-corners[data-composition='orbit'] .signature-primary {
+  width: 34%;
+  right: -6%;
+  top: 9%;
+}
+.wedding-page .floral-corners[data-composition='horizon'] .signature-primary {
+  width: 35%;
+  bottom: 2%;
+}
+.wedding-page .floral-corners[data-composition='canopy'] .signature-primary {
+  width: 30%;
+  top: 0;
+}
+.wedding-page .floral-corners.corners-compact .signature-corner {
+  width: min(24%, 115px);
+  opacity: 0.2;
+}
+.wedding-page .floral-corners.corners-compact .signature-accent {
+  width: min(18%, 86px);
+}
+.wedding-page[data-visual-personality='minimalist']
+  .floral-corners
+  .signature-corner {
+  opacity: 0.24;
+}
+.wedding-page[data-visual-personality='islamic'] .signature-mask,
+.wedding-page[data-visual-personality='nusantara'] .signature-mask {
+  background: var(--gold);
+}
+.wedding-page[data-visual-quality='lite'] .signature-motion,
+.wedding-page.motion-off .signature-motion {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wedding-page .signature-motion {
+    animation: none !important;
+  }
+}

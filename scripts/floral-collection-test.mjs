@@ -2,6 +2,7 @@ import { chromium, expect } from '@playwright/test'
 import assert from 'node:assert/strict'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { execFileSync } from 'node:child_process'
+import { artDirectionFor } from '../frontend/src/templates/shared/templateArtDirection.js'
 
 // Asset generation runs only on the isolated database/server, never production.
 const base = process.env.TEST_URL
@@ -67,7 +68,7 @@ try {
       'data-layout',
       design.family,
     )
-    await expect(page.locator('.floral-cover .atelier-corner')).toHaveCount(4)
+    await expect(page.locator('.floral-cover .atelier-corner')).toHaveCount(2)
     const quadrants = await page
       .locator('.floral-cover .atelier-corner')
       .evaluateAll((corners) =>
@@ -79,15 +80,15 @@ try {
       )
     assert.equal(
       new Set(quadrants).size,
-      4,
-      `Flowers do not occupy four corners: ${key}`,
+      2,
+      `Signature motifs must have two different anchors: ${key}`,
     )
     await expect(
       page.getByRole('button', { name: 'Buka Undangan', exact: true }),
     ).toBeVisible()
     await expect(page.locator('.scene-motion')).toHaveAttribute(
       'data-effects',
-      design.motion.join(','),
+      artDirectionFor(key, {}, design).effects.join(','),
     )
     await fits(`${key} cover`)
     await page.evaluate(() => document.fonts.ready)

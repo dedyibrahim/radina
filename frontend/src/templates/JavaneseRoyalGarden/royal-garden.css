@@ -613,10 +613,9 @@
 }
 .royal-garden .royal-person h3 {
   font:
-    400 clamp(32px, 9cqi, 50px)/1.15 'Cormorant Garamond',
+    400 clamp(20px, 6cqi, 38px)/1.15 'Cormorant Garamond',
     serif;
-  overflow-wrap: anywhere;
-  text-wrap: balance;
+  white-space: nowrap;
   margin: 12px 0 18px;
 }
 .royal-garden .royal-person p {
@@ -644,10 +643,10 @@
 .royal-garden .royal-slide .royal-story__chapter figure {
   margin: 24px auto;
   max-width: 310px;
-  rotate: -2deg;
+  rotate: 0deg;
 }
 .royal-garden .royal-slide:nth-child(even) .royal-story__chapter figure {
-  rotate: 2deg;
+  rotate: 0deg;
 }
 .royal-garden .royal-slide .royal-event {
   border: 0;

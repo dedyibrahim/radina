@@ -27,6 +27,10 @@
 .couple-dark .person-copy {
   padding: 28px;
 }
+.couple-dark .person-copy h3 {
+  font-size: clamp(18px, 5.4vw, 28px);
+  white-space: nowrap;
+}
 .story-dark .story-composition {
   border-left: 1px solid #b87988;
   padding-left: 28px;

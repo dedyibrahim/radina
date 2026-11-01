@@ -13,6 +13,7 @@ import {
     Monitor,
     MoveHorizontal,
     Palette,
+    Play,
     ShieldCheck,
     Wifi,
     MessageCircle,
@@ -25,6 +26,10 @@ const platform = usePlatformStore()
 const release = ref(null)
 const error = ref('')
 const loading = ref(false)
+const demoStarted = ref(false)
+const demoError = ref(false)
+const demoVideo = '/media/sigandi/sigandi-word-demo-v1.mp4'
+const demoPoster = '/media/sigandi/sigandi-word-demo-v1.webp'
 const contact = computed(() =>
     whatsappLink(
         platform.settings.whatsapp_number || '6287724170145',
@@ -179,6 +184,54 @@ const faqs = [
                 ><span><Check :size="17" />Pengaturan garis yang fleksibel</span
                 ><span><Check :size="17" />Panduan langkah demi langkah</span>
             </div>
+        </section>
+
+        <section class="sg-section sg-container sg-video-section" id="demo">
+            <div class="sg-section-heading">
+                <div>
+                    <p class="sg-eyebrow">LIHAT LANGSUNG DI MICROSOFT WORD</p>
+                    <h2>Dari dokumen biasa,<br />jadi lebih tertata.</h2>
+                </div>
+                <p>
+                    Tonton cara menandai isi akta, membuat garis, dan mengatur tampilannya
+                    melalui add-in SIGANDI. Durasi sekitar 2 menit 36 detik.
+                </p>
+            </div>
+            <div class="sg-video-frame">
+                <video
+                    v-if="demoStarted"
+                    controls
+                    autoplay
+                    playsinline
+                    preload="metadata"
+                    :poster="demoPoster"
+                    aria-label="Demo penggunaan add-in SIGANDI di Microsoft Word"
+                    @error="demoError = true"
+                >
+                    <source :src="demoVideo" type="video/mp4" />
+                    Browser Anda belum mendukung pemutar video.
+                </video>
+                <button
+                    v-else
+                    type="button"
+                    class="sg-video-preview"
+                    aria-label="Putar video demo SIGANDI di Word"
+                    @click="demoStarted = true"
+                >
+                    <img
+                        :src="demoPoster"
+                        alt="Pratinjau garis akta yang dibuat melalui tab SIGANDI di Word"
+                        width="1280"
+                        height="680"
+                        loading="lazy"
+                    />
+                    <span class="sg-video-play"><Play :size="28" fill="currentColor" />Putar demo</span>
+                </button>
+            </div>
+            <p class="sg-video-note">
+                {{ demoError ? 'Video belum dapat diputar.' : 'Gunakan layar penuh untuk melihat detail pengaturan dan hasil garis.' }}
+                <a :href="demoVideo" target="_blank" rel="noopener">Buka video langsung <ArrowUpRight :size="14" /></a>
+            </p>
         </section>
 
         <section class="sg-section sg-container" id="fitur">
@@ -368,6 +421,48 @@ const faqs = [
     padding-left: 32px;
     padding-right: 32px;
 }
+.sg-video-frame {
+    overflow: hidden;
+    border: 1px solid #d8e6de;
+    border-radius: 20px;
+    background: #123f31;
+    box-shadow: 0 18px 50px #123f3112;
+}
+.sg-video-frame video,
+.sg-video-preview {
+    display: block;
+    width: 100%;
+    aspect-ratio: 32 / 17;
+}
+.sg-video-preview {
+    position: relative;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    background: #123f31;
+    color: white;
+}
+.sg-video-preview img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.sg-video-preview::after { content: ''; position: absolute; inset: 0; background: #123f3120; }
+.sg-video-play {
+    position: absolute;
+    z-index: 1;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    border-radius: 100px;
+    background: #123f31ed;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 8px 30px #0003;
+}
+.sg-video-preview:hover .sg-video-play { background: #137956; }
+.sg-video-preview:focus-visible { outline: 4px solid #137956; outline-offset: -4px; }
+.sg-video-note { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; color: var(--sg-muted); font-size: 14px; margin-top: 16px; }
+.sg-video-note a { display: inline-flex; align-items: center; gap: 4px; color: var(--sg-green); font-weight: 700; }
 .sg-eyebrow {
     font-size: 11px;
     font-weight: 750;

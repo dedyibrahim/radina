@@ -1,6 +1,6 @@
-# SIGANDI Word 0.4.6 Preview
+# SIGANDI Word 0.4.7 Preview
 
-Disertakan bersama installer SIGANDI 1.4.6 untuk Word desktop Windows. Add-in
+Disertakan bersama installer SIGANDI 1.4.7 untuk Word desktop Windows. Add-in
 dimuat otomatis melalui Startup Word untuk akun pemasang. Simpan dan tutup Word
 sebelum instalasi. Kebijakan macro yang sudah berlaku tidak diubah.
 
@@ -13,7 +13,7 @@ mengikuti dokumen; tidak ada angka margin yang diklaim sebagai ketentuan hukum.
 Rujukan: [UU 30/2004](https://www.pajak.go.id/id/jabatan-notaris) dan
 [UU 2/2014](https://peraturan.bpk.go.id/Details/38565/uu-no-2-tahun-2014).
 
-Lisensi diperiksa melalui executable desktop 1.4.6+ yang didaftarkan installer
+Lisensi diperiksa melalui executable desktop 1.4.7+ yang didaftarkan installer
 di HKCU Software/RadinaNet/SIGANDI DesktopExe. Protokol UTF-16 sementara
 hanya berisi status dan identitas terverifikasi, bukan key/API token. Bukti aktivasi
 lokal diperiksa tanda tangannya, lalu server wajib menyetujui setiap tindakan
@@ -92,16 +92,20 @@ paragraf yang diberi format langsung. Gunakan posisi efektif paragraf.
 Benchmark 7 halaman: 21.33 s menjadi 11.38 s; posisi teks dan footer identik,
 perbedaan pembulatan stroke maksimal 0.34 pt pada dua renderer Word.
 
-PEMBARUAN 0.4.6
+PEMBARUAN 0.4.7
 Jangkar kanvas dibuat pada titik kosong agar tidak menghapus huruf pada dokumen kompatibilitas dan memicu pesan perubahan teks saat proses berjalan. Pemeriksaan perubahan teks tetap aktif.
 
-PEMBARUAN LISENSI 0.4.6 / 1.4.6
+PEMBARUAN LISENSI 0.4.7 / 1.4.7
 Setiap tindakan berlisensi memeriksa server; tidak memakai persetujuan offline atau cache lima menit untuk menjalankan tindakan. Jika server tidak dapat dihubungi, fitur berlisensi diblokir sampai pemeriksaan berhasil. Word dan dokumen lama tetap dapat dibuka.
 
-PEMBARUAN JUDUL DAN WARNA 1.4.6 / 0.4.6
+PEMBARUAN JUDUL DAN WARNA 1.4.7 / 0.4.7
 Isi ---- menambahkan pengisi di kiri dan kanan judul bagian rata tengah,
 misalnya Maksud dan Tujuan serta Kegiatan Usaha atau Pasal 3, tanpa menimpa
 kata-katanya. Di Word, sertakan judul bagian di dalam area isi yang ditandai.
 Judul utama, Nomor, footer dan tanda tangan tetap di luar area pemrosesan.
 Strip mendatar selalu hitam pada pratinjau, perubahan warna dan hasil PDF.
 Pilihan warna hanya berlaku pada garis vertikal beserta penutupnya.
+
+KONTAK RESMI RADINA.NET / SIGANDI
+WhatsApp: +62 877 2417 0145
+https://wa.me/6287724170145

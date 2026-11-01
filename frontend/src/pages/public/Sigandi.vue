@@ -27,7 +27,7 @@ const error = ref('')
 const loading = ref(false)
 const contact = computed(() =>
     whatsappLink(
-        platform.settings.whatsapp_number || '6281289903664',
+        platform.settings.whatsapp_number || '6287724170145',
         'Halo Radina, saya tertarik dengan SIGANDI untuk merapikan akta di desktop dan Microsoft Word. Boleh dibantu informasi lisensi dan aktivasinya?',
     ),
 )

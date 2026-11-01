@@ -21,7 +21,7 @@ try {
 
   const links = await page.locator('a[href^="https://wa.me/"]').evaluateAll(nodes => nodes.map(node => node.href))
   assert(links.length >= 20)
-  for (const link of links) assert.equal(new URL(link).pathname, '/6281289903664')
+  for (const link of links) assert.equal(new URL(link).pathname, '/6287724170145')
   const product = new URL(await page.getByRole('link', { name: 'Pesan buket ini' }).first().getAttribute('href'))
   assert.match(product.searchParams.get('text'), /Buket Custom 01/)
   assert.match(product.searchParams.get('text'), /\/images\/bouquets\/buket-01.jpg/)
@@ -39,14 +39,14 @@ try {
   await page.goto(`${base}/`, { waitUntil: 'networkidle' })
   await expect(page.getByRole('link', { name: 'Lihat Koleksi Buket' })).toHaveAttribute('href', '/buket')
   for (const link of [page.getByRole('link', { name: 'Hubungi Kami', exact: true }), page.getByRole('link', { name: 'Hubungi Radina melalui WhatsApp' })]) {
-    assert.equal(new URL(await link.getAttribute('href')).pathname, '/6281289903664')
+    assert.equal(new URL(await link.getAttribute('href')).pathname, '/6287724170145')
   }
   for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 950 })
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Homepage overflow at ${width}px`)
   }
   const settings = await (await page.request.get(`${base}/api/settings`)).json()
-  assert.equal(settings.data.whatsapp_number, '6281289903664')
+  assert.equal(settings.data.whatsapp_number, '6287724170145')
   assert.equal((await page.request.get(`${base}/bucket`, { maxRedirects: 0 })).status(), 301)
   checks.push('Wedding contact, homepage links, settings, and the bucket redirect are correct.')
   assert.deepEqual(errors, [])

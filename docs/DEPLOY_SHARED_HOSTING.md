@@ -16,7 +16,7 @@ PHP 8.2 dengan PDO MySQL, GD, mbstring, fileinfo, intl, curl, OpenSSL diperlukan
 4. Jalankan `php artisan optimize:clear`, `php artisan migrate --force`, dan `php artisan db:seed --force`. Akun admin lama diberi akses wedding tanpa mengganti password; lisensi tidak disemai ulang.
 5. Media `/storage` dapat dilayani langsung oleh Laravel dari disk publik jika hosting tidak menyediakan symlink. Path di luar disk publik dan file konfigurasi privat ditolak.
 6. Periksa `/api/license/activate` memakai aplikasi desktop yang sudah ada, lalu `/admin/licenses`, katalog, dan preview. Pastikan jumlah/key/aktivasi lisensi sama dengan cadangan.
-7. Migration mengatur rekening Mandiri `1680001279155` dan BCA `8721354342` a/n Dedy Ibrahim serta kontak WhatsApp `081289903664`. Perubahan berikutnya dapat dilakukan melalui `/admin/settings`.
+7. Migration mengatur rekening Mandiri `1680001279155` dan BCA `8721354342` a/n Dedy Ibrahim serta kontak WhatsApp `087724170145`. Perubahan berikutnya dapat dilakukan melalui `/admin/settings`.
 
 Endpoint aktivasi lisensi tetap pada domain dan URL sebelumnya. Data berita lama dipertahankan sebagai arsip database. Kode bisnis berita tidak lagi digunakan; URL berita mengembalikan 410.
 
@@ -42,7 +42,7 @@ Login menampilkan tombol tampilkan/sembunyikan kata sandi serta CAPTCHA penjumla
 
 ## Buket dan kontak bisnis
 
-Katalog `/buket` memakai 17 foto asli dari folder buket pemilik, dengan harga mulai Rp100.000 dan konsultasi custom melalui WhatsApp. `/bucket` diarahkan ke `/buket`. Nomor kontak bisnis wedding dan buket adalah `081289903664` (`6281289903664` untuk tautan WhatsApp), diperbarui lewat migration khusus setting tanpa mengubah akun, lisensi, atau aktivasi. Nomor selanjutnya dapat diubah lewat Pengaturan admin. Tombol WhatsApp mengambang tersedia di halaman publik dan tautan produk menyertakan foto referensi pilihan pelanggan.
+Katalog `/buket` memakai 17 foto asli dari folder buket pemilik, dengan harga mulai Rp100.000 dan konsultasi custom melalui WhatsApp. `/bucket` diarahkan ke `/buket`. Nomor kontak bisnis wedding dan buket adalah `087724170145` (`6287724170145` untuk tautan WhatsApp), diperbarui lewat migration khusus setting tanpa mengubah akun, lisensi, atau aktivasi. Nomor selanjutnya dapat diubah lewat Pengaturan admin. Tombol WhatsApp mengambang tersedia di halaman publik dan tautan produk menyertakan foto referensi pilihan pelanggan.
 
 Deployment membandingkan SHA-256 file dengan manifest commit produksi terakhir yang berhasil. Salinan upload sementara yang identik dapat dilewati; source dan file remote tidak dihapus. Manifest baru tetap memuat semua file yang diharapkan dan hook memverifikasi seluruhnya sebelum migrasi. Jika manifest lama tidak tersedia, rusak, atau tidak sesuai marker commit, semua file tetap dikirim. Hook dan entrypoint selalu dikirim.
 

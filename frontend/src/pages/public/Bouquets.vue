@@ -17,7 +17,7 @@ function orderLink(bouquet) {
     `Halo Radina, saya tertarik dengan ${bouquet.name}. Referensi foto: ${window.location.origin}${bouquet.image}. Saya ingin diskusi harga dan custom untuk buket ini.`)
 }
 useSeo(() => ({ title: 'Buket Custom Mulai Rp100.000 | Radina',
-  description: 'Buket untuk wisuda, ulang tahun, dan momen istimewa. Mulai Rp100.000, bisa custom. Pesan melalui WhatsApp 081289903664.',
+  description: 'Buket untuk wisuda, ulang tahun, dan momen istimewa. Mulai Rp100.000, bisa custom. Pesan melalui WhatsApp 087724170145.',
   image: '/images/bouquets/buket-05.jpg' }))
 </script>
 <template>
@@ -32,7 +32,7 @@ useSeo(() => ({ title: 'Buket Custom Mulai Rp100.000 | Radina',
           <a :href="customLink" class="p-button" target="_blank" rel="noopener noreferrer"><MessageCircle :size="18" />Pesan via WhatsApp</a>
           <a href="#koleksi-buket" class="text-link">Lihat koleksi <ArrowUpRight :size="16" /></a>
         </div>
-        <p class="bouquet-contact">WhatsApp <a :href="customLink" target="_blank" rel="noopener noreferrer">0812 8990 3664</a></p>
+        <p class="bouquet-contact">WhatsApp <a :href="customLink" target="_blank" rel="noopener noreferrer">+62 877 2417 0145</a></p>
       </div>
       <div class="bouquet-hero-image">
         <img src="/images/bouquets/buket-05.jpg" alt="Buket bunga pink dengan boneka wisuda dan pita, salah satu kreasi buket custom" width="960" height="1280" fetchpriority="high" />

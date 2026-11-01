@@ -30,7 +30,7 @@ class OrderDocumentService
                 'issued_at' => $type === 'receipt' ? ($order->payment->confirmed_at ?? now()) : $order->created_at,
                 'snapshot' => ['order_number' => $order->order_number, 'customer_name' => $order->customer_name, 'whatsapp' => $order->whatsapp, 'email' => $order->email,
                     'items' => $items, 'total' => (int) $order->total, 'currency' => 'IDR', 'company' => $settings['company_name'] ?? 'Radina',
-                    'contact' => $settings['whatsapp_number'] ?? '6281289903664', 'banks' => collect(['', 'secondary_'])->map(fn ($prefix) => ['bank' => $settings[$prefix.'bank_name'] ?? '', 'account_number' => $settings[$prefix.'bank_account'] ?? '', 'account_name' => $settings[$prefix.'bank_account_name'] ?? ''])->filter(fn ($bank) => $bank['account_number'] !== '')->values()->all(),
+                    'contact' => $settings['whatsapp_number'] ?? '6287724170145', 'banks' => collect(['', 'secondary_'])->map(fn ($prefix) => ['bank' => $settings[$prefix.'bank_name'] ?? '', 'account_number' => $settings[$prefix.'bank_account'] ?? '', 'account_name' => $settings[$prefix.'bank_account_name'] ?? ''])->filter(fn ($bank) => $bank['account_number'] !== '')->values()->all(),
                     'payment_method' => $order->payment?->payment_method, 'reference' => $type === 'receipt' ? $order->payment?->reference : null]]);
         });
     }

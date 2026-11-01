@@ -101,7 +101,7 @@ try:
     DEFAULT_LICENSE_API_TIMEOUT = float(os.environ.get("GARIS_LICENSE_API_TIMEOUT", "12"))
 except Exception:
     DEFAULT_LICENSE_API_TIMEOUT = 12.0
-APP_VERSION = "1.4.6"
+APP_VERSION = "1.4.7"
 APP_SHORTCUT_NAME = "Sistem Garis Akta Notaris Digital.lnk"
 try:
     from embedded_license_secret import EMBEDDED_LICENSE_SECRET as _EMBEDDED_LICENSE_SECRET
@@ -2376,7 +2376,8 @@ class GarisEditorApp:
             "5. Aktivasi lisensi menggunakan verifikasi online ke server resmi vendor.\n"
             "6. Pastikan data dokumen yang diproses adalah data yang berhak Anda kelola.\n\n"
             "Butuh bantuan atau pertanyaan?\n"
-            "WhatsApp: 081289903664"
+            "WhatsApp: +62 877 2417 0145\n"
+            "https://wa.me/6287724170145"
         )
         messagebox.showinfo("Help / Terms & Conditions", terms, parent=self.root)
 

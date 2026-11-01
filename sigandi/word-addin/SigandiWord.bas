@@ -1,7 +1,7 @@
 Attribute VB_Name = "Module1"
 Option Explicit
 
-' SIGANDI Word 0.4.6 - collapsed drawing anchors preserve document text.
+' SIGANDI Word 0.4.7 - collapsed drawing anchors preserve document text.
 ' Only shapes named SIGANDI_W_* are managed. Original text is never replaced.
 Private Const PREFIX As String = "SIGANDI_W_"
 Private Const BODY As String = "SIGANDI_AREA_ISI"
@@ -38,7 +38,7 @@ Private Type TextExtent
 End Type
 
 Public Function SigandiVersion() As String
-    SigandiVersion = "SIGANDI Word 0.4.6 Preview"
+    SigandiVersion = "SIGANDI Word 0.4.7 Preview"
 End Function
 
 Public Function SigandiTiming() As String
@@ -102,7 +102,9 @@ Public Sub RibbonHelp(ByVal control As Object)
         "paragraf bukan baris kosong. Header/footer dan tabel dilewati. " & _
         "Blok tanda tangan Notaris/PPAT dilewati mulai label jabatannya." & vbCrLf & vbCrLf & _
         "Versi pratinjau untuk Word desktop Windows. Garis merupakan " & _
-        "objek visual, bukan penguncian dokumen.", vbInformation, "SIGANDI | Panduan"
+        "objek visual, bukan penguncian dokumen." & vbCrLf & vbCrLf & _
+        "Bantuan Radina.net: +62 877 2417 0145" & vbCrLf & _
+        "https://wa.me/6287724170145", vbInformation, "SIGANDI | Panduan"
 End Sub
 
 Public Sub SigandiMarkBody()

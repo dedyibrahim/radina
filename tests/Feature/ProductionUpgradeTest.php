@@ -36,8 +36,8 @@ class ProductionUpgradeTest extends TestCase
                 $this->assertSame($rows, DB::table($table)->orderBy('id')->get()->map(fn ($row) => (array) $row)->all(), $table);
             }
             $this->assertDatabaseCount('templates', count(\App\Services\TemplateCatalog::keys()));
-            $this->assertDatabaseHas('system_settings', ['key' => 'whatsapp_number', 'value' => '6281289903664']);
-            $this->getJson('/api/settings')->assertOk()->assertJsonPath('data.whatsapp_number', '6281289903664');
+            $this->assertDatabaseHas('system_settings', ['key' => 'whatsapp_number', 'value' => '6287724170145']);
+            $this->getJson('/api/settings')->assertOk()->assertJsonPath('data.whatsapp_number', '6287724170145');
             $this->getJson('/api/settings')->assertOk()
                 ->assertJsonPath('data.bank_name', 'Bank Mandiri')
                 ->assertJsonPath('data.bank_account', '1680001279155')

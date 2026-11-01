@@ -5,7 +5,7 @@ import fitz
 import win32com.client
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'tmp/sigandi-center-0.4.6'
+OUT = ROOT / 'tmp/sigandi-center-0.4.7'
 OUT.mkdir(parents=True, exist_ok=True)
 app = doc = None
 report = {}
@@ -17,8 +17,8 @@ try:
     for addin in app.AddIns:
         if 'sigandi' in addin.Name.lower() and addin.Installed:
             addin.Installed = False
-    app.AddIns.Add(str(ROOT / 'output/word-addin/SIGANDI-Word-0.4.6-preview.dotm'), True)
-    assert app.Run('Module1.SigandiVersion') == 'SIGANDI Word 0.4.6 Preview'
+    app.AddIns.Add(str(ROOT / 'output/word-addin/SIGANDI-Word-0.4.7-preview.dotm'), True)
+    assert app.Run('Module1.SigandiVersion') == 'SIGANDI Word 0.4.7 Preview'
     old_color = app.Run('Module1.SigandiLineColorIndex')
     doc = app.Documents.Add()
     doc.Content.Text = ('JUDUL AKTA UTAMA\r'

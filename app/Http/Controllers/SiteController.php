@@ -23,7 +23,7 @@ class SiteController extends Controller
         }
         if ($request->is('buket')) {
             $metadata['seo_title'] = 'Buket Custom Mulai Rp100.000 | Radina';
-            $metadata['seo_description'] = 'Buket untuk wisuda, ulang tahun, dan momen istimewa. Mulai Rp100.000, bisa custom. Pesan melalui WhatsApp 081289903664.';
+            $metadata['seo_description'] = 'Buket untuk wisuda, ulang tahun, dan momen istimewa. Mulai Rp100.000, bisa custom. Pesan melalui WhatsApp 087724170145.';
             $metadata['seo_image'] = '/images/bouquets/buket-05.jpg';
         }
         $response = $this->html($metadata, null, $known ? 200 : 404);

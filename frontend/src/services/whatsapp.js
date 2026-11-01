@@ -1,4 +1,4 @@
-export const BUSINESS_WHATSAPP = '6281289903664'
+export const BUSINESS_WHATSAPP = '6287724170145'
 
 export function whatsappLink(number, message) {
   let digits = String(number || BUSINESS_WHATSAPP).replace(/\D/g, '')

@@ -36,7 +36,7 @@ try {
   await page.goto(`${base}/order/success/${order.order_number}`, { waitUntil: 'networkidle' })
   await verifyAccounts()
   assert(!await page.locator('.payment-instructions').textContent().then(text => /masih contoh|pemilik rekening.*contoh/.test(text)))
-  assert.equal(new URL(await page.getByRole('link', { name: 'Konfirmasi Pembayaran via WhatsApp' }).getAttribute('href')).pathname, '/6281289903664')
+  assert.equal(new URL(await page.getByRole('link', { name: 'Konfirmasi Pembayaran via WhatsApp' }).getAttribute('href')).pathname, '/6287724170145')
   checks.push('A newly created wedding order uses both owner accounts without the demo notice, with the correct WhatsApp contact.')
 
   for (const width of [320, 390, 768, 1440]) {

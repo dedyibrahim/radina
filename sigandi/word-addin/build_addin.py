@@ -15,7 +15,7 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parent.parent
 HERE = ROOT / 'word-addin'
 OUT = ROOT / 'output' / 'word-addin'
-VERSION = '0.4.6-preview'
+VERSION = '0.4.7-preview'
 
 
 def icon(kind):

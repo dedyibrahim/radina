@@ -1,4 +1,4 @@
-# SIGANDI 1.4.6 / Word 0.4.6
+# SIGANDI 1.4.7 / Word 0.4.7
 
 Versioned desktop, Word add-in, tests and guide generator for the public release
 at `/sigandi`. This source directory is excluded from production web deployment.
@@ -6,6 +6,8 @@ The actual installer, PDF and SHA-256 release manifest are published under
 `public/downloads/sigandi/` and included in the existing CI/CD upload.
 
 ## Release changes
+
+- Update official support to +62 877 2417 0145 across desktop, Word and guide.
 
 - Fill both sides of internal centered headings without touching their words.
 - Horizontal leaders remain black in preview, color changes, PDF and print.

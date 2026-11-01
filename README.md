@@ -31,7 +31,7 @@ Buka `http://127.0.0.1:8000`; admin pada `/admin/login`. Untuk pengembangan fron
 
 Instalasi lama menggunakan akun dan password administrator yang sudah ada. Instalasi baru perlu mengisi `ADMIN_EMAIL` dan `ADMIN_PASSWORD` pada `.env`. Seeder tidak mengganti password akun lama dan tidak membuat atau mengganti lisensi.
 
-Pembayaran wedding dan buket menggunakan Bank Mandiri `1680001279155` dan Bank BCA `8721354342`, keduanya a/n Dedy Ibrahim. WhatsApp bisnis: `081289903664`. Kedua rekening dapat disalin dari halaman pembayaran dan diubah melalui `/admin/settings`; rekening kedua opsional dan harus diisi lengkap bila digunakan. Rekening hadiah pada undangan demo tetap merupakan data contoh pengantin.
+Pembayaran wedding dan buket menggunakan Bank Mandiri `1680001279155` dan Bank BCA `8721354342`, keduanya a/n Dedy Ibrahim. WhatsApp bisnis: `087724170145`. Kedua rekening dapat disalin dari halaman pembayaran dan diubah melalui `/admin/settings`; rekening kedua opsional dan harus diisi lengkap bila digunakan. Rekening hadiah pada undangan demo tetap merupakan data contoh pengantin.
 
 ## Perlindungan lisensi dan data lama
 

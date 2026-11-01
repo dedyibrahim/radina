@@ -21,8 +21,8 @@ try {
     assert.equal(await page.locator('header a[href="/sigandi"]').count(), 1)
     const metadata = await page.request.get(`${base}/sigandi/release`)
     const release = await metadata.json()
-    assert.equal(release.version, '1.4.6')
-    assert.equal(release.word_version, '0.4.6')
+    assert.equal(release.version, '1.4.7')
+    assert.equal(release.word_version, '0.4.7')
     for (const type of ['installer', 'guide']) {
         const response = await page.request.head(`${base}/sigandi/download/${type}`)
         assert.equal(response.status(), 200)

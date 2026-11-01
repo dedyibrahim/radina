@@ -3,6 +3,11 @@
 /frontend/node_modules
 /frontend/dist
 /test-results
+/sigandi/build
+/sigandi/dist
+/sigandi/output
+/sigandi/tmp
+/sigandi/garis_editor_license.json
 __pycache__/
 /public/build
 /public/hot
@@ -14,6 +19,7 @@ __pycache__/
 /public/images/demos
 /public/images/bouquets
 /public/images/cinematic
+/public/images/sigandi
 /public/images/*.webp
 /public/storage
 /storage/*.key

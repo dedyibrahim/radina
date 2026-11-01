@@ -1,0 +1,183 @@
+SIGANDI WORD 0.4.6 PREVIEW | SIGANDI DESKTOP 1.4.6
+Add-in untuk Microsoft Word desktop Windows dengan pemeriksaan lisensi server
+==================================================
+
+INSTALASI OTOMATIS BERSAMA APLIKASI
+1. Simpan dokumen Anda, lalu tutup semua jendela Microsoft Word.
+2. Jalankan GarisAktaEditor_Setup_v1.4.6.exe dan ikuti petunjuk instalasi.
+3. Installer memasang aplikasi desktop dan add-in Word untuk akun Windows
+   yang menjalankan installer. Tidak memerlukan hak administrator.
+4. Buka Word kembali. Tab SIGANDI dimuat otomatis setiap Word dibuka.
+5. File aktif bernama SIGANDI-Word.dotm di folder Startup Word. Preview lama
+   dicadangkan sebelum digantikan sehingga tidak ada dua versi otomatis aktif.
+
+Memerlukan Word desktop Windows dengan VBA serta izin menjalankan macro
+sesuai kebijakan komputer. Word web dan Word mobile tidak didukung.
+Installer tidak mengubah Trust Center atau mengaktifkan semua macro.
+Jika kebijakan organisasi memblokir add-in, hubungi administrator Anda.
+Tidak memerlukan Python atau server lokal. Internet diperlukan saat aktivasi dan setiap menjalankan fitur berlisensi.
+Lisensi yang dihapus, revoked, expired, atau gagal diverifikasi server ditolak.
+
+MEMUAT MANUAL TANPA INSTALLER (PAKET DOTM TERPISAH)
+1. Simpan SIGANDI-Word-0.4.6-preview.dotm di folder tetap milik Anda.
+   Fungsi berlisensi memerlukan aplikasi/helper SIGANDI desktop 1.4.6 atau baru.
+2. Word > File > Options > Add-ins > Manage: Word Add-ins > Go > Add.
+3. Pilih file tersebut, centang, lalu OK. Tab SIGANDI tampil untuk sesi ini.
+4. Untuk otomatis, lihat Word > File > Options > Advanced > General > File
+   Locations > Startup. Tutup Word dan salin satu file add-in ke sana.
+   Jika installer sudah memasangnya, langkah manual ini tidak diperlukan.
+
+LISENSI DESKTOP DAN WORD
+SIGANDI > Lisensi > Informasi Lisensi menampilkan status, pemilik, masa berlaku
+dan perangkat. Key lengkap tidak ditampilkan. Aktivasi yang sah di desktop
+berlaku juga di Word pada komputer/akun Windows yang sama, tanpa membeli key
+kedua. Klik Aktivasi / Kelola Lisensi untuk membuka dialog aktivasi bersama.
+Aktivasi dan setiap tindakan berlisensi membutuhkan internet. Bukti aktivasi
+lokal diperiksa integritasnya, lalu server wajib menyetujui tindakan tersebut.
+Lisensi yang dihapus, nonaktif, revoked atau expired ditolak meskipun bukti
+aktivasi lama masih tersimpan. Gangguan internet/server juga memblokir fitur
+berlisensi sampai pemeriksaan berhasil; tidak ada izin offline pengganti.
+Membuat/memperbarui garis, menerapkan margin dan ekspor SIGANDI memerlukan
+lisensi aktif. Membaca panduan, menandai area dan menghapus garis tetap tersedia.
+Jika helper tidak ditemukan, jalankan ulang installer desktop terbaru.
+
+PENGATURAN PENUTUP
+Centang Bersilangan untuk penutup yang melintasi sambungan garis vertikal;
+hapus centang untuk sambungan biasa. Pilih Landai, Sedang atau Tinggi,
+atau isi Panjang atas/bawah (1-150 pt) dan Miring atas/bawah (0-30 pt).
+Nilai 0 untuk kemiringan membuat penutup datar. Nilai disimpan untuk akun ini.
+Klik Terapkan Penutup untuk mengubah penutup yang sudah ada dengan cepat.
+Jika teks/margin berubah, gunakan Perbarui Garis untuk menghitung posisi ulang.
+Panjang dan kemiringan dibatasi ruang isi halaman agar tidak masuk footer.
+
+HALAMAN AKTA: MARGIN, KERTAS DAN PRESET KANTOR
+1. SIGANDI > Halaman Akta > Atur Margin dan Kertas membuka Page Setup Word.
+   Pilih empat margin, ukuran kertas dan cakupan bagian yang diperlukan.
+   Untuk kertas khusus, masukkan lebar/tinggi melalui tab Paper Word.
+2. Simpan Preset Kantor menyimpan ukuran kertas dan empat margin bagian aktif.
+3. Terapkan preset ke Bagian Aktif atau Seluruh Dokumen sesuai kebutuhan.
+4. Setelah tata letak berubah, garis SIGANDI lama dihapus. Tandai ulang area
+   bila diperlukan dan klik Perbarui Garis. Ctrl+Z mengembalikan perubahan.
+Add-in tidak mengganti margin otomatis saat dibuka dan tidak memberi label
+ukuran tertentu sebagai kewajiban hukum. Ruang renvoi perlu disesuaikan dengan
+format kantor dan jenis akta. Pasal 38, 42 dan 49 UU Jabatan Notaris membahas
+bentuk akta, sela kosong dan perubahan; tidak menetapkan empat margin dalam cm.
+Rujukan resmi (UU 30/2004 sebagaimana diubah UU 2/2014):
+https://www.pajak.go.id/id/jabatan-notaris
+https://peraturan.bpk.go.id/Details/38565/uu-no-2-tahun-2014
+
+MENGGUNAKAN SIGANDI
+1. Buka salinan akta yang dapat diedit.
+2. Blok seluruh paragraf isi akta tanpa judul, footer, dan tanda tangan.
+3. Klik SIGANDI > Tandai Area Isi.
+4. Klik Buat Semua, atau pilih Garis Vertikal / Isi ---- dan Baris Kosong.
+5. Garis vertikal disambung menjadi blok. Pada daftar bernomor, garis
+   pendek mengikuti nomor dan garis utama masuk ke indentasi teks lanjutan.
+   Pembuka dan penutup miring dibuat pada awal/akhir isi setiap halaman.
+6. Paragraf kosong nyata di dalam area isi juga dapat diberi pengisi ----.
+7. Periksa semua halaman. Ctrl+Z membatalkan satu proses pembuatan garis.
+8. Klik Simpan PDF untuk membuat salinan PDF. Simpan DOCX seperti biasa
+   untuk mempertahankan teks, penanda area, serta garis yang dapat diedit.
+
+SETELAH TEKS DIEDIT
+Klik Perbarui Garis setelah mengubah teks atau tata letak. Vertikal,
+penutup miring dan pengisi ---- dihitung ulang dari posisi baris Word.
+Garis tidak diperbarui otomatis setiap kali mengetik. Jika batas isi
+berubah, tandai kembali areanya. Hapus Garis SIGANDI menghapus semua
+garis milik add-in. Border lama versi 0.2 dikembalikan ke kondisi asli.
+Teks, gambar, serta bentuk lain dipertahankan.
+Buat Semua mengganti kedua jenis garis. Tombol satu jenis hanya mengganti
+jenis tersebut. Gunakan satu versi add-in aktif dalam satu sesi Word.
+
+PROSES DOKUMEN PANJANG
+Status kemajuan tampil di bawah Word. Tunggu selesai sebelum mengedit atau
+berpindah dokumen. Gunakan Batalkan Proses atau Ctrl+Break untuk berhenti;
+Ctrl+Z dapat mengembalikan perubahan proses tersebut. Pengisi ---- masih
+menghitung setiap baris visual, sehingga lebih lama daripada dokumen pendek.
+Waktu bergantung pada tata letak dan komputer.
+
+JIKA TAB BELUM MUNCUL
+Tutup dan buka kembali Word setelah instalasi. Periksa File > Options >
+Add-ins > Manage: Word Add-ins > Go, lalu centang SIGANDI-Word.dotm.
+Periksa juga Disabled Items jika Word pernah menonaktifkan add-in setelah
+berhenti mendadak. Jangan memuat preview lama bersamaan.
+
+BATAS VERSI PREVIEW
+- Cakupan: paragraf isi utama satu kolom dengan margin biasa.
+- Tabel, textbox, header/footer asli Word, mirror margins, section beberapa
+  kolom, dan paragraf berisi gambar inline dilewati. Tidak melakukan OCR.
+- Label pendek seperti Notaris di Jakarta atau PPAT menjadi batas akhir.
+  Spasi ganda, tab, koma akhir, dan separator kosong sebelum label didukung.
+  Tetap tandai batas isi untuk susunan tanda tangan atau jabatan lain.
+- Judul rata tengah dilewati. Jarak Before/After dan sisa kertas bukan
+  paragraf kosong sehingga tidak otomatis diberi baris tambahan.
+- Teks putih di kertas putih dan teks tersembunyi bukan acuan ujung garis.
+  Periksa ulang dokumen dengan latar atau bentuk berwarna.
+- Vertikal dan penutup berupa bentuk Word di belakang teks. Indentasi
+  bertingkat mengikuti pengaturan paragraf, bukan satu garis luar halaman.
+  Setelah teks berubah atau halaman bergeser, klik Perbarui Garis.
+- Garis adalah tampilan visual, bukan penguncian atau jaminan file tidak
+  dapat disunting. Kompresi PDF dan booklet tetap fitur desktop.
+
+MELEPAS ADD-IN
+Simpan dan tutup Word, lalu uninstall SIGANDI melalui Installed Apps Windows.
+Untuk pemuatan manual, hapus centang pada Word Add-ins dan pindahkan file
+SIGANDI dari Startup setelah Word ditutup. Jangan menghapus template lain.
+
+Referensi Microsoft:
+https://support.microsoft.com/en-us/word/load-or-unload-a-template-or-add-in-program
+
+WARNA GARIS DAN POSISI PENUTUP
+Penutup atas dimulai pada baris pertama, termasuk baris nomor yang pendek.
+Warna Garis: Hitam, Merah, Hijau, Abu-abu. Pilihan mengubah garis vertikal dan penutup pada dokumen aktif. Pengisi ----
+mendatar selalu hitam, termasuk di kedua sisi judul bagian. Ctrl+Z
+mengembalikan warna bentuk; pilihan warna untuk pembuatan berikutnya tetap
+mengikuti dropdown. Teks, footer dan bentuk pengguna tidak diwarnai.
+
+KETEBALAN DAN DAFTAR BERNOMOR
+Nomor otomatis yang rata kanan/tengah dihitung dari sisi kiri labelnya.
+Ketebalan (pt) menerima nilai 0,1 sampai 4, termasuk desimal koma/titik.
+Mengubah ketebalan langsung mengubah garis SIGANDI dan disimpan untuk
+pembuatan berikutnya. Ctrl+Z mengembalikan bentuk yang sudah diubah.
+Untuk posisi nomor lama, klik Perbarui Garis satu kali setelah pembaruan.
+
+PEMBARUAN KINERJA
+Pembuatan pengisi ---- dipercepat dan tampilan diperbarui secara berkala.
+Warna, ketebalan dan penutup dapat diubah tanpa menghitung ulang seluruh
+baris. Perbarui Garis diperlukan setelah mengedit teks atau tata letak.
+Angka daftar dengan indentasi paragraf khusus mengikuti posisi efektif
+paragraf, termasuk ketika berbeda dari posisi pada template penomoran.
+
+PEMBARUAN 0.4.4
+Jangkar kanvas dibuat pada titik kosong agar tidak menghapus huruf pada dokumen kompatibilitas dan memicu pesan perubahan teks saat proses berjalan. Pemeriksaan perubahan teks tetap aktif.
+
+PEMBARUAN LISENSI 0.4.6 / 1.4.6
+Setiap tindakan berlisensi memeriksa server; tidak memakai persetujuan offline atau cache lima menit untuk menjalankan tindakan. Jika server tidak dapat dihubungi, fitur berlisensi diblokir sampai pemeriksaan berhasil. Word dan dokumen lama tetap dapat dibuka.
+
+PANDUAN PDF LENGKAP
+Panduan SIGANDI v1.4.6.pdf terdiri dari 20 halaman dan mencakup desktop serta
+Word. Installer menyimpannya di folder aplikasi dengan nama Panduan SIGANDI.pdf.
+Pintasan Panduan SIGANDI tersedia di Start Menu > Radina.net.
+
+LISENSI DITOLAK SETELAH SEBELUMNYA AKTIF
+- Di Word buka SIGANDI > Lisensi > Informasi Lisensi untuk memeriksa status.
+- Gunakan Aktivasi / Kelola Lisensi > Periksa Ulang atau aktivasi key yang sah.
+- Bila key dihapus atau revoked, hubungi penyedia lisensi; membuka ulang Word
+  atau memakai cache lama tidak memberi izin menjalankan fitur berlisensi.
+- Perbarui seluruh komputer ke desktop 1.4.6 dan add-in 0.4.6. Versi lama
+  masih dapat menggunakan kebijakan pemeriksaan yang berbeda.
+- Dokumen dan garis lama tetap ada. Word tetap dapat dipakai seperti biasa.
+
+JIKA MUNCUL PESAN TEKS BERUBAH
+Jangan mengetik atau pindah dokumen saat proses berlangsung. Versi 0.4.4+
+memperbaiki jangkar kanvas yang dapat mengganti huruf. Jika proses gagal,
+gunakan Ctrl+Z untuk membatalkan proses tersebut, periksa isi teks, lalu
+ulangi pada versi terbaru. Simpan salinan dokumen sebelum pemrosesan.
+
+PEMBARUAN JUDUL DAN WARNA 1.4.6 / 0.4.6
+Isi ---- menambahkan pengisi di kiri dan kanan judul bagian rata tengah,
+misalnya Maksud dan Tujuan serta Kegiatan Usaha atau Pasal 3, tanpa menimpa
+kata-katanya. Di Word, sertakan judul bagian di dalam area isi yang ditandai.
+Judul utama, Nomor, footer dan tanda tangan tetap di luar area pemrosesan.
+Strip mendatar selalu hitam pada pratinjau, perubahan warna dan hasil PDF.
+Pilihan warna hanya berlaku pada garis vertikal beserta penutupnya.

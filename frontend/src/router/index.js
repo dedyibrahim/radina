@@ -26,6 +26,7 @@ const router = createRouter({
           component: () => import('../pages/public/Bouquets.vue'),
         },
         { path: 'bucket', redirect: '/buket' },
+        { path: 'sigandi', component: () => import('../pages/public/Sigandi.vue') },
         {
           path: 'templates',
           component: () => import('../pages/public/Templates.vue'),

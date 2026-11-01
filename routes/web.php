@@ -15,6 +15,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LicenseAdminController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\SigandiDownloadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -112,6 +113,8 @@ Route::prefix('api/customer-portals/{token}')->middleware('throttle:api')->group
 });
 
 Route::get('/assets/{file}', [SiteController::class, 'asset']);
+Route::get('/sigandi/release', [SigandiDownloadController::class, 'release']);
+Route::get('/sigandi/download/{type}', [SigandiDownloadController::class, 'download'])->whereIn('type', ['installer', 'guide']);
 Route::get('/storage/{file}', [SiteController::class, 'media'])->where('file', '.*');
 Route::get('/favicon.svg', fn () => response()->file(base_path('frontend/public/favicon.svg'), ['Content-Type' => 'image/svg+xml']));
 Route::get('/login', fn () => redirect('/admin/login'))->name('login');

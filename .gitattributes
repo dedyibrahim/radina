@@ -1,5 +1,10 @@
 * text=auto eol=lf
 
+# Release downloads must retain exact bytes for their published SHA-256 hashes.
+*.pdf binary
+*.exe binary
+*.dotm binary
+
 *.blade.php diff=html
 *.css diff=css
 *.html diff=html

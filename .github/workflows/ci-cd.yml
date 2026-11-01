@@ -326,7 +326,7 @@ jobs:
             fi
 
             case "$path" in
-              .env*|storage/*|vendor/*|scripts/*|test-results/*|public/storage*|.github/*|docs/*|tests/*|README*|.gitignore|.gitattributes|.editorconfig|.deployignore)
+              .env*|storage/*|vendor/*|scripts/*|sigandi/*|test-results/*|public/storage*|.github/*|docs/*|tests/*|README*|.gitignore|.gitattributes|.editorconfig|.deployignore)
                 continue
                 ;;
               composer.json|composer.lock)

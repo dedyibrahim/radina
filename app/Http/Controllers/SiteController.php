@@ -14,7 +14,13 @@ class SiteController extends Controller
     public function index(Request $request, PlatformSettings $settings)
     {
         $known = preg_match('~^(?:/|/buket|/pelanggan/[a-f0-9]{64}(?:/preview)?|/tamu/[a-f0-9-]{36}|/templates(?:/[^/]+(?:/preview)?)?|/order/(?:success/)?[^/]+|/check-order|/admin(?:/.*)?|/preview/wedding/[^/]+)$~', '/'.$request->path()) || $request->path() === '/';
+        $known = $known || $request->is('sigandi');
         $metadata = $settings->all();
+        if ($request->is('sigandi')) {
+            $metadata['seo_title'] = 'SIGANDI - Rapikan Garis Akta di Desktop & Word | Radina';
+            $metadata['seo_description'] = 'Rapikan garis vertikal, pengisi ---- dan judul tengah akta dengan SIGANDI. Unduh aplikasi Windows beserta add-in Microsoft Word dan panduan pengguna.';
+            $metadata['seo_image'] = '/images/sigandi/sigandi-preview.svg';
+        }
         if ($request->is('buket')) {
             $metadata['seo_title'] = 'Buket Custom Mulai Rp100.000 | Radina';
             $metadata['seo_description'] = 'Buket untuk wisuda, ulang tahun, dan momen istimewa. Mulai Rp100.000, bisa custom. Pesan melalui WhatsApp 081289903664.';
@@ -35,7 +41,7 @@ class SiteController extends Controller
 
     public function sitemap()
     {
-        $urls = [url('/'), url('/templates'), url('/buket')];
+        $urls = [url('/'), url('/templates'), url('/buket'), url('/sigandi')];
         foreach (Template::where('status', 'ACTIVE')->pluck('slug') as $slug) {
             $urls[] = url('/templates/'.$slug);
         }

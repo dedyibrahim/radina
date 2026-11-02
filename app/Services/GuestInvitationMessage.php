@@ -22,7 +22,22 @@ class GuestInvitationMessage
             }
         }
 
-        return ['message_template' => $wedding->guest_message_template ?? self::defaultTemplate(), 'default_message_template' => self::defaultTemplate(), 'event_title' => $title, 'event_date' => $wedding->wedding_date?->locale('id')->translatedFormat('l, d F Y') ?? ''];
+        $events = $wedding->events;
+        $selected = $events->first(fn ($event) => $event->use_for_countdown);
+        $event = $selected
+            ? ($selected->is_visible !== false ? $selected : null)
+            : $events->first(fn ($item) => $item->is_visible !== false);
+        $date = $event?->date
+            ? \Carbon\Carbon::parse($event->date)->locale('id')->translatedFormat('l, d F Y')
+            : ($wedding->wedding_date?->locale('id')->translatedFormat('l, d F Y') ?? '');
+        $start = substr($event?->start_time ?? '', 0, 5);
+        $end = substr($event?->end_time ?? '', 0, 5);
+        $zone = ['Asia/Jakarta' => 'WIB', 'Asia/Makassar' => 'WITA', 'Asia/Jayapura' => 'WIT'][$event?->timezone ?? ''] ?? 'WIB';
+        if ($start !== '') {
+            $date .= "\nPukul {$start}".($end !== '' ? " s/d {$end}" : '')." {$zone}";
+        }
+
+        return ['message_template' => $wedding->guest_message_template ?? self::defaultTemplate(), 'default_message_template' => self::defaultTemplate(), 'event_title' => $title, 'event_date' => $date];
     }
 
     public static function render(Wedding $wedding, WeddingInvitee $guest): string

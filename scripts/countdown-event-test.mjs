@@ -36,6 +36,7 @@ try {
     assert.equal(view.countdownDate.month, 'NOVEMBER')
     assert.equal(view.countdownDate.year, 2026)
     assert.equal(view.countdownDate.timezone, 'WITA')
+    assert.equal(view.countdownDate.time, '14:00 s/d 16:00')
     assert.equal(view.date.day, '14', 'The main invitation date remains independent')
     assert.equal(view.location.name, 'Rumah Keluarga', 'Map selection remains independent')
     const reordered = weddingView({ ...source, events: [...source.events].reverse() })
@@ -44,6 +45,7 @@ try {
   }
   const legacy = weddingView({ ...source, events: source.events.map(({ use_for_countdown, ...event }) => event) })
   assert.equal(legacy.countdownDate.iso, '2026-11-14T09:00:00+07:00')
+  assert.equal(legacy.countdownDate.time, '09:00 s/d 10:00')
   const hidden = weddingView({ ...source, events: source.events.map(event => ({ ...event, is_visible: event.id !== 9 })) })
   assert.equal(hidden.countdownEvent, null)
   assert.equal(hidden.countdownDate.day, '', 'A hidden selected source must not silently become another event')
@@ -57,7 +59,7 @@ try {
   const html = await renderToString(createSSRApp({
     setup() { provide('wedding', view); return () => h(Section) },
   }))
-  assert(html.includes('Resepsi · 14:00 WITA'))
+  assert(html.includes('Resepsi · 14:00 s/d 16:00 WITA'))
   assert(html.includes('NOVEMBER') && html.includes('<span>15</span>'))
   assert(!html.includes('Akad Nikah'))
 

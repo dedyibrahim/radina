@@ -52,6 +52,8 @@ export function weddingView(data) {
   const date = data.wedding_date ? new Date(`${data.wedding_date}T12:00:00+07:00`) : null
   const chosen = allEvents.find((event) => event.use_for_countdown)
   const countdownEvent = chosen ? (chosen.is_visible ? chosen : null) : events[0] || null
+  const countdownStart = countdownEvent?.start_time?.slice(0, 5)
+  const countdownEnd = countdownEvent?.end_time?.slice(0, 5)
   const countdownDay = chosen && !chosen.is_visible ? '' : countdownEvent?.date || data.wedding_date
   const countdownCalendar = countdownDay ? new Date(`${countdownDay}T12:00:00Z`) : null
   const countdownDate = {
@@ -73,7 +75,9 @@ export function weddingView(data) {
           timeZone: 'UTC',
         })
       : '',
-    time: countdownEvent?.start_time?.slice(0, 5) || '00:00',
+    time: countdownStart
+      ? `${countdownStart}${countdownEnd ? ` s/d ${countdownEnd}` : ''}`
+      : '00:00',
     timezone:
       { 'Asia/Jakarta': 'WIB', 'Asia/Makassar': 'WITA', 'Asia/Jayapura': 'WIT' }[
         countdownEvent?.timezone

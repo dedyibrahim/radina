@@ -56,6 +56,20 @@ class CountdownEventTest extends TestCase
         return $data;
     }
 
+    public function test_whatsapp_date_includes_the_selected_event_time_range(): void
+    {
+        $wedding = $this->wedding();
+        $sharing = \App\Services\GuestInvitationMessage::settings($wedding);
+        $this->assertStringContainsString('14 November 2026', $sharing['event_date']);
+        $this->assertStringContainsString('Pukul 09:00 s/d 10:00 WIB', $sharing['event_date']);
+
+        $wedding->events()->where('title', 'Resepsi')->update(['use_for_countdown' => true]);
+        $sharing = \App\Services\GuestInvitationMessage::settings($wedding->fresh());
+        $this->assertStringContainsString('15 November 2026', $sharing['event_date']);
+        $this->assertStringContainsString('Pukul 14:00 s/d 16:00 WITA', $sharing['event_date']);
+        $this->assertStringNotContainsString('09:00', $sharing['event_date']);
+    }
+
     public function test_living_scene_defaults_preserve_approvals_and_admin_can_save_motion_controls(): void
     {
         $wedding = $this->wedding();

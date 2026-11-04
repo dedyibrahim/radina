@@ -7,12 +7,12 @@ import subprocess
 import winreg
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'tmp/installer-word-test-1.4.7'
+OUT = ROOT / 'tmp/installer-word-test-1.4.8'
 INSTALL = OUT / 'install'
 STARTUP = OUT / 'startup'
 STARTUP.mkdir(parents=True, exist_ok=True)
-TEMPLATE = ROOT / 'output/word-addin/SIGANDI-Word-0.4.7-preview.dotm'
-EXE = ROOT / 'dist/SIGANDI-v1.4.7/GarisAktaEditor.exe'
+TEMPLATE = ROOT / 'output/word-addin/SIGANDI-Word-0.4.9-preview.dotm'
+EXE = ROOT / 'dist/SIGANDI-v1.4.8/GarisAktaEditor.exe'
 LEGACY = STARTUP / 'SIGANDI-Word-0.1.0-preview.dotm'
 previous_backups = set((INSTALL / 'WordAddin/Backup').rglob(LEGACY.name))
 shutil.copy2(ROOT / 'output/word-addin/SIGANDI-Word-0.1.0-preview.dotm', LEGACY)
@@ -49,7 +49,7 @@ for number in (1, 2):
     assert sha(INSTALL / 'WordAddin/SIGANDI-Word.dotm') == sha(TEMPLATE)
     assert sha(STARTUP / 'SIGANDI-Word.dotm') == sha(TEMPLATE)
     assert (INSTALL / 'WordAddin/PANDUAN.txt').read_text(encoding='utf-8') == (ROOT / 'word-addin/PANDUAN.txt').read_text(encoding='utf-8')
-    assert sha(INSTALL / 'Panduan SIGANDI.pdf') == sha(ROOT / 'output/pdf/Panduan SIGANDI v1.4.7.pdf')
+    assert sha(INSTALL / 'Panduan SIGANDI.pdf') == sha(ROOT / 'output/pdf/Panduan SIGANDI v1.4.8.pdf')
     assert not LEGACY.exists()
     backups = list((INSTALL / 'WordAddin/Backup').rglob(LEGACY.name))
     fresh_backups = [p for p in backups if p not in previous_backups]

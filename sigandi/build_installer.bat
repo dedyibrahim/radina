@@ -3,7 +3,7 @@ setlocal EnableExtensions
 
 cd /d "%~dp0"
 
-set "EXE_PATH=dist\SIGANDI-v1.4.7\GarisAktaEditor.exe"
+set "EXE_PATH=dist\SIGANDI-v1.4.8\GarisAktaEditor.exe"
 set "ISS_FILE=GarisAktaEditor.iss"
 
 echo.
@@ -51,7 +51,7 @@ if errorlevel 1 (
 echo.
 echo [OK] Installer berhasil dibuat.
 echo Cek folder dist untuk file:
-echo GarisAktaEditor_Setup_v1.4.7.exe
+echo GarisAktaEditor_Setup_v1.4.8.exe
 echo.
 pause
 exit /b 0

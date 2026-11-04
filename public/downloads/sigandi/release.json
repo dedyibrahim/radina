@@ -1,19 +1,19 @@
 {
-  "version": "1.4.7",
-  "word_version": "0.4.7",
-  "release_date": "2026-11-01",
+  "version": "1.4.8",
+  "word_version": "0.4.9",
+  "release_date": "2026-11-04",
   "platform": "Windows 64-bit",
   "guide_pages": 20,
   "files": {
     "installer": {
-      "filename": "GarisAktaEditor_Setup_v1.4.7.exe",
-      "bytes": 98752181,
-      "sha256": "fb33b8058882b3bcf14d8a57ba976a28682237bb27a5588708ff54fa677e06c0"
+      "filename": "GarisAktaEditor_Setup_v1.4.8.exe",
+      "bytes": 98758612,
+      "sha256": "d1b0c7bc9ef02de3047bf3cf5f9b26b2677eec1764a6291870fe68531125d295"
     },
     "guide": {
-      "filename": "Panduan_SIGANDI_v1.4.7.pdf",
-      "bytes": 141280,
-      "sha256": "41994f7625c626e3b9091179b715d0f429e17c01b7d99d6e3e0d070cceb4ce7f"
+      "filename": "Panduan_SIGANDI_v1.4.8.pdf",
+      "bytes": 141261,
+      "sha256": "c3b8f0edc57413ec671bc8c73393e265b496890eab33c9acfc62856340e40235"
     }
   }
 }

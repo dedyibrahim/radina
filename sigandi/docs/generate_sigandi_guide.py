@@ -1,4 +1,4 @@
-"""Build the illustrated Indonesian desktop and Word guide for SIGANDI 1.4.7."""
+"""Build the illustrated Indonesian desktop and Word guide for SIGANDI 1.4.8."""
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -15,7 +15,7 @@ from reportlab.graphics.shapes import Drawing
 from reportlab.graphics import renderPDF
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '1.4.7'
+VERSION = '1.4.8'
 TOTAL_PAGES = 20
 OUT = ROOT / f'output/pdf/Panduan SIGANDI v{VERSION}.pdf'
 OUT.parent.mkdir(parents=True, exist_ok=True)
@@ -170,7 +170,7 @@ chip(f'PANDUAN PENGGUNA  /  v{VERSION}',M,144,width=226,fill='#215641',color='#d
 text('Panduan',M,210,48,'UI-Light','#ffffff')
 text('Instalasi dan',M,271,42,'UI-Bold','#ffffff')
 text('Penggunaan',M,325,42,'UI-Bold','#ffffff')
-text('Desktop Windows + Add-in Microsoft Word 0.4.7',M,396,12,'UI','#c3dece')
+text('Desktop Windows + Add-in Microsoft Word 0.4.9',M,396,12,'UI','#c3dece')
 # A native vector document illustration, deliberately using generic text.
 rect(338,460,172,213,'#0c2f22',radius=8)
 rect(327,447,172,213,'#ffffff',radius=7)
@@ -207,7 +207,7 @@ for i,(title,body) in enumerate(steps):
     if i<3:
         arrow(xx+35,y+11,xx+CW/4-20,y+11,'#92b7a1')
 y+=126
-y=note('Yang baru pada v1.4.7','Add-in Word otomatis, margin akta, warna dan ketebalan garis. <b>Internet diperlukan setiap menjalankan fitur berlisensi</b>; lisensi terhapus atau dicabut server ditolak.',y)
+y=note('Yang baru pada v1.4.8','Shortcut Ctrl+F6-F11 tampil pada menu Word. Garis tabel berjarak 6 pt dan sel tabel tidak diisi ----. <b>Internet diperlukan setiap menjalankan fitur berlisensi</b>; lisensi terhapus atau dicabut server ditolak.',y)
 y=small_heading('Daftar isi',y)
 contents=[('Instalasi aplikasi',3),('Aktivasi dan aturan lisensi',4),('Ruang kerja desktop',5),('Buka dokumen di desktop',6),('Isi ujung baris dengan ----',7),('Baris kosong dan footer',8),('Koreksi garis desktop',9),('Penutup dan tanda tangan',10),('Halaman dan booklet',11),('Simpan, kompres, cetak',12),('Solusi kendala desktop',13),('Pintasan dan bantuan',14),('Word: pemasangan add-in',15),('Word: alur membuat garis',16),('Word: warna dan penutup',17),('Word: margin akta',18),('Word: koreksi dan kendala',19),('Lisensi: status dan solusi',20)]
 for i,(title,pg) in enumerate(contents):
@@ -251,7 +251,7 @@ y=step(3,'Pastikan aktivasi berhasil','Tunggu pesan bahwa lisensi valid dan ters
 y=step(4,'Buka kembali menu lisensi bila perlu','Pilih tab <b>Dokumen</b> lalu tombol <b>Lisensi</b> untuk memasukkan atau memeriksa key melalui proses aktivasi.',y)
 y+=6
 y=small_heading('Setelah aktivasi',y)
-y=p('Desktop dan Word memakai satu aktivasi pada komputer serta akun Windows yang sama. Sejak v1.4.7, server wajib menyetujui setiap tindakan berlisensi. Lisensi yang dihapus, dinonaktifkan, dicabut atau expired ditolak walaupun bukti aktivasi lama masih tersimpan.',y)
+y=p('Desktop dan Word memakai satu aktivasi pada komputer serta akun Windows yang sama. Sejak v1.4.5, server wajib menyetujui setiap tindakan berlisensi. Lisensi yang dihapus, dinonaktifkan, dicabut atau expired ditolak walaupun bukti aktivasi lama masih tersimpan.',y)
 y=small_heading('Tentang dokumen dan koneksi',y+5)
 y=p('Pengolahan dokumen berlangsung di komputer. Aktivasi dan pemeriksaan lisensi memakai internet. Bila server tidak dapat dihubungi, fitur berlisensi diblokir hingga pemeriksaan berhasil. Dokumen dan garis lama tetap ada. Lihat status serta solusi lisensi di halaman 20.',y)
 note('Aktivasi atau mesin Word belum berhasil?','Periksa key dan internet bila aktivasi ditolak, lalu hubungi Radina.net jika tetap gagal. Untuk DOC/DOCX, pastikan Word atau LibreOffice dapat digunakan; pengguna PDF dapat memilih <b>Buka PDF</b>.',y)
@@ -494,7 +494,7 @@ p('Lisensi bermasalah: internet diperlukan saat aktivasi dan menjalankan fitur. 
 finish()
 
 # 14 / Shortcuts and help
-y=start('12 / Referensi','Pintasan desktop dan bantuan','Pintasan di halaman ini berlaku di aplikasi desktop. Di Word, gunakan tab SIGANDI dan pintasan bawaan Word sesuai konteks.')
+y=start('12 / Referensi','Pintasan desktop dan bantuan','Pintasan di halaman ini berlaku di aplikasi desktop. Shortcut khusus SIGANDI di Word tersedia pada halaman 16.')
 y=table(['Pintasan','Tindakan'],[
     ('Ctrl+O','Buka PDF'),('Ctrl+G','Buat garis otomatis'),('Ctrl+S atau Ctrl+E','Simpan / ekspor PDF'),
     ('Ctrl+Z / Ctrl+Y','Undo / Redo koreksi dan pengaturan pengisi'),('Delete','Hapus garis vertikal terpilih'),
@@ -516,26 +516,31 @@ renderPDF.draw(d,c,W-M-side,H-y-side+5)
 text('Pindai untuk bantuan',W-M-side/2,y+side+9,7.7,'UI',MUTED,'center')
 finish()
 # 15 / Word installation
-y=start('13 / Microsoft Word','Pasang tab SIGANDI di Word','Word add-in 0.4.7 tersedia untuk Microsoft Word desktop Windows dengan VBA. Word web dan Word mobile tidak didukung.')
+y=start('13 / Microsoft Word','Pasang tab SIGANDI di Word','Word add-in 0.4.9 tersedia untuk Microsoft Word desktop Windows dengan VBA. Word web dan Word mobile tidak didukung.')
 y=step(1,'Tutup Word sebelum instalasi','Simpan dokumen, lalu tutup semua jendela Word. Jangan menutup paksa dokumen yang belum disimpan.',y)
 y=step(2,'Jalankan installer terbaru',f'Gunakan <b>GarisAktaEditor_Setup_v{VERSION}.exe</b>. Installer memasang desktop, helper lisensi dan template Word untuk akun Windows yang menjalankannya.',y)
 y=step(3,'Buka Word kembali','Tab <b>SIGANDI</b> dimuat dari folder Startup Word. Satu aktivasi desktop berlaku juga untuk Word pada komputer dan akun yang sama.',y)
 y=step(4,'Periksa lisensi','Pilih <b>SIGANDI &gt; Lisensi &gt; Informasi Lisensi</b>. Bila perlu, pilih <b>Aktivasi / Kelola Lisensi</b> dan hubungkan komputer ke internet.',y)
 y=small_heading('Bila tab belum muncul',y)
 y=p('Buka <b>File &gt; Options &gt; Add-ins</b>. Pada Manage, pilih <b>Word Add-ins &gt; Go</b>, lalu periksa centang <b>SIGANDI-Word.dotm</b>. Bila Word pernah menonaktifkannya, periksa daftar <b>Disabled Items</b>. Gunakan satu versi aktif saja.',y)
-y=note('Pemasangan manual bersifat pilihan','Paket DOTM dapat dimuat melalui <b>Word Add-ins &gt; Go &gt; Add</b>. File harus berada di lokasi tetap. Fungsi berlisensi tetap memerlukan helper desktop 1.4.7 atau lebih baru; memasang DOTM saja tidak cukup.',y)
+y=note('Pemasangan manual bersifat pilihan','Paket DOTM dapat dimuat melalui <b>Word Add-ins &gt; Go &gt; Add</b>. File harus berada di lokasi tetap. Fungsi berlisensi tetap memerlukan helper desktop 1.4.8 atau lebih baru; memasang DOTM saja tidak cukup.',y)
 p('Installer tidak mengubah Trust Center. Bila kebijakan kantor memblokir macro, hubungi administrator. Untuk melepas add-in, simpan dan tutup Word, lalu uninstall SIGANDI; jangan menghapus template milik aplikasi lain.',y,size=9.6,color=MUTED)
 finish()
 
-# 16 / Word workflow
-y=start('14 / Microsoft Word','Buat garis pada isi akta','Mulai dari salinan dokumen yang dapat diedit. Atur redaksi, margin, ukuran kertas dan indentasi sebelum membuat garis.')
-y=step(1,'Blok hanya isi akta','Mulai dari paragraf isi pertama, misalnya "Pada hari ini", sampai akhir isi. Jangan sertakan judul, baris Nomor, footer, atau blok tanda tangan.',y)
-y=step(2,'Tandai Area Isi','Pilih <b>SIGANDI &gt; Tandai Area Isi</b>. Penanda menentukan batas pemrosesan. Bila batas isi berubah, tandai kembali areanya.',y)
-y=step(3,'Pilih jenis garis','Klik <b>Buat Semua</b> untuk vertikal, penutup dan pengisi. Judul bagian di dalam area isi, seperti <b>Pasal 3</b>, diberi strip hitam di kedua sisi agar teks tetap di tengah. Pilih <b>Garis Vertikal</b> atau <b>Isi ---- dan Baris Kosong</b> jika hanya ingin memperbarui jenis tersebut.',y)
-y=step(4,'Tunggu proses selesai','Jangan mengetik atau berpindah dokumen saat proses berjalan. Status tampil di bawah Word. Gunakan <b>Batalkan Proses</b> atau Ctrl+Break bila perlu berhenti.',y)
-y=step(5,'Periksa dan simpan','Tinjau setiap halaman, terutama daftar bernomor, awal/akhir isi, footer dan tanda tangan. Simpan DOCX seperti biasa dan gunakan <b>Simpan PDF</b> di tab SIGANDI untuk hasil PDF.',y)
-y=note('Setelah teks atau tata letak berubah','Klik <b>Perbarui Garis</b>. Garis tidak mengikuti ketikan secara otomatis. Ctrl+Z membatalkan satu proses; <b>Hapus Garis SIGANDI</b> menghapus bentuk milik add-in.',y)
-p('Paragraf kosong nyata di dalam area isi dapat diberi pengisi. Jarak Before/After, ruang sebelum isi, dan sisa kertas bukan paragraf kosong dan tidak diisi dengan baris buatan.',y,size=9.6,color=MUTED)
+# 16 / Word workflow and function keys
+y=start('14 / Microsoft Word','Shortcut dan alur kerja Word','Kombinasi tombol terlihat langsung pada label menu SIGANDI. Shortcut berlaku saat add-in dimuat; tombol Ctrl tetap ditekan bersama tombol fungsi.')
+y=step(1,'Tandai isi akta','Blok isi utama, lalu pilih <b>Tandai Area Isi (Ctrl+F7)</b>. Jangan sertakan judul utama, Nomor, footer, atau tanda tangan. Sertakan seluruh tabel jika berada dalam isi.',y)
+y=step(2,'Buat dan periksa garis','Gunakan <b>Buat Semua (Ctrl+F6)</b>. Jangan mengetik atau berpindah dokumen selama proses. Periksa awal/akhir isi, daftar bernomor, tabel dan judul bagian.',y)
+y=table(['Shortcut Word','Menu / tindakan'],[
+    ('Ctrl+F6','<b>Buat Semua</b>: vertikal, penutup dan pengisi di luar tabel.'),
+    ('Ctrl+F7','<b>Tandai Area Isi</b>: simpan batas isi yang sedang diblok.'),
+    ('Ctrl+F8','<b>Garis Vertikal</b>: perbarui garis paragraf dan sisi luar tabel.'),
+    ('Ctrl+F9','<b>Isi ---- di Luar Tabel</b>: ujung baris, paragraf kosong dan judul bagian.'),
+    ('Ctrl+F10','<b>Perbarui Garis</b>: hitung ulang setelah isi/tata letak berubah.'),
+    ('Ctrl+F11','<b>Simpan PDF</b>: pilih lokasi penyimpanan PDF hasil akhir.')
+],y,[112,CW-112],size=9.4)
+y=note('Tabel tetap utuh','Sel tabel tidak diberi pengisi ----. Garis vertikal berada <b>6 pt di luar sisi kiri tabel</b>; teks, padding dan border asli tidak diubah. Setelah mengubah ukuran, isi atau posisi tabel, tekan <b>Ctrl+F10</b>.',y)
+p('Simpan DOCX seperti biasa. Ctrl+Z membatalkan satu proses; Hapus Garis SIGANDI menghapus garis buatan add-in. Pengaturan shortcut bawaan Word pada kombinasi yang sama digantikan selama add-in aktif.',y,size=9.4,color=MUTED)
 finish()
 
 # 17 / Word line styling
@@ -568,20 +573,20 @@ finish()
 # 19 / Word troubleshooting
 y=start('17 / Microsoft Word','Koreksi dan solusi kendala','Periksa sumber, cakupan area isi dan versi add-in sebelum mengulangi pemrosesan. Simpan salinan sebelum mengubah dokumen penting.')
 y=table(['Gejala','Langkah yang disarankan'],[
-    ('Garis tidak sejajar nomor','Gunakan Word add-in <b>0.4.7</b>. Periksa indentasi paragraf serta daftar otomatis, lalu klik <b>Perbarui Garis</b>.'),
+    ('Garis tidak sejajar nomor','Gunakan Word add-in <b>0.4.9</b>. Periksa indentasi paragraf serta daftar otomatis, lalu klik <b>Perbarui Garis</b>.'),
     ('Footer / tanda tangan bergaris','Tandai ulang hanya isi akta. Header/footer asli Word dilewati; teks footer yang diketik di isi utama perlu dikeluarkan dari area.'),
     ('Pesan "Teks berubah"','Versi terbaru memperbaiki jangkar kanvas yang dapat mengganti huruf. Bila gagal, Ctrl+Z untuk membatalkan proses, periksa teks, lalu ulangi tanpa mengetik atau berpindah dokumen.'),
     ('Word tampak lambat','Tunggu status proses selesai. Dokumen panjang memerlukan waktu sesuai tata letak dan komputer. Gunakan Batalkan Proses jika perlu; jangan membuka proses kedua bersamaan.'),
-    ('Pengisi tidak muncul','Pastikan baris berada dalam area isi dan gunakan tombol <b>Isi ---- dan Baris Kosong</b>. Ruang Before/After serta area gambar bukan baris kosong yang dapat diisi.'),
+    ('Pengisi tidak muncul','Pastikan baris berada dalam area isi dan gunakan tombol <b>Isi ---- di Luar Tabel (Ctrl+F9)</b>. Ruang Before/After serta area gambar bukan baris kosong yang dapat diisi.'),
     ('Template tidak ditemukan','Hapus centang referensi preview lama yang filenya sudah dipindah. Tutup Word, lalu jalankan installer terbaru agar template tetap tersedia di Startup.'),
-    ('Helper / lisensi ditolak','Pastikan desktop <b>1.4.7+</b> terpasang, internet tersedia dan lisensi masih aktif di server. Lihat halaman 20.')
+    ('Helper / lisensi ditolak','Pastikan desktop <b>1.4.8+</b> terpasang, internet tersedia dan lisensi masih aktif di server. Lihat halaman 20.')
 ],y,[139,CW-139],size=9.4)
 y=small_heading('Batas cakupan add-in',y)
-p('Fokus pada paragraf isi utama satu kolom. Tabel, textbox, gambar inline, mirror margins dan bagian multikolom dilewati. Add-in tidak melakukan OCR. Kompres PDF dan booklet tersedia di desktop. Garis merupakan tampilan visual dan tidak mengunci dokumen dari penyuntingan.',y,size=9.7)
+p('Paragraf isi utama satu kolom dan tabel dalam area isi didukung. Pilih seluruh tabel; garis kiri dibuat 6 pt di luarnya dan sel tabel tidak diisi ----. Textbox, gambar inline, mirror margins dan bagian multikolom dilewati. Add-in tidak melakukan OCR. Kompres PDF dan booklet tersedia di desktop. Garis merupakan tampilan visual dan tidak mengunci dokumen dari penyuntingan.',y,size=9.7)
 finish()
 
 # 20 / Current licensing policy
-y=start('18 / Lisensi bersama','Status lisensi dan penolakan','Berlaku untuk desktop 1.4.7 dan Word add-in 0.4.7. Perbarui semua komputer: versi lama masih dapat memiliki aturan pemeriksaan yang berbeda.')
+y=start('18 / Lisensi bersama','Status lisensi dan penolakan','Berlaku untuk desktop 1.4.8 dan Word add-in 0.4.9. Perbarui semua komputer: versi lama masih dapat memiliki aturan pemeriksaan yang berbeda.')
 y=note('Internet diperlukan untuk fitur berlisensi','Server diperiksa pada setiap tindakan berlisensi. Persetujuan lama dan cache tampilan status bukan pengganti izin server. Putus koneksi atau server tidak tersedia akan memblokir fitur hingga pemeriksaan berhasil.',y)
 y=table(['Status / kondisi','Dampak dan tindakan'],[
     ('Aktif di server','Fitur berlisensi dapat dijalankan setelah pemeriksaan berhasil. Masa berlaku serta batas perangkat mengikuti lisensi.'),

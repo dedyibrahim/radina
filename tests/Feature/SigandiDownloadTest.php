@@ -17,8 +17,8 @@ class SigandiDownloadTest extends TestCase
     public function test_release_manifest_and_downloads_reference_the_same_real_files(): void
     {
         $data = $this->getJson('/sigandi/release')->assertOk()->json();
-        $this->assertSame('1.4.7', $data['version']);
-        $this->assertSame('0.4.7', $data['word_version']);
+        $this->assertSame('1.4.8', $data['version']);
+        $this->assertSame('0.4.9', $data['word_version']);
         foreach (['installer', 'guide'] as $type) {
             $file = $data['files'][$type];
             $path = public_path('downloads/sigandi/'.$file['filename']);

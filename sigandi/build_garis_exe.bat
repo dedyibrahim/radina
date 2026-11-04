@@ -4,7 +4,7 @@ setlocal EnableExtensions EnableDelayedExpansion
 cd /d "%~dp0"
 
 set "APP_NAME=GarisAktaEditor"
-set "DIST_DIR=dist\SIGANDI-v1.4.7"
+set "DIST_DIR=dist\SIGANDI-v1.4.8"
 set "ENTRY=garis_editor.py"
 set "ICON=assets\app_icon.ico"
 set "SPLASH=assets\splash_small.png"

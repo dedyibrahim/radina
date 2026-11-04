@@ -1,4 +1,4 @@
-# SIGANDI 1.4.7 / Word 0.4.7
+# SIGANDI 1.4.8 / Word 0.4.9
 
 Versioned desktop, Word add-in, tests and guide generator for the public release
 at `/sigandi`. This source directory is excluded from production web deployment.
@@ -41,3 +41,11 @@ After rebuilding, replace both downloads and regenerate their byte counts and
 SHA-256 values in `public/downloads/sigandi/release.json`. The backend feature
 test verifies every downloadable file against this manifest. Updating the
 website alone does not upgrade copies already installed on customers' PCs.
+
+## Release 1.4.8 / Word 0.4.9
+
+- Menu labels show Ctrl+F6 (All), Ctrl+F7 (Mark), Ctrl+F8 (Vertical), Ctrl+F9 (Fill), Ctrl+F10 (Refresh), Ctrl+F11 (PDF).
+- Skip all horizontal fillers inside tables before visual-line measurement.
+- Draw table rails 6 pt outside the original left edge; preserve existing borders and migrate legacy border bookmarks.
+- Validate merged and multipage tables, table-only documents, native shortcuts and legacy border restoration in isolated Word tests.
+- Updated 20-page PDF and TXT guide, including the Word shortcut table and table refresh workflow.

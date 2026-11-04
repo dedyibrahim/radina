@@ -67,7 +67,7 @@ const features = [
     {
         icon: Layers,
         title: 'Garis mengikuti paragraf',
-        body: 'Rapikan garis vertikal pada isi akta, termasuk paragraf menjorok dan daftar bernomor.',
+        body: 'Rapikan paragraf, daftar bernomor, dan sisi kiri tabel. Garis tabel berjarak 6 pt tanpa mengisi strip di dalam sel.',
     },
     {
         icon: MoveHorizontal,
@@ -86,6 +86,14 @@ const features = [
     },
 ]
 const faqs = [
+    [
+        'Apa shortcut terbaru di Word?',
+        'Ctrl+F6 untuk Buat Semua, Ctrl+F7 Tandai Area Isi, Ctrl+F8 Garis Vertikal, Ctrl+F9 Isi ---- di Luar Tabel, Ctrl+F10 Perbarui Garis, dan Ctrl+F11 Simpan PDF. Kombinasinya terlihat pada label menu SIGANDI.',
+    ],
+    [
+        'Bagaimana garis pada tabel?',
+        'Sel tabel tidak diisi strip. Garis dibuat 6 pt di luar sisi kiri tabel, termasuk saat tabel berlanjut ke halaman berikutnya. Sertakan seluruh tabel dalam area isi. Setelah mengubah ukuran, isi, atau posisi tabel, gunakan Perbarui Garis (Ctrl+F10).',
+    ],
     [
         'Apakah unduhan ini termasuk add-in Word?',
         'Ya. Installer Windows memasang aplikasi desktop dan add-in Word pada akun Windows yang menjalankan installer. Simpan dokumen dan tutup Word sebelum instalasi, kemudian buka kembali Word untuk melihat tab SIGANDI.',

@@ -101,7 +101,7 @@ try:
     DEFAULT_LICENSE_API_TIMEOUT = float(os.environ.get("GARIS_LICENSE_API_TIMEOUT", "12"))
 except Exception:
     DEFAULT_LICENSE_API_TIMEOUT = 12.0
-APP_VERSION = "1.4.7"
+APP_VERSION = "1.4.8"
 APP_SHORTCUT_NAME = "Sistem Garis Akta Notaris Digital.lnk"
 try:
     from embedded_license_secret import EMBEDDED_LICENSE_SECRET as _EMBEDDED_LICENSE_SECRET

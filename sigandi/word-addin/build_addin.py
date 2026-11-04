@@ -15,7 +15,7 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parent.parent
 HERE = ROOT / 'word-addin'
 OUT = ROOT / 'output' / 'word-addin'
-VERSION = '0.4.7-preview'
+VERSION = '0.4.9-preview'
 
 
 def icon(kind):
@@ -136,6 +136,46 @@ def build(target=None):
     ct = ET.fromstring(parts['[Content_Types].xml'])
     ET.SubElement(ct, f'{{{ct_ns}}}Default', {'Extension': 'png', 'ContentType': 'image/png'})
     ET.register_namespace('', ct_ns)
+    parts['[Content_Types].xml'] = ET.tostring(ct, encoding='utf-8', xml_declaration=True)
+    # Native template shortcuts: no AutoExec, Normal.dotm edits or security changes.
+    wne = 'http://schemas.microsoft.com/office/word/2006/wordml'
+    ET.register_namespace('wne', wne)
+    keys = ET.Element(f'{{{wne}}}tcg')
+    keymaps = ET.SubElement(keys, f'{{{wne}}}keymaps')
+    shortcuts = [(7, 'Mark'), (6, 'All'), (8, 'Vertical'),
+                 (9, 'Fill'), (10, 'Refresh'), (11, 'PDF')]
+    for function_key, action in shortcuts:
+        keymap = ET.SubElement(keymaps, f'{{{wne}}}keymap', {
+            f'{{{wne}}}kcmPrimary': f'{0x200 + 111 + function_key:04X}'})
+        ET.SubElement(keymap, f'{{{wne}}}macro', {
+            f'{{{wne}}}macroName': f'PROJECT.MODULE1.SIGANDISHORTCUT{action.upper()}'})
+    parts['word/customizations.xml'] = ET.tostring(keys, encoding='utf-8', xml_declaration=True)
+    import re
+    supp = ET.Element(f'{{{wne}}}vbaSuppData')
+    mcds = ET.SubElement(supp, f'{{{wne}}}mcds')
+    for name in re.findall(r'^Public Sub (\w+)\(\)', source, re.MULTILINE):
+        full = 'Project.Module1.' + name
+        ET.SubElement(mcds, f'{{{wne}}}mcd', {
+            f'{{{wne}}}macroName': full.upper(), f'{{{wne}}}name': full,
+            f'{{{wne}}}bEncrypt': '00', f'{{{wne}}}cmg': '56'})
+    parts['word/vbaData.xml'] = ET.tostring(supp, encoding='utf-8', xml_declaration=True)
+    docrels = ET.fromstring(parts['word/_rels/document.xml.rels'])
+    ET.SubElement(docrels, f'{{{ns}}}Relationship', {
+        'Id': 'rIdSigandiKeys',
+        'Type': 'http://schemas.microsoft.com/office/2006/relationships/keyMapCustomizations',
+        'Target': 'customizations.xml'})
+    parts['word/_rels/document.xml.rels'] = ET.tostring(docrels, encoding='utf-8', xml_declaration=True)
+    vbarels = ET.Element(f'{{{ns}}}Relationships')
+    ET.SubElement(vbarels, f'{{{ns}}}Relationship', {
+        'Id': 'rIdSigandiVbaData',
+        'Type': 'http://schemas.microsoft.com/office/2006/relationships/wordVbaData',
+        'Target': 'vbaData.xml'})
+    parts['word/_rels/vbaProject.bin.rels'] = ET.tostring(vbarels, encoding='utf-8', xml_declaration=True)
+    for part, content_type in [
+        ('customizations.xml', 'application/vnd.ms-word.keyMapCustomizations+xml'),
+        ('vbaData.xml', 'application/vnd.ms-word.vbaData+xml'),
+    ]:
+        ET.SubElement(ct, f'{{{ct_ns}}}Override', {'PartName': '/word/' + part, 'ContentType': content_type})
     parts['[Content_Types].xml'] = ET.tostring(ct, encoding='utf-8', xml_declaration=True)
     target = Path(target).resolve() if target else OUT / f'SIGANDI-Word-{VERSION}.dotm'
     target.parent.mkdir(parents=True, exist_ok=True)

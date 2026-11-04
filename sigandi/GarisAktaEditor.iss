@@ -2,9 +2,9 @@
 ; Build with: ISCC GarisAktaEditor.iss
 
 #define AppName "Sistem Garis Akta Notaris Digital"
-#define AppVersion "1.4.7"
+#define AppVersion "1.4.8"
 #ifndef AppSourceDir
-  #define AppSourceDir "dist\SIGANDI-v1.4.7"
+  #define AppSourceDir "dist\SIGANDI-v1.4.8"
 #endif
 #define AppPublisher "Radina.net"
 #define AppExeName "GarisAktaEditor.exe"
@@ -33,7 +33,7 @@ PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
 #ifdef IntegrationTest
 OutputBaseFilename=SIGANDI_Installer_Integration_Test
-OutputDir=tmp\installer-word-test-1.4.7
+OutputDir=tmp\installer-word-test-1.4.8
 Uninstallable=no
 CreateUninstallRegKey=no
 UsePreviousAppDir=no
@@ -71,7 +71,7 @@ Source: "{#AppSourceDir}\{#AppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#WordAddinSource}"; DestDir: "{app}\WordAddin"; DestName: "SIGANDI-Word.dotm"; Flags: ignoreversion
 Source: "{#WordAddinSource}"; DestDir: "{code:GetWordStartup}"; DestName: "SIGANDI-Word.dotm"; Flags: ignoreversion
 Source: "word-addin\PANDUAN.txt"; DestDir: "{app}\WordAddin"; Flags: ignoreversion
-Source: "output\pdf\Panduan SIGANDI v1.4.7.pdf"; DestDir: "{app}"; DestName: "Panduan SIGANDI.pdf"; Flags: ignoreversion
+Source: "output\pdf\Panduan SIGANDI v1.4.8.pdf"; DestDir: "{app}"; DestName: "Panduan SIGANDI.pdf"; Flags: ignoreversion
 
 [Registry]
 #ifndef IntegrationTest

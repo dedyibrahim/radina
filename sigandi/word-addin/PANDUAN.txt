@@ -1,10 +1,10 @@
-SIGANDI WORD 0.4.7 PREVIEW | SIGANDI DESKTOP 1.4.7
+SIGANDI WORD 0.4.9 PREVIEW | SIGANDI DESKTOP 1.4.8
 Add-in untuk Microsoft Word desktop Windows dengan pemeriksaan lisensi server
 ==================================================
 
 INSTALASI OTOMATIS BERSAMA APLIKASI
 1. Simpan dokumen Anda, lalu tutup semua jendela Microsoft Word.
-2. Jalankan GarisAktaEditor_Setup_v1.4.7.exe dan ikuti petunjuk instalasi.
+2. Jalankan GarisAktaEditor_Setup_v1.4.8.exe dan ikuti petunjuk instalasi.
 3. Installer memasang aplikasi desktop dan add-in Word untuk akun Windows
    yang menjalankan installer. Tidak memerlukan hak administrator.
 4. Buka Word kembali. Tab SIGANDI dimuat otomatis setiap Word dibuka.
@@ -19,8 +19,8 @@ Tidak memerlukan Python atau server lokal. Internet diperlukan saat aktivasi dan
 Lisensi yang dihapus, revoked, expired, atau gagal diverifikasi server ditolak.
 
 MEMUAT MANUAL TANPA INSTALLER (PAKET DOTM TERPISAH)
-1. Simpan SIGANDI-Word-0.4.7-preview.dotm di folder tetap milik Anda.
-   Fungsi berlisensi memerlukan aplikasi/helper SIGANDI desktop 1.4.7 atau baru.
+1. Simpan SIGANDI-Word-0.4.9-preview.dotm di folder tetap milik Anda.
+   Fungsi berlisensi memerlukan aplikasi/helper SIGANDI desktop 1.4.8 atau baru.
 2. Word > File > Options > Add-ins > Manage: Word Add-ins > Go > Add.
 3. Pilih file tersebut, centang, lalu OK. Tab SIGANDI tampil untuk sesi ini.
 4. Untuk otomatis, lihat Word > File > Options > Advanced > General > File
@@ -70,7 +70,7 @@ MENGGUNAKAN SIGANDI
 1. Buka salinan akta yang dapat diedit.
 2. Blok seluruh paragraf isi akta tanpa judul, footer, dan tanda tangan.
 3. Klik SIGANDI > Tandai Area Isi.
-4. Klik Buat Semua, atau pilih Garis Vertikal / Isi ---- dan Baris Kosong.
+4. Klik Buat Semua, atau pilih Garis Vertikal / Isi ---- di Luar Tabel (Ctrl+F9).
 5. Garis vertikal disambung menjadi blok. Pada daftar bernomor, garis
    pendek mengikuti nomor dan garis utama masuk ke indentasi teks lanjutan.
    Pembuka dan penutup miring dibuat pada awal/akhir isi setiap halaman.
@@ -104,7 +104,11 @@ berhenti mendadak. Jangan memuat preview lama bersamaan.
 
 BATAS VERSI PREVIEW
 - Cakupan: paragraf isi utama satu kolom dengan margin biasa.
-- Tabel, textbox, header/footer asli Word, mirror margins, section beberapa
+- Isi ---- tidak dibuat dalam sel tabel. Garis kiri mengikuti batas tabel,
+  termasuk tabel gabungan dan lintas halaman, dengan jarak 6 pt di luarnya.
+  Border, padding, dan teks asli tabel tidak diubah. Setelah mengubah
+  ukuran/isi tabel, tekan Ctrl+F10. Tandai seluruh tabel dalam area isi.
+- Textbox, header/footer asli Word, mirror margins, section beberapa
   kolom, dan paragraf berisi gambar inline dilewati. Tidak melakukan OCR.
 - Label pendek seperti Notaris di Jakarta atau PPAT menjadi batas akhir.
   Spasi ganda, tab, koma akhir, dan separator kosong sebelum label didukung.
@@ -151,11 +155,11 @@ paragraf, termasuk ketika berbeda dari posisi pada template penomoran.
 PEMBARUAN 0.4.4
 Jangkar kanvas dibuat pada titik kosong agar tidak menghapus huruf pada dokumen kompatibilitas dan memicu pesan perubahan teks saat proses berjalan. Pemeriksaan perubahan teks tetap aktif.
 
-PEMBARUAN LISENSI 0.4.7 / 1.4.7
+PEMBARUAN LISENSI 0.4.9 / 1.4.8
 Setiap tindakan berlisensi memeriksa server; tidak memakai persetujuan offline atau cache lima menit untuk menjalankan tindakan. Jika server tidak dapat dihubungi, fitur berlisensi diblokir sampai pemeriksaan berhasil. Word dan dokumen lama tetap dapat dibuka.
 
 PANDUAN PDF LENGKAP
-Panduan SIGANDI v1.4.7.pdf terdiri dari 20 halaman dan mencakup desktop serta
+Panduan SIGANDI v1.4.8.pdf terdiri dari 20 halaman dan mencakup desktop serta
 Word. Installer menyimpannya di folder aplikasi dengan nama Panduan SIGANDI.pdf.
 Pintasan Panduan SIGANDI tersedia di Start Menu > Radina.net.
 
@@ -164,7 +168,7 @@ LISENSI DITOLAK SETELAH SEBELUMNYA AKTIF
 - Gunakan Aktivasi / Kelola Lisensi > Periksa Ulang atau aktivasi key yang sah.
 - Bila key dihapus atau revoked, hubungi penyedia lisensi; membuka ulang Word
   atau memakai cache lama tidak memberi izin menjalankan fitur berlisensi.
-- Perbarui seluruh komputer ke desktop 1.4.7 dan add-in 0.4.7. Versi lama
+- Perbarui seluruh komputer ke desktop 1.4.8 dan add-in 0.4.9. Versi lama
   masih dapat menggunakan kebijakan pemeriksaan yang berbeda.
 - Dokumen dan garis lama tetap ada. Word tetap dapat dipakai seperti biasa.
 
@@ -174,7 +178,7 @@ memperbaiki jangkar kanvas yang dapat mengganti huruf. Jika proses gagal,
 gunakan Ctrl+Z untuk membatalkan proses tersebut, periksa isi teks, lalu
 ulangi pada versi terbaru. Simpan salinan dokumen sebelum pemrosesan.
 
-PEMBARUAN JUDUL DAN WARNA 1.4.7 / 0.4.7
+PEMBARUAN JUDUL DAN WARNA 1.4.8 / 0.4.9
 Isi ---- menambahkan pengisi di kiri dan kanan judul bagian rata tengah,
 misalnya Maksud dan Tujuan serta Kegiatan Usaha atau Pasal 3, tanpa menimpa
 kata-katanya. Di Word, sertakan judul bagian di dalam area isi yang ditandai.
@@ -185,3 +189,15 @@ Pilihan warna hanya berlaku pada garis vertikal beserta penutupnya.
 KONTAK RESMI RADINA.NET / SIGANDI
 WhatsApp: +62 877 2417 0145
 https://wa.me/6287724170145
+
+SHORTCUT WORD (AKTIF SAAT ADD-IN DIMUAT)
+Ctrl+F7 : Tandai area isi yang diblok
+Ctrl+F6 : Buat semua garis
+Ctrl+F8 : Buat garis vertikal / sisi kiri tabel
+Ctrl+F9 : Isi ---- di luar tabel
+Ctrl+F10 : Perbarui semua garis
+Ctrl+F11 : Simpan PDF
+Shortcut disimpan di template SIGANDI, tanpa mengubah Normal.dotm.
+Shortcut tersedia bersama add-in yang disertakan dalam installer 1.4.8.
+
+Garis tabel berjarak 6 pt di luar tepi kiri. Border dan padding asli tabel tidak diubah.

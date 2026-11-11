@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
-import { Download, Upload, Copy, Search, MessageCircle, Eye, ExternalLink, Trash2, UserPlus } from 'lucide-vue-next'
+import { Download, Upload, Copy, Search, MessageCircle, Pencil, ExternalLink, Trash2, UserPlus } from 'lucide-vue-next'
 import { api, errorMessage } from '../services/api'
 import { useUiStore } from '../stores/ui'
 import BaseModal from './BaseModal.vue'
@@ -28,9 +28,16 @@ const manual = ref({ name: '', address: '', whatsapp: '' }),
 const sharing = ref({}),
   messageDraft = ref(''),
   selectedGuest = ref(null),
-  phoneDraft = ref('')
+  editDraft = ref({ name: '', address: '', whatsapp: '' })
 const disabled = computed(() => busy.value || props.blocked)
 const messageDirty = computed(() => messageDraft.value !== sharing.value.message_template)
+const guestDirty = computed(() =>
+  Boolean(selectedGuest.value) && (
+    editDraft.value.name !== selectedGuest.value.name ||
+    editDraft.value.address !== (selectedGuest.value.address || '') ||
+    editDraft.value.whatsapp !== (selectedGuest.value.whatsapp || '')
+  ),
+)
 watch(busy, (value) => emit('busy', value))
 function message(guest, template = sharing.value.message_template || '') {
   const values = {
@@ -194,25 +201,36 @@ async function saveMessage(reset = false) {
 }
 function inspectGuest(guest) {
   selectedGuest.value = guest
-  phoneDraft.value = guest.whatsapp || ''
+  editDraft.value = {
+    name: guest.name,
+    address: guest.address || '',
+    whatsapp: guest.whatsapp || '',
+  }
   error.value = ''
 }
-async function savePhone() {
-  if (disabled.value || !selectedGuest.value) return
+async function saveGuest() {
+  if (disabled.value || !selectedGuest.value || !guestDirty.value) return
   busy.value = true
   error.value = ''
   try {
     const guest = (
-      await api.patch(`${props.base}/invitees/${selectedGuest.value.id}/phone`, {
-        whatsapp: phoneDraft.value,
+      await api.patch(`${props.base}/invitees/${selectedGuest.value.id}`, {
+        ...editDraft.value,
+        expected_name: selectedGuest.value.name,
+        expected_address: selectedGuest.value.address || '',
         expected_whatsapp: selectedGuest.value.whatsapp,
       })
     ).data.data
     const index = guests.value.findIndex((item) => item.id === guest.id)
     if (index >= 0) guests.value[index] = guest
+    if (createdGuest.value?.id === guest.id) createdGuest.value = guest
     selectedGuest.value = guest
-    phoneDraft.value = guest.whatsapp || ''
-    ui.toast('Nomor WhatsApp disimpan.')
+    editDraft.value = {
+      name: guest.name,
+      address: guest.address || '',
+      whatsapp: guest.whatsapp || '',
+    }
+    ui.toast('Data tamu disimpan. Tautan undangan tetap sama.')
   } catch (e) {
     error.value = errorMessage(e)
   } finally {
@@ -476,17 +494,7 @@ onMounted(() => find())
           <tr v-for="guest in guests" :key="guest.id">
             <td>{{ guest.name }}</td>
             <td>{{ guest.address || '?' }}</td>
-            <td>
-              {{ guest.whatsapp ? '+' + guest.whatsapp : 'Belum diisi'
-              }}<button
-                type="button"
-                class="text-link"
-                :disabled="disabled"
-                @click="inspectGuest(guest)"
-              >
-                {{ guest.whatsapp ? 'Edit Nomor WA' : 'Lengkapi Nomor WA' }}
-              </button>
-            </td>
+            <td>{{ guest.whatsapp ? '+' + guest.whatsapp : 'Belum diisi' }}</td>
             <td>
               <div class="guest-link-actions">
                 <button type="button" class="text-link" @click="copy(guest)">
@@ -514,7 +522,7 @@ onMounted(() => find())
                   :disabled="disabled"
                   @click="inspectGuest(guest)"
                 >
-                  <Eye :size="14" />Preview Pesan
+                  <Pencil :size="14" />Edit Tamu &amp; Preview Pesan
                 </button>
                 <button
                   v-if="allowDelete"
@@ -563,34 +571,57 @@ onMounted(() => find())
     </div>
     <BaseModal
       :open="Boolean(selectedGuest)"
-      title="Preview pesan undangan"
+      title="Edit tamu & preview pesan"
       @close="!busy && (selectedGuest = null)"
       ><div v-if="selectedGuest" class="platform guest-message-modal">
         <h2>{{ selectedGuest.name }}</h2>
-        <form @submit.prevent="savePhone">
-          <label for="guest-wa-phone">Nomor WhatsApp tamu</label
-          ><input
-            id="guest-wa-phone"
-            v-model="phoneDraft"
-            type="tel"
-            maxlength="40"
-            placeholder="081234567890"
-            :disabled="disabled"
-          /><button
+        <form @submit.prevent="saveGuest">
+          <label for="guest-edit-name">Nama tamu
+            <input
+              id="guest-edit-name"
+              v-model="editDraft.name"
+              type="text"
+              maxlength="120"
+              required
+              :disabled="disabled"
+            />
+          </label>
+          <label for="guest-edit-address">Alamat (opsional)
+            <input
+              id="guest-edit-address"
+              v-model="editDraft.address"
+              type="text"
+              maxlength="1000"
+              :disabled="disabled"
+            />
+          </label>
+          <label for="guest-wa-phone">Nomor WhatsApp (opsional)
+            <input
+              id="guest-wa-phone"
+              v-model="editDraft.whatsapp"
+              type="tel"
+              inputmode="tel"
+              maxlength="40"
+              placeholder="081234567890"
+              :disabled="disabled"
+            />
+          </label>
+          <button
             type="submit"
             class="p-button secondary"
-            :disabled="disabled || phoneDraft === (selectedGuest.whatsapp || '')"
+            :disabled="disabled || !guestDirty || !editDraft.name.trim()"
           >
-            Simpan Nomor WA
+            Simpan Data Tamu
           </button>
         </form>
         <p v-if="error" class="alert error" role="alert">{{ error }}</p>
+        <p v-if="guestDirty" role="status">Simpan perubahan sebelum menyalin pesan atau mengirim WA.</p>
         <pre class="guest-message-preview">{{ message(selectedGuest) }}</pre>
         <div class="action-group">
-          <button type="button" class="p-button secondary" @click="copyMessage(selectedGuest)">
+          <button type="button" class="p-button secondary" :disabled="disabled || guestDirty" @click="copyMessage(selectedGuest)">
             <Copy :size="16" />Salin Pesan</button
           ><a
-            v-if="selectedGuest.whatsapp && phoneDraft === selectedGuest.whatsapp"
+            v-if="selectedGuest.whatsapp && !guestDirty"
             :href="whatsappUrl(selectedGuest)"
             target="_blank"
             rel="noopener noreferrer"
@@ -599,7 +630,7 @@ onMounted(() => find())
           >
         </div>
         <p>
-          Simpan perubahan nomor terlebih dahulu. Pesan dikirim setelah Anda menekan Kirim di
+          Tautan pendek tetap sama setelah data tamu disimpan. Pesan dikirim setelah Anda menekan Kirim di
           WhatsApp.
         </p>
       </div></BaseModal
@@ -871,16 +902,19 @@ td > .text-link {
   margin-top: 8px;
 }
 .guest-message-modal form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  gap: 14px;
 }
 .guest-message-modal label {
-  flex-basis: 100%;
+  display: grid;
+  gap: 8px;
 }
 .guest-message-modal input {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.guest-message-modal form .p-button {
+  justify-self: start;
 }
 .guest-message-modal .action-group {
   display: flex;

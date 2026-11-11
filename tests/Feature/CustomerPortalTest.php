@@ -289,6 +289,44 @@ class CustomerPortalTest extends TestCase
         $this->postJson($path, ['name' => 'Tamu Baru'])->assertNotFound();
     }
 
+    public function test_customer_can_edit_guest_name_address_and_whatsapp_without_changing_short_link(): void
+    {
+        $w = $this->wedding('edit-manual-guest');
+        $other = $this->wedding('other-edit-guest');
+        $token = $this->token($w);
+        $otherToken = $this->token($other);
+        $path = $this->customerPath($token, '/invitees');
+        $fingerprint = CustomerPortalService::fingerprint($w->fresh());
+        $first = $this->postJson($path, ['name' => 'Ibu Ayu', 'address' => 'Bogor', 'whatsapp' => '081234567890'])->assertCreated()->json('data');
+        $this->postJson($path, ['name' => 'Bapak Budi', 'address' => 'Depok'])->assertCreated();
+        $stored = WeddingInvitee::findOrFail($first['id']);
+        $shortCode = $stored->short_code;
+        $tokenBefore = $stored->token;
+        $expected = ['expected_name' => 'Ibu Ayu', 'expected_address' => 'Bogor', 'expected_whatsapp' => '6281234567890'];
+
+        $updated = $this->patchJson($path.'/'.$first['id'], $expected + ['name' => 'Ibu Ayu S.Kom.', 'address' => 'Kota Bogor', 'whatsapp' => '082233445566'])
+            ->assertOk()->assertJsonPath('data.name', 'Ibu Ayu S.Kom.')->assertJsonPath('data.address', 'Kota Bogor')
+            ->assertJsonPath('data.whatsapp', '6282233445566')->assertJsonPath('data.link', $first['link'])
+            ->assertHeader('Cache-Control', 'no-store, private');
+        $this->assertSame($first['id'], $updated->json('data.id'));
+        $this->assertSame($shortCode, $stored->fresh()->short_code);
+        $this->assertSame($tokenBefore, $stored->fresh()->token);
+        $this->getJson($path)->assertOk()->assertJsonPath('total', 2);
+        $this->postJson($path.'/import', ['file' => UploadedFile::fake()->createWithContent('tamu.csv', "nama;alamat\nIbu Ayu S.Kom.;Kota Bogor\n")])->assertCreated()->assertJsonPath('data.imported', 0);
+
+        $this->patchJson($path.'/'.$first['id'], $expected + ['name' => 'Nama Lama'])->assertStatus(409);
+        $current = ['expected_name' => 'Ibu Ayu S.Kom.', 'expected_address' => 'Kota Bogor', 'expected_whatsapp' => '6282233445566'];
+        $this->patchJson($path.'/'.$first['id'], $current + ['name' => 'Bapak Budi', 'address' => 'Depok'])->assertStatus(409);
+        $this->patchJson($path.'/'.$first['id'], $current + ['name' => '<script>', 'address' => 'Bogor'])->assertUnprocessable();
+        $this->assertSame('Ibu Ayu S.Kom.', $stored->fresh()->name);
+        $this->assertSame($fingerprint, CustomerPortalService::fingerprint($w->fresh()));
+
+        $otherGuest = $this->postJson($this->customerPath($otherToken, '/invitees'), ['name' => 'Tamu Lain'])->assertCreated()->json('data');
+        $this->patchJson($path.'/'.$otherGuest['id'], $current + ['name' => 'Bukan Tamu'])->assertNotFound();
+        WeddingCustomerPortal::where('wedding_id', $w->id)->update(['revoked_at' => now()]);
+        $this->patchJson($path.'/'.$first['id'], $current + ['name' => 'Tamu Baru'])->assertNotFound();
+    }
+
     public function test_customer_can_read_scoped_paginated_rsvp_and_wishes_without_changing_approval(): void
     {
         $w = $this->wedding('guest-responses');

@@ -165,6 +165,49 @@ class AdminInviteeController extends Controller
         });
     }
 
+    public function update(Request $request, Wedding $wedding, WeddingInvitee $invitee)
+    {
+        $input = $request->validate([
+            'name' => 'required|string|max:120',
+            'address' => 'nullable|string|max:1000',
+            'whatsapp' => 'nullable|string|max:40',
+            'expected_name' => 'required|string|max:120',
+            'expected_address' => 'present|nullable|string|max:1000',
+            'expected_whatsapp' => 'present|nullable|string|max:15',
+        ]);
+        $name = preg_replace('/\s+/u', ' ', trim($input['name']));
+        $address = preg_replace('/\s+/u', ' ', trim($input['address'] ?? ''));
+        Validator::make(['name' => $name, 'address' => $address], [
+            'name' => 'required|string|max:120|not_regex:/[<>\x00-\x1F\x7F]/u',
+            'address' => 'nullable|string|max:1000',
+        ])->validate();
+        $phone = GuestInvitationMessage::normalizePhone($input['whatsapp'] ?? null);
+        abort_if($phone === '', 422, 'Nomor WhatsApp tidak valid. Gunakan format 08..., 628..., atau +628....');
+        $fingerprint = hash('sha256', mb_strtolower($name)."\0".mb_strtolower($address));
+
+        return DB::transaction(function () use ($wedding, $invitee, $input, $name, $address, $phone, $fingerprint) {
+            $order = \App\Models\Order::lockForUpdate()->findOrFail($wedding->order_id);
+            $this->service->ensurePaid($order);
+            $wedding = Wedding::lockForUpdate()->findOrFail($wedding->id);
+            $guest = WeddingInvitee::where('wedding_id', $wedding->id)->lockForUpdate()->findOrFail($invitee->id);
+            abort_if(
+                $guest->name !== $input['expected_name'] ||
+                $guest->address !== ($input['expected_address'] ?? '') ||
+                $guest->whatsapp !== $input['expected_whatsapp'],
+                409,
+                'Data tamu sudah berubah di perangkat lain. Muat ulang daftar tamu sebelum menyimpan.'
+            );
+            abort_if(
+                WeddingInvitee::where('wedding_id', $wedding->id)->where('fingerprint', $fingerprint)->whereKeyNot($guest->id)->exists(),
+                409,
+                'Tamu dengan nama dan alamat ini sudah ada. Gunakan nama atau alamat pembeda.'
+            );
+            $guest->update(['name' => $name, 'address' => $address, 'whatsapp' => $phone, 'fingerprint' => $fingerprint]);
+
+            return response()->json(['data' => $this->present($guest, $wedding)])->header('Cache-Control', 'private, no-store');
+        });
+    }
+
     public function destroy(Wedding $wedding, WeddingInvitee $invitee)
     {
         DB::transaction(function () use ($wedding, $invitee) {

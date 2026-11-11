@@ -126,6 +126,11 @@ class CustomerPortalController extends Controller
         return $this->locked($token, fn ($portal) => $this->privateResponse($invitees->phone($request, $portal->wedding, $invitee)));
     }
 
+    public function inviteeUpdate(Request $request, string $token, \App\Models\WeddingInvitee $invitee, AdminInviteeController $invitees)
+    {
+        return $this->locked($token, fn ($portal) => $this->privateResponse($invitees->update($request, $portal->wedding, $invitee)));
+    }
+
     public function document(string $token, string $type, \App\Services\OrderDocumentService $documents)
     {
         return $documents->download($this->resolve($token)->wedding->order, $type);

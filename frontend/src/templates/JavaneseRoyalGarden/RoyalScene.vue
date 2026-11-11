@@ -1,5 +1,5 @@
 <script setup>
-import { computed, inject, ref } from 'vue'
+import { computed, inject, onMounted, onUnmounted, ref } from 'vue'
 import RoyalAtmosphere from './RoyalAtmosphere.vue'
 import { useIntersectionAnimation } from '../../composables/useIntersectionAnimation'
 const props = defineProps({
@@ -10,7 +10,33 @@ const props = defineProps({
 const visual = inject('weddingVisual')
 const wedding = inject('wedding')
 const root = ref(null)
+const sceneRoot = ref(null)
+const nearby = ref(false)
+let nearObserver
 const visible = useIntersectionAnimation(root)
+onMounted(() => {
+  if (props.arrival || !sceneRoot.value) return
+  if (!('IntersectionObserver' in window)) {
+    nearby.value = true
+    return
+  }
+  nearObserver = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[entries.length - 1]
+      if (entry) nearby.value = entry.isIntersecting
+    },
+    { rootMargin: '600px 0px' },
+  )
+  nearObserver.observe(sceneRoot.value)
+})
+onUnmounted(() => nearObserver?.disconnect())
+const renderEnvironment = computed(
+  () =>
+    props.arrival ||
+    props.scene === 'home' ||
+    visual.performance.quality.value !== 'lite' ||
+    nearby.value,
+)
 const composition = computed(() => {
   const scene = props.scene
   if (scene === 'opening')
@@ -43,6 +69,7 @@ const active = computed(
 <template>
   <div
     v-if="!grouped"
+    ref="sceneRoot"
     class="royal-scene"
     :class="`royal-shot-${scene}`"
     :data-active="active"
@@ -52,12 +79,15 @@ const active = computed(
     :data-camera="composition.camera"
     :data-lite="visual.performance.quality.value === 'lite'"
     :style="{
-      '--royal-backdrop': `url(/images/cinematic/${composition.plate}-640.webp)`,
+      '--royal-backdrop': renderEnvironment
+        ? `url(/images/cinematic/${composition.plate}-640.webp)`
+        : 'none',
     }"
     aria-hidden="true"
   >
     <div ref="root" class="royal-scene__environment">
       <img
+        v-if="renderEnvironment"
         class="royal-scene__camera"
         data-living-motion="true"
         data-parallax="0.35"
@@ -69,8 +99,9 @@ const active = computed(
         :fetchpriority="arrival ? 'high' : 'auto'"
         decoding="async"
       />
-      <div class="royal-scene__veil"></div>
+      <div v-if="renderEnvironment" class="royal-scene__veil"></div>
       <RoyalAtmosphere
+        v-if="renderEnvironment"
         :scene="scene"
         :active="active"
         :quality="visual.performance.quality.value"

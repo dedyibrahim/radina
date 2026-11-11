@@ -25,7 +25,7 @@ try {
   const { ornamentLibrary } = await server.ssrLoadModule(
     '/src/components/wedding/effects/ornamentLibrary.js',
   )
-  const { performanceMode } = await server.ssrLoadModule(
+  const { performanceMode, isIOSDevice } = await server.ssrLoadModule(
     '/src/composables/useDevicePerformance.js',
   )
   const { default: Atmosphere } = await server.ssrLoadModule(
@@ -33,6 +33,9 @@ try {
   )
   const { default: Divider } = await server.ssrLoadModule(
     '/src/components/wedding/effects/SectionDivider.vue',
+  )
+  const { default: RoyalScene } = await server.ssrLoadModule(
+    '/src/templates/JavaneseRoyalGarden/RoyalScene.vue',
   )
   const studio = JSON.parse(
     await readFile('config/template-studio.json', 'utf8'),
@@ -207,6 +210,45 @@ try {
   }
   assert.equal(performanceMode({ width: 1440, cores: 8, memory: 8 }), 'high')
   assert.equal(performanceMode({ width: 390, cores: 8, memory: 8 }), 'standard')
+  assert.equal(
+    performanceMode({ width: 390, cores: 8, memory: 8, ios: true }),
+    'lite',
+  )
+  assert.equal(
+    isIOSDevice({
+      userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)',
+    }),
+    true,
+  )
+  assert.equal(isIOSDevice({ platform: 'MacIntel', maxTouchPoints: 5 }), true)
+  assert.equal(
+    isIOSDevice({
+      userAgent: 'Mozilla/5.0 (Linux; Android 14)',
+      maxTouchPoints: 5,
+    }),
+    false,
+  )
+  const renderRoyalScene = (quality, scene, arrival = false) =>
+    renderToString(
+      createSSRApp({
+        setup() {
+          provide('wedding', { isWedding: true })
+          provide('weddingVisual', {
+            motion: ref(true),
+            performance: {
+              active: ref(true),
+              quality: ref(quality),
+              reduced: ref(false),
+            },
+          })
+          return () => h(RoyalScene, { scene, arrival })
+        },
+      }),
+    )
+  assert(!(await renderRoyalScene('lite', 'gift')).includes('royal-atmosphere'))
+  assert((await renderRoyalScene('lite', 'home')).includes('royal-atmosphere'))
+  assert((await renderRoyalScene('lite', 'opening', true)).includes('royal-atmosphere'))
+  assert((await renderRoyalScene('standard', 'gift')).includes('royal-atmosphere'))
   for (const facts of [
     { reduced: true },
     { saveData: true },

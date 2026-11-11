@@ -6,9 +6,20 @@ export function performanceMode({
   cores = 4,
   memory = 4,
   saveData = false,
+  ios = false,
 } = {}) {
-  if (reduced || saveData || cores <= 2 || memory <= 2) return 'lite'
+  if (reduced || saveData || ios || cores <= 2 || memory <= 2) return 'lite'
   return width >= 1000 && cores >= 4 && memory >= 4 ? 'high' : 'standard'
+}
+export function isIOSDevice({
+  userAgent = '',
+  platform = '',
+  maxTouchPoints = 0,
+} = {}) {
+  return (
+    /iPhone|iPad|iPod/i.test(userAgent) ||
+    (platform === 'MacIntel' && maxTouchPoints > 1)
+  )
 }
 export function useDevicePerformance() {
   const reduced = useReducedMotion(),
@@ -38,6 +49,7 @@ export function useDevicePerformance() {
       saveData:
         typeof navigator !== 'undefined' &&
         navigator.connection?.saveData === true,
+      ios: typeof navigator !== 'undefined' && isIOSDevice(navigator),
     }),
   )
   onMounted(() => {

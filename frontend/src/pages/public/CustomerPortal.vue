@@ -338,7 +338,7 @@ onBeforeRouteLeave(
             :class="{ selected: tab === 'guests' }"
             @click="tab = 'guests'"
           >
-            Daftar Tamu / Impor &amp; Ekspor
+            Daftar Tamu / Tambah &amp; Impor
           </button>
           <button
             type="button"

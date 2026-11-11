@@ -69,6 +69,7 @@ Route::prefix('api/admin')->middleware('throttle:api')->group(function () {
         Route::get('/weddings/{wedding}/invitees/template', [AdminInviteeController::class, 'template']);
         Route::get('/weddings/{wedding}/invitees/export', [AdminInviteeController::class, 'export']);
         Route::get('/weddings/{wedding}/invitees', [AdminInviteeController::class, 'index']);
+        Route::post('/weddings/{wedding}/invitees', [AdminInviteeController::class, 'create']);
         Route::post('/weddings/{wedding}/invitees/preview', [AdminInviteeController::class, 'preview']);
         Route::post('/weddings/{wedding}/invitees/import', [AdminInviteeController::class, 'store']);
         Route::patch('/weddings/{wedding}/invitees/message', [AdminInviteeController::class, 'message']);
@@ -97,6 +98,7 @@ Route::prefix('api/customer-portals/{token}')->middleware('throttle:api')->group
     Route::get('/invitees/template', [CustomerPortalController::class, 'inviteeTemplate']);
     Route::get('/invitees/export', [CustomerPortalController::class, 'inviteeExport']);
     Route::get('/invitees', [CustomerPortalController::class, 'invitees']);
+    Route::post('/invitees', [CustomerPortalController::class, 'inviteeCreate'])->middleware('throttle:customer-guests-create');
     Route::post('/invitees/preview', [CustomerPortalController::class, 'inviteePreview'])->middleware('throttle:customer-guests-preview');
     Route::post('/invitees/import', [CustomerPortalController::class, 'inviteeImport'])->middleware('throttle:customer-guests-import');
     Route::patch('/invitees/message', [CustomerPortalController::class, 'inviteeMessage'])->middleware('throttle:customer-guests-message');

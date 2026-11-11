@@ -78,6 +78,42 @@ class AdminInviteeController extends Controller
         });
     }
 
+    public function create(Request $request, Wedding $wedding)
+    {
+        $input = $request->validate([
+            'name' => 'required|string|max:120',
+            'address' => 'nullable|string|max:1000',
+            'whatsapp' => 'nullable|string|max:40',
+        ]);
+        $name = preg_replace('/\s+/u', ' ', trim($input['name']));
+        $address = preg_replace('/\s+/u', ' ', trim($input['address'] ?? ''));
+        Validator::make(['name' => $name, 'address' => $address], [
+            'name' => 'required|string|max:120|not_regex:/[<>\x00-\x1F\x7F]/u',
+            'address' => 'nullable|string|max:1000',
+        ])->validate();
+        $phone = GuestInvitationMessage::normalizePhone($input['whatsapp'] ?? null);
+        abort_if($phone === '', 422, 'Nomor WhatsApp tidak valid. Gunakan format 08..., 628..., atau +628....');
+        $fingerprint = hash('sha256', mb_strtolower($name)."\0".mb_strtolower($address));
+
+        return DB::transaction(function () use ($wedding, $name, $address, $phone, $fingerprint) {
+            $order = \App\Models\Order::lockForUpdate()->findOrFail($wedding->order_id);
+            $this->service->ensurePaid($order);
+            $wedding = Wedding::lockForUpdate()->findOrFail($wedding->id);
+            abort_if(WeddingInvitee::where('wedding_id', $wedding->id)->where('fingerprint', $fingerprint)->exists(), 409, 'Tamu dengan nama dan alamat ini sudah ada. Cari tamu tersebut untuk melihat tautan atau melengkapi nomor WA.');
+            abort_if(WeddingInvitee::where('wedding_id', $wedding->id)->count() >= 10000, 422, 'Maksimal 10.000 tamu per undangan.');
+            $guest = WeddingInvitee::create([
+                'wedding_id' => $wedding->id,
+                'token' => (string) Str::uuid(),
+                'name' => $name,
+                'address' => $address,
+                'whatsapp' => $phone,
+                'fingerprint' => $fingerprint,
+            ]);
+
+            return response()->json(['data' => $this->present($guest, $wedding)], 201)->header('Cache-Control', 'private, no-store');
+        });
+    }
+
     public function export(Request $request, Wedding $wedding)
     {
         $this->service->ensurePaid($wedding->order);

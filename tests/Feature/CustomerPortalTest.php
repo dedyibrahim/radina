@@ -260,6 +260,35 @@ class CustomerPortalTest extends TestCase
         $this->assertSame('SUBMITTED', WeddingCustomerPortal::first()->status);
     }
 
+    public function test_customer_can_add_one_guest_manually_without_excel_or_changing_approval(): void
+    {
+        $w = $this->wedding('manual-guests');
+        $other = $this->wedding('other-manual-guests');
+        $token = $this->token($w);
+        $otherToken = $this->token($other);
+        $path = $this->customerPath($token, '/invitees');
+        $fingerprint = CustomerPortalService::fingerprint($w->fresh());
+
+        $created = $this->postJson($path, ['name' => '  Ibu   Ayu  ', 'address' => '  Kota   Bogor ', 'whatsapp' => '081234567890'])
+            ->assertCreated()->assertJsonPath('data.name', 'Ibu Ayu')->assertJsonPath('data.address', 'Kota Bogor')
+            ->assertJsonPath('data.whatsapp', '6281234567890')->assertHeader('Cache-Control', 'no-store, private');
+        $this->assertMatchesRegularExpression('~/i/[a-f0-9]{16}$~', $created->json('data.link'));
+        $this->getJson($path)->assertOk()->assertJsonPath('total', 1)->assertJsonPath('data.0.link', $created->json('data.link'));
+        $this->postJson($path, ['name' => 'ibu ayu', 'address' => 'kota bogor', 'whatsapp' => '081299999999'])->assertStatus(409);
+        $this->postJson($path, ['name' => 'Ibu Ayu', 'address' => 'Depok'])->assertCreated();
+        $this->postJson($path, ['name' => 'Bapak Budi'])->assertCreated()->assertJsonPath('data.address', '')->assertJsonPath('data.whatsapp', null);
+        $this->postJson($path, ['name' => '<script>', 'address' => 'Bogor'])->assertUnprocessable();
+        $this->postJson($path, ['name' => 'Tamu', 'whatsapp' => 'invalid'])->assertUnprocessable();
+        $this->assertSame(3, WeddingInvitee::where('wedding_id', $w->id)->count());
+        $this->assertSame(0, WeddingInvitee::where('wedding_id', $other->id)->count());
+        $this->assertSame($fingerprint, CustomerPortalService::fingerprint($w->fresh()));
+
+        $this->postJson($this->customerPath($otherToken, '/invitees'), ['name' => 'Tamu Lain'])->assertCreated();
+        $this->assertSame(3, WeddingInvitee::where('wedding_id', $w->id)->count());
+        WeddingCustomerPortal::where('wedding_id', $w->id)->update(['revoked_at' => now()]);
+        $this->postJson($path, ['name' => 'Tamu Baru'])->assertNotFound();
+    }
+
     public function test_customer_can_read_scoped_paginated_rsvp_and_wishes_without_changing_approval(): void
     {
         $w = $this->wedding('guest-responses');

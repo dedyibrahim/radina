@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
-import { Download, Upload, Copy, Search, MessageCircle, Eye, ExternalLink, Trash2 } from 'lucide-vue-next'
+import { Download, Upload, Copy, Search, MessageCircle, Eye, ExternalLink, Trash2, UserPlus } from 'lucide-vue-next'
 import { api, errorMessage } from '../services/api'
 import { useUiStore } from '../stores/ui'
 import BaseModal from './BaseModal.vue'
@@ -22,6 +22,9 @@ const ui = useUiStore(),
   search = ref(''),
   result = ref(''),
   format = ref('xlsx')
+const manual = ref({ name: '', address: '', whatsapp: '' }),
+  manualError = ref(''),
+  createdGuest = ref(null)
 const sharing = ref({}),
   messageDraft = ref(''),
   selectedGuest = ref(null),
@@ -122,6 +125,25 @@ async function apply() {
     await load(1)
   } catch (e) {
     error.value = errorMessage(e)
+  } finally {
+    busy.value = false
+  }
+}
+async function addManual() {
+  if (disabled.value || !manual.value.name.trim()) return
+  busy.value = true
+  manualError.value = ''
+  createdGuest.value = null
+  try {
+    createdGuest.value = (
+      await api.post(`${props.base}/invitees`, manual.value)
+    ).data.data
+    manual.value = { name: '', address: '', whatsapp: '' }
+    search.value = ''
+    await load(1)
+    ui.toast('Tamu ditambahkan dan tautan undangan dibuat.')
+  } catch (e) {
+    manualError.value = errorMessage(e)
   } finally {
     busy.value = false
   }
@@ -237,10 +259,74 @@ onMounted(() => find())
   <div class="customer-guests">
     <h2>Daftar tamu &amp; kirim undangan</h2>
     <p>
-      Unduh template, isi nama, alamat, dan nomor WhatsApp di Excel atau Google Sheets. Nama wajib;
-      alamat dan nomor WA boleh kosong. Tautan pendek dibuat otomatis dan dapat dibuka setelah
-      undangan dipublish.
+      Tambah tamu satu per satu atau impor banyak tamu melalui Excel/CSV. Nama wajib; alamat dan
+      nomor WA boleh kosong. Tautan pendek dibuat otomatis dan dapat dibuka setelah undangan
+      dipublish.
     </p>
+    <form class="guest-manual" @submit.prevent="addManual">
+      <h3>Tambah tamu manual</h3>
+      <p>Isi satu tamu, lalu tautannya langsung siap disalin atau dibagikan.</p>
+      <div class="guest-manual-fields">
+        <label for="manual-guest-name">Nama tamu <span aria-hidden="true">*</span>
+          <input
+            id="manual-guest-name"
+            v-model="manual.name"
+            type="text"
+            maxlength="120"
+            autocomplete="off"
+            required
+            :disabled="disabled"
+            placeholder="Contoh: Bapak Dedy Ibrahim"
+          />
+        </label>
+        <label for="manual-guest-address">Alamat (opsional)
+          <input
+            id="manual-guest-address"
+            v-model="manual.address"
+            type="text"
+            maxlength="1000"
+            autocomplete="off"
+            :disabled="disabled"
+            placeholder="Contoh: Kota Bogor"
+          />
+        </label>
+        <label for="manual-guest-whatsapp">Nomor WhatsApp (opsional)
+          <input
+            id="manual-guest-whatsapp"
+            v-model="manual.whatsapp"
+            type="tel"
+            inputmode="tel"
+            maxlength="40"
+            autocomplete="off"
+            :disabled="disabled"
+            placeholder="Contoh: 081234567890"
+          />
+        </label>
+      </div>
+      <button type="submit" class="p-button" :disabled="disabled || !manual.name.trim()">
+        <UserPlus :size="16" /> Tambah &amp; Buat Tautan
+      </button>
+      <p v-if="manualError" class="alert error" role="alert">{{ manualError }}</p>
+      <div v-if="createdGuest" class="guest-manual-result" role="status">
+        <strong>{{ createdGuest.name }} berhasil ditambahkan.</strong>
+        <p>{{ createdGuest.link }}</p>
+        <div class="guest-link-actions">
+          <button type="button" class="text-link" @click="copy(createdGuest)">
+            <Copy :size="14" />Salin Link
+          </button>
+          <a class="guest-view-button" :href="createdGuest.link" target="_blank" rel="noopener noreferrer">
+            <ExternalLink :size="16" />Lihat Undangan
+          </a>
+          <a
+            v-if="createdGuest.whatsapp"
+            class="guest-wa-button"
+            :href="whatsappUrl(createdGuest)"
+            target="_blank"
+            rel="noopener noreferrer"
+          ><MessageCircle :size="16" />Kirim WA</a>
+        </div>
+      </div>
+    </form>
     <div class="action-group">
       <label class="format-choice"
         >Format unduhan
@@ -450,7 +536,7 @@ onMounted(() => find())
       {{
         search
           ? 'Nama tamu tidak ditemukan.'
-          : 'Belum ada tamu. Unggah daftar tamu untuk membuat tautan otomatis.'
+          : 'Belum ada tamu. Tambah manual atau unggah daftar tamu untuk membuat tautan otomatis.'
       }}
     </p>
     <p class="guest-wa-note">
@@ -537,6 +623,52 @@ onMounted(() => find())
   padding: 20px;
   border: 1px solid #d8dfcd;
   border-radius: 8px;
+}
+.guest-manual {
+  margin: 28px 0;
+  padding: 20px;
+  border: 1px solid #d8dfcd;
+  border-radius: 8px;
+  background: #fffef9;
+}
+.guest-manual h3 {
+  margin: 0;
+}
+.guest-manual > p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #7a8869;
+}
+.guest-manual-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.guest-manual-fields label {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+}
+.guest-manual-fields input {
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  padding: 12px;
+  border: 1px solid #d8dfcd;
+  border-radius: 6px;
+  background: white;
+  color: #40352e;
+}
+.guest-manual-result {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 6px;
+  background: #f3f5ed;
+}
+.guest-manual-result p {
+  overflow-wrap: anywhere;
+  font-size: 13px;
 }
 .guest-import label,
 .guest-search label {
@@ -639,6 +771,9 @@ td {
     width: 100%;
   }
   .guest-import {
+    padding: 14px;
+  }
+  .guest-manual {
     padding: 14px;
   }
 }

@@ -111,6 +111,11 @@ class CustomerPortalController extends Controller
         return $this->locked($token, fn ($portal) => $this->privateResponse($invitees->store($request, $portal->wedding)));
     }
 
+    public function inviteeCreate(Request $request, string $token, AdminInviteeController $invitees)
+    {
+        return $this->locked($token, fn ($portal) => $this->privateResponse($invitees->create($request, $portal->wedding)));
+    }
+
     public function inviteeMessage(Request $request, string $token, AdminInviteeController $invitees)
     {
         return $this->locked($token, fn ($portal) => $this->privateResponse($invitees->message($request, $portal->wedding)));

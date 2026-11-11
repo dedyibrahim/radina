@@ -113,6 +113,7 @@ jobs:
         run: |
           python3 scripts/deployment/test_news_cleanup.py
           python3 scripts/deployment/test_prune_unchanged_release.py
+          bash scripts/deployment/test_install_lftp.sh
 
   deploy:
     name: Deploy production
@@ -153,6 +154,10 @@ jobs:
           fi
 
           exit "$missing"
+
+      - name: Install FTP client
+        shell: bash
+        run: bash scripts/deployment/install_lftp.sh
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -231,11 +236,6 @@ jobs:
           if-no-files-found: error
           retention-days: 7
           compression-level: 0
-
-      - name: Install FTP client
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq lftp
 
       - name: Resolve last production commit
         id: production
